@@ -5,7 +5,6 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import com.esotericsoftware.minlog.Log;
-import com.palyrobotics.frc2020.config.VisionConfig;
 import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.vision.LimelightControlMode.*;
@@ -48,10 +47,6 @@ public class Limelight {
 	 */
 	public boolean isTargetFound() {
 		return mTable.getEntry("tv").getDouble(0.0) != 0.0;
-	}
-
-	public boolean isAligned() {
-		return isTargetFound() && getYawToTarget() < kVisionConfig.acceptableYawError;
 	}
 
 	/**

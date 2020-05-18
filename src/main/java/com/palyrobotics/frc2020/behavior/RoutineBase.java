@@ -8,7 +8,7 @@ import java.util.Set;
 import com.palyrobotics.frc2020.robot.Commands;
 import com.palyrobotics.frc2020.robot.ReadOnly;
 import com.palyrobotics.frc2020.robot.RobotState;
-import com.palyrobotics.frc2020.subsystems.*;
+import com.palyrobotics.frc2020.subsystems.SubsystemBase;
 import com.palyrobotics.frc2020.util.Util;
 
 public abstract class RoutineBase {
@@ -22,13 +22,6 @@ public abstract class RoutineBase {
 			entry(State.RUNNING, "Running"),
 			entry(State.FINISHED, "Finished"));
 
-	/** Only should be used for {@link #getRequiredSubsystems()} */
-	protected final Climber mClimber = Climber.getInstance();
-	protected final Drive mDrive = Drive.getInstance();
-	protected final Indexer mIndexer = Indexer.getInstance();
-	protected final Intake mIntake = Intake.getInstance();
-	protected final Shooter mShooter = Shooter.getInstance();
-	protected final Spinner mSpinner = Spinner.getInstance();
 	private State mState = State.INIT;
 
 	/**

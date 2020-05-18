@@ -19,14 +19,9 @@ import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.palyrobotics.frc2020.behavior.SequentialRoutine;
-import com.palyrobotics.frc2020.behavior.routines.TimedRoutine;
-import com.palyrobotics.frc2020.behavior.routines.superstructure.IndexerFeedAllRoutine;
-import com.palyrobotics.frc2020.behavior.routines.superstructure.ShooterCustomVelocityRoutine;
 import com.palyrobotics.frc2020.robot.Commands;
 import com.palyrobotics.frc2020.robot.ReadOnly;
 import com.palyrobotics.frc2020.robot.RobotState;
-import com.palyrobotics.frc2020.subsystems.Shooter;
 import com.palyrobotics.frc2020.util.config.ConfigBase;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.service.RobotService;
@@ -216,19 +211,6 @@ public class CommandReceiverService implements RobotService {
 				}
 			}
 			case "run": {
-//				String routineName = parse.getString("routine_name");
-//				switch (routineName) {
-//					default: {
-//						throw new ArgumentParserException("Routine not recognized!", mParser);
-//					}
-//				}
-				var hoodState = Shooter.HoodState.valueOf(parse.getString("hood_state"));
-				var manualSpeed = Double.parseDouble(parse.getString("manual_speed"));
-//				commands.addWantedRoutine(new ShooterCustomVelocityRoutine(20.0, manualSpeed, hoodState));
-				commands.wantedCompression = false;
-				commands.addWantedRoutines(new ShooterCustomVelocityRoutine(15.0, manualSpeed, hoodState),
-						new SequentialRoutine(new TimedRoutine(3.0), new IndexerFeedAllRoutine(7.0, true, true)));
-				return String.format("Running with hood state %s and velocity %f", hoodState, manualSpeed);
 			}
 			default: {
 				throw new RuntimeException("Unknown command");

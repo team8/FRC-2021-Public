@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import com.esotericsoftware.minlog.Log;
-import com.palyrobotics.frc2020.config.RobotConfig;
 import com.palyrobotics.frc2020.util.config.Configs;
 
 public abstract class SimpleControllerBase<TController extends Controller> {
