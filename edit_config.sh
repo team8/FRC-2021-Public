@@ -1,0 +1,1 @@
+ssh -t admin@roborio-8-frc.local 'cd /home/lvuser/deploy/config ; bash'

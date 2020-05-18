@@ -1,0 +1,28 @@
+{
+	"velocityGains": {
+		"f": 0.0478,
+		"p": 0.015
+	},
+	"turnGains": {
+		"f": 0.00122,
+		"p": 0.0005,
+		"velocity": 280.0,
+		"acceleration": 380.0
+	},
+	"turnGainsS": 0.05,
+	"quickStopWeight": 0.125,
+	"quickTurnScalar": 0.4,
+	"quickStopDeadBand": 0.5,
+	"quickStopScalar": 0.0,
+	"slowTurnScalar": 0.1,
+	"turnSensitivity": 0.65,
+	"lowNegativeInertiaThreshold": 0.65,
+	"lowNegativeInertiaFarScalar": 5.0,
+	"lowNegativeInertiaCloseScalar": 3.0,
+	"lowNegativeInertiaTurnScalar": 2.5,
+	"wheelNonLinearity": 0.5,
+	"nonlinearPasses": 3,
+	"pathVelocityMetersPerSecond": 1.6,
+	"pathAccelerationMetersPerSecondSquared": 1.4,
+	"allowableYawErrorDegrees": 2.0
+}
