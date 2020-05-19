@@ -8,7 +8,7 @@ import java.util.Set;
 import com.palyrobotics.frc2020.robot.Commands;
 import com.palyrobotics.frc2020.robot.ReadOnly;
 import com.palyrobotics.frc2020.robot.RobotState;
-import com.palyrobotics.frc2020.subsystems.SubsystemBase;
+import com.palyrobotics.frc2020.subsystems.*;
 import com.palyrobotics.frc2020.util.Util;
 
 public abstract class RoutineBase {
@@ -22,6 +22,8 @@ public abstract class RoutineBase {
 			entry(State.RUNNING, "Running"),
 			entry(State.FINISHED, "Finished"));
 
+	/** Only should be used for {@link #getRequiredSubsystems()} */
+	protected final Drive mDrive = Drive.getInstance();
 	private State mState = State.INIT;
 
 	/**
