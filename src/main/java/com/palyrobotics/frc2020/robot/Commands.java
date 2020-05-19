@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.palyrobotics.frc2020.behavior.RoutineBase;
 import com.palyrobotics.frc2020.subsystems.Drive;
+import com.palyrobotics.frc2020.subsystems.Shooter;
 import com.palyrobotics.frc2020.util.control.DriveOutputs;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -21,6 +22,9 @@ public class Commands {
 	public boolean shouldClearCurrentRoutines;
 	/* Drive Commands */
 	private Drive.State driveWantedState;
+	/* Shooter Commands */
+	public Shooter.FlywheelState shooterWantedState;
+	public double shooterWantedCustomFlywheelVelocity;
 	// Teleop
 	private double driveWantedThrottle, driveWantedWheel;
 	private boolean driveWantsQuickTurn, driveWantsSlowTurn, driveWantedSlowTurnLeft, driveWantsBrake;
@@ -31,7 +35,6 @@ public class Commands {
 	public Pose2d driveWantedOdometryPose;
 	// Turning
 	private double driveWantedYawDegrees;
-	public double spinnerWantedPercentOutput;
 	/* Vision */
 	public int visionWantedPipeline;
 	public boolean visionWanted;
