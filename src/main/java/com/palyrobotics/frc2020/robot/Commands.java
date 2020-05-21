@@ -23,8 +23,9 @@ public class Commands {
 	/* Drive Commands */
 	private Drive.State driveWantedState;
 	/* Shooter Commands */
-	public Shooter.FlywheelState shooterWantedState;
-	public double shooterWantedCustomFlywheelVelocity;
+	private Shooter.ShooterState shooterWantedState;
+	private Shooter.HoodState hoodWantedState;
+	private double shooterWantedCustomFlywheelVelocity;
 	// Teleop
 	private double driveWantedThrottle, driveWantedWheel;
 	private boolean driveWantsQuickTurn, driveWantsSlowTurn, driveWantedSlowTurnLeft, driveWantsBrake;
@@ -132,6 +133,32 @@ public class Commands {
 
 	public DriveOutputs getDriveWantedSignal() {
 		return driveWantedSignal;
+	}
+
+	public void setShooterWantedCustomFlywheelVelocity(double flywheelWantedVelocity) {
+		this.shooterWantedCustomFlywheelVelocity = flywheelWantedVelocity;
+	}
+
+	public void setShooterWantedCustomFlywheelVelocity(double flywheelWantedVelocity, Shooter.HoodState hoodWantedState) {
+		this.hoodWantedState = hoodWantedState;
+		this.shooterWantedCustomFlywheelVelocity = flywheelWantedVelocity;
+	}
+
+	public void setShooterVisionAssisted(int pipelineWanted) {
+		visionWantedPipeline = pipelineWanted;
+		shooterWantedState = Shooter.ShooterState.VISION_VELOCITY;
+	}
+
+	public double getShooterWantedCustomFlywheelVelocity() {
+		return shooterWantedCustomFlywheelVelocity;
+	}
+
+	public Shooter.ShooterState getShooterWantedState() {
+		return shooterWantedState;
+	}
+
+	public Shooter.HoodState getHoodWantedState() {
+		return hoodWantedState;
 	}
 
 	@Override

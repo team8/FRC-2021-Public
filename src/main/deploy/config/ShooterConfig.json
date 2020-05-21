@@ -1,0 +1,12 @@
+{
+  "noVisionVelocity" : 1900.0,
+  "maxVelocity" : 5000.0,
+  "flywheelGains" : {
+      "f" : 0.0,
+      "p" : 0.0,
+      "i" : 0.0,
+      "d" : 0.0,
+      "iZone" : 0.0,
+      "iMax" : 0.0
+  }
+}
