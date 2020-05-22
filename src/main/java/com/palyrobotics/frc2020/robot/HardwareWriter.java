@@ -13,6 +13,7 @@ import com.esotericsoftware.minlog.Log;
 import com.palyrobotics.frc2020.config.RobotConfig;
 import com.palyrobotics.frc2020.config.constants.DriveConstants;
 import com.palyrobotics.frc2020.subsystems.Drive;
+import com.palyrobotics.frc2020.subsystems.Shooter;
 import com.palyrobotics.frc2020.subsystems.SubsystemBase;
 import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.config.Configs;
@@ -34,10 +35,12 @@ public class HardwareWriter {
 			true, 30.0, 35.0, 1.0);
 	private final RobotConfig mRobotConfig = Configs.get(RobotConfig.class);
 	private final Drive mDrive = Drive.getInstance();
+	private final Shooter mShooter = Shooter.getInstance();
 	private boolean mRumbleOutput;
 
 	void configureHardware(Set<SubsystemBase> enabledSubsystems) {
 		if (enabledSubsystems.contains(mDrive)) configureDriveHardware();
+		if (enabledSubsystems.contains(mShooter)) configureShooterHardware();
 		configureMiscellaneousHardware();
 	}
 
@@ -81,6 +84,17 @@ public class HardwareWriter {
 		resetDriveSensors(new Pose2d());
 	}
 
+	private void configureShooterHardware() {
+		var hardware = HardwareAdapter.ShooterHardware.getInstance();
+		hardware.masterSpark.restoreFactoryDefaults();
+		hardware.slaveSpark.restoreFactoryDefaults();
+		hardware.masterSpark.setInverted(true);
+		hardware.slaveSpark.follow(hardware.masterSpark, true);
+
+		/* Flywheel velocity in RPM, adjusted for gearing ratio */
+		hardware.masterEncoder.setVelocityConversionFactor(1.0 / 0.76923076);
+	}
+
 	public void resetDriveSensors(Pose2d pose) {
 		double heading = pose.getRotation().getDegrees();
 		var hardware = HardwareAdapter.DriveHardware.getInstance();
@@ -103,6 +117,7 @@ public class HardwareWriter {
 		mRumbleOutput = false;
 		if (!mRobotConfig.disableHardwareUpdates) {
 			if (enabledSubsystems.contains(mDrive)) updateDrivetrain();
+			if (enabledSubsystems.contains(mShooter)) updateShooter();
 		}
 		var joystickHardware = HardwareAdapter.Joysticks.getInstance();
 		joystickHardware.operatorXboxController.setRumble(mRumbleOutput);
@@ -114,6 +129,13 @@ public class HardwareWriter {
 		hardware.leftMasterFalcon.setOutput(mDrive.getDriveSignal().leftOutput);
 		hardware.rightMasterFalcon.setOutput(mDrive.getDriveSignal().rightOutput);
 		handleReset(hardware.gyro);
+	}
+
+	private void updateShooter() {
+		var hardware = HardwareAdapter.ShooterHardware.getInstance();
+		hardware.masterSpark.setOutput(mShooter.getFlywheelOutput());
+		hardware.blockingSolenoid.setExtended(mShooter.getBlockingOutput());
+		hardware.hoodPiston.setExtended(mShooter.getHoodOutput());
 	}
 
 	private void setPigeonStatusFramePeriods(PigeonIMU gyro) {

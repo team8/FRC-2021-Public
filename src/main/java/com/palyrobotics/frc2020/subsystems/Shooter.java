@@ -28,7 +28,7 @@ public class Shooter extends SubsystemBase {
     private static Shooter sInstance = new Shooter();
     private ShooterConfig mConfig = Configs.get(ShooterConfig.class);
     private ControllerOutput mFlywheelOutput = new ControllerOutput();
-    private boolean mBlockingOutput;
+    private boolean mBlockingOutput, mHoodOutput;
     private Limelight mLimelight = Limelight.getInstance();
     private MedianFilter mDistanceFilter = new MedianFilter(15);
 
@@ -90,4 +90,9 @@ public class Shooter extends SubsystemBase {
     public boolean getBlockingOutput() {
         return mBlockingOutput;
     }
+
+    public boolean getHoodOutput() {
+        return mHoodOutput;
+    }
+
 }

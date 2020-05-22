@@ -6,9 +6,12 @@ import com.ctre.phoenix.sensors.PigeonIMU;
 import com.palyrobotics.frc2020.config.PortConstants;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.Falcon;
+import com.palyrobotics.frc2020.util.control.Spark;
+import com.palyrobotics.frc2020.util.control.TimedSolenoid;
 import com.palyrobotics.frc2020.util.input.Joystick;
 import com.palyrobotics.frc2020.util.input.XboxController;
 
+import com.revrobotics.CANEncoder;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
@@ -40,6 +43,22 @@ public class HardwareAdapter {
 
 		static DriveHardware getInstance() {
 			if (sInstance == null) sInstance = new DriveHardware();
+			return sInstance;
+		}
+	}
+
+	/**
+	 * 2 NEO's, Hood Piston, Blocking Solenoid
+	 */
+	static class ShooterHardware {
+		private static ShooterHardware sInstance;
+		final Spark masterSpark = new Spark(sPortConstants.nariShooterMasterId, "Shooter Master"), slaveSpark = new Spark(sPortConstants.nariShooterSlaveId, "Shooter Slave");
+		final CANEncoder masterEncoder = masterSpark.getEncoder();
+		final TimedSolenoid blockingSolenoid = new TimedSolenoid(sPortConstants.nariShooterBlockingSolenoidId, 0.2, false),
+				hoodPiston = new TimedSolenoid(sPortConstants.nariShooterBlockingSolenoidId, 0.2, false);
+
+		static ShooterHardware getInstance() {
+			if (sInstance == null) sInstance = new ShooterHardware();
 			return sInstance;
 		}
 	}
