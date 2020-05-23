@@ -6,8 +6,9 @@ import com.ctre.phoenix.motorcontrol.StickyFaults;
 import com.ctre.phoenix.sensors.PigeonIMU.PigeonState;
 import com.esotericsoftware.minlog.Log;
 import com.palyrobotics.frc2020.config.RobotConfig;
-import com.palyrobotics.frc2020.robot.HardwareAdapter.DriveHardware;
+import com.palyrobotics.frc2020.robot.HardwareAdapter.*;
 import com.palyrobotics.frc2020.subsystems.Drive;
+import com.palyrobotics.frc2020.subsystems.Shooter;
 import com.palyrobotics.frc2020.subsystems.SubsystemBase;
 import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.config.Configs;
@@ -38,6 +39,7 @@ public class HardwareReader {
 		readGameAndFieldState(state);
 		Robot.mDebugger.addPoint("readGameAndFieldState");
 		if (enabledSubsystems.contains(Drive.getInstance())) readDriveState(state);
+		if (enabledSubsystems.contains(Shooter.getInstance())) readShooterState(state);
 		Robot.mDebugger.addPoint("Drive");
 	}
 
@@ -75,6 +77,16 @@ public class HardwareReader {
 //		LiveGraph.add("driveRightPercentOutput", hardware.rightMasterFalcon.getMotorOutputPercent());
 //		LiveGraph.add("driveLeftPercentOutput", hardware.leftMasterFalcon.getMotorOutputPercent());
 		hardware.falcons.forEach(this::checkFalconFaults);
+	}
+
+	private void readShooterState(RobotState state) {
+		var hardware = ShooterHardware.getInstance();
+		state.shooterBlockingIsExtended = hardware.blockingSolenoid.isExtended();
+		state.shooterHoodPistonIsExtended = hardware.hoodPiston.isExtended();
+		state.shooterHoodTransitioning = hardware.blockingSolenoid.isInTransition() || hardware.hoodPiston.isInTransition();
+		state.shooterFlywheelVelocity = hardware.masterEncoder.getVelocity();
+		checkSparkFaults(hardware.masterSpark);
+		checkSparkFaults(hardware.slaveSpark);
 	}
 
 	private void checkSparkFaults(Spark spark) {

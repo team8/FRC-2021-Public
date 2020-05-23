@@ -30,6 +30,9 @@ public class RobotState {
 	public Pose2d drivePoseMeters = new Pose2d();
 	public double driveVelocityMetersPerSecond;
 	public boolean driveIsGyroReady;
+	/* Shooter */
+	public boolean shooterHoodPistonIsExtended, shooterBlockingIsExtended, shooterHoodTransitioning;
+	public double shooterFlywheelVelocity;
 
 	public GamePeriod gamePeriod = GamePeriod.DISABLED;
 	public String gameData;
