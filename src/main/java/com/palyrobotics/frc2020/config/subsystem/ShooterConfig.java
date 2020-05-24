@@ -4,7 +4,7 @@ import com.palyrobotics.frc2020.util.config.SubsystemConfigBase;
 import com.palyrobotics.frc2020.util.control.Gains;
 
 public class ShooterConfig extends SubsystemConfigBase {
+
 	public Gains flywheelGains;
-	public double noVisionVelocity;
-	public double maxVelocity;
+	public double noVisionVelocity, maxVelocity, hoodSwitchDistanceThreshold;
 }

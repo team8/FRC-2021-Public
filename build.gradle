@@ -75,7 +75,7 @@ task spotlessDeploy {
 }
 
 // Set this to true to enable desktop support.
-def includeDesktopSupport = false
+def includeDesktopSupport = true
 
 // Maven central needed for JUnit
 repositories {

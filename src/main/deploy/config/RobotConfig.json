@@ -6,11 +6,7 @@
 	],
 	"enabledSubsystems": [
 		"drive",
-		"indexer",
-		"intake",
-		"shooter",
-		"lighting",
-		"climber"
+		"shooter"
 	],
 	"checkFaults": false,
 	"coastDriveWhenDisabled": false,

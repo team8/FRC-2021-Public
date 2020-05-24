@@ -10,8 +10,8 @@ import com.palyrobotics.frc2020.util.control.Spark;
 import com.palyrobotics.frc2020.util.control.TimedSolenoid;
 import com.palyrobotics.frc2020.util.input.Joystick;
 import com.palyrobotics.frc2020.util.input.XboxController;
-
 import com.revrobotics.CANEncoder;
+
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
@@ -51,6 +51,7 @@ public class HardwareAdapter {
 	 * 2 NEO's, Hood Piston, Blocking Solenoid
 	 */
 	static class ShooterHardware {
+
 		private static ShooterHardware sInstance;
 		final Spark masterSpark = new Spark(sPortConstants.nariShooterMasterId, "Shooter Master"), slaveSpark = new Spark(sPortConstants.nariShooterSlaveId, "Shooter Slave");
 		final CANEncoder masterEncoder = masterSpark.getEncoder();
