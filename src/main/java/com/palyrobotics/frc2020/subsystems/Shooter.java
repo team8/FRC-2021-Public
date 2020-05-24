@@ -40,7 +40,11 @@ public class Shooter extends SubsystemBase {
 
     @Override
     public void update(@ReadOnly Commands commands, @ReadOnly RobotState state) {
-         mFlywheelOutput.setTargetVelocity(getTargetFlywheelVelocity(commands, getHoodState()), mConfig.flywheelGains);
+         mFlywheelOutput.setTargetVelocity(getTargetFlywheelVelocity(commands, getVisionHoodState()), mConfig.flywheelGains);
+
+        HoodState wantedHoodState = commands.getShooterWantedState() == ShooterState.VISION_VELOCITY ? getVisionHoodState() : commands.getHoodWantedState();
+        wantedHoodState = commands.getShooterWantedState() == ShooterState.IDLE ? HoodState.LOW : wantedHoodState;
+        applyHoodState(state, wantedHoodState);
     }
 
     private double getTargetFlywheelVelocity(@ReadOnly Commands commands, HoodState hoodState) {
@@ -66,7 +70,7 @@ public class Shooter extends SubsystemBase {
         return null;
     }
 
-    private HoodState getHoodState() {
+    private HoodState getVisionHoodState() {
         Double targetDistance = getTargetDistance();
         if (targetDistance == null) {
             return HoodState.HIGH;
@@ -82,6 +86,25 @@ public class Shooter extends SubsystemBase {
         return (targetDistance - floorEntry.getKey()) < (ceilingEntry.getKey() - targetDistance) ? floorEntry.getValue() : ceilingEntry.getValue();
     }
 
+    private void applyHoodState(@ReadOnly RobotState state, HoodState hoodState) {
+        if (!state.shooterHoodTransitioning) {
+            switch(hoodState) {
+                case HIGH:
+                    mHoodOutput = true;
+
+                case MIDDLE:
+                    if (mBlockingOutput) {
+                        mHoodOutput = false;
+                    }
+                    mHoodOutput = true;
+                    mBlockingOutput = true;
+
+                case LOW:
+                    mBlockingOutput = false;
+                    mHoodOutput = false;
+            }
+        }
+    }
 
     public ControllerOutput getFlywheelOutput() {
         return mFlywheelOutput;
