@@ -4,7 +4,9 @@ import static com.palyrobotics.frc2020.util.Util.handleDeadBand;
 import static com.palyrobotics.frc2020.vision.Limelight.kOneTimesZoomPipelineId;
 import static com.palyrobotics.frc2020.vision.Limelight.kTwoTimesZoomPipelineId;
 
+import com.palyrobotics.frc2020.config.subsystem.ShooterConfig;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.Joysticks;
+import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.input.Joystick;
 import com.palyrobotics.frc2020.util.input.XboxController;
 import com.palyrobotics.frc2020.vision.Limelight;
@@ -16,6 +18,7 @@ public class OperatorInterface {
 
 	public static final double kDeadBand = 0.05;
 	public static final int kOnesTimesZoomAlignButton = 3, kTwoTimesZoomAlignButton = 4;
+	private final ShooterConfig mShooterConfig = Configs.get(ShooterConfig.class);
 	private final Joystick mDriveStick = Joysticks.getInstance().driveStick,
 			mTurnStick = Joysticks.getInstance().turnStick;
 	private Limelight mLimelight = Limelight.getInstance();
@@ -46,24 +49,37 @@ public class OperatorInterface {
 		} else if (wantsTwoTimesAlign) {
 			commands.setDriveVisionAlign(kTwoTimesZoomPipelineId);
 		}
-		/* Path Following */
-//		if (mOperatorXboxController.getBButtonPressed()) {
-//			commands.addWantedRoutine(new SequentialRoutine(
-//					new DriveSetOdometryRoutine(0.0, 0.0, 0.0),
-//					new DrivePathRoutine(newWaypoint(30.0, 0.0, 0.0))));
-//			commands.addWantedRoutine(new SequentialRoutine(
-//					new DriveSetOdometryRoutine(0.0, 0.0, 180.0),
-//					new DriveYawRoutine(0.0)));
-//			commands.addWantedRoutine(new DrivePathRoutine(newWaypoint(0.0, 0.0, 180.0)));
-//			commands.addWantedRoutine(new SequentialRoutine(
-//					new DriveSetOdometryRoutine(0.0, 0.0, 0.0),
-//					new DrivePathRoutine(newWaypoint(40.0, 0.0, 0.0))
-//							.setMovement(1.0, 1.0)
-//							.endingVelocity(0.5),
-//					new DrivePathRoutine(newWaypoint(80.0, 0.0, 0.0))
-//							.setMovement(0.5, 1.0)
-//							.startingVelocity(0.5)));
-//		}
+
+		/* Shooting */
+		if (mOperatorXboxController.getRightTriggerPressed()) {
+			commands.setShooterWantedCustomFlywheelVelocity(mShooterConfig.noVisionVelocity);
+			commands.setShooterVisionAssisted(commands.visionWantedPipeline);
+			commands.wantedCompression = false;
+		} else if (mOperatorXboxController.getLeftTriggerPressed()) {
+			commands.setShooterIdle();
+			commands.visionWanted = false;
+			commands.wantedCompression = true;
+		}
+
+/* 		Path Following
+		if (mOperatorXboxController.getBButtonPressed()) {
+			commands.addWantedRoutine(new SequentialRoutine(
+					new DriveSetOdometryRoutine(0.0, 0.0, 0.0),
+					new DrivePathRoutine(newWaypoint(30.0, 0.0, 0.0))));
+			commands.addWantedRoutine(new SequentialRoutine(
+					new DriveSetOdometryRoutine(0.0, 0.0, 180.0),
+					new DriveYawRoutine(0.0)));
+			commands.addWantedRoutine(new DrivePathRoutine(newWaypoint(0.0, 0.0, 180.0)));
+			commands.addWantedRoutine(new SequentialRoutine(
+					new DriveSetOdometryRoutine(0.0, 0.0, 0.0),
+					new DrivePathRoutine(newWaypoint(40.0, 0.0, 0.0))
+							.setMovement(1.0, 1.0)
+							.endingVelocity(0.5),
+					new DrivePathRoutine(newWaypoint(80.0, 0.0, 0.0))
+							.setMovement(0.5, 1.0)
+							.startingVelocity(0.5)));
+		}
+*/
 	}
 
 	public void resetPeriodic(Commands commands) {

@@ -134,8 +134,8 @@ public class HardwareWriter {
 	private void updateShooter() {
 		var hardware = HardwareAdapter.ShooterHardware.getInstance();
 		hardware.masterSpark.setOutput(mShooter.getFlywheelOutput());
-		hardware.blockingSolenoid.setExtended(mShooter.getBlockingOutput());
 		hardware.hoodPiston.setExtended(mShooter.getHoodOutput());
+		hardware.blockingSolenoid.setExtended(mShooter.getBlockingOutput());
 	}
 
 	private void setPigeonStatusFramePeriods(PigeonIMU gyro) {

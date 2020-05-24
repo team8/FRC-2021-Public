@@ -149,6 +149,10 @@ public class Commands {
 		shooterWantedState = Shooter.ShooterState.VISION_VELOCITY;
 	}
 
+	public void setShooterIdle() {
+		shooterWantedState = Shooter.ShooterState.IDLE;
+	}
+
 	public double getShooterWantedCustomFlywheelVelocity() {
 		return shooterWantedCustomFlywheelVelocity;
 	}
