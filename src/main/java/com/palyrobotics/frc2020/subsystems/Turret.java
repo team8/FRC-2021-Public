@@ -11,7 +11,7 @@ import com.palyrobotics.frc2020.vision.Limelight;
 public class Turret extends SubsystemBase {
 
 	public enum TurretState {
-		IDLE, VISION_ALIGN, CUSTOM_ANGLE_ALIGN
+		IDLE, VISION_ALIGN, CUSTOM_ANGLE_SETPOINT
 	}
 
 	private static Turret sInstance = new Turret();
@@ -37,7 +37,7 @@ public class Turret extends SubsystemBase {
 				 */
 				mOutput.setTargetPosition(mLimelight.getYawToTarget() + state.turretYawDegrees, mConfig.turretGains);
 				break;
-			case CUSTOM_ANGLE_ALIGN:
+			case CUSTOM_ANGLE_SETPOINT:
 				mOutput.setTargetPosition(commands.getTurretWantedAngle(), mConfig.turretGains);
 				break;
 			case IDLE:

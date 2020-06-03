@@ -170,7 +170,7 @@ public class Commands {
 	}
 
 	public void setTurretCustomAngle(double turretWantedAngle) {
-		turretWantedState = Turret.TurretState.CUSTOM_ANGLE_ALIGN;
+		turretWantedState = Turret.TurretState.CUSTOM_ANGLE_SETPOINT;
 		this.turretWantedAngle = turretWantedAngle;
 	}
 
