@@ -10,6 +10,7 @@ import com.palyrobotics.frc2020.robot.HardwareAdapter.*;
 import com.palyrobotics.frc2020.subsystems.Drive;
 import com.palyrobotics.frc2020.subsystems.Shooter;
 import com.palyrobotics.frc2020.subsystems.SubsystemBase;
+import com.palyrobotics.frc2020.subsystems.Turret;
 import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.Falcon;
@@ -40,6 +41,7 @@ public class HardwareReader {
 		Robot.mDebugger.addPoint("readGameAndFieldState");
 		if (enabledSubsystems.contains(Drive.getInstance())) readDriveState(state);
 		if (enabledSubsystems.contains(Shooter.getInstance())) readShooterState(state);
+		if (enabledSubsystems.contains(Turret.getInstance())) readTurretState(state);
 		Robot.mDebugger.addPoint("Drive");
 	}
 
@@ -87,6 +89,11 @@ public class HardwareReader {
 		state.shooterFlywheelVelocity = hardware.masterEncoder.getVelocity();
 		checkSparkFaults(hardware.masterSpark);
 		checkSparkFaults(hardware.slaveSpark);
+	}
+
+	private void readTurretState(RobotState state) {
+		var talon = TurretHardware.getInstance().talon;
+		state.turretYawDegrees = talon.getConvertedPosition();
 	}
 
 	private void checkSparkFaults(Spark spark) {

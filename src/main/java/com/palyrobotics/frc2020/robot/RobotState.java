@@ -33,6 +33,8 @@ public class RobotState {
 	/* Shooter */
 	public boolean shooterHoodPistonIsExtended, shooterBlockingIsExtended, shooterHoodTransitioning;
 	public double shooterFlywheelVelocity;
+	/* Turret */
+	public double turretYawDegrees;
 
 	public GamePeriod gamePeriod = GamePeriod.DISABLED;
 	public String gameData;

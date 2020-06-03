@@ -135,6 +135,8 @@ public class Talon extends TalonSRX implements Controller {
 		return mController.setOutput(output);
 	}
 
+	//todo: put next 3 methods in Base talon controller?
+
 	/**
 	 * @param positionConversion Units per native encoder ticks
 	 */
@@ -151,10 +153,14 @@ public class Talon extends TalonSRX implements Controller {
 		mController.mVelocityConversion = velocityConversion;
 	}
 
-	/**
-	 * When controllers reset over CAN, frame periods are cleared. This handles resetting them to their
-	 * configured values before.
-	 */
+	public double getConvertedPosition() {
+		return getSelectedSensorPosition() * mController.mPositionConversion;
+	}
+
+		/**
+         * When controllers reset over CAN, frame periods are cleared. This handles resetting them to their
+         * configured values before.
+         */
 	public void handleReset() {
 		if (hasResetOccurred()) {
 			Log.error("reset", String.format("%s reset", mController.getName()));
