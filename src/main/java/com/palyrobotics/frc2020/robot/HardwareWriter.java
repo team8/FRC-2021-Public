@@ -2,10 +2,7 @@ package com.palyrobotics.frc2020.robot;
 
 import java.util.Set;
 
-import com.ctre.phoenix.motorcontrol.InvertType;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
-import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
+import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.ctre.phoenix.sensors.PigeonIMU_StatusFrame;
 import com.ctre.phoenix.sensors.SensorInitializationStrategy;
@@ -15,6 +12,7 @@ import com.palyrobotics.frc2020.config.constants.DriveConstants;
 import com.palyrobotics.frc2020.subsystems.Drive;
 import com.palyrobotics.frc2020.subsystems.Shooter;
 import com.palyrobotics.frc2020.subsystems.SubsystemBase;
+import com.palyrobotics.frc2020.subsystems.Turret;
 import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.Falcon;
@@ -36,11 +34,13 @@ public class HardwareWriter {
 	private final RobotConfig mRobotConfig = Configs.get(RobotConfig.class);
 	private final Drive mDrive = Drive.getInstance();
 	private final Shooter mShooter = Shooter.getInstance();
+	private final Turret mTurret = Turret.getInstance();
 	private boolean mRumbleOutput;
 
 	void configureHardware(Set<SubsystemBase> enabledSubsystems) {
 		if (enabledSubsystems.contains(mDrive)) configureDriveHardware();
 		if (enabledSubsystems.contains(mShooter)) configureShooterHardware();
+		if (enabledSubsystems.contains(mTurret)) configureTurretHardware();
 		configureMiscellaneousHardware();
 	}
 
@@ -95,6 +95,18 @@ public class HardwareWriter {
 		hardware.masterEncoder.setVelocityConversionFactor(1.0 / 0.76923076);
 	}
 
+	private void configureTurretHardware() {
+		var talon = HardwareAdapter.TurretHardware.getInstance().talon;
+		talon.configFactoryDefault(kTimeoutMs);
+		talon.enableVoltageCompensation(true);
+		talon.configFrameTimings(5, 5); // 5 ms frame period
+		talon.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.CTRE_MagEncoder_Relative, kPidIndex, kTimeoutMs); //set feedback sensor to mag relative encoder
+
+		//Assuming 1:1 gear ratio, converts from native encoder ticks to degrees.
+		talon.configPositionConversion(360.0 / 4096);
+		talon.setSelectedSensorPosition(0, kPidIndex, kTimeoutMs); //zeros encoder
+	}
+
 	public void resetDriveSensors(Pose2d pose) {
 		double heading = pose.getRotation().getDegrees();
 		var hardware = HardwareAdapter.DriveHardware.getInstance();
@@ -118,6 +130,7 @@ public class HardwareWriter {
 		if (!mRobotConfig.disableHardwareUpdates) {
 			if (enabledSubsystems.contains(mDrive)) updateDrivetrain();
 			if (enabledSubsystems.contains(mShooter)) updateShooter();
+			if (enabledSubsystems.contains(mTurret)) updateTurret();
 		}
 		var joystickHardware = HardwareAdapter.Joysticks.getInstance();
 		joystickHardware.operatorXboxController.setRumble(mRumbleOutput);
@@ -136,6 +149,12 @@ public class HardwareWriter {
 		hardware.masterSpark.setOutput(mShooter.getFlywheelOutput());
 		hardware.hoodPiston.setExtended(mShooter.getHoodOutput());
 		hardware.blockingSolenoid.setExtended(mShooter.getBlockingOutput());
+	}
+
+	private void updateTurret() {
+		var talon = HardwareAdapter.TurretHardware.getInstance().talon;
+		talon.handleReset();
+		talon.setOutput(mTurret.getOutput());
 	}
 
 	private void setPigeonStatusFramePeriods(PigeonIMU gyro) {

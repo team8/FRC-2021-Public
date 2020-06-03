@@ -47,8 +47,10 @@ public class Shooter extends SubsystemBase {
 		mFlywheelOutput.setTargetVelocity(getTargetFlywheelVelocity(commands, getVisionHoodState()), mConfig.flywheelGains);
 
 		HoodState wantedHoodState = commands.getShooterWantedState() == ShooterState.VISION_VELOCITY ?
-				getVisionHoodState() : commands.getShooterWantedState() == ShooterState.CUSTOM_VELOCITY ?
-				commands.getHoodWantedState() : HoodState.LOW;
+				getVisionHoodState() :
+				commands.getShooterWantedState() == ShooterState.CUSTOM_VELOCITY ?
+						commands.getHoodWantedState() :
+						HoodState.LOW;
 		applyHoodState(state, wantedHoodState);
 
 		mPreviousHoodState = wantedHoodState;

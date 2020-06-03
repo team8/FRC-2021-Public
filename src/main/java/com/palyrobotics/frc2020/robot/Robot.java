@@ -17,6 +17,7 @@ import com.palyrobotics.frc2020.config.RobotConfig;
 import com.palyrobotics.frc2020.subsystems.Drive;
 import com.palyrobotics.frc2020.subsystems.Shooter;
 import com.palyrobotics.frc2020.subsystems.SubsystemBase;
+import com.palyrobotics.frc2020.subsystems.Turret;
 import com.palyrobotics.frc2020.util.LoopOverrunDebugger;
 import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.commands.CommandReceiverService;
@@ -52,8 +53,9 @@ public class Robot extends TimedRobot {
 	/* Subsystems */
 	private final Drive mDrive = Drive.getInstance();
 	private final Shooter mShooter = Shooter.getInstance();
+	private final Turret mTurret = Turret.getInstance();
 
-	private Set<SubsystemBase> mSubsystems = Set.of(mDrive, mShooter),
+	private Set<SubsystemBase> mSubsystems = Set.of(mDrive, mShooter, mTurret),
 			mEnabledSubsystems;
 	private Set<RobotService> mServices = Set.of(new CommandReceiverService(), new NetworkLoggerService(),
 			new TelemetryService()),

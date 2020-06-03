@@ -136,6 +136,22 @@ public class Talon extends TalonSRX implements Controller {
 	}
 
 	/**
+	 * @param positionConversion Units per native encoder ticks
+	 */
+	public void configPositionConversion(double positionConversion) {
+		mController.mPositionConversion = positionConversion;
+	}
+
+	/**
+	 * @param positionConversion Units per native encoder ticks
+	 * @param velocityConversion Velocity units per native encoder ticks per 100ms
+	 */
+	public void configSensorConversions(double positionConversion, double velocityConversion) {
+		mController.mPositionConversion = positionConversion;
+		mController.mVelocityConversion = velocityConversion;
+	}
+
+	/**
 	 * When controllers reset over CAN, frame periods are cleared. This handles resetting them to their
 	 * configured values before.
 	 */

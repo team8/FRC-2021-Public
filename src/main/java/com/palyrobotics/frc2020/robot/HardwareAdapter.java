@@ -7,6 +7,7 @@ import com.palyrobotics.frc2020.config.PortConstants;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.Falcon;
 import com.palyrobotics.frc2020.util.control.Spark;
+import com.palyrobotics.frc2020.util.control.Talon;
 import com.palyrobotics.frc2020.util.control.TimedSolenoid;
 import com.palyrobotics.frc2020.util.input.Joystick;
 import com.palyrobotics.frc2020.util.input.XboxController;
@@ -97,6 +98,23 @@ public class HardwareAdapter {
 		}
 
 		static Joysticks getInstance() {
+			return sInstance;
+		}
+	}
+
+	/**
+	 * 1 TalonSRX and Encoder
+	 */
+	static class TurretHardware {
+
+		private static TurretHardware sInstance;
+		final Talon talon = new Talon(sPortConstants.nariTurretTalonId, "Turret Talon");
+
+		private TurretHardware() {
+		}
+
+		static TurretHardware getInstance() {
+			if (sInstance == null) sInstance = new TurretHardware();
 			return sInstance;
 		}
 	}

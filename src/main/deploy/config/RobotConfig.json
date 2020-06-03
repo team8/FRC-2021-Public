@@ -6,7 +6,8 @@
 	],
 	"enabledSubsystems": [
 		"drive",
-		"shooter"
+		"shooter",
+		"turret"
 	],
 	"checkFaults": false,
 	"coastDriveWhenDisabled": false,
