@@ -30,7 +30,11 @@ public class Turret extends SubsystemBase {
 	public void update(@ReadOnly Commands commands, @ReadOnly RobotState state) {
 		switch (commands.getTurretWantedState()) {
 			case VISION_ALIGN:
-				//todo: add better vision align for turret
+				/*
+				  Need to implement the following:
+				  Latency compensation, accurate feedback control, feedback control with nonzero velocity reference
+				  Accurate feedforward that accounts for drivetrain motion
+				 */
 				mOutput.setTargetPosition(mLimelight.getYawToTarget() + state.turretYawDegrees, mConfig.turretGains);
 				break;
 			case CUSTOM_ANGLE_ALIGN:
