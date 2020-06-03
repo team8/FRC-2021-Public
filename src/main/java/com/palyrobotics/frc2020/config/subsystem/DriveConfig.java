@@ -16,4 +16,5 @@ public class DriveConfig extends SubsystemConfigBase {
 	public int nonlinearPasses;
 	public double pathVelocityMetersPerSecond, pathAccelerationMetersPerSecondSquared;
 	public double allowableYawErrorDegrees;
+	public double xBoundShootingQuadrant, yBoundShootingQuadrant;
 }

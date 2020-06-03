@@ -82,7 +82,7 @@ public class Shooter extends SubsystemBase {
 	private HoodState getVisionHoodState() {
 		Double targetDistanceInches = getTargetDistance();
 		if (targetDistanceInches == null) {
-			return HoodState.HIGH;
+			return HoodState.LOW;
 		}
 		Map.Entry<Double, HoodState> floorEntry = kTargetDistanceToHoodState.floorEntry(targetDistanceInches),
 				ceilingEntry = kTargetDistanceToHoodState.ceilingEntry(targetDistanceInches),

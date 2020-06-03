@@ -6,6 +6,7 @@ import java.util.List;
 import com.palyrobotics.frc2020.behavior.RoutineBase;
 import com.palyrobotics.frc2020.subsystems.Drive;
 import com.palyrobotics.frc2020.subsystems.Shooter;
+import com.palyrobotics.frc2020.subsystems.Turret;
 import com.palyrobotics.frc2020.util.control.DriveOutputs;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -26,6 +27,9 @@ public class Commands {
 	private Shooter.ShooterState shooterWantedState;
 	private Shooter.HoodState hoodWantedState;
 	private double shooterWantedFlywheelVelocity;
+	/* Turret Commands */
+	private Turret.TurretState turretWantedState;
+	private double turretWantedAngle; //[0, TurretConstants.turretAngleHardStopRange]
 	// Teleop
 	private double driveWantedThrottle, driveWantedWheel;
 	private boolean driveWantsQuickTurn, driveWantsSlowTurn, driveWantedSlowTurnLeft, driveWantsBrake;
@@ -163,6 +167,27 @@ public class Commands {
 
 	public Shooter.HoodState getHoodWantedState() {
 		return hoodWantedState;
+	}
+
+	public void setTurretCustomAngle(double turretWantedAngle) {
+		turretWantedState = Turret.TurretState.CUSTOM_ANGLE_ALIGN;
+		this.turretWantedAngle = turretWantedAngle;
+	}
+
+	public void setTurretVisionAlign() {
+		turretWantedState = Turret.TurretState.VISION_ALIGN;
+	}
+
+	public void setTurretIdle() {
+		turretWantedState = Turret.TurretState.IDLE;
+	}
+
+	public Turret.TurretState getTurretWantedState() {
+		return turretWantedState;
+	}
+
+	public double getTurretWantedAngle() {
+		return turretWantedAngle;
 	}
 
 	@Override

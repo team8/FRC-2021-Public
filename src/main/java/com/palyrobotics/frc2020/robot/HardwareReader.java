@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.StickyFaults;
 import com.ctre.phoenix.sensors.PigeonIMU.PigeonState;
 import com.esotericsoftware.minlog.Log;
 import com.palyrobotics.frc2020.config.RobotConfig;
+import com.palyrobotics.frc2020.config.subsystem.DriveConfig;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.*;
 import com.palyrobotics.frc2020.subsystems.Drive;
 import com.palyrobotics.frc2020.subsystems.Shooter;
@@ -26,6 +27,7 @@ public class HardwareReader {
 	private static final String kLoggerTag = Util.classToJsonName(HardwareReader.class);
 	private static final int kYawIndex = 0, kYawAngularVelocityIndex = 2;
 	private final RobotConfig mRobotConfig = Configs.get(RobotConfig.class);
+	private final DriveConfig mDriveConfig = Configs.get(DriveConfig.class);
 
 	private final double[] mGyroAngles = new double[3], mGyroAngularVelocities = new double[3];
 
@@ -64,6 +66,7 @@ public class HardwareReader {
 		state.driveRightVelocity = hardware.rightMasterFalcon.getConvertedVelocity();
 		state.driveLeftPosition = hardware.leftMasterFalcon.getConvertedPosition();
 		state.driveRightPosition = hardware.rightMasterFalcon.getConvertedPosition();
+		state.inShootingQuadrant = state.drivePoseMeters.getTranslation().getX() < mDriveConfig.xBoundShootingQuadrant && state.drivePoseMeters.getTranslation().getY() > mDriveConfig.yBoundShootingQuadrant;
 //		LiveGraph.add("x", state.drivePoseMeters.getTranslation().getX());
 //		LiveGraph.add("y", state.drivePoseMeters.getTranslation().getY());
 //		LiveGraph.add("leftPosition", state.driveLeftPosition);

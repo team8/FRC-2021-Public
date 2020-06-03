@@ -157,10 +157,10 @@ public class Talon extends TalonSRX implements Controller {
 		return getSelectedSensorPosition() * mController.mPositionConversion;
 	}
 
-		/**
-         * When controllers reset over CAN, frame periods are cleared. This handles resetting them to their
-         * configured values before.
-         */
+	/**
+	 * When controllers reset over CAN, frame periods are cleared. This handles resetting them to their
+	 * configured values before.
+	 */
 	public void handleReset() {
 		if (hasResetOccurred()) {
 			Log.error("reset", String.format("%s reset", mController.getName()));
