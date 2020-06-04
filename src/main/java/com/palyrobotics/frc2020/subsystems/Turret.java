@@ -11,6 +11,7 @@ import com.palyrobotics.frc2020.vision.Limelight;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.geometry.*;
+import edu.wpi.first.wpilibj.util.Units;
 
 public class Turret extends SubsystemBase {
 
@@ -41,7 +42,7 @@ public class Turret extends SubsystemBase {
 				*/
 
 				double latencyCompensationLookBack = Timer.getFPGATimestamp() - mLimelight.imageCaptureLatency / 100.0 - mLimelight.getPipelineLatency() / 100.0;
-				Pose2d visionPose = new Pose2d(TurretConstants.targetFieldLocation.minus(new Translation2d(mLimelight.getPnPTranslationX(), mLimelight.getPnPTranslationY())), new Rotation2d(Math.toRadians(mLimelight.getPnPYaw())));
+				Pose2d visionPose = new Pose2d(TurretConstants.targetFieldLocation.minus(new Translation2d(Units.inchesToMeters(mLimelight.getPnPTranslationX()), Units.inchesToMeters(mLimelight.getPnPTranslationY()))), new Rotation2d(Math.toRadians(mLimelight.getPnPYaw())));
 				Pose2d adjustedPose = state.drivePoseMeters.plus(visionPose.minus(state.pastPoses.get(latencyCompensationLookBack).getValue2()));
 				Transform2d poseChange = adjustedPose.minus(state.pastPoses.get(Timer.getFPGATimestamp() - mConfig.poseChangeLookBackSec).getValue2());
 				Pose2d nextDrivePredictedPose = adjustedPose.exp(new Twist2d(poseChange.getTranslation().getX(), poseChange.getTranslation().getY(), poseChange.getRotation().getRadians()));
