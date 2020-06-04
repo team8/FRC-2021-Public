@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.XboxController;
 public class Limelight {
 
 	public static final int kOneTimesZoomPipelineId = 0, kTwoTimesZoomPipelineId = 1;
+	public final int imageCaptureLatency = 11;
 	private static String kLoggerTag = Util.classToJsonName(Limelight.class);
 	private static final NetworkTableInstance sNetworkTableInstance = NetworkTableInstance.getDefault();
 	private static VisionConfig kVisionConfig = Configs.get(VisionConfig.class);

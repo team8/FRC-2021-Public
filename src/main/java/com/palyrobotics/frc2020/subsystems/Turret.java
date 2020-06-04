@@ -1,5 +1,6 @@
 package com.palyrobotics.frc2020.subsystems;
 
+import com.palyrobotics.frc2020.config.constants.TurretConstants;
 import com.palyrobotics.frc2020.config.subsystem.TurretConfig;
 import com.palyrobotics.frc2020.robot.Commands;
 import com.palyrobotics.frc2020.robot.ReadOnly;
@@ -9,6 +10,7 @@ import com.palyrobotics.frc2020.util.control.ControllerOutput;
 import com.palyrobotics.frc2020.vision.Limelight;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.geometry.*;
 
 public class Turret extends SubsystemBase {
 
@@ -37,23 +39,23 @@ public class Turret extends SubsystemBase {
 				Latency compensation, accurate feedback control, feedback control with nonzero velocity reference
 				Accurate feedforward that accounts for drivetrain motion
 				*/
-				mOutput.setTargetPosition(getLatencyCompensatedYaw2Target(state) + state.turretYawDegrees, mConfig.turretGains);
+
+				double latencyCompensationLookBack = Timer.getFPGATimestamp() - mLimelight.imageCaptureLatency / 100.0 - mLimelight.getPipelineLatency() / 100.0;
+				Pose2d visionPose = new Pose2d(TurretConstants.targetFieldLocation.minus(new Translation2d(mLimelight.getPnPTranslationX(), mLimelight.getPnPTranslationY())), new Rotation2d(Math.toRadians(mLimelight.getPnPYaw())));
+				Pose2d adjustedPose = state.drivePoseMeters.plus(visionPose.minus(state.pastPoses.get(latencyCompensationLookBack).getValue2()));
+				Transform2d poseChange = adjustedPose.minus(state.pastPoses.get(Timer.getFPGATimestamp() - mConfig.poseChangeLookBackSec).getValue2());
+				Pose2d nextDrivePredictedPose = adjustedPose.exp(new Twist2d(poseChange.getTranslation().getX(), poseChange.getTranslation().getY(), poseChange.getRotation().getRadians()));
+				Transform2d drivetrain2TurretTransform = new Transform2d(new Translation2d(TurretConstants.drivetrain2TurretX, TurretConstants.drivetrain2TurretY), nextDrivePredictedPose.getRotation()); //fine tune this...
+				Pose2d nextTurretPredictedPose = nextDrivePredictedPose.transformBy(drivetrain2TurretTransform);
+
+//				mOutput.setTargetPosition(getLatencyCompensatedYaw2Target(state) + state.turretYawDegrees, mConfig.turretGains);
 				break;
 			case CUSTOM_ANGLE_SETPOINT:
 				mOutput.setTargetPosition(commands.getTurretWantedAngle(), mConfig.turretGains);
 				break;
 			case IDLE:
-				mOutput.setIdle();
+				mOutput.setTargetPosition(TurretConstants.turretAngleHardStopRange / 2, mConfig.turretGains);
 		}
-	}
-
-	private double getLatencyCompensatedYaw2Target(RobotState state) {
-		double timestampPose = Timer.getFPGATimestamp() - 11 - mLimelight.getPipelineLatency(); //11 ms reduction because of image capture latency
-		Double floorKey = state.pastPoses.floorKey(timestampPose),
-				ceilingKey = state.pastPoses.ceilingKey(timestampPose);
-		return (floorKey == null) ? state.pastPoses.get(ceilingKey).getValue1() :
-				(ceilingKey == null) ? state.pastPoses.get(floorKey).getValue1() :
-						(ceilingKey - timestampPose > timestampPose - floorKey) ? state.pastPoses.get(floorKey).getValue1() : state.pastPoses.get(ceilingKey).getValue1();
 	}
 
 	public ControllerOutput getOutput() {

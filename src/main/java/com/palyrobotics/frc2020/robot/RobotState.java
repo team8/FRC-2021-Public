@@ -28,7 +28,7 @@ public class RobotState {
 
 	/* Drive */
 	private final DifferentialDriveOdometry driveOdometry = new DifferentialDriveOdometry(new Rotation2d());
-	public CircularTreeMap<Double, Pair<Double, Pose2d>> pastPoses = new CircularTreeMap<>(Configs.get(DriveConfig.class).pastPosesSize);
+	public CircularTreeMap<Pair<Double, Pose2d>> pastPoses = new CircularTreeMap<>(Configs.get(DriveConfig.class).pastPosesSize);
 	public double driveYawDegrees, driveYawAngularVelocityDegrees;
 	public boolean driveIsQuickTurning, driveIsSlowTurning;
 	public double driveLeftVelocity, driveRightVelocity, driveLeftPosition, driveRightPosition;
