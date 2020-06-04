@@ -8,6 +8,8 @@ import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.ControllerOutput;
 import com.palyrobotics.frc2020.vision.Limelight;
 
+import edu.wpi.first.wpilibj.Timer;
+
 public class Turret extends SubsystemBase {
 
 	public enum TurretState {
@@ -31,11 +33,11 @@ public class Turret extends SubsystemBase {
 		switch (commands.getTurretWantedState()) {
 			case VISION_ALIGN:
 				/*
-				  Need to implement the following:
-				  Latency compensation, accurate feedback control, feedback control with nonzero velocity reference
-				  Accurate feedforward that accounts for drivetrain motion
-				 */
-				mOutput.setTargetPosition(mLimelight.getYawToTarget() + state.turretYawDegrees, mConfig.turretGains);
+				Need to implement the following:
+				Latency compensation, accurate feedback control, feedback control with nonzero velocity reference
+				Accurate feedforward that accounts for drivetrain motion
+				*/
+				mOutput.setTargetPosition(getLatencyCompensatedYaw2Target(state) + state.turretYawDegrees, mConfig.turretGains);
 				break;
 			case CUSTOM_ANGLE_SETPOINT:
 				mOutput.setTargetPosition(commands.getTurretWantedAngle(), mConfig.turretGains);
@@ -43,6 +45,15 @@ public class Turret extends SubsystemBase {
 			case IDLE:
 				mOutput.setIdle();
 		}
+	}
+
+	private double getLatencyCompensatedYaw2Target(RobotState state) {
+		double timestampPose = Timer.getFPGATimestamp() - 11 - mLimelight.getPipelineLatency(); //11 ms reduction because of image capture latency
+		Double floorKey = state.pastPoses.floorKey(timestampPose),
+				ceilingKey = state.pastPoses.ceilingKey(timestampPose);
+		return (floorKey == null) ? state.pastPoses.get(ceilingKey).getValue1() :
+				(ceilingKey == null) ? state.pastPoses.get(floorKey).getValue1() :
+						(ceilingKey - timestampPose > timestampPose - floorKey) ? state.pastPoses.get(floorKey).getValue1() : state.pastPoses.get(ceilingKey).getValue1();
 	}
 
 	public ControllerOutput getOutput() {

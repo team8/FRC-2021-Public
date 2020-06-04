@@ -3,21 +3,16 @@ package com.palyrobotics.frc2020.robot;
 import com.esotericsoftware.minlog.Log;
 import com.palyrobotics.frc2020.config.constants.DriveConstants;
 import com.palyrobotics.frc2020.config.subsystem.DriveConfig;
-import com.palyrobotics.frc2020.subsystems.Shooter;
 import com.palyrobotics.frc2020.util.CircularTreeMap;
 import com.palyrobotics.frc2020.util.Pair;
 import com.palyrobotics.frc2020.util.Util;
-
 import com.palyrobotics.frc2020.util.config.Configs;
+
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
-
-import java.util.HashMap;
-import java.util.NavigableMap;
-import java.util.TreeMap;
 
 /**
  * Holds the current physical state of the robot from our sensors.
