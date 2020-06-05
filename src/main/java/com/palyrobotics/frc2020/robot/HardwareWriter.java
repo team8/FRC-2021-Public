@@ -104,7 +104,7 @@ public class HardwareWriter {
 
 		//Assuming 1:1 gear ratio, converts from native encoder ticks to degrees.
 		talon.configPositionConversion(360.0 / 4096);
-		talon.setSelectedSensorPosition(0, kPidIndex, kTimeoutMs); //zeros encoder
+		talon.setSelectedSensorPosition(0, kPidIndex, kTimeoutMs); //zeros encoder; starting position for turret will be all the way to the left
 	}
 
 	public void resetDriveSensors(Pose2d pose) {

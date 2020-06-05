@@ -24,6 +24,8 @@ import com.revrobotics.CANSparkMax.FaultID;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
 
 public class HardwareReader {
 
@@ -70,16 +72,17 @@ public class HardwareReader {
 		state.driveRightVelocity = hardware.rightMasterFalcon.getConvertedVelocity();
 		state.driveLeftPosition = hardware.leftMasterFalcon.getConvertedPosition();
 		state.driveRightPosition = hardware.rightMasterFalcon.getConvertedPosition();
-		state.inShootingQuadrant = state.drivePoseMeters.getTranslation().getX() < mDriveConfig.xBoundShootingQuadrant && state.drivePoseMeters.getTranslation().getY() > mDriveConfig.yBoundShootingQuadrant;
-		if (state.inShootingQuadrant) {
-			state.pastPoses.put(Timer.getFPGATimestamp(), new Pair<>(mLimelight.getYawToTarget(), state.drivePoseMeters));
-		}
 //		LiveGraph.add("x", state.drivePoseMeters.getTranslation().getX());
 //		LiveGraph.add("y", state.drivePoseMeters.getTranslation().getY());
 //		LiveGraph.add("leftPosition", state.driveLeftPosition);
 //		LiveGraph.add("rightPosition", state.driveRightPosition);
 		/* Odometry */
 		state.updateOdometry(state.driveYawDegrees, state.driveLeftPosition, state.driveRightPosition);
+		state.inShootingQuadrant = state.drivePoseMeters.getTranslation().getX() > mDriveConfig.xBoundShootingQuadrant && state.drivePoseMeters.getTranslation().getY() < mDriveConfig.yBoundShootingQuadrant;
+		if (state.inShootingQuadrant) {
+			Pose2d drivePoseRotationBounded = new Pose2d(state.drivePoseMeters.getTranslation(), Rotation2d.fromDegrees(Util.boundAngleNeg180to180Degrees(state.drivePoseMeters.getRotation().getDegrees())));
+			state.pastPoses.put(Timer.getFPGATimestamp(), drivePoseRotationBounded);
+		}
 //		LiveGraph.add("driveLeftPosition", state.driveLeftPosition);
 
 		LiveGraph.add("driveLeftVelocity", state.driveLeftVelocity);
