@@ -106,6 +106,10 @@ public class Util {
 		return angle;
 	}
 
+	public static double calculateHeadingDeg(double y, double x) {
+		return Math.toDegrees(Math.atan2(y, x));
+	}
+
 	public static boolean approximatelyEqual(double d1, double d2) {
 		return withinRange(d1, d2, kEpsilon);
 	}

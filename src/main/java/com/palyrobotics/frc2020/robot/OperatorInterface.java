@@ -86,8 +86,7 @@ public class OperatorInterface {
 		/* Turret */
 		if (state.inShootingQuadrant) {
 			commands.setTurretVisionAlign();
-		}
-		else {
+		} else {
 			commands.setTurretIdle();
 		}
 	}
@@ -103,4 +102,3 @@ public class OperatorInterface {
 		mOperatorXboxController.clearLastInputs();
 	}
 }
-
