@@ -1,5 +1,4 @@
 {
-  "turretAngleSoftStopRange" : 160.0,
   "poseChangeLookBackSec" : 0.3,
   "visionPnPMedianFilterSize" : 7,
   "turretGains" : {

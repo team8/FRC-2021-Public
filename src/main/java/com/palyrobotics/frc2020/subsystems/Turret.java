@@ -2,12 +2,14 @@ package com.palyrobotics.frc2020.subsystems;
 
 import com.palyrobotics.frc2020.config.constants.FieldConstants;
 import com.palyrobotics.frc2020.config.constants.TurretConstants;
+import static com.palyrobotics.frc2020.config.constants.TurretConstants.turretAngleMultiplier;
 import com.palyrobotics.frc2020.config.subsystem.TurretConfig;
 import com.palyrobotics.frc2020.robot.Commands;
 import com.palyrobotics.frc2020.robot.ReadOnly;
 import com.palyrobotics.frc2020.robot.RobotState;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.ControllerOutput;
+import com.palyrobotics.frc2020.util.control.SynchronousPIDF;
 import com.palyrobotics.frc2020.vision.Limelight;
 import edu.wpi.first.wpilibj.MedianFilter;
 import edu.wpi.first.wpilibj.Timer;
@@ -26,6 +28,7 @@ public class Turret extends SubsystemBase {
     private Limelight mLimelight = Limelight.getInstance();
     private MedianFilter mVisionPnPXFilter = new MedianFilter(mConfig.visionPnPMedianFilterSize);
     private MedianFilter mVisionPnPYFilter = new MedianFilter(mConfig.visionPnPMedianFilterSize);
+    private final SynchronousPIDF mPidController = new SynchronousPIDF();
 
     private Turret() {
     }
@@ -62,8 +65,9 @@ public class Turret extends SubsystemBase {
                 Translation2d nextTurretPredictedTranslation = nextTurretPredictedPose.getTranslation();
                 double turretRelativeBearing = Math.toDegrees(Math.atan2(nextTurretPredictedTranslation.getY() - FieldConstants.targetFieldLocation.getY(),
                         FieldConstants.targetFieldLocation.getX() - nextTurretPredictedTranslation.getY())); //finds angle between predicted pose of turret and the target
-                double turretDegAngleError = turretRelativeBearing + state.turretYawDegrees;
-                mOutput.setTargetPosition(turretDegAngleError, mConfig.turretGains);
+
+                mPidController.setPIDF(mConfig.turretGains.p, mConfig.turretGains.i, mConfig.turretGains.d, mConfig.turretGains.f);
+                mOutput.setPercentOutput(mPidController.calculate((nextTurretPredictedPose.getRotation().getDegrees() - turretRelativeBearing) * turretAngleMultiplier.getInterpolated(state.turretYawDegrees)));
                 break;
             case CUSTOM_ANGLE_SETPOINT:
                 mOutput.setTargetPosition(commands.getTurretWantedAngle(), mConfig.turretGains);
