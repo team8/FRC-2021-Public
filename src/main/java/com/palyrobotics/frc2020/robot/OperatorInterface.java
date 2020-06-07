@@ -31,7 +31,7 @@ public class OperatorInterface {
 	void updateCommands(Commands commands, @ReadOnly RobotState state) {
 		commands.shouldClearCurrentRoutines = mDriveStick.getTriggerPressed();
 		updateDriveCommands(commands);
-		updateSuperstructure(commands);
+		updateSuperstructure(commands, state);
 		mOperatorXboxController.updateLastInputs();
 	}
 
@@ -71,7 +71,7 @@ public class OperatorInterface {
 		*/
 	}
 
-	private void updateSuperstructure(Commands commands) {
+	private void updateSuperstructure(Commands commands, RobotState state) {
 		/* Shooting */
 		if (mOperatorXboxController.getRightTriggerPressed()) {
 			commands.setShooterWantedCustomFlywheelVelocity(mShooterConfig.noVisionVelocity);
@@ -81,6 +81,14 @@ public class OperatorInterface {
 			commands.setShooterIdle();
 			commands.visionWanted = false;
 			commands.wantedCompression = true;
+		}
+
+		/* Turret */
+		if (state.inShootingQuadrant) {
+			commands.setTurretVisionAlign();
+		}
+		else {
+			commands.setTurretIdle();
 		}
 	}
 

@@ -44,7 +44,6 @@ public class Turret extends SubsystemBase {
 				Accurate feedforward that accounts for drivetrain motion
 				*/
 
-
 				Pose2d robotOdometryPose = state.pastPoses.lastEntry().getValue();
 				Translation2d visionRobotTranslation = new Translation2d(FieldConstants.fieldDimensions.getX() - Units.inchesToMeters(mVisionPnPYFilter.calculate(mLimelight.getPnPTranslationY())),
                         Units.inchesToMeters(mVisionPnPXFilter.calculate(mLimelight.getPnPTranslationX())) + FieldConstants.targetFieldLocation.getY());
