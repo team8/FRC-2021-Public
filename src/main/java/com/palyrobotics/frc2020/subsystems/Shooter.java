@@ -31,8 +31,8 @@ public class Shooter extends SubsystemBase {
 	private Limelight mLimelight = Limelight.getInstance();
 	private ControllerOutput mFlywheelOutput = new ControllerOutput();
 	private boolean mBlockingOutput, mHoodOutput;
-	private MedianFilter mVisionDistanceFilter = new MedianFilter(15);
-	private MedianFilter mVelocityFilter = new MedianFilter(15);
+	private MedianFilter mVisionDistanceFilter = new MedianFilter(mConfig.visionDistanceMedianFilterSize);
+	private MedianFilter mVelocityFilter = new MedianFilter(mConfig.velocityMedianFilterSize);
 	private HoodState mPreviousHoodState = HoodState.LOW;
 
 	private Shooter() {

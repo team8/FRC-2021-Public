@@ -7,4 +7,5 @@ public class ShooterConfig extends SubsystemConfigBase {
 
 	public Gains flywheelGains;
 	public double noVisionVelocity, maxVelocity, hoodSwitchDistanceThreshold;
+	public int visionDistanceMedianFilterSize, velocityMedianFilterSize;
 }

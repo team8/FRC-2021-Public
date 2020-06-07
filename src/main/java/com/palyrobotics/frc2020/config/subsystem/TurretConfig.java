@@ -8,4 +8,5 @@ public class TurretConfig extends SubsystemConfigBase {
 	public double turretAngleSoftStopRange;
 	public double poseChangeLookBackSec;
 	public Gains turretGains;
+	public int visionPnPMedianFilterSize;
 }

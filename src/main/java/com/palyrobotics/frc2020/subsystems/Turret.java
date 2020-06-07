@@ -9,6 +9,7 @@ import com.palyrobotics.frc2020.robot.RobotState;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.ControllerOutput;
 import com.palyrobotics.frc2020.vision.Limelight;
+import edu.wpi.first.wpilibj.MedianFilter;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.geometry.*;
 import edu.wpi.first.wpilibj.util.Units;
@@ -23,6 +24,8 @@ public class Turret extends SubsystemBase {
     private ControllerOutput mOutput = new ControllerOutput();
     private TurretConfig mConfig = Configs.get(TurretConfig.class);
     private Limelight mLimelight = Limelight.getInstance();
+    private MedianFilter mVisionPnPXFilter = new MedianFilter(mConfig.visionPnPMedianFilterSize);
+    private MedianFilter mVisionPnPYFilter = new MedianFilter(mConfig.visionPnPMedianFilterSize);
 
     private Turret() {
     }
@@ -43,16 +46,15 @@ public class Turret extends SubsystemBase {
 
                 double latencyCompensationTimestamp = Timer.getFPGATimestamp() - mLimelight.imageCaptureLatency / 100.0 - mLimelight.getPipelineLatency() / 100.0; //pose look back time to account for vision latency
 				Pose2d robotOdometryPose = state.pastPoses.lastEntry().getValue();
-				//Note: This vision robot pose should be a var in RobotState. There should also be a median filter on the pnp values to remove noise.
-				Translation2d visionRobotTranslation = new Translation2d(FieldConstants.fieldDimensions.getX() - Units.inchesToMeters(mLimelight.getPnPTranslationY()),
-                        Units.inchesToMeters(mLimelight.getPnPTranslationX()) + FieldConstants.targetFieldLocation.getY()); //derives pose translation using solvePnP
+				Translation2d visionRobotTranslation = new Translation2d(FieldConstants.fieldDimensions.getX() - Units.inchesToMeters(mVisionPnPYFilter.calculate(mLimelight.getPnPTranslationY())),
+                        Units.inchesToMeters(mVisionPnPXFilter.calculate(mLimelight.getPnPTranslationX())) + FieldConstants.targetFieldLocation.getY()); //derives pose translation using solvePnP
                 Pose2d visionPose = new Pose2d(visionRobotTranslation, robotOdometryPose.getRotation());
-                Pose2d oldLatencyCompensatedPose = state.pastPoses.get(latencyCompensationTimestamp);
+                Pose2d oldLatencyCompensatedPose = state.pastPoses.get(latencyCompensationTimestamp); //finds latency compensated pose
                 Pose2d adjustedPose = robotOdometryPose.plus(visionPose.minus(oldLatencyCompensatedPose)); // corrects odometry using the vision derived pose and the old latency compensated pose : current_pose += (vision_pose - old_pose)
                 Pose2d oldPose = state.pastPoses.get(Timer.getFPGATimestamp() - mConfig.poseChangeLookBackSec);
-                Transform2d poseChange = adjustedPose.minus(oldPose); //finds change in pose between the current pose and a pose x ms before.
+                Transform2d poseChange = adjustedPose.minus(oldPose); //finds change in pose between the current pose and a pose mConfig.poseChangeLookBackSec ms before.
                 Twist2d poseChangeTwist2D = new Twist2d(poseChange.getTranslation().getX(), poseChange.getTranslation().getY(), poseChange.getRotation().getRadians());
-                Pose2d nextDrivePredictedPose = adjustedPose.exp(poseChangeTwist2D); //predicts next pose using previous change in pose
+                Pose2d nextDrivePredictedPose = adjustedPose.exp(poseChangeTwist2D); // predicts next pose using previous change in pose
                 Transform2d drivetrain2TurretTransform = new Transform2d(new Translation2d(TurretConstants.drivetrain2TurretX,
                         TurretConstants.drivetrain2TurretY), Rotation2d.fromDegrees(state.turretYawDegrees - 90)); //drivetrain2TurretTransform stores the turret pose in relation to the drivetrain
                 Pose2d nextTurretPredictedPose = nextDrivePredictedPose.transformBy(drivetrain2TurretTransform); //accounts for pose offset between drivetrain and turret
