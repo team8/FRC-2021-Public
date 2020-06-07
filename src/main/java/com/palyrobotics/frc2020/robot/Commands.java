@@ -175,7 +175,7 @@ public class Commands {
 	}
 
 	public void setTurretVisionAlign() {
-		turretWantedState = Turret.TurretState.VISION_ALIGN;
+		turretWantedState = Turret.TurretState.TARGET_ALIGN;
 	}
 
 	public void setTurretIdle() {
