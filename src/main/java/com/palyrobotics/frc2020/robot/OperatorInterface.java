@@ -1,3 +1,4 @@
+
 package com.palyrobotics.frc2020.robot;
 
 import static com.palyrobotics.frc2020.util.Util.handleDeadBand;
@@ -28,10 +29,9 @@ public class OperatorInterface {
 	 * Modifies commands based on operator input devices.
 	 */
 	void updateCommands(Commands commands, @ReadOnly RobotState state) {
-
 		commands.shouldClearCurrentRoutines = mDriveStick.getTriggerPressed();
-
 		updateDriveCommands(commands);
+		updateSuperstructure(commands);
 		mOperatorXboxController.updateLastInputs();
 	}
 
@@ -48,17 +48,6 @@ public class OperatorInterface {
 			commands.setDriveVisionAlign(kOneTimesZoomPipelineId);
 		} else if (wantsTwoTimesAlign) {
 			commands.setDriveVisionAlign(kTwoTimesZoomPipelineId);
-		}
-
-		/* Shooting */
-		if (mOperatorXboxController.getRightTriggerPressed()) {
-			commands.setShooterWantedCustomFlywheelVelocity(mShooterConfig.noVisionVelocity);
-			commands.setShooterVisionAssisted(commands.visionWantedPipeline);
-			commands.wantedCompression = false;
-		} else if (mOperatorXboxController.getLeftTriggerPressed()) {
-			commands.setShooterIdle();
-			commands.visionWanted = false;
-			commands.wantedCompression = true;
 		}
 
 		/* 		Path Following
@@ -82,6 +71,19 @@ public class OperatorInterface {
 		*/
 	}
 
+	private void updateSuperstructure(Commands commands) {
+		/* Shooting */
+		if (mOperatorXboxController.getRightTriggerPressed()) {
+			commands.setShooterWantedCustomFlywheelVelocity(mShooterConfig.noVisionVelocity);
+			commands.setShooterVisionAssisted(commands.visionWantedPipeline);
+			commands.wantedCompression = false;
+		} else if (mOperatorXboxController.getLeftTriggerPressed()) {
+			commands.setShooterIdle();
+			commands.visionWanted = false;
+			commands.wantedCompression = true;
+		}
+	}
+
 	public void resetPeriodic(Commands commands) {
 	}
 
@@ -93,3 +95,4 @@ public class OperatorInterface {
 		mOperatorXboxController.clearLastInputs();
 	}
 }
+
