@@ -22,8 +22,8 @@ public class CircularTreeMap<V> extends TreeMap<Double, V> {
 	public V get(Object key) {
 		Double floorKey = floorKey((Double) key),
 				ceilingKey = ceilingKey((Double) key);
-		return  (floorKey == null) ? super.get(ceilingKey) :
+		return (floorKey == null) ? super.get(ceilingKey) :
 				(ceilingKey == null) ? super.get(floorKey) :
-				(ceilingKey - (Double) key > (Double) key - floorKey) ? super.get(floorKey) : super.get(ceilingKey);
+						(ceilingKey - (Double) key > (Double) key - floorKey) ? super.get(floorKey) : super.get(ceilingKey);
 	}
 }

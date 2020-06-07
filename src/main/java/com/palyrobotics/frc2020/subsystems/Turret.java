@@ -29,9 +29,9 @@ public class Turret extends SubsystemBase {
 	private ControllerOutput mOutput = new ControllerOutput();
 	private TurretConfig mConfig = Configs.get(TurretConfig.class);
 	private Limelight mLimelight = Limelight.getInstance();
-    private final SynchronousPIDF mPidController = new SynchronousPIDF();
-    private MedianFilter mVisionPnPXFilter = new MedianFilter(mConfig.visionPnPMedianFilterSize),
-                         mVisionPnPYFilter = new MedianFilter(mConfig.visionPnPMedianFilterSize);
+	private final SynchronousPIDF mPidController = new SynchronousPIDF();
+	private MedianFilter mVisionPnPXFilter = new MedianFilter(mConfig.visionPnPMedianFilterSize),
+			mVisionPnPYFilter = new MedianFilter(mConfig.visionPnPMedianFilterSize);
 
 	private Turret() {
 	}
@@ -61,8 +61,12 @@ public class Turret extends SubsystemBase {
 						nextTurretPredictedTranslation.getY() - FieldConstants.targetFieldLocation.getY(),
 						FieldConstants.targetFieldLocation.getX() - nextTurretPredictedTranslation.getX());
 				mPidController.setPIDF(mConfig.turretGains.p, mConfig.turretGains.i, mConfig.turretGains.d, mConfig.turretGains.f);
-				double turretBoundPOMultiplier = turretAngleMultiplier.getInterpolated(state.turretYawDegrees);
+
 				double turretAngleError = nextTurretPredictedPose.getRotation().getDegrees() - turretRelativeBearing;
+				double turretBoundPOMultiplier = (turretAngleError < 0 && state.turretYawDegrees > TurretConstants.turretAngleSoftStopRange)
+						|| (turretAngleError > 0 && state.turretYawDegrees < (TurretConstants.turretAngleHardStopRange - TurretConstants.turretAngleSoftStopRange))
+						? turretAngleMultiplier.getInterpolated(state.turretYawDegrees) : 1; //Multiplier to prevent turret from hitting side bounds.
+
 				mOutput.setPercentOutput(mPidController.calculate(turretAngleError * turretBoundPOMultiplier));
 				break;
 			case CUSTOM_ANGLE_SETPOINT:
@@ -73,14 +77,12 @@ public class Turret extends SubsystemBase {
 		}
 	}
 
-
 	private Pose2d calculateVisionPose(Pose2d robotOdometryPose) {
 		Translation2d visionRobotTranslation = new Translation2d(
-		        FieldConstants.fieldDimensions.getX() - Units.inchesToMeters(mVisionPnPYFilter.calculate(mLimelight.getPnPTranslationY())),
-				Units.inchesToMeters(mVisionPnPXFilter.calculate(mLimelight.getPnPTranslationX())) + FieldConstants.targetFieldLocation.getY()); //todo: account for limelight and drivetrain pose offset
+				FieldConstants.fieldDimensions.getX() - Units.inchesToMeters(mVisionPnPYFilter.calculate(mLimelight.getPnPTranslationY())),
+				Units.inchesToMeters(mVisionPnPXFilter.calculate(mLimelight.getPnPTranslationX())) + FieldConstants.targetFieldLocation.getY()); //todo: maybe account for limelight and drivetrain pose offset
 		return new Pose2d(visionRobotTranslation, robotOdometryPose.getRotation()); //todo: try to derive rotation through vision.
 	}
-
 
 	private Pose2d applyLatencyCompensation(RobotState state, Pose2d robotOdometryPose, Pose2d visionPose) {
 		double latencyCompensationTimestamp = Timer.getFPGATimestamp() - mLimelight.imageCaptureLatency / 100.0 - mLimelight.getPipelineLatency() / 100.0; //pose look back time to account for vision latency
@@ -90,9 +92,9 @@ public class Turret extends SubsystemBase {
 
 	private Pose2d predictNextPose(Pose2d currentPose, Pose2d oldPose) {
 		Transform2d poseChange = currentPose.minus(oldPose); //finds change in pose between current pose and a pose mConfig.poseChangeLookBackSec ms before.
-		Twist2d poseChangeTwist2D = new Twist2d(poseChange.getTranslation().getX(),
+		Twist2d poseChangeTwist2d = new Twist2d(poseChange.getTranslation().getX(),
 				poseChange.getTranslation().getY(), poseChange.getRotation().getRadians()); //converts transform2d to twist2d
-		return currentPose.exp(poseChangeTwist2D); // predicts next pose using previous change in pose
+		return currentPose.exp(poseChangeTwist2d); // predicts next pose using previous change in pose
 	}
 
 	private Pose2d drive2TurretPose(RobotState state, Pose2d drivePose) {
