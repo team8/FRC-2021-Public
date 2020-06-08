@@ -1,5 +1,8 @@
 {
   "poseChangeLookBackSec" : 0.3,
+  "motionFFMultiplier" : 0.5,
+  "maxTurretPO" : 0.5,
+  "maxTurretFF" : 0.2,
   "visionPnPMedianFilterSize" : 7,
   "turretGains" : {
     "f" : 0,
