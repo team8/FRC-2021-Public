@@ -6,6 +6,8 @@ import com.ctre.phoenix.motorcontrol.StickyFaults;
 import com.ctre.phoenix.sensors.PigeonIMU.PigeonState;
 import com.esotericsoftware.minlog.Log;
 import com.palyrobotics.frc2020.config.RobotConfig;
+import com.palyrobotics.frc2020.config.VisionConfig;
+import com.palyrobotics.frc2020.config.constants.FieldConstants;
 import com.palyrobotics.frc2020.config.subsystem.DriveConfig;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.*;
 import com.palyrobotics.frc2020.subsystems.Drive;
@@ -22,9 +24,12 @@ import com.palyrobotics.frc2020.vision.Limelight;
 import com.revrobotics.CANSparkMax.FaultID;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.MedianFilter;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
+import edu.wpi.first.wpilibj.util.Units;
 
 public class HardwareReader {
 
@@ -32,7 +37,11 @@ public class HardwareReader {
 	private static final int kYawIndex = 0, kYawAngularVelocityIndex = 2;
 	private final RobotConfig mRobotConfig = Configs.get(RobotConfig.class);
 	private final DriveConfig mDriveConfig = Configs.get(DriveConfig.class);
+	private final VisionConfig mVisionConfig = Configs.get(VisionConfig.class);
 	private Limelight mLimelight = Limelight.getInstance();
+	private MedianFilter mVisionPnPXFilter = new MedianFilter(mVisionConfig.visionPnPMedianFilterSize),
+			mVisionPnPYFilter = new MedianFilter(mVisionConfig.visionPnPMedianFilterSize);
+
 
 	private final double[] mGyroAngles = new double[3], mGyroAngularVelocities = new double[3];
 
@@ -76,6 +85,16 @@ public class HardwareReader {
 //		LiveGraph.add("leftPosition", state.driveLeftPosition);
 //		LiveGraph.add("rightPosition", state.driveRightPosition);
 		/* Odometry */
+		if (mLimelight.isTargetFound()) {
+			double metersPnPTranslationX = Units.inchesToMeters(mVisionPnPXFilter.calculate(mLimelight.getPnPTranslationX())),
+				metersPnPTranslationY = Units.inchesToMeters(mVisionPnPYFilter.calculate(mLimelight.getPnPTranslationY()));
+			if (metersPnPTranslationX != 0 || metersPnPTranslationY != 0) {
+				Translation2d visionRobotTranslation = new Translation2d(
+						FieldConstants.fieldDimensions.getX() - metersPnPTranslationY,
+						metersPnPTranslationX + FieldConstants.targetFieldLocation.getY()); //todo: maybe account for limelight and drivetrain pose offset
+				state.driveVisionPoseMeters = new Pose2d(visionRobotTranslation, Rotation2d.fromDegrees(state.driveYawDegrees)); //todo: try to derive rotation through vision.
+			}
+		}
 		state.updateOdometry(state.driveYawDegrees, state.driveLeftPosition, state.driveRightPosition);
 		state.inShootingQuadrant = state.drivePoseMeters.getTranslation().getX() > mDriveConfig.xBoundShootingQuadrant && state.drivePoseMeters.getTranslation().getY() < mDriveConfig.yBoundShootingQuadrant;
 		if (state.inShootingQuadrant) {

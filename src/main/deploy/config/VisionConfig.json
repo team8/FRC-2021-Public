@@ -23,5 +23,6 @@
 		"iMax": 0.03
 	},
 	"acceptableYawError": 0.25,
-	"alignSwitchYawAngleMin": 40.0
+	"alignSwitchYawAngleMin": 40.0,
+	"visionPnPMedianFilterSize" : 7
 }

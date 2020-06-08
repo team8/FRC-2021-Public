@@ -7,5 +7,4 @@ public class TurretConfig extends SubsystemConfigBase {
 
 	public double poseChangeLookBackSec, motionFFMultiplier, maxTurretPO, maxTurretFF;
 	public Gains turretGains;
-	public int visionPnPMedianFilterSize;
 }

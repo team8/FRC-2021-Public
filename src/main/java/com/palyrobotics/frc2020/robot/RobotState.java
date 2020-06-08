@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 @SuppressWarnings ("squid:ClassVariableVisibilityCheck")
 public class RobotState {
 
+
 	public enum GamePeriod {
 		AUTO, TELEOP, TESTING, DISABLED
 	}
@@ -32,7 +33,9 @@ public class RobotState {
 	public boolean driveIsQuickTurning, driveIsSlowTurning;
 	public double driveLeftVelocity, driveRightVelocity, driveLeftPosition, driveRightPosition;
 	public Pose2d drivePoseMeters = new Pose2d();
+	public Pose2d driveVisionPoseMeters = new Pose2d();
 	public double driveVelocityMetersPerSecond;
+	public double driveLateralVelocityMetersPerSecond;
 	public boolean driveIsGyroReady;
 	public boolean inShootingQuadrant;
 	/* Shooter */
@@ -55,5 +58,6 @@ public class RobotState {
 		drivePoseMeters = driveOdometry.update(Rotation2d.fromDegrees(yawDegrees), leftMeters, rightMeters);
 		ChassisSpeeds speeds = DriveConstants.kKinematics.toChassisSpeeds(new DifferentialDriveWheelSpeeds(driveLeftVelocity, driveRightVelocity));
 		driveVelocityMetersPerSecond = Math.sqrt(Math.pow(speeds.vxMetersPerSecond, 2) + Math.pow(speeds.vyMetersPerSecond, 2));
+		driveLateralVelocityMetersPerSecond = speeds.vyMetersPerSecond;
 	}
 }
