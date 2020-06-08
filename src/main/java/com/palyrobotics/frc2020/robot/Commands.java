@@ -9,6 +9,7 @@ import com.palyrobotics.frc2020.subsystems.Shooter;
 import com.palyrobotics.frc2020.subsystems.Turret;
 import com.palyrobotics.frc2020.util.control.DriveOutputs;
 
+import com.palyrobotics.frc2020.vision.Limelight;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 
@@ -176,6 +177,8 @@ public class Commands {
 
 	public void setTurretVisionAlign() {
 		turretWantedState = Turret.TurretState.TARGET_ALIGN;
+		visionWantedPipeline = Limelight.kOneTimesZoomPipelineId;
+		visionWanted = true;
 	}
 
 	public void setTurretIdle() {

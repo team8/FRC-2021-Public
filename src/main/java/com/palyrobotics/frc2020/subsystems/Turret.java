@@ -2,6 +2,7 @@ package com.palyrobotics.frc2020.subsystems;
 
 import static com.palyrobotics.frc2020.config.constants.TurretConstants.turretAngleMultiplier;
 import static com.palyrobotics.frc2020.util.Util.calculateHeadingDeg;
+import static com.palyrobotics.frc2020.util.Util.clamp;
 
 import com.palyrobotics.frc2020.config.constants.FieldConstants;
 import com.palyrobotics.frc2020.config.constants.TurretConstants;
@@ -70,7 +71,7 @@ public class Turret extends SubsystemBase {
 				mOutput.setPercentOutput(mPidController.calculate(turretAngleError * turretBoundPOMultiplier));
 				break;
 			case CUSTOM_ANGLE_SETPOINT:
-				mOutput.setTargetPosition(commands.getTurretWantedAngle(), mConfig.turretGains);
+				mOutput.setTargetPosition(clamp(commands.getTurretWantedAngle(), 0, 180), mConfig.turretGains);
 				break;
 			case IDLE:
 				mOutput.setTargetPosition(TurretConstants.turretAngleHardStopRange / 2, mConfig.turretGains);
@@ -78,16 +79,21 @@ public class Turret extends SubsystemBase {
 	}
 
 	private Pose2d calculateVisionPose(Pose2d robotOdometryPose) {
-		Translation2d visionRobotTranslation = new Translation2d(
-				FieldConstants.fieldDimensions.getX() - Units.inchesToMeters(mVisionPnPYFilter.calculate(mLimelight.getPnPTranslationY())),
-				Units.inchesToMeters(mVisionPnPXFilter.calculate(mLimelight.getPnPTranslationX())) + FieldConstants.targetFieldLocation.getY()); //todo: maybe account for limelight and drivetrain pose offset
-		return new Pose2d(visionRobotTranslation, robotOdometryPose.getRotation()); //todo: try to derive rotation through vision.
+		double metersPnPTranslationX = Units.inchesToMeters(mVisionPnPXFilter.calculate(mLimelight.getPnPTranslationX())),
+				metersPnPTranslationY = Units.inchesToMeters(mVisionPnPYFilter.calculate(mLimelight.getPnPTranslationY()));
+		if (metersPnPTranslationX != 0 || metersPnPTranslationY != 0) {
+			Translation2d visionRobotTranslation = new Translation2d(
+					FieldConstants.fieldDimensions.getX() - metersPnPTranslationY,
+					metersPnPTranslationX + FieldConstants.targetFieldLocation.getY()); //todo: maybe account for limelight and drivetrain pose offset
+			return new Pose2d(visionRobotTranslation, robotOdometryPose.getRotation()); //todo: try to derive rotation through vision.
+		}
+		return null;
 	}
 
 	private Pose2d applyLatencyCompensation(RobotState state, Pose2d robotOdometryPose, Pose2d visionPose) {
 		double latencyCompensationTimestamp = Timer.getFPGATimestamp() - mLimelight.imageCaptureLatency / 100.0 - mLimelight.getPipelineLatency() / 100.0; //pose look back time to account for vision latency
 		Pose2d oldLatencyCompensatedPose = state.pastPoses.get(latencyCompensationTimestamp); //finds latency compensated pose
-		return robotOdometryPose.plus(visionPose.minus(oldLatencyCompensatedPose)); // corrects odometry using the vision derived pose and the old latency compensated pose : current_pose += (vision_pose - old_pose)
+		return visionPose != null ? robotOdometryPose.plus(visionPose.minus(oldLatencyCompensatedPose)) : robotOdometryPose.plus(robotOdometryPose.minus(oldLatencyCompensatedPose)); // corrects odometry using the vision derived pose and the old latency compensated pose : current_pose += (vision_pose - old_pose)
 	}
 
 	private Pose2d predictNextPose(Pose2d currentPose, Pose2d oldPose) {
