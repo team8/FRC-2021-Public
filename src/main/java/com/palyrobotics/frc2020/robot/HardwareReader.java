@@ -85,15 +85,16 @@ public class HardwareReader {
 //		LiveGraph.add("leftPosition", state.driveLeftPosition);
 //		LiveGraph.add("rightPosition", state.driveRightPosition);
 		/* Odometry */
-		if (mLimelight.isTargetFound()) {
-			double metersPnPTranslationX = Units.inchesToMeters(mVisionPnPXFilter.calculate(mLimelight.getPnPTranslationX())),
+		double metersPnPTranslationX = Units.inchesToMeters(mVisionPnPXFilter.calculate(mLimelight.getPnPTranslationX())),
 				metersPnPTranslationY = Units.inchesToMeters(mVisionPnPYFilter.calculate(mLimelight.getPnPTranslationY()));
-			if (metersPnPTranslationX != 0 || metersPnPTranslationY != 0) {
-				Translation2d visionRobotTranslation = new Translation2d(
-						FieldConstants.fieldDimensions.getX() - metersPnPTranslationY,
-						metersPnPTranslationX + FieldConstants.targetFieldLocation.getY()); //todo: maybe account for limelight and drivetrain pose offset
-				state.driveVisionPoseMeters = new Pose2d(visionRobotTranslation, Rotation2d.fromDegrees(state.driveYawDegrees)); //todo: try to derive rotation through vision.
-			}
+		if (metersPnPTranslationX != 0 || metersPnPTranslationY != 0) {
+			Translation2d visionRobotTranslation = new Translation2d(
+					FieldConstants.fieldDimensions.getX() - metersPnPTranslationY,
+					metersPnPTranslationX + FieldConstants.targetFieldLocation.getY()); //todo: maybe account for limelight and drivetrain pose offset
+			state.driveVisionPoseMeters = new Pose2d(visionRobotTranslation, Rotation2d.fromDegrees(state.driveYawDegrees)); //todo: try to derive rotation through vision.
+		}
+		else {
+			state.driveVisionPoseMeters = null;
 		}
 		state.updateOdometry(state.driveYawDegrees, state.driveLeftPosition, state.driveRightPosition);
 		state.inShootingQuadrant = state.drivePoseMeters.getTranslation().getX() > mDriveConfig.xBoundShootingQuadrant && state.drivePoseMeters.getTranslation().getY() < mDriveConfig.yBoundShootingQuadrant;
