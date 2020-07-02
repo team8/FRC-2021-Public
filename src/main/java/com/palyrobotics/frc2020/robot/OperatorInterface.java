@@ -1,9 +1,9 @@
-
 package com.palyrobotics.frc2020.robot;
 
 import static com.palyrobotics.frc2020.util.Util.handleDeadBand;
 import static com.palyrobotics.frc2020.vision.Limelight.kOneTimesZoomPipelineId;
 import static com.palyrobotics.frc2020.vision.Limelight.kTwoTimesZoomPipelineId;
+
 
 import com.palyrobotics.frc2020.config.subsystem.ShooterConfig;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.Joysticks;
@@ -49,26 +49,6 @@ public class OperatorInterface {
 		} else if (wantsTwoTimesAlign) {
 			commands.setDriveVisionAlign(kTwoTimesZoomPipelineId);
 		}
-
-		/* 		Path Following
-				if (mOperatorXboxController.getBButtonPressed()) {
-					commands.addWantedRoutine(new SequentialRoutine(
-							new DriveSetOdometryRoutine(0.0, 0.0, 0.0),
-							new DrivePathRoutine(newWaypoint(30.0, 0.0, 0.0))));
-					commands.addWantedRoutine(new SequentialRoutine(
-							new DriveSetOdometryRoutine(0.0, 0.0, 180.0),
-							new DriveYawRoutine(0.0)));
-					commands.addWantedRoutine(new DrivePathRoutine(newWaypoint(0.0, 0.0, 180.0)));
-					commands.addWantedRoutine(new SequentialRoutine(
-							new DriveSetOdometryRoutine(0.0, 0.0, 0.0),
-							new DrivePathRoutine(newWaypoint(40.0, 0.0, 0.0))
-									.setMovement(1.0, 1.0)
-									.endingVelocity(0.5),
-							new DrivePathRoutine(newWaypoint(80.0, 0.0, 0.0))
-									.setMovement(0.5, 1.0)
-									.startingVelocity(0.5)));
-				}
-		*/
 	}
 
 	private void updateSuperstructure(Commands commands, RobotState state) {

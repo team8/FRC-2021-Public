@@ -19,7 +19,6 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 @SuppressWarnings ("squid:ClassVariableVisibilityCheck")
 public class RobotState {
 
-
 	public enum GamePeriod {
 		AUTO, TELEOP, TESTING, DISABLED
 	}

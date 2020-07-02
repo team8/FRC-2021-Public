@@ -10,6 +10,8 @@ import com.palyrobotics.frc2020.subsystems.Turret;
 import com.palyrobotics.frc2020.util.control.DriveOutputs;
 
 import com.palyrobotics.frc2020.vision.Limelight;
+import com.palyrobotics.frc2020.util.control.DriveOutputs;
+
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 
@@ -31,6 +33,7 @@ public class Commands {
 	/* Turret Commands */
 	private Turret.TurretState turretWantedState;
 	private double turretWantedAngle; //[0, TurretConstants.turretAngleHardStopRange]
+
 	// Teleop
 	private double driveWantedThrottle, driveWantedWheel;
 	private boolean driveWantsQuickTurn, driveWantsSlowTurn, driveWantedSlowTurnLeft, driveWantsBrake;
@@ -140,6 +143,7 @@ public class Commands {
 		return driveWantedSignal;
 	}
 
+<<<<<<< HEAD
 	public void setShooterWantedCustomFlywheelVelocity(double flywheelWantedVelocity) {
 		this.shooterWantedFlywheelVelocity = flywheelWantedVelocity;
 	}

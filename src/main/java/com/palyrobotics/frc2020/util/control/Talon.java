@@ -135,6 +135,7 @@ public class Talon extends TalonSRX implements Controller {
 		return mController.setOutput(output);
 	}
 
+<<<<<<< HEAD
 	//todo: put next 3 methods in Base talon controller?
 
 	/**

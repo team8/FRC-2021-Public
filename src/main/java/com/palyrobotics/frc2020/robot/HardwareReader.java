@@ -14,6 +14,9 @@ import com.palyrobotics.frc2020.subsystems.Drive;
 import com.palyrobotics.frc2020.subsystems.Shooter;
 import com.palyrobotics.frc2020.subsystems.SubsystemBase;
 import com.palyrobotics.frc2020.subsystems.Turret;
+import com.palyrobotics.frc2020.robot.HardwareAdapter.DriveHardware;
+import com.palyrobotics.frc2020.subsystems.Drive;
+import com.palyrobotics.frc2020.subsystems.SubsystemBase;
 import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.Falcon;
@@ -30,6 +33,9 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.util.Units;
+import com.revrobotics.CANSparkMax.FaultID;
+
+import edu.wpi.first.wpilibj.DriverStation;
 
 public class HardwareReader {
 
@@ -41,7 +47,6 @@ public class HardwareReader {
 	private Limelight mLimelight = Limelight.getInstance();
 	private MedianFilter mVisionPnPXFilter = new MedianFilter(mVisionConfig.visionPnPMedianFilterSize),
 			mVisionPnPYFilter = new MedianFilter(mVisionConfig.visionPnPMedianFilterSize);
-
 
 	private final double[] mGyroAngles = new double[3], mGyroAngularVelocities = new double[3];
 
@@ -102,14 +107,7 @@ public class HardwareReader {
 			Pose2d drivePoseRotationBounded = new Pose2d(state.drivePoseMeters.getTranslation(), Rotation2d.fromDegrees(Util.boundAngleNeg180to180Degrees(state.drivePoseMeters.getRotation().getDegrees())));
 			state.pastPoses.put(Timer.getFPGATimestamp(), drivePoseRotationBounded);
 		}
-//		LiveGraph.add("driveLeftPosition", state.driveLeftPosition);
-
-		LiveGraph.add("driveLeftVelocity", state.driveLeftVelocity);
-//		LiveGraph.add("driveRightPosition", state.driveRightPosition);
-		LiveGraph.add("driveRightVelocity", state.driveRightVelocity);
-//		LiveGraph.add("driveYaw", state.driveYawDegrees);
-//		LiveGraph.add("driveRightPercentOutput", hardware.rightMasterFalcon.getMotorOutputPercent());
-//		LiveGraph.add("driveLeftPercentOutput", hardware.leftMasterFalcon.getMotorOutputPercent());
+		state.updateOdometry(state.driveYawDegrees, state.driveLeftPosition, state.driveRightPosition);
 		hardware.falcons.forEach(this::checkFalconFaults);
 	}
 
