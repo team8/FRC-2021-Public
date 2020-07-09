@@ -30,6 +30,8 @@ public class OperatorInterface {
 
 		updateDriveCommands(commands);
 		mOperatorXboxController.updateLastInputs();
+
+		Robot.sLoopDebugger.addPoint("updateCommands");
 	}
 
 	private void updateDriveCommands(Commands commands) {

@@ -12,6 +12,7 @@ import com.ctre.phoenix.sensors.SensorInitializationStrategy;
 import com.esotericsoftware.minlog.Log;
 import com.palyrobotics.frc2020.config.RobotConfig;
 import com.palyrobotics.frc2020.config.constants.DriveConstants;
+import com.palyrobotics.frc2020.robot.RobotState.GamePeriod;
 import com.palyrobotics.frc2020.subsystems.Drive;
 import com.palyrobotics.frc2020.subsystems.SubsystemBase;
 import com.palyrobotics.frc2020.util.Util;
@@ -99,13 +100,15 @@ public class HardwareWriter {
 	/**
 	 * Updates the hardware to run with output values of {@link SubsystemBase}'s.
 	 */
-	void updateHardware(Set<SubsystemBase> enabledSubsystems, @ReadOnly RobotState robotState) {
+	void writeHardware(Set<SubsystemBase> enabledSubsystems, @ReadOnly RobotState robotState) {
 		mRumbleOutput = false;
 		if (!mRobotConfig.disableHardwareUpdates) {
-			if (enabledSubsystems.contains(mDrive)) updateDrivetrain();
+			if (enabledSubsystems.contains(mDrive) && robotState.gamePeriod != GamePeriod.TESTING) updateDrivetrain();
+			Robot.sLoopDebugger.addPoint("writeDrive");
 		}
 		var joystickHardware = HardwareAdapter.Joysticks.getInstance();
 		joystickHardware.operatorXboxController.setRumble(mRumbleOutput);
+		Robot.sLoopDebugger.addPoint("writeHardware");
 	}
 
 	private void updateDrivetrain() {

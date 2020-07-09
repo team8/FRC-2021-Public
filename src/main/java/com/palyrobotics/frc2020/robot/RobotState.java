@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 /**
  * Holds the current physical state of the robot from our sensors.
  */
-@SuppressWarnings ("squid:ClassVariableVisibilityCheck")
+@SuppressWarnings ("java:S1104")
 public class RobotState {
 
 	public enum GamePeriod {
