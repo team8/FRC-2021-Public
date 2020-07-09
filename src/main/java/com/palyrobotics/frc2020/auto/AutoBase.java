@@ -1,19 +1,14 @@
 package com.palyrobotics.frc2020.auto;
 
-import java.util.List;
-
 import com.palyrobotics.frc2020.behavior.RoutineBase;
+import com.palyrobotics.frc2020.util.Util;
 
-import edu.wpi.first.wpilibj.trajectory.Trajectory;
+public interface AutoBase {
 
-public abstract class AutoBase {
+	RoutineBase getRoutine();
 
-	public abstract RoutineBase getRoutine();
-
-	public List<Trajectory.State> getFullTrajectoryStates() {
-		// TODO: implement
-		RoutineBase routine = getRoutine();
-		return null;
+	default String getName() {
+		return Util.classToJsonName(getClass());
 	}
 
 }

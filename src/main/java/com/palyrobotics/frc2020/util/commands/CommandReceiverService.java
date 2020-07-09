@@ -19,9 +19,7 @@ import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.palyrobotics.frc2020.robot.Commands;
-import com.palyrobotics.frc2020.robot.ReadOnly;
-import com.palyrobotics.frc2020.robot.RobotState;
+import com.palyrobotics.frc2020.robot.*;
 import com.palyrobotics.frc2020.util.config.ConfigBase;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.service.RobotService;
@@ -37,25 +35,26 @@ public class CommandReceiverService implements RobotService {
 	private AtomicString mResult = new AtomicString(), mCommand = new AtomicString();
 
 	public CommandReceiverService() {
-		mParser = ArgumentParsers.newFor("rio-terminal").build();
+		mParser = ArgumentParsers.newFor("command-receiver").build();
 		Subparsers subparsers = mParser.addSubparsers().dest("command");
+		Subparser auto = subparsers.addParser("auto");
+		Subparsers autoSubparsers = auto.addSubparsers().dest("auto_command");
+		autoSubparsers.addParser("get");
+		autoSubparsers.addParser("set").addArgument("auto_name");
 		Subparser set = subparsers.addParser("set");
 		set.addArgument("config_name");
 		set.addArgument("config_field");
 		set.addArgument("config_value");
 		Subparser get = subparsers.addParser("get");
 		get.addArgument("config_name");
-		get.addArgument("config_field").nargs("?"); // "?" means this is optional, and will default to null if not
-		// supplied
+		// "?" means this is optional, and will default to null if not supplied
+		get.addArgument("config_field").nargs("?");
 		get.addArgument("--raw").action(Arguments.storeTrue());
 		subparsers.addParser("reload").addArgument("config_name");
 		Subparser run = subparsers.addParser("run");
 		run.addArgument("hood_state");
 		run.addArgument("manual_speed");
-//		run.addArgument("parameters").nargs("*");
 		subparsers.addParser("save").addArgument("config_name");
-		subparsers.addParser("calibrate").addSubparsers().dest("subsystem").addParser("arm")
-				.help("Resets the Spark encoder so it is in-line with the potentiometer");
 	}
 
 	@Override
@@ -126,12 +125,20 @@ public class CommandReceiverService implements RobotService {
 		// TODO less nesting >:( refactor into functions
 		var commandName = parse.getString("command");
 		switch (commandName) {
+			case "auto": {
+				var autoCommand = parse.getString("auto_command");
+				if (autoCommand.equals("set")) {
+					var autoName = parse.getString("auto_name");
+					return AutoSelector.setAuto(autoName) ? String.format("Selected auto: %s", autoName) : String.format("Cannot select unknown auto %s", autoName);
+				}
+				return String.join(";", AutoSelector.getAuto().getName(), String.join(",", AutoSelector.getAutoNames()));
+			}
 			case "get":
 			case "set":
 			case "save":
 			case "reload": {
 				String configName = parse.getString("config_name");
-				if (commandName.equals("get") && configName.equals("Configs")) {
+				if (commandName.equals("get") && configName.equals("configs")) {
 					return String.join(",", Configs.getActiveConfigNames());
 				}
 				try {
@@ -196,7 +203,7 @@ public class CommandReceiverService implements RobotService {
 										configName);
 							}
 							default: {
-								throw new RuntimeException();
+								throw new RuntimeException("Unknown config command");
 							}
 						}
 					} catch (NoSuchFieldException noFieldException) {

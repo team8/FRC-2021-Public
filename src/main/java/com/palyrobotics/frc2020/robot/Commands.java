@@ -18,13 +18,13 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 /**
  * Commands represent what we want the robot to be doing.
  */
-@SuppressWarnings ("squid:ClassVariableVisibilityCheck")
+@SuppressWarnings ("java:S1104")
 public class Commands {
 
 	/* Routines */
 	public List<RoutineBase> routinesWanted = new ArrayList<>();
 	public boolean shouldClearCurrentRoutines;
-	/* Drive Commands */
+	/* Drive */
 	private Drive.State driveWantedState;
 	/* Shooter Commands */
 	private Shooter.ShooterState shooterWantedState;
