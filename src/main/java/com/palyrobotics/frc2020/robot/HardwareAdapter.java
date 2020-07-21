@@ -15,7 +15,9 @@ import com.palyrobotics.frc2020.util.input.XboxController;
 import com.revrobotics.CANEncoder;
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.Solenoid;
 
 /**
  * Represents all hardware components of the robot. Singleton class. Should only be used in robot
@@ -66,6 +68,23 @@ public class HardwareAdapter {
 	}
 
 	/**
+	 * 1 TalonSRX and Encoder
+	 */
+	static class TurretHardware {
+
+		private static TurretHardware sInstance;
+		final Talon talon = new Talon(sPortConstants.nariTurretTalonId, "Turret Talon");
+
+		private TurretHardware() {
+		}
+
+		static TurretHardware getInstance() {
+			if (sInstance == null) sInstance = new TurretHardware();
+			return sInstance;
+		}
+	}
+
+	/**
 	 * 2 NEO's, Hood Piston, Blocking Solenoid
 	 */
 	static class ShooterHardware {
@@ -82,6 +101,36 @@ public class HardwareAdapter {
 		}
 	}
 
+	/*
+	 * 2 NEOs (controlled by Spark MAX) for indexer tower, 2 775s (controlled by Talon SRX) for v belts,
+	 * 2 Single Solenoids, 2 Infrared Sensors
+	 */
+	static class IndexerHardware {
+
+		private static IndexerHardware sInstance;
+
+		final Spark slaveColumnSpark = new Spark(sPortConstants.nariIndexerSlaveId, "slaveColumnSpark"),
+				masterColumnSpark = new Spark(sPortConstants.nariIndexerMasterId, "masterColumnSpark");
+		final CANEncoder masterColumnSparkEncoder = masterColumnSpark.getEncoder();
+		final List<Spark> columnSparks = List.of(masterColumnSpark, slaveColumnSpark);
+		final Talon leftVTalon = new Talon(sPortConstants.nariIndexerLeftVTalonId, "leftVTalon"),
+				rightVTalon = new Talon(sPortConstants.nariIndexerRightVTalonId, "rightVTalon");
+		final List<Talon> vTalons = List.of(rightVTalon, leftVTalon);
+		final Solenoid blockingSolenoid = new Solenoid(sPortConstants.nariIndexerBlockingSolenoidId),
+				hopperSolenoids = new Solenoid(sPortConstants.nariIndexerHopperSolenoidId);
+		final DigitalInput pos1Sensor = new DigitalInput(sPortConstants.nariIndexerPos1Infrared);
+		final DigitalInput pos5Sensor = new DigitalInput(sPortConstants.nariIndexerPos5Infrared);
+
+		private IndexerHardware() {
+
+		}
+
+		static IndexerHardware getInstance() {
+			if (sInstance == null) sInstance = new IndexerHardware();
+			return sInstance;
+		}
+	}
+
 	/**
 	 * 1 Compressor, 1 PDP, 1 Fisheye USB Camera
 	 */
@@ -90,7 +139,7 @@ public class HardwareAdapter {
 		private static MiscellaneousHardware sInstance;
 		final Compressor compressor = new Compressor();
 		final PowerDistributionPanel pdp = new PowerDistributionPanel();
-//		final UsbCamera fisheyeCam = CameraServer.getInstance().startAutomaticCapture();
+//    final UsbCamera fisheyeCam = CameraServer.getInstance().startAutomaticCapture();
 
 		private MiscellaneousHardware() {
 			compressor.stop();
@@ -115,23 +164,6 @@ public class HardwareAdapter {
 		}
 
 		static Joysticks getInstance() {
-			return sInstance;
-		}
-	}
-
-	/**
-	 * 1 TalonSRX and Encoder
-	 */
-	static class TurretHardware {
-
-		private static TurretHardware sInstance;
-		final Talon talon = new Talon(sPortConstants.nariTurretTalonId, "Turret Talon");
-
-		private TurretHardware() {
-		}
-
-		static TurretHardware getInstance() {
-			if (sInstance == null) sInstance = new TurretHardware();
 			return sInstance;
 		}
 	}

@@ -1,0 +1,7 @@
+{
+  "columnStallCurrentLimit" : 30,
+  "columnFreeCurrentLimit" : 20,
+  "vTalonCurrentLimit" : 5,
+  "rampRate" : 0.1,
+  "nativeToInchPosConversion" : 1.0
+}
