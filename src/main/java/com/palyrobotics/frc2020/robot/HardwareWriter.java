@@ -13,6 +13,7 @@ import com.esotericsoftware.minlog.Log;
 import com.palyrobotics.frc2020.config.RobotConfig;
 import com.palyrobotics.frc2020.config.constants.DriveConstants;
 import com.palyrobotics.frc2020.config.subsystem.LightingConfig;
+import com.palyrobotics.frc2020.config.subsystem.IndexerConfig;
 import com.palyrobotics.frc2020.robot.RobotState.GamePeriod;
 import com.palyrobotics.frc2020.subsystems.Drive;
 import com.palyrobotics.frc2020.subsystems.Intake;
@@ -21,6 +22,8 @@ import com.palyrobotics.frc2020.subsystems.SubsystemBase;
 import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.Falcon;
+import com.palyrobotics.frc2020.util.control.Spark;
+import com.palyrobotics.frc2020.util.control.Talon;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 
@@ -37,6 +40,7 @@ public class HardwareWriter {
 	public static final SupplyCurrentLimitConfiguration k30AmpCurrentLimitConfiguration = new SupplyCurrentLimitConfiguration(
 			true, 30.0, 35.0, 1.0);
 	private final RobotConfig mRobotConfig = Configs.get(RobotConfig.class);
+	private final IndexerConfig mIndexerConfig = Configs.get(IndexerConfig.class);
 	private final Drive mDrive = Drive.getInstance();
 	private final Intake mIntake = Intake.getInstance();
 	private final Lighting mLighting = Lighting.getInstance();
@@ -94,11 +98,30 @@ public class HardwareWriter {
 		hardware.talon.setInverted(true);
 	}
 
+
 	private void configureLightingHardware() {
 		var hardware = HardwareAdapter.LightingHardware.getInstance();
 		hardware.ledStrip.setLength(Configs.get(LightingConfig.class).ledCount);
 		hardware.ledStrip.start();
 		hardware.ledStrip.setData(mLighting.getOutput());
+	}
+
+	private void configureIndexerHardware() {
+		var hardware = HardwareAdapter.IndexerHardware.getInstance();
+		for (Spark spark : hardware.columnSparks) {
+			spark.restoreFactoryDefaults();
+			spark.enableVoltageCompensation(kVoltageCompensation);
+			spark.setSmartCurrentLimit(mIndexerConfig.columnStallCurrentLimit, mIndexerConfig.columnFreeCurrentLimit);
+			spark.setOpenLoopRampRate(mIndexerConfig.rampRate);
+		}
+		hardware.slaveColumnSpark.follow(hardware.masterColumnSpark);
+		hardware.masterColumnSparkEncoder.setPositionConversionFactor(mIndexerConfig.nativeToInchPosConversion);
+		for (Talon talon : hardware.vTalons) {
+			talon.configFactoryDefault(kTimeoutMs);
+			SupplyCurrentLimitConfiguration vTalonSupplyCurrentLimit = new SupplyCurrentLimitConfiguration(true, mIndexerConfig.vTalonCurrentLimit, 0, kTimeoutMs / 1000.0);
+			talon.configVoltageCompSaturation(kVoltageCompensation);
+			talon.configSupplyCurrentLimit(vTalonSupplyCurrentLimit);
+		}
 	}
 
 	public void resetDriveSensors(Pose2d pose) {
