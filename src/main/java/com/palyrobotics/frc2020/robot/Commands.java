@@ -6,6 +6,7 @@ import java.util.List;
 import com.palyrobotics.frc2020.behavior.RoutineBase;
 import com.palyrobotics.frc2020.subsystems.Drive;
 import com.palyrobotics.frc2020.subsystems.Intake;
+import com.palyrobotics.frc2020.subsystems.Indexer;
 import com.palyrobotics.frc2020.util.control.DriveOutputs;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -32,6 +33,10 @@ public class Commands {
 	public Pose2d driveWantedOdometryPose;
 	// Turning
 	private double driveWantedYawDegrees;
+
+	/* Indexer */
+	public Indexer.State indexerWantedState;
+
 	/* Vision */
 	public int visionWantedPipeline;
 	public boolean visionWanted;
