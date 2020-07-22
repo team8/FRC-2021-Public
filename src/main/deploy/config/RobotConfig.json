@@ -8,7 +8,8 @@
 		"drive",
 		"shooter",
 		"turret",
-	  	"intake"
+	  	"intake",
+		"indexer"
 	],
 	"checkFaults": false,
 	"coastDriveWhenDisabled": false,

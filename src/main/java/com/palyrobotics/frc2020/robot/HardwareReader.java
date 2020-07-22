@@ -18,6 +18,7 @@ import com.palyrobotics.frc2020.robot.HardwareAdapter.DriveHardware;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.IntakeHardware;
 import com.palyrobotics.frc2020.subsystems.Drive;
 import com.palyrobotics.frc2020.subsystems.Intake;
+import com.palyrobotics.frc2020.subsystems.Indexer;
 import com.palyrobotics.frc2020.subsystems.SubsystemBase;
 import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.config.Configs;
@@ -61,12 +62,11 @@ public class HardwareReader {
 	 */
 	void readState(Set<SubsystemBase> enabledSubsystems, RobotState state) {
 		readGameAndFieldState(state);
-		Robot.sLoopDebugger.addPoint("readGameAndFieldState");
 		if (enabledSubsystems.contains(Drive.getInstance())) readDriveState(state);
 		if (enabledSubsystems.contains(Shooter.getInstance())) readShooterState(state);
 		if (enabledSubsystems.contains(Turret.getInstance())) readTurretState(state);
 		if (enabledSubsystems.contains(Intake.getInstance())) readIntakeState(state);
-		Robot.sLoopDebugger.addPoint("readDrive");
+		if (enabledSubsystems.contains(Indexer.getInstance())) readIndexerState(state);
 	}
 
 	private void readGameAndFieldState(RobotState state) {
@@ -127,6 +127,12 @@ public class HardwareReader {
 	private void readTurretState(RobotState state) {
 		var talon = TurretHardware.getInstance().talon;
 		state.turretYawDegrees = talon.getConvertedPosition();
+	}
+
+	private void readIndexerState(RobotState state) {
+		var hardware = HardwareAdapter.IndexerHardware.getInstance();
+		state.indexerPos1Blocked = !hardware.pos1Sensor.get();
+		state.indexerPos4Blocked = !hardware.pos4Sensor.get();
 	}
 
 	private void checkSparkFaults(Spark spark) {

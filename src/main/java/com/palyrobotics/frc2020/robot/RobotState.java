@@ -47,6 +47,9 @@ public class RobotState {
 	public boolean intakeExtended;
 	public boolean intakeTransitioning;
 
+	/* Indexer */
+	public boolean indexerPos1Blocked, indexerPos4Blocked;
+
 	public GamePeriod gamePeriod = GamePeriod.DISABLED;
 	public String gameData;
 

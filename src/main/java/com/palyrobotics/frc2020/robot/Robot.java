@@ -57,9 +57,9 @@ public class Robot extends TimedRobot {
 	private final Shooter mShooter = Shooter.getInstance();
 	private final Turret mTurret = Turret.getInstance();
 	private final Intake mIntake = Intake.getInstance();
+	private final Indexer mIndexer = Indexer.getInstance();
 
-
-	private Set<SubsystemBase> mSubsystems = Set.of(mDrive, mShooter, mTurret, mIntake),
+	private Set<SubsystemBase> mSubsystems = Set.of(mDrive, mShooter, mTurret, mIntake, mIndexer),
 			mEnabledSubsystems;
 	private Set<RobotService> mServices = Set.of(new CommandReceiverService(), new NetworkLoggerService(),
 			new TelemetryService()),

@@ -119,7 +119,7 @@ public class HardwareAdapter {
 		final Solenoid blockingSolenoid = new Solenoid(sPortConstants.nariIndexerBlockingSolenoidId),
 				hopperSolenoids = new Solenoid(sPortConstants.nariIndexerHopperSolenoidId);
 		final DigitalInput pos1Sensor = new DigitalInput(sPortConstants.nariIndexerPos1Infrared);
-		final DigitalInput pos5Sensor = new DigitalInput(sPortConstants.nariIndexerPos5Infrared);
+		final DigitalInput pos4Sensor = new DigitalInput(sPortConstants.nariIndexerPos4Infrared);
 
 		private IndexerHardware() {
 
