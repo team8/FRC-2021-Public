@@ -18,6 +18,7 @@ import com.palyrobotics.frc2020.robot.RobotState.GamePeriod;
 import com.palyrobotics.frc2020.subsystems.Drive;
 import com.palyrobotics.frc2020.subsystems.Intake;
 import com.palyrobotics.frc2020.subsystems.Lighting;
+import com.palyrobotics.frc2020.subsystems.Indexer;
 import com.palyrobotics.frc2020.subsystems.SubsystemBase;
 import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.config.Configs;
@@ -37,19 +38,19 @@ public class HardwareWriter {
 			kPidIndex = 0;
 	private static final String kLoggerTag = Util.classToJsonName(HardwareWriter.class);
 	public static final double kVoltageCompensation = 12.0;
-	public static final SupplyCurrentLimitConfiguration k30AmpCurrentLimitConfiguration = new SupplyCurrentLimitConfiguration(
-			true, 30.0, 35.0, 1.0);
 	private final RobotConfig mRobotConfig = Configs.get(RobotConfig.class);
 	private final IndexerConfig mIndexerConfig = Configs.get(IndexerConfig.class);
 	private final Drive mDrive = Drive.getInstance();
 	private final Intake mIntake = Intake.getInstance();
 	private final Lighting mLighting = Lighting.getInstance();
+	private final Indexer mIndexer = Indexer.getInstance();
 	private boolean mRumbleOutput;
 
 	void configureHardware(Set<SubsystemBase> enabledSubsystems) {
 		if (enabledSubsystems.contains(mDrive)) configureDriveHardware();
 		if (enabledSubsystems.contains(mIntake)) configureIntakeHardware();
 		if (enabledSubsystems.contains(mLighting)) configureLightingHardware();
+		if (enabledSubsystems.contains(mIndexer)) configureIndexerHardware();
 		configureMiscellaneousHardware();
 	}
 

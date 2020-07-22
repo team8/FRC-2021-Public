@@ -56,8 +56,9 @@ public class Robot extends TimedRobot {
 	private final Drive mDrive = Drive.getInstance();
 	private final Intake mIntake = Intake.getInstance();
 	private final Lighting mLighting = Lighting.getInstance();
+	private final Indexer mIndexer = Indexer.getInstance();
 
-	private Set<SubsystemBase> mSubsystems = Set.of(mDrive, mIntake, mLighting),
+	private Set<SubsystemBase> mSubsystems = Set.of(mDrive, mIntake, mLighting, mIndexer),
 			mEnabledSubsystems;
 	private Set<RobotService> mServices = Set.of(new CommandReceiverService(), new NetworkLoggerService(),
 			new TelemetryService()),
