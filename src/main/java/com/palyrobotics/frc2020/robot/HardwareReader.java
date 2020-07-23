@@ -17,6 +17,7 @@ import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.Falcon;
 import com.palyrobotics.frc2020.util.control.Spark;
 import com.palyrobotics.frc2020.util.control.Talon;
+import com.palyrobotics.frc2020.util.dashboard.LiveGraph;
 import com.revrobotics.CANSparkMax.FaultID;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -73,6 +74,9 @@ public class HardwareReader {
 		state.indexerPos1Blocked = !hardware.pos1Sensor.get();
 		state.indexerPos4Blocked = !hardware.pos4Sensor.get();
 		state.indexerEncPosition = hardware.masterColumnSparkEncoder.getPosition();
+		state.indexerEncVelocity = hardware.masterColumnSparkEncoder.getVelocity();
+		LiveGraph.add("indexerEncoderPosition", state.indexerEncPosition);
+		LiveGraph.add("indexerEncoderVelocity", state.indexerEncVelocity);
 	}
 
 	private void checkSparkFaults(Spark spark) {

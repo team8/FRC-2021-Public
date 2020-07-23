@@ -6,9 +6,14 @@ import com.palyrobotics.frc2020.util.control.ControllerOutput;
 
 public class FeedColumnController extends Indexer.IndexerColumnController {
 
+	public FeedColumnController(RobotState state) {
+		super(state);
+	}
+
 	@Override
 	protected ControllerOutput update(RobotState robotState) {
 		System.out.println("Running Feed Controller");
+		mOutputs.setPercentOutput(0.3);
 		return super.update(robotState);
 	}
 
