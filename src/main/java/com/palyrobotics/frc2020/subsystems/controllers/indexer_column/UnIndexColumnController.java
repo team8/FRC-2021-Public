@@ -8,6 +8,7 @@ public class UnIndexColumnController extends Indexer.IndexerColumnController {
 
 	@Override
 	protected ControllerOutput update(RobotState robotState) {
+		System.out.println("Running UnIndex Controller");
 		return super.update(robotState);
 	}
 

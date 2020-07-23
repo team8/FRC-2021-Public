@@ -132,6 +132,7 @@ public class HardwareWriter {
 			spark.enableVoltageCompensation(kVoltageCompensation);
 			spark.setSmartCurrentLimit(mIndexerConfig.columnStallCurrentLimit, mIndexerConfig.columnFreeCurrentLimit);
 			spark.setOpenLoopRampRate(mIndexerConfig.rampRate);
+			spark.setInverted(true);
 		}
 		hardware.slaveColumnSpark.follow(hardware.masterColumnSpark);
 		hardware.masterColumnSparkEncoder.setPositionConversionFactor(mIndexerConfig.nativeToInchPosConversion);
@@ -168,6 +169,7 @@ public class HardwareWriter {
 			if (enabledSubsystems.contains(mShooter)) updateShooter();
 			if (enabledSubsystems.contains(mTurret)) updateTurret();
 			if (enabledSubsystems.contains(mIntake)) updateIntake();
+			if (enabledSubsystems.contains(mIndexer)) updateIndexer();
 			Robot.sLoopDebugger.addPoint("writeDrive");
 		}
 		var joystickHardware = HardwareAdapter.Joysticks.getInstance();
@@ -204,7 +206,11 @@ public class HardwareWriter {
 
 	private void updateIndexer() {
 		var hardware = HardwareAdapter.IndexerHardware.getInstance();
-
+		hardware.masterColumnSpark.setOutput(mIndexer.getIndexerColumnOutput());
+		hardware.leftVTalon.setOutput(mIndexer.getLeftVTalonOutput());
+		hardware.rightVTalon.setOutput(mIndexer.getRightVTalonOutput());
+		hardware.blockingSolenoid.set(mIndexer.getBlockingSolenoidOutput());
+		hardware.hopperSolenoids.set(mIndexer.getHopperSolenoidOutput());
 	}
 
 	private void setPigeonStatusFramePeriods(PigeonIMU gyro) {

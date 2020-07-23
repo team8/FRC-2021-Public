@@ -8,6 +8,7 @@ public class ReverseFeedColumnController extends Indexer.IndexerColumnController
 
 	@Override
 	protected ControllerOutput update(RobotState robotState) {
+		System.out.println("Running Reverse Feed Controller");
 		return super.update(robotState);
 	}
 
