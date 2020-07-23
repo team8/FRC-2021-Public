@@ -131,6 +131,9 @@ public class HardwareReader {
 		state.indexerPos1Blocked = !hardware.pos1Sensor.get();
 		state.indexerPos4Blocked = !hardware.pos4Sensor.get();
 		state.indexerEncPosition = hardware.masterColumnSparkEncoder.getPosition();
+		state.indexerEncVelocity = hardware.masterColumnSparkEncoder.getVelocity();
+		LiveGraph.add("indexerEncoderPosition", state.indexerEncPosition);
+		LiveGraph.add("indexerEncoderVelocity", state.indexerEncVelocity);
 	}
 
 	private void checkSparkFaults(Spark spark) {

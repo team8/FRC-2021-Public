@@ -1,6 +1,7 @@
 package com.palyrobotics.frc2020.config.subsystem;
 
 import com.palyrobotics.frc2020.util.config.SubsystemConfigBase;
+import com.palyrobotics.frc2020.util.control.Gains;
 
 public class IndexerConfig extends SubsystemConfigBase {
 
@@ -8,5 +9,6 @@ public class IndexerConfig extends SubsystemConfigBase {
 	public double rampRate, nativeToInchPosConversion, powercellIndexDistance,
 			feedSpeed, reverseFeedSpeed, rightVTalonPo, leftVTalonPo;
 	public boolean blockingSolenoidExtended, hopperSolenoidExtended;
+	public Gains positionGains;
 
 }
