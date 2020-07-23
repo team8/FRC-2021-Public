@@ -6,9 +6,14 @@ import com.palyrobotics.frc2020.util.control.ControllerOutput;
 
 public class ReverseFeedColumnController extends Indexer.IndexerColumnController {
 
+	public ReverseFeedColumnController(RobotState state) {
+		super(state);
+	}
+
 	@Override
 	protected ControllerOutput update(RobotState robotState) {
 		System.out.println("Running Reverse Feed Controller");
+		mOutputs.setPercentOutput(-0.3);
 		return super.update(robotState);
 	}
 

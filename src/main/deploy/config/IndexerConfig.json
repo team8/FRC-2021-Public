@@ -10,5 +10,9 @@
   "rightVTalonPo" : 0.3,
   "leftVTalonPo" : 0.6,
   "blockingSolenoidExtended" : false,
-  "hopperSolenoidExtended" : false
+  "hopperSolenoidExtended" : false,
+  "positionGains": {
+    "f": 1,
+    "p": 1
+  }
 }

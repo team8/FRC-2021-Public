@@ -6,6 +6,10 @@ import com.palyrobotics.frc2020.util.control.ControllerOutput;
 
 public class UnIndexColumnController extends Indexer.IndexerColumnController {
 
+	public UnIndexColumnController(RobotState state) {
+		super(state);
+	}
+
 	@Override
 	protected ControllerOutput update(RobotState robotState) {
 		System.out.println("Running UnIndex Controller");
