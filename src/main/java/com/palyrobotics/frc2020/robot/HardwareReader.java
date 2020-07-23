@@ -17,7 +17,6 @@ import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.Falcon;
 import com.palyrobotics.frc2020.util.control.Spark;
 import com.palyrobotics.frc2020.util.control.Talon;
-import com.palyrobotics.frc2020.util.dashboard.LiveGraph;
 import com.revrobotics.CANSparkMax.FaultID;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -63,20 +62,9 @@ public class HardwareReader {
 		state.driveRightVelocity = hardware.rightMasterFalcon.getConvertedVelocity();
 		state.driveLeftPosition = hardware.leftMasterFalcon.getConvertedPosition();
 		state.driveRightPosition = hardware.rightMasterFalcon.getConvertedPosition();
-//		LiveGraph.add("x", state.drivePoseMeters.getTranslation().getX());
-//		LiveGraph.add("y", state.drivePoseMeters.getTranslation().getY());
-//		LiveGraph.add("leftPosition", state.driveLeftPosition);
-//		LiveGraph.add("rightPosition", state.driveRightPosition);
+
 		/* Odometry */
 		state.updateOdometry(state.driveYawDegrees, state.driveLeftPosition, state.driveRightPosition);
-//		LiveGraph.add("driveLeftPosition", state.driveLeftPosition);
-
-		LiveGraph.add("driveLeftVelocity", state.driveLeftVelocity);
-//		LiveGraph.add("driveRightPosition", state.driveRightPosition);
-		LiveGraph.add("driveRightVelocity", state.driveRightVelocity);
-//		LiveGraph.add("driveYaw", state.driveYawDegrees);
-//		LiveGraph.add("driveRightPercentOutput", hardware.rightMasterFalcon.getMotorOutputPercent());
-//		LiveGraph.add("driveLeftPercentOutput", hardware.leftMasterFalcon.getMotorOutputPercent());
 		hardware.falcons.forEach(this::checkFalconFaults);
 	}
 
