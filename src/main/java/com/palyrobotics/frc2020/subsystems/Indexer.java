@@ -4,51 +4,87 @@ import com.palyrobotics.frc2020.config.subsystem.IndexerConfig;
 import com.palyrobotics.frc2020.robot.Commands;
 import com.palyrobotics.frc2020.robot.ReadOnly;
 import com.palyrobotics.frc2020.robot.RobotState;
+import com.palyrobotics.frc2020.subsystems.controllers.indexer_column.FeedColumnController;
+import com.palyrobotics.frc2020.subsystems.controllers.indexer_column.IndexColumnController;
+import com.palyrobotics.frc2020.subsystems.controllers.indexer_column.ReverseFeedColumnController;
+import com.palyrobotics.frc2020.subsystems.controllers.indexer_column.UnIndexColumnController;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.ControllerOutput;
 
 public class Indexer extends SubsystemBase {
-    public enum State {
-        INDEX, UN_INDEX, FEED, REVERSE_FEED, IDLE
-    }
 
-    public abstract static class IndexerColumnController {
-        protected ControllerOutput mOutputs = new ControllerOutput();
+	public enum State {
+		INDEX, UN_INDEX, FEED, REVERSE_FEED, IDLE
+	}
 
-        public final ControllerOutput update(@ReadOnly Commands commands, @ReadOnly RobotState robotState) {
-            return mOutputs;
-        }
+	public abstract static class IndexerColumnController {
 
-        public boolean checkFinished() { return false; }
-    }
+		protected ControllerOutput mOutputs = new ControllerOutput();
 
-    private static final Indexer sInstance = new Indexer();
-    private static final IndexerConfig mConfig = Configs.get(IndexerConfig.class);
-    private static State mActiveState = State.IDLE;
-    private static ControllerOutput mIndexerColumnOutput = new ControllerOutput();
-    private static ControllerOutput mRightVTalonOutput = new ControllerOutput(),
-                                    mLeftVTalonOutput = new ControllerOutput();
+		protected ControllerOutput update(@ReadOnly RobotState robotState) {
+			return mOutputs;
+		}
 
+		protected boolean isFinished() {
+			return true;
+		}
+	}
 
+	private static final Indexer sInstance = new Indexer();
+	private static final IndexerConfig mConfig = Configs.get(IndexerConfig.class);
+	private static State mActiveState = State.IDLE;
+	private static IndexerColumnController mRunningController = null;
+	private static ControllerOutput mIndexerColumnOutput = new ControllerOutput();
+	private static ControllerOutput mRightVTalonOutput = new ControllerOutput(),
+			mLeftVTalonOutput = new ControllerOutput();
 
-    public static Indexer getInstance() {
-        return sInstance;
-    }
+	public static Indexer getInstance() {
+		return sInstance;
+	}
 
-    @Override
-    public void update(Commands commands, RobotState state) {
-//        boolean isNewState = commands.indexerWantedState != mActiveState;
-    }
+	@Override
+	public void update(Commands commands, RobotState state) {
+		boolean isNewState = commands.indexerWantedState != mActiveState && (mRunningController == null || mRunningController.isFinished());
 
-    public ControllerOutput getRightVTalonOutput() {
-        return mRightVTalonOutput;
-    }
+		if (isNewState) {
+			switch (commands.indexerWantedState) {
+				case FEED:
+					mActiveState = State.FEED;
+					mRunningController = new FeedColumnController();
+					break;
+				case REVERSE_FEED:
+					mActiveState = State.REVERSE_FEED;
+					mRunningController = new ReverseFeedColumnController();
+					break;
+				case INDEX:
+					mActiveState = State.INDEX;
+					mRunningController = new IndexColumnController();
+					break;
+				case UN_INDEX:
+					mActiveState = State.UN_INDEX;
+					mRunningController = new UnIndexColumnController();
+					break;
+				case IDLE:
+					mActiveState = State.IDLE;
+					mRunningController = null;
+			}
+		}
+		if (mRunningController != null) {
+			mIndexerColumnOutput = mRunningController.update(state);
+		} else {
+			mIndexerColumnOutput.setIdle();
+		}
+	}
 
-    public ControllerOutput getLeftVTalonOutput() {
-        return mLeftVTalonOutput;
-    }
+	public ControllerOutput getRightVTalonOutput() {
+		return mRightVTalonOutput;
+	}
 
-    public ControllerOutput getIndexerColumnOutput() {
-        return mIndexerColumnOutput;
-    }
+	public ControllerOutput getLeftVTalonOutput() {
+		return mLeftVTalonOutput;
+	}
+
+	public ControllerOutput getIndexerColumnOutput() {
+		return mIndexerColumnOutput;
+	}
 }
