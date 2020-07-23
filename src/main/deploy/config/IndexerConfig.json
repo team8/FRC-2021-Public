@@ -3,5 +3,12 @@
   "columnFreeCurrentLimit" : 20,
   "vTalonCurrentLimit" : 5,
   "rampRate" : 0.1,
-  "nativeToInchPosConversion" : 1.0
+  "nativeToInchPosConversion" : 1.0,
+  "powercellIndexDistance" : 8.0,
+  "feedSpeed" : 0,
+  "reverseFeedSpeed" : 0,
+  "rightVTalonPo" : 0.3,
+  "leftVTalonPo" : 0.6,
+  "blockingSolenoidExtended" : false,
+  "hopperSolenoidExtended" : false
 }

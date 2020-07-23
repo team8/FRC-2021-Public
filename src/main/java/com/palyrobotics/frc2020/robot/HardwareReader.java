@@ -72,6 +72,7 @@ public class HardwareReader {
 		var hardware = HardwareAdapter.IndexerHardware.getInstance();
 		state.indexerPos1Blocked = !hardware.pos1Sensor.get();
 		state.indexerPos4Blocked = !hardware.pos4Sensor.get();
+		state.indexerEncPosition = hardware.masterColumnSparkEncoder.getPosition();
 	}
 
 	private void checkSparkFaults(Spark spark) {
