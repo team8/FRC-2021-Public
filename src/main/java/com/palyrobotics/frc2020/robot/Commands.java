@@ -143,7 +143,6 @@ public class Commands {
 		return driveWantedSignal;
 	}
 
-<<<<<<< HEAD
 	public void setShooterWantedCustomFlywheelVelocity(double flywheelWantedVelocity) {
 		this.shooterWantedFlywheelVelocity = flywheelWantedVelocity;
 	}
