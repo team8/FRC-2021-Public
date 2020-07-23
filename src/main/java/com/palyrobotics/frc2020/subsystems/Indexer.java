@@ -21,6 +21,9 @@ public class Indexer extends SubsystemBase {
 
 		protected ControllerOutput mOutputs = new ControllerOutput();
 
+		protected IndexerColumnController(@ReadOnly RobotState state) {
+		}
+
 		protected ControllerOutput update(@ReadOnly RobotState robotState) {
 			return mOutputs;
 		}
@@ -51,25 +54,25 @@ public class Indexer extends SubsystemBase {
 			switch (commands.indexerWantedState) {
 				case FEED:
 					mActiveState = State.FEED;
-					mRunningController = new FeedColumnController();
+					mRunningController = new FeedColumnController(state);
 					mLeftVTalonOutput.setPercentOutput(mConfig.leftVTalonPo);
 					mRightVTalonOutput.setPercentOutput(mConfig.rightVTalonPo);
 					break;
 				case REVERSE_FEED:
 					mActiveState = State.REVERSE_FEED;
-					mRunningController = new ReverseFeedColumnController();
+					mRunningController = new ReverseFeedColumnController(state);
 					mLeftVTalonOutput.setPercentOutput(-mConfig.leftVTalonPo);
 					mRightVTalonOutput.setPercentOutput(-mConfig.rightVTalonPo);
 					break;
 				case INDEX:
 					mActiveState = State.INDEX;
-					mRunningController = new IndexColumnController();
+					mRunningController = new IndexColumnController(state);
 					mLeftVTalonOutput.setPercentOutput(mConfig.leftVTalonPo);
 					mRightVTalonOutput.setPercentOutput(mConfig.rightVTalonPo);
 					break;
 				case UN_INDEX:
 					mActiveState = State.UN_INDEX;
-					mRunningController = new UnIndexColumnController();
+					mRunningController = new UnIndexColumnController(state);
 					mLeftVTalonOutput.setPercentOutput(-mConfig.leftVTalonPo);
 					mRightVTalonOutput.setPercentOutput(-mConfig.rightVTalonPo);
 					break;

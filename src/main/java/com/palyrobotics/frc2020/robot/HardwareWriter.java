@@ -111,6 +111,7 @@ public class HardwareWriter {
 			SupplyCurrentLimitConfiguration vTalonSupplyCurrentLimit = new SupplyCurrentLimitConfiguration(true, mIndexerConfig.vTalonCurrentLimit, 0, kTimeoutMs / 1000.0);
 			talon.configVoltageCompSaturation(kVoltageCompensation);
 			talon.configSupplyCurrentLimit(vTalonSupplyCurrentLimit);
+			talon.setInverted(true);
 		}
 	}
 
