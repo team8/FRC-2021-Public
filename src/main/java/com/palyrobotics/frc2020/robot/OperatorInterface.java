@@ -10,6 +10,7 @@ import java.util.Arrays;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.Joysticks;
 import com.palyrobotics.frc2020.subsystems.Intake;
 import com.palyrobotics.frc2020.subsystems.Lighting;
+import com.palyrobotics.frc2020.subsystems.Indexer;
 import com.palyrobotics.frc2020.util.input.Joystick;
 import com.palyrobotics.frc2020.util.input.XboxController;
 import com.palyrobotics.frc2020.vision.Limelight;
@@ -36,6 +37,7 @@ public class OperatorInterface {
 		updateDriveCommands(commands);
 		updateIntakeCommands(commands);
 		updateLightingCommands(commands, state);
+		updateIndexerCommands(commands);
 		mOperatorXboxController.updateLastInputs();
 
 		Robot.sLoopDebugger.addPoint("updateCommands");
@@ -87,6 +89,20 @@ public class OperatorInterface {
 		//Need to implement
 	}
 
+	private void updateIndexerCommands(Commands commands) {
+		if (mOperatorXboxController.getDPadRight()) {
+			commands.indexerWantedState = Indexer.State.FEED;
+		} else if (mOperatorXboxController.getDPadDown()) {
+			commands.indexerWantedState = Indexer.State.REVERSE_FEED;
+		} else if (mOperatorXboxController.getDPadLeft()) {
+			commands.indexerWantedState = Indexer.State.INDEX;
+		} else if (mOperatorXboxController.getDPadUp()) {
+			commands.indexerWantedState = Indexer.State.UN_INDEX;
+		} else if (mOperatorXboxController.getLeftTrigger()) {
+			commands.indexerWantedState = Indexer.State.IDLE;
+		}
+	}
+
 	public void resetPeriodic(Commands commands) {
 		commands.lightingWantedStates = new ArrayList<>(Arrays.asList(Lighting.State.IDLE));
 	}
@@ -98,6 +114,7 @@ public class OperatorInterface {
 		commands.visionWanted = false;
 		commands.intakeWantedState = Intake.State.IDLE;
 		commands.lightingWantedStates = new ArrayList<>(Arrays.asList(Lighting.State.IDLE));
+		commands.indexerWantedState = Indexer.State.IDLE;
 		mOperatorXboxController.clearLastInputs();
 	}
 }

@@ -37,6 +37,7 @@ public class Indexer extends SubsystemBase {
 	private static ControllerOutput mIndexerColumnOutput = new ControllerOutput();
 	private static ControllerOutput mRightVTalonOutput = new ControllerOutput(),
 			mLeftVTalonOutput = new ControllerOutput();
+	private static boolean mBlockingSolenoidOutput, mHopperSolenoidOutput;
 
 	public static Indexer getInstance() {
 		return sInstance;
@@ -51,29 +52,42 @@ public class Indexer extends SubsystemBase {
 				case FEED:
 					mActiveState = State.FEED;
 					mRunningController = new FeedColumnController();
+					mLeftVTalonOutput.setPercentOutput(mConfig.leftVTalonPo);
+					mRightVTalonOutput.setPercentOutput(mConfig.rightVTalonPo);
 					break;
 				case REVERSE_FEED:
 					mActiveState = State.REVERSE_FEED;
 					mRunningController = new ReverseFeedColumnController();
+					mLeftVTalonOutput.setPercentOutput(-mConfig.leftVTalonPo);
+					mRightVTalonOutput.setPercentOutput(-mConfig.rightVTalonPo);
 					break;
 				case INDEX:
 					mActiveState = State.INDEX;
 					mRunningController = new IndexColumnController();
+					mLeftVTalonOutput.setPercentOutput(mConfig.leftVTalonPo);
+					mRightVTalonOutput.setPercentOutput(mConfig.rightVTalonPo);
 					break;
 				case UN_INDEX:
 					mActiveState = State.UN_INDEX;
 					mRunningController = new UnIndexColumnController();
+					mLeftVTalonOutput.setPercentOutput(-mConfig.leftVTalonPo);
+					mRightVTalonOutput.setPercentOutput(-mConfig.rightVTalonPo);
 					break;
 				case IDLE:
 					mActiveState = State.IDLE;
 					mRunningController = null;
+					mLeftVTalonOutput.setIdle();
+					mRightVTalonOutput.setIdle();
 			}
 		}
 		if (mRunningController != null) {
 			mIndexerColumnOutput = mRunningController.update(state);
 		} else {
+			System.out.println("Indexer @ Idle");
 			mIndexerColumnOutput.setIdle();
 		}
+		mBlockingSolenoidOutput = !mConfig.blockingSolenoidExtended;
+		mHopperSolenoidOutput = mConfig.hopperSolenoidExtended;
 	}
 
 	public ControllerOutput getRightVTalonOutput() {
@@ -86,5 +100,13 @@ public class Indexer extends SubsystemBase {
 
 	public ControllerOutput getIndexerColumnOutput() {
 		return mIndexerColumnOutput;
+	}
+
+	public boolean getBlockingSolenoidOutput() {
+		return mBlockingSolenoidOutput;
+	}
+
+	public boolean getHopperSolenoidOutput() {
+		return mHopperSolenoidOutput;
 	}
 }

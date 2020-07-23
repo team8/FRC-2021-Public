@@ -13,7 +13,7 @@
 	"nariIndexerHopperSolenoidId": 2,
 	"nariIndexerBlockingSolenoidId": 3,
 	"nariIndexerPos1Infrared": 1,
-	"nariIndexerPos5Infrared": 8,
+	"nariIndexerPos4Infrared": 0,
 	"nariIntakeId": 8,
 	"nariIntakeSolenoidId": 0,
 	"nariLightingPwmPort": 9,
