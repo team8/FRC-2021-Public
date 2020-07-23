@@ -31,7 +31,6 @@ public class Commands {
 	public Pose2d driveWantedOdometryPose;
 	// Turning
 	private double driveWantedYawDegrees;
-	public double spinnerWantedPercentOutput;
 	/* Vision */
 	public int visionWantedPipeline;
 	public boolean visionWanted;
