@@ -202,6 +202,11 @@ public class HardwareWriter {
 		hardware.talon.setOutput(mIntake.getOutput());
 	}
 
+	private void updateIndexer() {
+		var hardware = HardwareAdapter.IndexerHardware.getInstance();
+
+	}
+
 	private void setPigeonStatusFramePeriods(PigeonIMU gyro) {
 		gyro.setStatusFramePeriod(PigeonIMU_StatusFrame.CondStatus_9_SixDeg_YPR, 5, kTimeoutMs);
 		gyro.setStatusFramePeriod(PigeonIMU_StatusFrame.BiasedStatus_2_Gyro, 5, kTimeoutMs);
