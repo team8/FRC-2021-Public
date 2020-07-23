@@ -6,6 +6,7 @@ import static com.palyrobotics.frc2020.vision.Limelight.kTwoTimesZoomPipelineId;
 
 import com.palyrobotics.frc2020.robot.HardwareAdapter.Joysticks;
 import com.palyrobotics.frc2020.subsystems.Intake;
+import com.palyrobotics.frc2020.subsystems.Indexer;
 import com.palyrobotics.frc2020.util.input.Joystick;
 import com.palyrobotics.frc2020.util.input.XboxController;
 import com.palyrobotics.frc2020.vision.Limelight;
@@ -31,6 +32,8 @@ public class OperatorInterface {
 
 		updateDriveCommands(commands);
 		updateIntakeCommands(commands);
+		updateIndexerCommands(commands);
+
 		mOperatorXboxController.updateLastInputs();
 
 		Robot.sLoopDebugger.addPoint("updateCommands");
@@ -78,6 +81,20 @@ public class OperatorInterface {
 		}
 	}
 
+	private void updateIndexerCommands(Commands commands) {
+		if (mOperatorXboxController.getDPadRight()) {
+			commands.indexerWantedState = Indexer.State.FEED;
+		} else if (mOperatorXboxController.getDPadDown()) {
+			commands.indexerWantedState = Indexer.State.REVERSE_FEED;
+		} else if (mOperatorXboxController.getDPadLeft()) {
+			commands.indexerWantedState = Indexer.State.INDEX;
+		} else if (mOperatorXboxController.getDPadUp()) {
+			commands.indexerWantedState = Indexer.State.UN_INDEX;
+		} else if (mOperatorXboxController.getLeftTrigger()) {
+			commands.indexerWantedState = Indexer.State.IDLE;
+		}
+	}
+
 	public void resetPeriodic(Commands commands) {
 	}
 
@@ -87,6 +104,7 @@ public class OperatorInterface {
 		commands.wantedCompression = true;
 		commands.visionWanted = false;
 		commands.intakeWantedState = Intake.State.IDLE;
+		commands.indexerWantedState = Indexer.State.IDLE;
 		mOperatorXboxController.clearLastInputs();
 	}
 }

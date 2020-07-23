@@ -8,6 +8,7 @@ public class FeedColumnController extends Indexer.IndexerColumnController {
 
 	@Override
 	protected ControllerOutput update(RobotState robotState) {
+		System.out.println("Running Feed Controller");
 		return super.update(robotState);
 	}
 

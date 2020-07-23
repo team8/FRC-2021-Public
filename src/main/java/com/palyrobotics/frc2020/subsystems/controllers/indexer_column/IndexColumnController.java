@@ -8,6 +8,7 @@ public class IndexColumnController extends Indexer.IndexerColumnController {
 
 	@Override
 	protected ControllerOutput update(RobotState robotState) {
+		System.out.println("Running Index Controller");
 		return super.update(robotState);
 	}
 
