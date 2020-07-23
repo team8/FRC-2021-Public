@@ -88,10 +88,7 @@ public class HardwareReader {
 		state.driveRightVelocity = hardware.rightMasterFalcon.getConvertedVelocity();
 		state.driveLeftPosition = hardware.leftMasterFalcon.getConvertedPosition();
 		state.driveRightPosition = hardware.rightMasterFalcon.getConvertedPosition();
-//		LiveGraph.add("x", state.drivePoseMeters.getTranslation().getX());
-//		LiveGraph.add("y", state.drivePoseMeters.getTranslation().getY());
-//		LiveGraph.add("leftPosition", state.driveLeftPosition);
-//		LiveGraph.add("rightPosition", state.driveRightPosition);
+
 		/* Odometry */
 		double metersPnPTranslationX = Units.inchesToMeters(mVisionPnPXFilter.calculate(mLimelight.getPnPTranslationX())),
 				metersPnPTranslationY = Units.inchesToMeters(mVisionPnPYFilter.calculate(mLimelight.getPnPTranslationY()));
