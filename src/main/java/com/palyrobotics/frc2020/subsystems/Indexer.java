@@ -11,8 +11,6 @@ import com.palyrobotics.frc2020.subsystems.controllers.indexer_column.UnIndexCol
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.ControllerOutput;
 
-import java.util.List;
-
 public class Indexer extends SubsystemBase {
 
 	public enum State {
@@ -27,19 +25,11 @@ public class Indexer extends SubsystemBase {
 		protected IndexerColumnController(@ReadOnly RobotState state) {
 		}
 
-		protected void update(@ReadOnly RobotState robotState) {
+		protected void update(@ReadOnly RobotState state) {
 		}
 
-		protected boolean isFinished() {
+		protected boolean isFinished(@ReadOnly RobotState state) {
 			return true;
-		}
-
-		protected ControllerOutput getMasterSparkOutput() {
-			return mMasterSparkOutput;
-		}
-
-		protected ControllerOutput getSlaveSparkOutput() {
-			return mSlaveSparkOutput;
 		}
 	}
 
@@ -49,7 +39,7 @@ public class Indexer extends SubsystemBase {
 	private static IndexerColumnController mRunningController = null;
 	private static ControllerOutput mMasterIndexerColumnOutput = new ControllerOutput(),
 			mSlaveIndexerColumnOutput = new ControllerOutput();
-	private static ControllerOutput mRightVTalonOutput = new ControllerOutput(),
+	private static final ControllerOutput mRightVTalonOutput = new ControllerOutput(),
 			mLeftVTalonOutput = new ControllerOutput();
 	private static boolean mBlockingSolenoidOutput, mHopperSolenoidOutput;
 
@@ -59,7 +49,7 @@ public class Indexer extends SubsystemBase {
 
 	@Override
 	public void update(Commands commands, RobotState state) {
-		boolean isNewState = commands.indexerWantedState != mActiveState && (mRunningController == null || mRunningController.isFinished());
+		boolean isNewState = commands.indexerWantedState != mActiveState && (mRunningController == null || mRunningController.isFinished(state));
 
 		if (isNewState) {
 			switch (commands.indexerWantedState) {
@@ -96,8 +86,8 @@ public class Indexer extends SubsystemBase {
 		}
 		if (mRunningController != null) {
 			mRunningController.update(state);
-			mMasterIndexerColumnOutput = mRunningController.getMasterSparkOutput();
-			mSlaveIndexerColumnOutput = mRunningController.getSlaveSparkOutput();
+			mMasterIndexerColumnOutput = mRunningController.mMasterSparkOutput;
+			mSlaveIndexerColumnOutput = mRunningController.mSlaveSparkOutput;
 		} else {
 			System.out.println("Indexer @ Idle");
 			mMasterIndexerColumnOutput.setIdle();

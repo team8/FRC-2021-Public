@@ -238,11 +238,8 @@ public class Robot extends TimedRobot {
 		}
 	}
 
-
-
 	private void updateSubsystemsAndApplyOutputs() {
 		resetOdometryIfWanted();
-
 
 		for (SubsystemBase subsystem : mEnabledSubsystems) {
 			subsystem.update(mCommands, mRobotState);
