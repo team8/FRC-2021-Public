@@ -68,8 +68,8 @@ public class Indexer extends SubsystemBase {
 				case INDEX:
 					mActiveState = State.INDEX;
 					mRunningController = new IndexColumnController(state);
-					mLeftVTalonOutput.setPercentOutput(mConfig.leftVTalonPo);
-					mRightVTalonOutput.setPercentOutput(mConfig.rightVTalonPo);
+					mLeftVTalonOutput.setIdle();
+					mRightVTalonOutput.setIdle();
 					break;
 				case UN_INDEX:
 					mActiveState = State.UN_INDEX;
