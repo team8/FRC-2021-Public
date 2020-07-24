@@ -1,7 +1,6 @@
 package com.palyrobotics.frc2020.subsystems.controllers.indexer_column;
 
 import com.palyrobotics.frc2020.config.subsystem.IndexerConfig;
-import com.palyrobotics.frc2020.robot.Robot;
 import com.palyrobotics.frc2020.robot.RobotState;
 import com.palyrobotics.frc2020.subsystems.Indexer;
 import com.palyrobotics.frc2020.util.config.Configs;
@@ -12,26 +11,40 @@ import edu.wpi.first.wpiutil.math.MathUtil;
 
 public class IndexColumnController extends Indexer.IndexerColumnController {
 	private IndexerConfig mConfig = Configs.get(IndexerConfig.class);
-	private PIDController mPIDController = new PIDController(mConfig.positionGains.p, mConfig.positionGains.i, mConfig.positionGains.d);
-	private double mIndexerWantedPosition;
+	private PIDController mMasterSparkPIDController = new PIDController(mConfig.masterSparkPositionGains.p, mConfig.masterSparkPositionGains.i, mConfig.masterSparkPositionGains.d);
+	private PIDController mSlaveSparkPIDController = new PIDController(mConfig.slaveSparkPositionGains.p, mConfig.slaveSparkPositionGains.i, mConfig.slaveSparkPositionGains.d);
+	private double mMasterSparkEncWantedPosition, mSlaveSparkEncWantedPosition;
 
 	public IndexColumnController(RobotState robotState) {
 		super(robotState);
-		mIndexerWantedPosition = robotState.indexerEncPosition + mConfig.powercellIndexDistance;
+		mMasterSparkEncWantedPosition = robotState.indexerMasterEncPosition + mConfig.powercellIndexDistance;
+		mSlaveSparkEncWantedPosition = robotState.indexerSlaveEncPosition + mConfig.powercellIndexDistance;
 	}
 
 	@Override
-	protected ControllerOutput update(RobotState robotState) {
+	protected void update(RobotState robotState) {
 		System.out.println("Running Index Controller");
-		mPIDController.setPID(mConfig.positionGains.p, mConfig.positionGains.i, mConfig.positionGains.d);
-		LiveGraph.add("Target", mIndexerWantedPosition);
-
-		mOutputs.setPercentOutput(MathUtil.clamp(mPIDController.calculate(robotState.indexerEncPosition, mIndexerWantedPosition), -0.3, 0.3));
-		return super.update(robotState);
+		mMasterSparkPIDController.setPID(mConfig.masterSparkPositionGains.p, mConfig.masterSparkPositionGains.i, mConfig.masterSparkPositionGains.d);
+		mSlaveSparkPIDController.setPID(mConfig.slaveSparkPositionGains.p, mConfig.slaveSparkPositionGains.i, mConfig.slaveSparkPositionGains.d);
+		LiveGraph.add("MasterTarget", mMasterSparkEncWantedPosition);
+		LiveGraph.add("SlaveTarget", mSlaveSparkEncWantedPosition);
+		mMasterSparkOutput.setPercentOutput(MathUtil.clamp(mMasterSparkPIDController.calculate(robotState.indexerMasterEncPosition, mMasterSparkEncWantedPosition), -0.3, 0.3));
+		mSlaveSparkOutput.setPercentOutput(MathUtil.clamp(mSlaveSparkPIDController.calculate(robotState.indexerSlaveEncPosition, mSlaveSparkEncWantedPosition), -0.3, 0.3));
 	}
 
 	@Override
 	protected boolean isFinished() {
 		return super.isFinished();
 	}
+
+	@Override
+	protected ControllerOutput getMasterSparkOutput() {
+		return mMasterSparkOutput;
+	}
+
+	@Override
+	protected ControllerOutput getSlaveSparkOutput() {
+		return mSlaveSparkOutput;
+	}
 }
+

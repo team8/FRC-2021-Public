@@ -11,6 +11,8 @@ import com.palyrobotics.frc2020.subsystems.controllers.indexer_column.UnIndexCol
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.ControllerOutput;
 
+import java.util.List;
+
 public class Indexer extends SubsystemBase {
 
 	public enum State {
@@ -19,17 +21,25 @@ public class Indexer extends SubsystemBase {
 
 	public abstract static class IndexerColumnController {
 
-		protected ControllerOutput mOutputs = new ControllerOutput();
+		protected ControllerOutput mMasterSparkOutput = new ControllerOutput();
+		protected ControllerOutput mSlaveSparkOutput = new ControllerOutput();
 
 		protected IndexerColumnController(@ReadOnly RobotState state) {
 		}
 
-		protected ControllerOutput update(@ReadOnly RobotState robotState) {
-			return mOutputs;
+		protected void update(@ReadOnly RobotState robotState) {
 		}
 
 		protected boolean isFinished() {
 			return true;
+		}
+
+		protected ControllerOutput getMasterSparkOutput() {
+			return mMasterSparkOutput;
+		}
+
+		protected ControllerOutput getSlaveSparkOutput() {
+			return mSlaveSparkOutput;
 		}
 	}
 
@@ -37,7 +47,8 @@ public class Indexer extends SubsystemBase {
 	private static final IndexerConfig mConfig = Configs.get(IndexerConfig.class);
 	private static State mActiveState = State.IDLE;
 	private static IndexerColumnController mRunningController = null;
-	private static ControllerOutput mIndexerColumnOutput = new ControllerOutput();
+	private static ControllerOutput mMasterIndexerColumnOutput = new ControllerOutput(),
+			mSlaveIndexerColumnOutput = new ControllerOutput();
 	private static ControllerOutput mRightVTalonOutput = new ControllerOutput(),
 			mLeftVTalonOutput = new ControllerOutput();
 	private static boolean mBlockingSolenoidOutput, mHopperSolenoidOutput;
@@ -84,10 +95,13 @@ public class Indexer extends SubsystemBase {
 			}
 		}
 		if (mRunningController != null) {
-			mIndexerColumnOutput = mRunningController.update(state);
+			mRunningController.update(state);
+			mMasterIndexerColumnOutput = mRunningController.getMasterSparkOutput();
+			mSlaveIndexerColumnOutput = mRunningController.getSlaveSparkOutput();
 		} else {
 			System.out.println("Indexer @ Idle");
-			mIndexerColumnOutput.setIdle();
+			mMasterIndexerColumnOutput.setIdle();
+			mSlaveIndexerColumnOutput.setIdle();
 		}
 		mBlockingSolenoidOutput = !mConfig.blockingSolenoidExtended;
 		mHopperSolenoidOutput = mConfig.hopperSolenoidExtended;
@@ -101,8 +115,12 @@ public class Indexer extends SubsystemBase {
 		return mLeftVTalonOutput;
 	}
 
-	public ControllerOutput getIndexerColumnOutput() {
-		return mIndexerColumnOutput;
+	public ControllerOutput getMasterIndexerColumnOutput() {
+		return mMasterIndexerColumnOutput;
+	}
+
+	public ControllerOutput getSlaveIndexerColumnOutput() {
+		return mSlaveIndexerColumnOutput;
 	}
 
 	public boolean getBlockingSolenoidOutput() {

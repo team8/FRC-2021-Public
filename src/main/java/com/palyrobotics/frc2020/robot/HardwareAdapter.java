@@ -95,6 +95,7 @@ public class HardwareAdapter {
 		final Spark slaveColumnSpark = new Spark(sPortConstants.nariIndexerSlaveId, "slaveColumnSpark"),
 				masterColumnSpark = new Spark(sPortConstants.nariIndexerMasterId, "masterColumnSpark");
 		final CANEncoder masterColumnSparkEncoder = masterColumnSpark.getEncoder();
+		final CANEncoder slaveColumnSparkEncoder = slaveColumnSpark.getEncoder();
 		final List<Spark> columnSparks = List.of(masterColumnSpark, slaveColumnSpark);
 		final Talon leftVTalon = new Talon(sPortConstants.nariIndexerLeftVTalonId, "leftVTalon"),
 				rightVTalon = new Talon(sPortConstants.nariIndexerRightVTalonId, "rightVTalon");

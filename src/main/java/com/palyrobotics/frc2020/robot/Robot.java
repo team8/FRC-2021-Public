@@ -240,9 +240,13 @@ public class Robot extends TimedRobot {
 		}
 	}
 
+
+
 	private void updateSubsystemsAndApplyOutputs() {
 		System.out.println("e");
 		resetOdometryIfWanted();
+
+
 		for (SubsystemBase subsystem : mEnabledSubsystems) {
 			subsystem.update(mCommands, mRobotState);
 			sLoopDebugger.addPoint(subsystem.getName());
