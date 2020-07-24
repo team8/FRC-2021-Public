@@ -10,6 +10,7 @@
   "leftVTalonPo" : 0.4,
   "blockingSolenoidExtended" : false,
   "hopperSolenoidExtended" : false,
+  "indexFinishedMinThreshold" : 5,
   "masterSparkPositionGains": {
     "p": 0.05
   },
