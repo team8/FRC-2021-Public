@@ -2,7 +2,6 @@ package com.palyrobotics.frc2020.subsystems.controllers.indexer_column;
 
 import com.palyrobotics.frc2020.robot.RobotState;
 import com.palyrobotics.frc2020.subsystems.Indexer;
-import com.palyrobotics.frc2020.util.control.ControllerOutput;
 
 public class UnIndexColumnController extends Indexer.IndexerColumnController {
 
@@ -11,22 +10,12 @@ public class UnIndexColumnController extends Indexer.IndexerColumnController {
 	}
 
 	@Override
-	protected void update(RobotState robotState) {
+	protected void update(RobotState state) {
 		System.out.println("Running UnIndex Controller");
 	}
 
 	@Override
-	protected boolean isFinished() {
-		return super.isFinished();
-	}
-
-	@Override
-	protected ControllerOutput getMasterSparkOutput() {
-		return super.getMasterSparkOutput();
-	}
-
-	@Override
-	protected ControllerOutput getSlaveSparkOutput() {
-		return super.getSlaveSparkOutput();
+	protected boolean isFinished(RobotState state) {
+		return super.isFinished(state);
 	}
 }

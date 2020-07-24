@@ -7,7 +7,7 @@ public class IndexerConfig extends SubsystemConfigBase {
 
 	public int columnStallCurrentLimit, columnFreeCurrentLimit, vTalonCurrentLimit;
 	public double rampRate, powercellIndexDistance,
-			feedSpeed, reverseFeedSpeed, rightVTalonPo, leftVTalonPo;
+			feedSpeed, reverseFeedSpeed, rightVTalonPo, leftVTalonPo, indexFinishedMinThreshold;
 	public boolean blockingSolenoidExtended, hopperSolenoidExtended;
 	public Gains masterSparkPositionGains, masterSparkVelocityGains, slaveSparkPositionGains, slaveSparkVelocityGains;
 
