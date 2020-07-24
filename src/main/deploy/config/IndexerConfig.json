@@ -12,7 +12,8 @@
   "hopperSolenoidExtended" : false,
   "indexFinishedMinThreshold" : 5,
   "masterSparkPositionGains": {
-    "p": 0.05
+    "p": 0.3,
+    "d": 0.001
   },
   "masterSparkVelocityGains": {
     "f": 0.02,
@@ -20,7 +21,8 @@
     "d": 0.000028
   },
   "slaveSparkPositionGains": {
-    "p": 0.05
+    "p": 0.3,
+    "d": 0.001
   },
   "slaveSparkVelocityGains": {
     "p": 0.05

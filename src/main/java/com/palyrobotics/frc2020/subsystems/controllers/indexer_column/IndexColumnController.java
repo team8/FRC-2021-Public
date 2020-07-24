@@ -18,7 +18,8 @@ public class IndexColumnController extends Indexer.IndexerColumnController {
 
 	public IndexColumnController(RobotState state) {
 		super(state);
-		mMasterSparkEncWantedPosition = state.indexerMasterEncPosition + mConfig.powercellIndexDistance;
+		mMasterSparkEncWantedPosition = state.indexerMasterEncPosition + mConfig.powercellIndexDistance - 4
+		;
 		mSlaveSparkEncWantedPosition = state.indexerSlaveEncPosition + mConfig.powercellIndexDistance;
 	}
 
@@ -29,6 +30,7 @@ public class IndexColumnController extends Indexer.IndexerColumnController {
 		mSlaveSparkPIDController.setPID(mConfig.slaveSparkPositionGains.p, mConfig.slaveSparkPositionGains.i, mConfig.slaveSparkPositionGains.d);
 		LiveGraph.add("MasterTarget", mMasterSparkEncWantedPosition);
 		LiveGraph.add("SlaveTarget", mSlaveSparkEncWantedPosition);
+		LiveGraph.add("isFinished", Math.abs(mMasterSparkEncWantedPosition - state.indexerMasterEncPosition));
 		mMasterSparkOutput.setPercentOutput(MathUtil.clamp(mMasterSparkPIDController.calculate(state.indexerMasterEncPosition, mMasterSparkEncWantedPosition), -0.3, 0.3));
 		mSlaveSparkOutput.setPercentOutput(MathUtil.clamp(mSlaveSparkPIDController.calculate(state.indexerSlaveEncPosition, mSlaveSparkEncWantedPosition), -0.3, 0.3));
 	}
