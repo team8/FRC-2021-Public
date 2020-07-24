@@ -13,10 +13,10 @@ public class LiveGraph {
 //	}
 
 	public static void add(String key, double value) {
-//		sLiveTable.getEntry(key).setDouble(value);
+		sLiveTable.getEntry(key).setDouble(value);
 	}
 
-	public static void add(String key, boolean value) {
-		sLiveTable.getEntry(key).setBoolean(value);
-	}
+//	public static void add(String key, boolean value) {
+//		sLiveTable.getEntry(key).setBoolean(value);
+//	}
 }
