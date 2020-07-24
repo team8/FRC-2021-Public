@@ -6,9 +6,9 @@ import com.palyrobotics.frc2020.util.control.Gains;
 public class IndexerConfig extends SubsystemConfigBase {
 
 	public int columnStallCurrentLimit, columnFreeCurrentLimit, vTalonCurrentLimit;
-	public double rampRate, nativeToInchPosConversion, powercellIndexDistance,
+	public double rampRate, powercellIndexDistance,
 			feedSpeed, reverseFeedSpeed, rightVTalonPo, leftVTalonPo;
 	public boolean blockingSolenoidExtended, hopperSolenoidExtended;
-	public Gains positionGains;
+	public Gains positionGains, velocityGains;
 
 }
