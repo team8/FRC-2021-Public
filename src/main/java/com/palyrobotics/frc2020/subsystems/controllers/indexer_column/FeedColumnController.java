@@ -4,9 +4,9 @@ import com.palyrobotics.frc2020.config.subsystem.IndexerConfig;
 import com.palyrobotics.frc2020.robot.RobotState;
 import com.palyrobotics.frc2020.subsystems.Indexer;
 import com.palyrobotics.frc2020.util.config.Configs;
-import com.palyrobotics.frc2020.util.control.ControllerOutput;
 
 public class FeedColumnController extends Indexer.IndexerColumnController {
+
 	private IndexerConfig mConfig = Configs.get(IndexerConfig.class);
 
 	public FeedColumnController(RobotState state) {
@@ -14,24 +14,14 @@ public class FeedColumnController extends Indexer.IndexerColumnController {
 	}
 
 	@Override
-	protected void update(RobotState robotState) {
+	protected void update(RobotState state) {
 		System.out.println("Running Feed Controller");
 		mMasterSparkOutput.setPercentOutput(0.3);
 		mSlaveSparkOutput.setPercentOutput(0.3);
 	}
 
 	@Override
-	protected boolean isFinished() {
-		return super.isFinished();
-	}
-
-	@Override
-	protected ControllerOutput getMasterSparkOutput() {
-		return mMasterSparkOutput;
-	}
-
-	@Override
-	protected ControllerOutput getSlaveSparkOutput() {
-		return mSlaveSparkOutput;
+	protected boolean isFinished(RobotState state) {
+		return super.isFinished(state);
 	}
 }
