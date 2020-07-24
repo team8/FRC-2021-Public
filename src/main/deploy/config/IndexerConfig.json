@@ -10,12 +10,18 @@
   "leftVTalonPo" : 0.4,
   "blockingSolenoidExtended" : false,
   "hopperSolenoidExtended" : false,
-  "positionGains": {
+  "masterSparkPositionGains": {
     "p": 0.05
   },
-  "velocityGains": {
+  "masterSparkVelocityGains": {
     "f": 0.02,
     "p": 0.0014,
     "d": 0.000028
+  },
+  "slaveSparkPositionGains": {
+    "p": 0.05
+  },
+  "slaveSparkVelocityGains": {
+    "p": 0.05
   }
 }

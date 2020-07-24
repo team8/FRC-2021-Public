@@ -9,6 +9,6 @@ public class IndexerConfig extends SubsystemConfigBase {
 	public double rampRate, powercellIndexDistance,
 			feedSpeed, reverseFeedSpeed, rightVTalonPo, leftVTalonPo;
 	public boolean blockingSolenoidExtended, hopperSolenoidExtended;
-	public Gains positionGains, velocityGains;
+	public Gains masterSparkPositionGains, masterSparkVelocityGains, slaveSparkPositionGains, slaveSparkVelocityGains;
 
 }
