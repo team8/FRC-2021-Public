@@ -11,6 +11,7 @@ import com.palyrobotics.frc2020.robot.HardwareAdapter.Joysticks;
 import com.palyrobotics.frc2020.subsystems.Intake;
 import com.palyrobotics.frc2020.subsystems.Lighting;
 import com.palyrobotics.frc2020.subsystems.Indexer;
+import com.palyrobotics.frc2020.util.dashboard.LiveGraph;
 import com.palyrobotics.frc2020.util.input.Joystick;
 import com.palyrobotics.frc2020.util.input.XboxController;
 import com.palyrobotics.frc2020.vision.Limelight;

@@ -117,7 +117,6 @@ public class HardwareWriter {
 			spark.setInverted(true);
 		}
 		hardware.slaveColumnSpark.follow(hardware.masterColumnSpark);
-		hardware.masterColumnSparkEncoder.setPositionConversionFactor(mIndexerConfig.nativeToInchPosConversion);
 		for (Talon talon : hardware.vTalons) {
 			talon.configFactoryDefault(kTimeoutMs);
 			SupplyCurrentLimitConfiguration vTalonSupplyCurrentLimit = new SupplyCurrentLimitConfiguration(true, mIndexerConfig.vTalonCurrentLimit, 0, kTimeoutMs / 1000.0);

@@ -3,16 +3,19 @@
   "columnFreeCurrentLimit" : 20,
   "vTalonCurrentLimit" : 5,
   "rampRate" : 0.1,
-  "nativeToInchPosConversion" : 1.0,
   "powercellIndexDistance" : 8.0,
   "feedSpeed" : 0,
   "reverseFeedSpeed" : 0,
-  "rightVTalonPo" : 0.3,
-  "leftVTalonPo" : 0.6,
+  "rightVTalonPo" : 0.2,
+  "leftVTalonPo" : 0.4,
   "blockingSolenoidExtended" : false,
   "hopperSolenoidExtended" : false,
   "positionGains": {
-    "f": 1,
-    "p": 1
+    "p": 0.05
+  },
+  "velocityGains": {
+    "f": 0.02,
+    "p": 0.0014,
+    "d": 0.000028
   }
 }

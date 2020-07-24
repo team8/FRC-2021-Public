@@ -180,7 +180,7 @@ public class Robot extends TimedRobot {
 			robotService.update(mRobotState, mCommands);
 		}
 		LiveGraph.add("visionEstimatedDistance", mLimelight.getEstimatedDistanceInches());
-		LiveGraph.add("isEnabled", isEnabled());
+//		LiveGraph.add("isEnabled", isEnabled());
 		mOperatorInterface.resetPeriodic(mCommands);
 	}
 
