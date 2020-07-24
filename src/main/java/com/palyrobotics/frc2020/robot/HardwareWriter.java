@@ -104,7 +104,8 @@ public class HardwareWriter {
 			spark.setOpenLoopRampRate(mIndexerConfig.rampRate);
 			spark.setInverted(true);
 		}
-		hardware.slaveColumnSpark.follow(hardware.masterColumnSpark);
+		hardware.masterColumnSparkEncoder.setPosition(0);
+		hardware.slaveColumnSparkEncoder.setPosition(0);
 		for (Talon talon : hardware.vTalons) {
 			talon.configFactoryDefault(kTimeoutMs);
 			SupplyCurrentLimitConfiguration vTalonSupplyCurrentLimit = new SupplyCurrentLimitConfiguration(true, mIndexerConfig.vTalonCurrentLimit, 0, kTimeoutMs / 1000.0);
@@ -122,6 +123,12 @@ public class HardwareWriter {
 		hardware.rightMasterFalcon.setSelectedSensorPosition(0);
 		Log.info(kLoggerTag, String.format("Drive sensors reset, gyro heading: %s", heading));
 	}
+
+	//	public void resetIndexerSensors() {
+//		var hardware = HardwareAdapter.IndexerHardware.getInstance();
+//		hardware.masterColumnSparkEncoder.setPosition(0);
+//		hardware.slaveColumnSparkEncoder.setPosition(0);
+//	}
 
 	void setDriveNeutralMode(NeutralMode neutralMode) {
 		var hardware = HardwareAdapter.DriveHardware.getInstance();
@@ -161,7 +168,8 @@ public class HardwareWriter {
 
 	private void updateIndexer() {
 		var hardware = HardwareAdapter.IndexerHardware.getInstance();
-		hardware.masterColumnSpark.setOutput(mIndexer.getIndexerColumnOutput());
+		hardware.masterColumnSpark.setOutput(mIndexer.getMasterIndexerColumnOutput());
+		hardware.slaveColumnSpark.setOutput(mIndexer.getSlaveIndexerColumnOutput());
 		hardware.leftVTalon.setOutput(mIndexer.getLeftVTalonOutput());
 		hardware.rightVTalon.setOutput(mIndexer.getRightVTalonOutput());
 		hardware.blockingSolenoid.set(mIndexer.getBlockingSolenoidOutput());

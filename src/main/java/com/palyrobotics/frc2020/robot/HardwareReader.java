@@ -73,10 +73,13 @@ public class HardwareReader {
 		var hardware = HardwareAdapter.IndexerHardware.getInstance();
 		state.indexerPos1Blocked = !hardware.pos1Sensor.get();
 		state.indexerPos4Blocked = !hardware.pos4Sensor.get();
-		state.indexerEncPosition = hardware.masterColumnSparkEncoder.getPosition();
-		state.indexerEncVelocity = hardware.masterColumnSparkEncoder.getVelocity();
-		LiveGraph.add("indexerEncoderPosition", state.indexerEncPosition);
-		LiveGraph.add("indexerEncoderVelocity", state.indexerEncVelocity);
+		state.indexerMasterEncPosition = hardware.masterColumnSparkEncoder.getPosition();
+		state.indexerMasterEncVelocity = hardware.masterColumnSparkEncoder.getVelocity();
+		state.indexerSlaveEncPosition = hardware.slaveColumnSparkEncoder.getPosition();
+		state.indexerSlaveEncVelocity = hardware.slaveColumnSparkEncoder.getVelocity();
+		LiveGraph.add("masterIndexerEncoderPosition", state.indexerMasterEncPosition);
+		LiveGraph.add("masterIndexerEncoderVelocity", state.indexerMasterEncVelocity);
+		LiveGraph.add("slaveIndexerEncoderPosition", state.indexerSlaveEncPosition);
 	}
 
 	private void checkSparkFaults(Spark spark) {

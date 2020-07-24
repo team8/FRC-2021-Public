@@ -11,14 +11,24 @@ public class ReverseFeedColumnController extends Indexer.IndexerColumnController
 	}
 
 	@Override
-	protected ControllerOutput update(RobotState robotState) {
+	protected void update(RobotState robotState) {
 		System.out.println("Running Reverse Feed Controller");
-		mOutputs.setPercentOutput(-0.3);
-		return super.update(robotState);
+		mMasterSparkOutput.setPercentOutput(-0.3);
+		mSlaveSparkOutput.setPercentOutput(-0.3);
 	}
 
 	@Override
 	protected boolean isFinished() {
 		return super.isFinished();
+	}
+
+	@Override
+	protected ControllerOutput getMasterSparkOutput() {
+		return mMasterSparkOutput;
+	}
+
+	@Override
+	protected ControllerOutput getSlaveSparkOutput() {
+		return mSlaveSparkOutput;
 	}
 }
