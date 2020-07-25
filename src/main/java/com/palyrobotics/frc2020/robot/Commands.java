@@ -35,8 +35,8 @@ public class Commands {
 	private double driveWantedYawDegrees;
 
 	/* Indexer */
-	public Indexer.State indexerWantedState;
-
+	public Indexer.ColumnState indexerColumnWantedState;
+	public Indexer.VSingulatorState indexerVSingulatorWantedState;
 	/* Vision */
 	public int visionWantedPipeline;
 	public boolean visionWanted;

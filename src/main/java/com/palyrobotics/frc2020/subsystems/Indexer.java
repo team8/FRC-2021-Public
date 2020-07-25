@@ -13,14 +13,17 @@ import com.palyrobotics.frc2020.util.control.ControllerOutput;
 
 public class Indexer extends SubsystemBase {
 
-	public enum State {
+	public enum ColumnState {
 		INDEX, UN_INDEX, FEED, REVERSE_FEED, IDLE
+	}
+
+	public enum VSingulatorState {
+		FORWARD, REVERSE, IDLE
 	}
 
 	public abstract static class IndexerColumnController {
 
-		protected ControllerOutput mMasterSparkOutput = new ControllerOutput(), mSlaveSparkOutput = new ControllerOutput(),
-				mRightVTalonOutput = new ControllerOutput(), mLeftVTalonOutput = new ControllerOutput();
+		protected ControllerOutput mMasterSparkOutput = new ControllerOutput(), mSlaveSparkOutput = new ControllerOutput();
 
 		protected IndexerColumnController(@ReadOnly RobotState state) {
 		}
@@ -35,7 +38,7 @@ public class Indexer extends SubsystemBase {
 
 	private static final Indexer sInstance = new Indexer();
 	private static final IndexerConfig mConfig = Configs.get(IndexerConfig.class);
-	private static State mActiveState = State.IDLE;
+	private static ColumnState mActiveColumnState = ColumnState.IDLE;
 	private static IndexerColumnController mRunningController = null;
 	private static ControllerOutput mMasterIndexerColumnOutput = new ControllerOutput(),
 			mSlaveIndexerColumnOutput = new ControllerOutput(), mRightVTalonOutput = new ControllerOutput(),
@@ -48,28 +51,28 @@ public class Indexer extends SubsystemBase {
 
 	@Override
 	public void update(Commands commands, RobotState state) {
-		boolean isNewState = mRunningController == null || mRunningController.isFinished(state);
+		boolean isNewColumnState = mRunningController == null || mRunningController.isFinished(state);
 
-		if (isNewState) {
-			switch (commands.indexerWantedState) {
+		if (isNewColumnState) {
+			switch (commands.indexerColumnWantedState) {
 				case FEED:
-					mActiveState = State.FEED;
+					mActiveColumnState = ColumnState.FEED;
 					mRunningController = new FeedColumnController(state);
 					break;
 				case REVERSE_FEED:
-					mActiveState = State.REVERSE_FEED;
+					mActiveColumnState = ColumnState.REVERSE_FEED;
 					mRunningController = new ReverseFeedColumnController(state);
 					break;
 				case INDEX:
-					mActiveState = State.INDEX;
+					mActiveColumnState = ColumnState.INDEX;
 					mRunningController = new IndexColumnController(state);
 					break;
 				case UN_INDEX:
-					mActiveState = State.UN_INDEX;
+					mActiveColumnState = ColumnState.UN_INDEX;
 					mRunningController = new UnIndexColumnController(state);
 					break;
 				default:
-					mActiveState = State.IDLE;
+					mActiveColumnState = ColumnState.IDLE;
 					mRunningController = null;
 			}
 		}
@@ -77,14 +80,21 @@ public class Indexer extends SubsystemBase {
 			mRunningController.update(state);
 			mMasterIndexerColumnOutput = mRunningController.mMasterSparkOutput;
 			mSlaveIndexerColumnOutput = mRunningController.mSlaveSparkOutput;
-			mRightVTalonOutput = mRunningController.mRightVTalonOutput;
-			mLeftVTalonOutput = mRunningController.mLeftVTalonOutput;
 		} else {
 			System.out.println("Indexer @ Idle");
 			mMasterIndexerColumnOutput.setIdle();
 			mSlaveIndexerColumnOutput.setIdle();
-			mRightVTalonOutput.setIdle();
+		}
+
+		if (commands.indexerVSingulatorWantedState == VSingulatorState.FORWARD) {
+			mLeftVTalonOutput.setPercentOutput(mConfig.leftVTalonPo);
+			mRightVTalonOutput.setPercentOutput(mConfig.rightVTalonPo);
+		} else if (commands.indexerVSingulatorWantedState == VSingulatorState.REVERSE) {
+			mLeftVTalonOutput.setPercentOutput(-mConfig.leftVTalonPo);
+			mRightVTalonOutput.setPercentOutput(-mConfig.rightVTalonPo);
+		} else {
 			mLeftVTalonOutput.setIdle();
+			mRightVTalonOutput.setIdle();
 		}
 		mBlockingSolenoidOutput = !mConfig.blockingSolenoidExtended;
 		mHopperSolenoidOutput = mConfig.hopperSolenoidExtended;
