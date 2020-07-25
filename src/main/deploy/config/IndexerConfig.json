@@ -6,11 +6,14 @@
   "powercellIndexDistance" : 8.0,
   "feedSpeed" : 0,
   "reverseFeedSpeed" : 0,
-  "rightVTalonPo" : 0.2,
-  "leftVTalonPo" : 0.4,
+  "rightVTalonPo" : 0.25,
+  "leftVTalonPo" : 0.3,
   "blockingSolenoidExtended" : false,
   "hopperSolenoidExtended" : false,
   "indexFinishedMinThreshold" : 5,
+  "indexDuration" : 0.3,
+  "indexControllerDuration" : 1.2,
+  "maximumIndexerColumnPo" : 0.5,
   "masterSparkPositionGains": {
     "p": 0.3,
     "d": 0.001
@@ -22,7 +25,7 @@
   },
   "slaveSparkPositionGains": {
     "p": 0.3,
-    "d": 0.001
+    "d": 0.005
   },
   "slaveSparkVelocityGains": {
     "p": 0.05
