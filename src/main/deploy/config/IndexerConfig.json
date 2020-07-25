@@ -3,7 +3,7 @@
   "columnFreeCurrentLimit" : 20,
   "vTalonCurrentLimit" : 5,
   "rampRate" : 0.1,
-  "powercellIndexDistance" : 9.0,
+  "powercellIndexDistance" : 7.0,
   "feedSpeed" : 0,
   "reverseFeedSpeed" : 0,
   "rightVTalonPo" : 0.5,
