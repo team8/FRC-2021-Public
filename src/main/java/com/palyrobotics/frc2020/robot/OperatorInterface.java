@@ -90,14 +90,12 @@ public class OperatorInterface {
 	}
 
 	private void updateIndexerCommands(Commands commands, RobotState state) {
-		System.out.println(state.indexerPos1Blocked);
 		if (mOperatorXboxController.getDPadRight()) {
 			commands.indexerWantedState = Indexer.State.FEED;
 		} else if (mOperatorXboxController.getDPadDown()) {
 			commands.indexerWantedState = Indexer.State.REVERSE_FEED;
-		} else if (state.indexerPos1Blocked) {
+		} else if (state.indexerPos1Blocked && !state.indexerPos4Blocked) {
 			commands.indexerWantedState = Indexer.State.INDEX;
-			System.out.println("entered");
 		} else {
 			commands.indexerWantedState = Indexer.State.IDLE;
 		}
