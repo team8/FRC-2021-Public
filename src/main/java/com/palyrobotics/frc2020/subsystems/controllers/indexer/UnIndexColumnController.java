@@ -1,4 +1,4 @@
-package com.palyrobotics.frc2020.subsystems.controllers.indexer_column;
+package com.palyrobotics.frc2020.subsystems.controllers.indexer;
 
 import com.palyrobotics.frc2020.robot.RobotState;
 import com.palyrobotics.frc2020.subsystems.Indexer;
