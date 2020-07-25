@@ -16,8 +16,10 @@ public class FeedColumnController extends Indexer.IndexerColumnController {
 	@Override
 	protected void update(RobotState state) {
 		System.out.println("Running Feed Controller");
-		mMasterSparkOutput.setPercentOutput(0.3);
-		mSlaveSparkOutput.setPercentOutput(0.3);
+		mMasterSparkOutput.setPercentOutput(0.8);
+		mSlaveSparkOutput.setPercentOutput(0.8);
+		mRightVTalonOutput.setPercentOutput(0.4);
+		mLeftVTalonOutput.setPercentOutput(0.4);
 	}
 
 	@Override
