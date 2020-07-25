@@ -33,13 +33,8 @@ public class IndexColumnController extends Indexer.IndexerColumnController {
 
 		mMasterSparkOutput.setPercentOutput(MathUtil.clamp(mMasterSparkPIDController.calculate(state.indexerMasterEncPosition, mMasterSparkEncWantedPosition), -mConfig.maximumIndexerColumnPo, mConfig.maximumIndexerColumnPo));
 		mSlaveSparkOutput.setPercentOutput(MathUtil.clamp(mSlaveSparkPIDController.calculate(state.indexerSlaveEncPosition, mSlaveSparkEncWantedPosition), -mConfig.maximumIndexerColumnPo, mConfig.maximumIndexerColumnPo));
-		if (mTimer.get() > mConfig.indexDuration) {
-			mRightVTalonOutput.setPercentOutput(mConfig.rightVTalonPo);
-			mLeftVTalonOutput.setPercentOutput(mConfig.leftVTalonPo);
-		} else {
-			mRightVTalonOutput.setIdle();
-			mLeftVTalonOutput.setIdle();
-		}
+		mRightVTalonOutput.setPercentOutput(mConfig.rightVTalonPo);
+		mLeftVTalonOutput.setPercentOutput(mConfig.leftVTalonPo);
 		LiveGraph.add("MasterSparkPo", MathUtil.clamp(mMasterSparkPIDController.calculate(state.indexerMasterEncPosition, mMasterSparkEncWantedPosition), -mConfig.maximumIndexerColumnPo, mConfig.maximumIndexerColumnPo));
 		LiveGraph.add("MasterTarget", mMasterSparkEncWantedPosition);
 		LiveGraph.add("SlaveTarget", mSlaveSparkEncWantedPosition);
@@ -48,6 +43,6 @@ public class IndexColumnController extends Indexer.IndexerColumnController {
 
 	@Override
 	protected boolean isFinished(RobotState state) {
-		return Math.abs(mMasterSparkEncWantedPosition - state.indexerMasterEncPosition) < mConfig.indexFinishedMinThreshold && Math.abs(mSlaveSparkEncWantedPosition - state.indexerSlaveEncPosition) < mConfig.indexFinishedMinThreshold && mTimer.get() > mConfig.indexControllerDuration;
+		return Math.abs(mMasterSparkEncWantedPosition - state.indexerMasterEncPosition) < mConfig.indexFinishedMinThreshold && Math.abs(mSlaveSparkEncWantedPosition - state.indexerSlaveEncPosition) < mConfig.indexFinishedMinThreshold;
 	}
 }
