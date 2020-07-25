@@ -99,7 +99,7 @@ public class OperatorInterface {
 		} else {
 			commands.indexerColumnWantedState = Indexer.ColumnState.IDLE;
 		}
-		if (mOperatorXboxController.getYButton()) {
+		if (mOperatorXboxController.getYButton() && !state.indexerPos1Blocked) {
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.FORWARD;
 		}
 		else if (mOperatorXboxController.getAButton()) {
