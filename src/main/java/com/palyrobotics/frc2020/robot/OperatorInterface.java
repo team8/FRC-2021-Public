@@ -98,8 +98,7 @@ public class OperatorInterface {
 		} else if (state.indexerPos1Blocked) {
 			commands.indexerWantedState = Indexer.State.INDEX;
 			System.out.println("entered");
-		}
-		else {
+		} else {
 			commands.indexerWantedState = Indexer.State.IDLE;
 		}
 	}
