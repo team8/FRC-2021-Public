@@ -40,6 +40,7 @@ public class IndexColumnController extends Indexer.IndexerColumnController {
 			mRightVTalonOutput.setIdle();
 			mLeftVTalonOutput.setIdle();
 		}
+		LiveGraph.add("MasterSparkPo", MathUtil.clamp(mMasterSparkPIDController.calculate(state.indexerMasterEncPosition, mMasterSparkEncWantedPosition), -mConfig.maximumIndexerColumnPo, mConfig.maximumIndexerColumnPo));
 		LiveGraph.add("MasterTarget", mMasterSparkEncWantedPosition);
 		LiveGraph.add("SlaveTarget", mSlaveSparkEncWantedPosition);
 		LiveGraph.add("isFinished", Math.abs(mMasterSparkEncWantedPosition - state.indexerMasterEncPosition));
