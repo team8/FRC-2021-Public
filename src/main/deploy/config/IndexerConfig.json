@@ -2,11 +2,11 @@
   "columnStallCurrentLimit" : 30,
   "columnFreeCurrentLimit" : 20,
   "vTalonCurrentLimit" : 5,
-  "rampRate" : 0.1,
-  "powercellIndexDistance" : 7.0,
+  "rampRate" : 0.2,
+  "powercellIndexDistance" : 8.0,
   "feedSpeed" : 0,
   "reverseFeedSpeed" : 0,
-  "rightVTalonPo" : 0.5,
+  "rightVTalonPo" : 0.3,
   "leftVTalonPo" : 0.5,
   "blockingSolenoidExtended" : false,
   "hopperSolenoidExtended" : false,
@@ -15,8 +15,9 @@
   "indexControllerDuration" : 1.2,
   "maximumIndexerColumnPo" : 0.7,
   "masterSparkPositionGains": {
-    "p": 0.5,
-    "d": 0.07
+    "p": 0.8,
+    "i": 0.01,
+    "d": 0.02
   },
   "masterSparkVelocityGains": {
     "f": 0.02,
@@ -24,8 +25,7 @@
     "d": 0.000028
   },
   "slaveSparkPositionGains": {
-    "p": 0.3,
-    "d": 0.005
+    "p": 0.1
   },
   "slaveSparkVelocityGains": {
     "p": 0.05
