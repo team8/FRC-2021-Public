@@ -90,15 +90,6 @@ public class OperatorInterface {
 	}
 
 	private void updateIndexerCommands(Commands commands, RobotState state) {
-		if (mOperatorXboxController.getDPadRight()) {
-			commands.indexerColumnWantedState = Indexer.ColumnState.FEED;
-		} else if (mOperatorXboxController.getDPadDown()) {
-			commands.indexerColumnWantedState = Indexer.ColumnState.REVERSE_FEED;
-		} else if (state.indexerPos1Blocked && !state.indexerPos4Blocked) {
-			commands.indexerColumnWantedState = Indexer.ColumnState.INDEX;
-		} else {
-			commands.indexerColumnWantedState = Indexer.ColumnState.IDLE;
-		}
 		if (mOperatorXboxController.getYButton() && !state.indexerPos1Blocked) {
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.FORWARD;
 		}
@@ -107,6 +98,17 @@ public class OperatorInterface {
 		}
 		else {
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.IDLE;
+		}
+		if (mOperatorXboxController.getDPadRight()) {
+			commands.indexerColumnWantedState = Indexer.ColumnState.FEED;
+			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.FORWARD;
+		} else if (mOperatorXboxController.getDPadDown()) {
+			commands.indexerColumnWantedState = Indexer.ColumnState.REVERSE_FEED;
+			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.REVERSE;
+		} else if (state.indexerPos1Blocked && !state.indexerPos4Blocked) {
+			commands.indexerColumnWantedState = Indexer.ColumnState.INDEX;
+		} else {
+			commands.indexerColumnWantedState = Indexer.ColumnState.IDLE;
 		}
 	}
 
