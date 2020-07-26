@@ -92,11 +92,9 @@ public class OperatorInterface {
 	private void updateIndexerCommands(Commands commands, RobotState state) {
 		if (mOperatorXboxController.getYButton() && !state.indexerPos1Blocked) {
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.FORWARD;
-		}
-		else if (mOperatorXboxController.getAButton()) {
+		} else if (mOperatorXboxController.getAButton()) {
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.REVERSE;
-		}
-		else {
+		} else {
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.IDLE;
 		}
 		if (mOperatorXboxController.getDPadRight()) {
