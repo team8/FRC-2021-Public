@@ -17,11 +17,12 @@ public class IndexColumnController extends Indexer.IndexerColumnController {
 	private final PIDController mSlaveSparkPIDController = new PIDController(mConfig.slaveSparkPositionGains.p, mConfig.slaveSparkPositionGains.i, mConfig.slaveSparkPositionGains.d);
 	private final double mMasterSparkEncWantedPosition, mSlaveSparkEncWantedPosition;
 	private final Timer mTimer = new Timer();
+	private final Integer kTimeout = 3;
 
 	public IndexColumnController(RobotState state) {
 		super(state);
 		mTimer.start();
-		mMasterSparkEncWantedPosition = state.indexerMasterEncPosition + mConfig.powercellIndexDistance - 4;
+		mMasterSparkEncWantedPosition = state.indexerMasterEncPosition + mConfig.powercellIndexDistance - 5;
 		mSlaveSparkEncWantedPosition = state.indexerSlaveEncPosition + mConfig.powercellIndexDistance;
 	}
 
@@ -41,6 +42,6 @@ public class IndexColumnController extends Indexer.IndexerColumnController {
 
 	@Override
 	protected boolean isFinished(RobotState state) {
-		return Math.abs(mMasterSparkEncWantedPosition - state.indexerMasterEncPosition) < mConfig.indexFinishedMinThreshold && Math.abs(mSlaveSparkEncWantedPosition - state.indexerSlaveEncPosition) < mConfig.indexFinishedMinThreshold;
+		return (Math.abs(mMasterSparkEncWantedPosition - state.indexerMasterEncPosition) < mConfig.indexFinishedMinThreshold && Math.abs(mSlaveSparkEncWantedPosition - state.indexerSlaveEncPosition) < mConfig.indexFinishedMinThreshold) || mTimer.get() > kTimeout;
 	}
 }

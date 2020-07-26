@@ -22,6 +22,6 @@ public class FeedColumnController extends Indexer.IndexerColumnController {
 
 	@Override
 	protected boolean isFinished(RobotState state) {
-		return super.isFinished(state);
+		return true;
 	}
 }
