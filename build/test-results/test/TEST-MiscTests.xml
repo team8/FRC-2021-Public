@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="MiscTests" tests="4" skipped="0" failures="0" errors="0" timestamp="2020-08-13T02:58:39" hostname="ZEPHYRUSG14" time="3.251">
+  <properties/>
+  <testcase name="testSparkWrapper()" classname="MiscTests" time="2.942"/>
+  <testcase name="testMisc()" classname="MiscTests" time="0.002"/>
+  <testcase name="testSolenoidState()" classname="MiscTests" time="0.294"/>
+  <testcase name="testInterpolatingTreeMap()" classname="MiscTests" time="0.008"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

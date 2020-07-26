@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d6f1a065-87da-4eed-a47b-8ae2e4de1b98" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/linux_env/lib64" beforeDir="false" afterPath="$PROJECT_DIR$/linux_env/lib64" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/deploy/config/RobotConfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/deploy/config/RobotConfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/robot/Commands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/robot/Commands.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/util/control/Talon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/util/control/Talon.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="FRC-2021-Private" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="FRC-2021-Private" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="FRC-2021-Private" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="FRC-2021-Private" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="documentation" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="FRC-2021-Private" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="embeddedtools" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="FRC-2021-Private" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="gradlerio" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="FRC-2021-Private" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="help" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="FRC-2021-Private" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="other" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="FRC-2021-Private" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="team8" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="FRC-2021-Private" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="verification" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1f0ZufPkko1LYYHXPxAg86ZOY0S" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="full.screen.before.presentation.mode" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+    <property name="nodejs_package_manager_path" value="npm" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Gradle.FRC-2021-Private [build]">
+    <configuration name="RobotStarter" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.palyrobotics.frc2021.robot.RobotStarter" />
+      <module name="FRC-2021-Private.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.palyrobotics.frc2021.robot.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FRC-2021-Private [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="FRC-2021-Private [deploy]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="deploy" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="FRC-2021-Private [spotlessJavaApply]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="spotlessJavaApply" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="FRC-2021-Private [test]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.FRC-2021-Private [build]" />
+        <item itemvalue="Gradle.FRC-2021-Private [spotlessJavaApply]" />
+        <item itemvalue="Gradle.FRC-2021-Private [test]" />
+        <item itemvalue="Application.RobotStarter" />
+        <item itemvalue="Gradle.FRC-2021-Private [deploy]" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d6f1a065-87da-4eed-a47b-8ae2e4de1b98" name="Default Changelist" comment="" />
+      <created>1595357195031</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1595357195031</updated>
+      <workItem from="1595357201912" duration="3864000" />
+      <workItem from="1595386388044" duration="9223000" />
+      <workItem from="1595472097886" duration="16000" />
+      <workItem from="1595527592167" duration="11000" />
+      <workItem from="1595527649140" duration="39282000" />
+      <workItem from="1595655266160" duration="703000" />
+      <workItem from="1595663737006" duration="536000" />
+      <workItem from="1595713053019" duration="20895000" />
+      <workItem from="1595752044874" duration="966000" />
+      <workItem from="1595876628591" duration="2624000" />
+      <workItem from="1595894845400" duration="5910000" />
+      <workItem from="1595975601166" duration="6274000" />
+      <workItem from="1595999334932" duration="4160000" />
+      <workItem from="1596080027482" duration="619000" />
+      <workItem from="1596134181755" duration="405000" />
+      <workItem from="1596144083636" duration="6956000" />
+      <workItem from="1596173193057" duration="15980000" />
+      <workItem from="1596248386325" duration="986000" />
+      <workItem from="1596249482057" duration="311000" />
+      <workItem from="1596297932554" duration="22613000" />
+      <workItem from="1596659245947" duration="2589000" />
+      <workItem from="1596733311991" duration="1810000" />
+      <workItem from="1596833556940" duration="121000" />
+      <workItem from="1596915897023" duration="3398000" />
+      <workItem from="1597000638969" duration="1495000" />
+      <workItem from="1597265542717" duration="3107000" />
+      <workItem from="1597349583001" duration="3936000" />
+      <workItem from="1597537387910" duration="1418000" />
+      <workItem from="1597635103140" duration="1313000" />
+      <workItem from="1597689729735" duration="2223000" />
+      <workItem from="1597819265715" duration="735000" />
+      <workItem from="1601058015699" duration="1469000" />
+      <workItem from="1601759443748" duration="595000" />
+      <workItem from="1601838486112" duration="3838000" />
+      <workItem from="1602533576948" duration="1456000" />
+      <workItem from="1602535055199" duration="3105000" />
+      <workItem from="1602691711914" duration="509000" />
+      <workItem from="1602692288629" duration="3185000" />
+      <workItem from="1602911497514" duration="2554000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="130" y="0" key="#Auto_Import" timestamp="1595357897660">
+      <screen x="0" y="0" width="1217" height="720" />
+    </state>
+    <state x="130" y="0" key="#Auto_Import/0.0.1217.720@0.0.1217.720" timestamp="1595357897660" />
+    <state x="65" y="16" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1597287673096">
+      <screen x="0" y="0" width="1218" height="720" />
+    </state>
+    <state x="65" y="16" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1218.720@0.0.1218.720" timestamp="1597287673096" />
+    <state x="169" y="64" key="#com.intellij.ide.util.MemberChooser" timestamp="1596217883680">
+      <screen x="0" y="0" width="1217" height="720" />
+    </state>
+    <state x="169" y="64" key="#com.intellij.ide.util.MemberChooser/0.0.1217.720@0.0.1217.720" timestamp="1596217883680" />
+    <state x="367" y="216" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1602691815811">
+      <screen x="0" y="0" width="1203" height="720" />
+    </state>
+    <state x="367" y="216" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1203.720@0.0.1203.720" timestamp="1602691815811" />
+    <state x="126" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1596395467184">
+      <screen x="0" y="0" width="1217" height="720" />
+    </state>
+    <state x="126" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1217.720@0.0.1217.720" timestamp="1596395467184" />
+    <state x="390" y="116" key="FileChooserDialogImpl" timestamp="1596173783225">
+      <screen x="0" y="0" width="1217" height="720" />
+    </state>
+    <state x="390" y="116" key="FileChooserDialogImpl/0.0.1217.720@0.0.1217.720" timestamp="1596173783225" />
+    <state width="557" height="234" key="GridCell.Tab.0.bottom" timestamp="1602535044175">
+      <screen x="0" y="0" width="1203" height="720" />
+    </state>
+    <state width="557" height="234" key="GridCell.Tab.0.bottom/0.0.1203.720@0.0.1203.720" timestamp="1602535044175" />
+    <state width="1174" height="202" key="GridCell.Tab.0.bottom/0.0.1217.720@0.0.1217.720" timestamp="1596502556620" />
+    <state width="1175" height="226" key="GridCell.Tab.0.bottom/0.0.1218.720@0.0.1218.720" timestamp="1601058762963" />
+    <state width="557" height="234" key="GridCell.Tab.0.center" timestamp="1602535044175">
+      <screen x="0" y="0" width="1203" height="720" />
+    </state>
+    <state width="557" height="234" key="GridCell.Tab.0.center/0.0.1203.720@0.0.1203.720" timestamp="1602535044175" />
+    <state width="1174" height="202" key="GridCell.Tab.0.center/0.0.1217.720@0.0.1217.720" timestamp="1596502556620" />
+    <state width="1175" height="226" key="GridCell.Tab.0.center/0.0.1218.720@0.0.1218.720" timestamp="1601058762963" />
+    <state width="557" height="234" key="GridCell.Tab.0.left" timestamp="1602535044175">
+      <screen x="0" y="0" width="1203" height="720" />
+    </state>
+    <state width="557" height="234" key="GridCell.Tab.0.left/0.0.1203.720@0.0.1203.720" timestamp="1602535044175" />
+    <state width="1174" height="202" key="GridCell.Tab.0.left/0.0.1217.720@0.0.1217.720" timestamp="1596502556620" />
+    <state width="1175" height="226" key="GridCell.Tab.0.left/0.0.1218.720@0.0.1218.720" timestamp="1601058762962" />
+    <state width="557" height="234" key="GridCell.Tab.0.right" timestamp="1602535044175">
+      <screen x="0" y="0" width="1203" height="720" />
+    </state>
+    <state width="557" height="234" key="GridCell.Tab.0.right/0.0.1203.720@0.0.1203.720" timestamp="1602535044175" />
+    <state width="1174" height="202" key="GridCell.Tab.0.right/0.0.1217.720@0.0.1217.720" timestamp="1596502556620" />
+    <state width="1175" height="226" key="GridCell.Tab.0.right/0.0.1218.720@0.0.1218.720" timestamp="1601058762963" />
+    <state width="1175" height="226" key="GridCell.Tab.1.bottom" timestamp="1601058762963">
+      <screen x="0" y="0" width="1218" height="720" />
+    </state>
+    <state width="1046" height="209" key="GridCell.Tab.1.bottom/0.0.1217.720@0.0.1217.720" timestamp="1595636835225" />
+    <state width="1175" height="226" key="GridCell.Tab.1.bottom/0.0.1218.720@0.0.1218.720" timestamp="1601058762963" />
+    <state width="1175" height="226" key="GridCell.Tab.1.center" timestamp="1601058762963">
+      <screen x="0" y="0" width="1218" height="720" />
+    </state>
+    <state width="1046" height="209" key="GridCell.Tab.1.center/0.0.1217.720@0.0.1217.720" timestamp="1595636835225" />
+    <state width="1175" height="226" key="GridCell.Tab.1.center/0.0.1218.720@0.0.1218.720" timestamp="1601058762963" />
+    <state width="1175" height="226" key="GridCell.Tab.1.left" timestamp="1601058762963">
+      <screen x="0" y="0" width="1218" height="720" />
+    </state>
+    <state width="1046" height="209" key="GridCell.Tab.1.left/0.0.1217.720@0.0.1217.720" timestamp="1595636835224" />
+    <state width="1175" height="226" key="GridCell.Tab.1.left/0.0.1218.720@0.0.1218.720" timestamp="1601058762963" />
+    <state width="1175" height="226" key="GridCell.Tab.1.right" timestamp="1601058762963">
+      <screen x="0" y="0" width="1218" height="720" />
+    </state>
+    <state width="1046" height="209" key="GridCell.Tab.1.right/0.0.1217.720@0.0.1217.720" timestamp="1595636835225" />
+    <state width="1175" height="226" key="GridCell.Tab.1.right/0.0.1218.720@0.0.1218.720" timestamp="1601058762963" />
+    <state x="312" y="77" width="579" height="624" key="find.popup" timestamp="1602916420002">
+      <screen x="0" y="0" width="1203" height="720" />
+    </state>
+    <state x="312" y="77" width="579" height="624" key="find.popup/0.0.1203.720@0.0.1203.720" timestamp="1602916420002" />
+    <state x="316" y="77" width="585" height="566" key="find.popup/0.0.1217.720@0.0.1217.720" timestamp="1596392064028" />
+    <state x="316" y="77" width="586" height="566" key="find.popup/0.0.1218.720@0.0.1218.720" timestamp="1596917472254" />
+    <state x="266" y="161" key="run.anything.popup" timestamp="1595529709068">
+      <screen x="0" y="0" width="1217" height="720" />
+    </state>
+    <state x="266" y="161" key="run.anything.popup/0.0.1217.720@0.0.1217.720" timestamp="1595529709068" />
+    <state x="600" y="93" width="672" height="678" key="search.everywhere.popup" timestamp="1602913478773">
+      <screen x="0" y="0" width="1203" height="720" />
+    </state>
+    <state x="600" y="93" width="672" height="678" key="search.everywhere.popup/0.0.1203.720@0.0.1203.720" timestamp="1602913478772" />
+    <state x="607" y="93" width="672" height="678" key="search.everywhere.popup/0.0.1217.720@0.0.1217.720" timestamp="1596500961051" />
+    <state x="607" y="93" width="673" height="678" key="search.everywhere.popup/0.0.1218.720@0.0.1218.720" timestamp="1601058862402" />
+  </component>
+</project>
