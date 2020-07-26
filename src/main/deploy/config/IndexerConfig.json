@@ -10,13 +10,13 @@
   "leftVTalonPo" : 0.5,
   "blockingSolenoidExtended" : false,
   "hopperSolenoidExtended" : false,
-  "indexFinishedMinThreshold" : 5,
+  "indexFinishedMinThreshold" : 3,
   "indexDuration" : 0.15,
   "indexControllerDuration" : 1.2,
   "maximumIndexerColumnPo" : 0.7,
   "masterSparkPositionGains": {
-    "p": 0.3,
-    "d": 0.001
+    "p": 0.5,
+    "d": 0.07
   },
   "masterSparkVelocityGains": {
     "f": 0.02,
