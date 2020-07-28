@@ -40,6 +40,7 @@ public class RobotState {
 	public double indexerMasterEncPosition, indexerMasterEncVelocity, indexerSlaveEncPosition, indexerSlaveEncVelocity;
 
 	public GamePeriod gamePeriod = GamePeriod.DISABLED;
+	public double gameTime = 0;
 	public String gameData;
 
 	public void resetOdometry(Pose2d pose) {

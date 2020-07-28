@@ -21,16 +21,19 @@ import com.palyrobotics.frc2020.util.dashboard.LiveGraph;
 import com.revrobotics.CANSparkMax.FaultID;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
 
 public class HardwareReader {
 
 	private static final String kLoggerTag = Util.classToJsonName(HardwareReader.class);
 	private static final int kYawIndex = 0, kYawAngularVelocityIndex = 2;
+	private static final Timer mTimer = new Timer();
 	private final RobotConfig mRobotConfig = Configs.get(RobotConfig.class);
 
 	private final double[] mGyroAngles = new double[3], mGyroAngularVelocities = new double[3];
 
 	public HardwareReader() {
+		mTimer.start();
 	}
 
 	/**
@@ -46,6 +49,7 @@ public class HardwareReader {
 
 	private void readGameAndFieldState(RobotState state) {
 		state.gameData = DriverStation.getInstance().getGameSpecificMessage();
+		state.gameTime = mTimer.get();
 	}
 
 	private void readDriveState(RobotState state) {
