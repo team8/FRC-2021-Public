@@ -114,16 +114,6 @@ public class Commands {
 	}
 
 	/**
-	 * With all this solve pnp stuff going around, I wanted to make a mode to help out.
-	 * This will only set the hood state and nothing else in order to be quicker, probably unnecessary because
-	 * switching hood state is probably faster than accelerating the fly wheel, however in the small chance that it
-	 * isn't, I want to have a way to do it.
-	 */
-	public void setVisionTargeting() {
-		this.wantedShooterState = Shooter.ShooterState.TARGETING;
-	}
-
-	/**
 	 * This should not be used in the match, it only exists to allow us to test velocities and hood states for data to be
 	 * used in interpolation.
 	 * @param velocity The velocity to be tested
