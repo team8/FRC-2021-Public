@@ -167,7 +167,7 @@ public class Commands {
 
 	public void setShooterVisionAssisted(int pipelineWanted) {
 		visionWantedPipeline = pipelineWanted;
-		shooterWantedState = Shooter.ShooterState.VISION_VELOCITY;
+		shooterWantedState = Shooter.ShooterState.VISION;
 	}
 
 	public void setShooterIdle() {
