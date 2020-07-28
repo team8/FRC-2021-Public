@@ -17,6 +17,7 @@ import com.palyrobotics.frc2020.robot.RobotState.GamePeriod;
 import com.palyrobotics.frc2020.subsystems.Drive;
 import com.palyrobotics.frc2020.subsystems.Indexer;
 import com.palyrobotics.frc2020.subsystems.Intake;
+import com.palyrobotics.frc2020.subsystems.Shooter;
 import com.palyrobotics.frc2020.subsystems.SubsystemBase;
 import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.config.Configs;
@@ -40,7 +41,7 @@ public class HardwareWriter {
 	private final IndexerConfig mIndexerConfig = Configs.get(IndexerConfig.class);
 	private final Drive mDrive = Drive.getInstance();
 	private final Intake mIntake = Intake.getInstance();
-	private final Indexer mIndexer = Indexer.getInstance();
+	private final Shooter mShooter = Shooter.getInstance();
 	private boolean mRumbleOutput;
 
 	void configureHardware(Set<SubsystemBase> enabledSubsystems) {
@@ -144,6 +145,7 @@ public class HardwareWriter {
 		if (!mRobotConfig.disableHardwareUpdates) {
 			if (enabledSubsystems.contains(mDrive) && robotState.gamePeriod != GamePeriod.TESTING) updateDrivetrain();
 			if (enabledSubsystems.contains(mIntake)) updateIntake();
+			if (enabledSubsystems.contains(mShooter)) updateShooter();
 			if (enabledSubsystems.contains(mIndexer)) updateIndexer();
 			Robot.sLoopDebugger.addPoint("writeDrive");
 		}
@@ -174,6 +176,14 @@ public class HardwareWriter {
 		hardware.rightVTalon.setOutput(mIndexer.getRightVTalonOutput());
 		hardware.blockingSolenoid.set(mIndexer.getBlockingSolenoidOutput());
 		hardware.hopperSolenoids.set(mIndexer.getHopperSolenoidOutput());
+	}
+
+	private void updateShooter() {
+		var hardware = HardwareAdapter.ShooterHardware.getInstance();
+
+		hardware.blockingSolenoid.setExtended(mShooter.getBlockingOutput());
+		hardware.hoodSolenoid.setExtended(mShooter.getHoodOutput());
+		hardware.masterSpark.setOutput(mShooter.getFlywheelOutput());
 	}
 
 	private void setPigeonStatusFramePeriods(PigeonIMU gyro) {
