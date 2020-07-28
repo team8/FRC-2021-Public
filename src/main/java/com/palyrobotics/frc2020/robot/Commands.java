@@ -83,7 +83,7 @@ public class Commands {
 		visionWanted = true;
 	}
 
-	/* Shoooter */
+	/* Shooter */
 
 	/**
 	 * Self documenting code down here, sets the shooter to IDLE, this means it will set the flywheel velocity to 0, and
@@ -204,6 +204,18 @@ public class Commands {
 
 	public double getIntakeWantedPo() {
 		return intakeWantedPo;
+	}
+
+	public double getWantedShooterVelocity() {
+		return wantedShooterVelocity;
+	}
+
+	public Shooter.HoodState getWantedShooterHoodState() {
+		return wantedShooterHoodState;
+	}
+
+	public Shooter.ShooterState getWantedShooterState() {
+		return wantedShooterState;
 	}
 
 	@Override
