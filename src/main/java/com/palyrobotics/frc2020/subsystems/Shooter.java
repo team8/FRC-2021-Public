@@ -1,5 +1,6 @@
 package com.palyrobotics.frc2020.subsystems;
 
+import com.palyrobotics.frc2020.config.constants.ShooterConstants;
 import com.palyrobotics.frc2020.config.subsystem.ShooterConfig;
 import com.palyrobotics.frc2020.robot.Commands;
 import com.palyrobotics.frc2020.robot.ReadOnly;
@@ -8,6 +9,11 @@ import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.ControllerOutput;
 import com.palyrobotics.frc2020.vision.Limelight;
 import edu.wpi.first.wpilibj.Timer;
+
+import java.util.Map;
+
+import static com.palyrobotics.frc2020.config.constants.ShooterConstants.*;
+import static com.palyrobotics.frc2020.util.Util.clamp;
 
 public class Shooter extends SubsystemBase {
 
@@ -91,8 +97,28 @@ public class Shooter extends SubsystemBase {
      * Updates all of the outputs for the IDLE shooting state
      */
     private void updateVision() {
-        // TODO: finish the rest
-        mChanged = true;
+        // Updating the hood
+        Map.Entry<Double, HoodState> floorEntry = kTargetDistanceToHoodState.floorEntry(mTargetDistance);
+        Map.Entry<Double, HoodState> ceilingEntry = kTargetDistanceToHoodState.ceilingEntry(mTargetDistance);
+        Map.Entry<Double, HoodState> closestEntry;
+        if (ceilingEntry == null) {
+            closestEntry = floorEntry;
+        } else if (floorEntry == null) {
+            closestEntry = ceilingEntry;
+        } else {
+            closestEntry = mTargetDistance - floorEntry.getKey() < ceilingEntry
+                    .getKey() - mTargetDistance ? floorEntry : ceilingEntry;
+        }
+        mHoodState = closestEntry.getValue();
+        translateHoodState(mHoodState);
+
+        // Updating the velocity
+        double targetFlywheelVelocity;
+
+        targetFlywheelVelocity = kTargetDistanceToVelocity.get(mHoodState).getInterpolated(mTargetDistance);
+
+        mTargetVelocity = clamp(targetFlywheelVelocity, 0.0, kMaxVelocity);
+        mFlywheelOutput.setTargetVelocity(mTargetVelocity, mConfig.shooterGains);
     }
 
     /**
