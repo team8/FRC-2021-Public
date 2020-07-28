@@ -7,6 +7,7 @@ import com.palyrobotics.frc2020.behavior.RoutineBase;
 import com.palyrobotics.frc2020.subsystems.Drive;
 import com.palyrobotics.frc2020.subsystems.Indexer;
 import com.palyrobotics.frc2020.subsystems.Intake;
+import com.palyrobotics.frc2020.subsystems.Shooter;
 import com.palyrobotics.frc2020.util.control.DriveOutputs;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -47,6 +48,8 @@ public class Commands {
 	public boolean visionWanted;
 	/* Miscellaneous */
 	public boolean wantedCompression;
+	/* Shooter */
+	public Shooter.ShooterState wantedShooterState;
 
 	public void addWantedRoutines(RoutineBase... wantedRoutines) {
 		for (RoutineBase wantedRoutine : wantedRoutines) {
