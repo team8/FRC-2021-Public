@@ -5,13 +5,9 @@ import java.util.List;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.palyrobotics.frc2020.config.PortConstants;
 import com.palyrobotics.frc2020.config.subsystem.IntakeConfig;
-import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.Falcon;
 import com.palyrobotics.frc2020.util.control.Spark;
-import com.palyrobotics.frc2020.util.control.Talon;
 import com.palyrobotics.frc2020.util.control.TimedSolenoid;
-import com.palyrobotics.frc2020.util.input.Joystick;
-import com.palyrobotics.frc2020.util.input.XboxController;
 import com.revrobotics.CANEncoder;
 
 import edu.wpi.first.wpilibj.Compressor;
@@ -131,6 +127,28 @@ public class HardwareAdapter {
 			return sInstance;
 		}
 	}
+
+	/**
+	 * 2 NEO (controlled by Spark MAX), 3 Solenoids
+	 */
+	static class ShooterHardware {
+
+		private static ShooterHardware sInstance;
+		final Spark masterSpark = new Spark(sPortConstants.nariShooterMasterId, "Shooter Master"),
+				slaveSpark = new Spark(sPortConstants.nariShooterSlaveId, "Shooter Slave");
+		final CANEncoder masterEncoder = masterSpark.getEncoder();
+		final TimedSolenoid hoodSolenoid = new TimedSolenoid(sPortConstants.nariShooterHoodSolenoid, 0.4, true),
+				blockingSolenoid = new TimedSolenoid(sPortConstants.nariShooterBlockingSolenoidId, 0.2, false);
+
+		private ShooterHardware() {
+		}
+
+		static ShooterHardware getInstance() {
+			if (sInstance == null) sInstance = new ShooterHardware();
+			return sInstance;
+		}
+	}
+
 
 	/**
 	 * 1 Compressor, 1 PDP, 1 Fisheye USB Camera
