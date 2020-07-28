@@ -98,25 +98,27 @@ public class Commands {
 	/* Shooter */
 
 	/**
-	 * Self documenting code down here, sets the shooter to IDLE, this means it will set the flywheel velocity to 0, and
-	 * keep the same hood state.
+	 * Self documenting code down here, sets the shooter to IDLE, this means it will set the flywheel
+	 * velocity to 0, and keep the same hood state.
 	 */
 	public void setIdleShooterState() {
 		this.wantedShooterState = Shooter.ShooterState.IDLE;
 	}
 
 	/**
-	 * Also self documenting: Sets the shooter state to VISION, this means it will try and set the hood state to the best
-	 * of its knowledge using interpolation from the "carefully" chosen data points we have tested.
+	 * Also self documenting: Sets the shooter state to VISION, this means it will try and set the hood
+	 * state to the best of its knowledge using interpolation from the "carefully" chosen data points we
+	 * have tested.
 	 */
 	public void setVisionShooterState() {
 		this.wantedShooterState = Shooter.ShooterState.VISION;
 	}
 
 	/**
-	 * This should not be used in the match, it only exists to allow us to test velocities and hood states for data to be
-	 * used in interpolation.
-	 * @param velocity The velocity to be tested
+	 * This should not be used in the match, it only exists to allow us to test velocities and hood
+	 * states for data to be used in interpolation.
+	 *
+	 * @param velocity  The velocity to be tested
 	 * @param hoodState The hood state to be tested
 	 */
 	public void setCustomShooterState(double velocity, Shooter.HoodState hoodState) {

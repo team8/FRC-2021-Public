@@ -196,7 +196,7 @@ public class HardwareWriter {
 	private void updateShooter() {
 		var hardware = HardwareAdapter.ShooterHardware.getInstance();
 		hardware.masterSpark.setOutput(mShooter.getFlywheelOutput());
-		hardware.hoodPiston.set(mShooter.getHoodOutput());
+		hardware.hoodSolenoid.set(mShooter.getHoodOutput());
 		hardware.blockingSolenoid.set(mShooter.getBlockingOutput());
 	}
 

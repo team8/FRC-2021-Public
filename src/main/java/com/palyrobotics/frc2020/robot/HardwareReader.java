@@ -125,12 +125,13 @@ public class HardwareReader {
 //		LiveGraph.add("driveYaw", state.driveYawDegrees);
 //		LiveGraph.add("driveRightPercentOutput", hardware.rightMasterFalcon.getMotorOutputPercent());
 //		LiveGraph.add("driveLeftPercentOutput", hardware.leftMasterFalcon.getMotorOutputPercent());
+//		hardware.falcons.forEach(this::checkFalconFaults);
 	}
 
 	private void readShooterState(RobotState state) {
 		var hardware = HardwareAdapter.ShooterHardware.getInstance();
 		state.blockingSolenoidState = hardware.blockingSolenoid.isExtended();
-		state.hoodSolenoidState = hardware.hoodPiston.isExtended();
+		state.hoodSolenoidState = hardware.hoodSolenoid.isExtended();
 		state.shooterVelocity = hardware.masterEncoder.getVelocity();
 	}
 

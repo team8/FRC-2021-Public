@@ -83,23 +83,6 @@ public class HardwareAdapter {
 		}
 	}
 
-	/**
-	 * 2 NEO's, Hood Piston, Blocking Solenoid
-	 */
-	static class ShooterHardware {
-
-		private static ShooterHardware sInstance;
-		final Spark masterSpark = new Spark(sPortConstants.nariShooterMasterId, "Shooter Master"), slaveSpark = new Spark(sPortConstants.nariShooterSlaveId, "Shooter Slave");
-		final CANEncoder masterEncoder = masterSpark.getEncoder();
-		final TimedSolenoid blockingSolenoid = new TimedSolenoid(sPortConstants.nariShooterBlockingSolenoidId, 0.2, false),
-				hoodPiston = new TimedSolenoid(sPortConstants.nariShooterBlockingSolenoidId, 0.2, false);
-
-		static ShooterHardware getInstance() {
-			if (sInstance == null) sInstance = new ShooterHardware();
-			return sInstance;
-		}
-	}
-
 	/*
 	 * 2 NEOs (controlled by Spark MAX) for indexer tower, 2 775s (controlled by Talon SRX) for v belts,
 	 * 2 Single Solenoids, 2 Infrared Sensors
@@ -131,6 +114,26 @@ public class HardwareAdapter {
 		}
 	}
 
+	/**
+	 * 2 NEO (controlled by Spark MAX), 3 Solenoids
+	 */
+	static class ShooterHardware {
+
+		private static ShooterHardware sInstance;
+		final Spark masterSpark = new Spark(sPortConstants.nariShooterMasterId, "Shooter Master"),
+				slaveSpark = new Spark(sPortConstants.nariShooterSlaveId, "Shooter Slave");
+		final CANEncoder masterEncoder = masterSpark.getEncoder();
+		final TimedSolenoid hoodSolenoid = new TimedSolenoid(sPortConstants.nariShooterHoodSolenoid, 0.4, true),
+				blockingSolenoid = new TimedSolenoid(sPortConstants.nariShooterBlockingSolenoidId, 0.2, false);
+
+		private ShooterHardware() {
+		}
+
+		static ShooterHardware getInstance() {
+			if (sInstance == null) sInstance = new ShooterHardware();
+			return sInstance;
+		}
+	}
 
 	/**
 	 * 1 Compressor, 1 PDP, 1 Fisheye USB Camera
