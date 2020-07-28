@@ -3,17 +3,19 @@ package com.palyrobotics.frc2020.robot;
 import java.util.List;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
+
 import com.palyrobotics.frc2020.config.PortConstants;
-import com.palyrobotics.frc2020.config.subsystem.IntakeConfig;
-import com.palyrobotics.frc2020.util.control.Falcon;
-import com.palyrobotics.frc2020.util.control.Spark;
-import com.palyrobotics.frc2020.util.control.TimedSolenoid;
+import com.palyrobotics.frc2020.util.config.Configs;
+import com.palyrobotics.frc2020.util.control.*;
+import com.palyrobotics.frc2020.util.input.Joystick;
+import com.palyrobotics.frc2020.util.input.XboxController;
 import com.revrobotics.CANEncoder;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Solenoid;
+
 
 /**
  * Represents all hardware components of the robot. Singleton class. Should only be used in robot

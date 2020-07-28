@@ -125,7 +125,6 @@ public class HardwareReader {
 //		LiveGraph.add("driveYaw", state.driveYawDegrees);
 //		LiveGraph.add("driveRightPercentOutput", hardware.rightMasterFalcon.getMotorOutputPercent());
 //		LiveGraph.add("driveLeftPercentOutput", hardware.leftMasterFalcon.getMotorOutputPercent());
-		hardware.falcons.forEach(this::checkFalconFaults);
 	}
 
 	private void readShooterState(RobotState state) {

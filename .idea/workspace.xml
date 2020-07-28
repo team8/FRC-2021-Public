@@ -20,14 +20,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d6f1a065-87da-4eed-a47b-8ae2e4de1b98" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/config/ShooterConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linux_env/bin/python" beforeDir="false" afterPath="$PROJECT_DIR$/linux_env/bin/python" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linux_env/bin/python3" beforeDir="false" afterPath="$PROJECT_DIR$/linux_env/bin/python3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linux_env/lib64" beforeDir="false" afterPath="$PROJECT_DIR$/linux_env/lib64" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/robot/Commands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/robot/Commands.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/linux_env/bin/python" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linux_env/bin/python3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linux_env/lib64" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linux_env/pyvenv.cfg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/config/ShooterConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/config/constants/ShooterConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/config/constants/ShooterConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/config/subsystem/ShooterConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/config/subsystem/ShooterConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/robot/HardwareAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/robot/HardwareAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/robot/HardwareReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/robot/HardwareReader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/robot/RobotState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/robot/RobotState.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/subsystems/Shooter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/subsystems/Shooter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -290,7 +291,7 @@
       <workItem from="1602535055199" duration="3105000" />
       <workItem from="1602691711914" duration="509000" />
       <workItem from="1602692288629" duration="3185000" />
-      <workItem from="1602911497514" duration="5495000" />
+      <workItem from="1602911497514" duration="5826000" />
     </task>
     <servers />
   </component>
@@ -334,28 +335,28 @@
       <screen x="0" y="0" width="1217" height="720" />
     </state>
     <state x="390" y="116" key="FileChooserDialogImpl/0.0.1217.720@0.0.1217.720" timestamp="1596173783225" />
-    <state width="1159" height="229" key="GridCell.Tab.0.bottom" timestamp="1602919395625">
+    <state width="1159" height="229" key="GridCell.Tab.0.bottom" timestamp="1602919602024">
       <screen x="0" y="0" width="1203" height="720" />
     </state>
-    <state width="1159" height="229" key="GridCell.Tab.0.bottom/0.0.1203.720@0.0.1203.720" timestamp="1602919395625" />
+    <state width="1159" height="229" key="GridCell.Tab.0.bottom/0.0.1203.720@0.0.1203.720" timestamp="1602919602024" />
     <state width="1174" height="202" key="GridCell.Tab.0.bottom/0.0.1217.720@0.0.1217.720" timestamp="1596502556620" />
     <state width="1175" height="226" key="GridCell.Tab.0.bottom/0.0.1218.720@0.0.1218.720" timestamp="1601058762963" />
-    <state width="1159" height="229" key="GridCell.Tab.0.center" timestamp="1602919395624">
+    <state width="1159" height="229" key="GridCell.Tab.0.center" timestamp="1602919602023">
       <screen x="0" y="0" width="1203" height="720" />
     </state>
-    <state width="1159" height="229" key="GridCell.Tab.0.center/0.0.1203.720@0.0.1203.720" timestamp="1602919395624" />
+    <state width="1159" height="229" key="GridCell.Tab.0.center/0.0.1203.720@0.0.1203.720" timestamp="1602919602023" />
     <state width="1174" height="202" key="GridCell.Tab.0.center/0.0.1217.720@0.0.1217.720" timestamp="1596502556620" />
     <state width="1175" height="226" key="GridCell.Tab.0.center/0.0.1218.720@0.0.1218.720" timestamp="1601058762963" />
-    <state width="1159" height="229" key="GridCell.Tab.0.left" timestamp="1602919395624">
+    <state width="1159" height="229" key="GridCell.Tab.0.left" timestamp="1602919602023">
       <screen x="0" y="0" width="1203" height="720" />
     </state>
-    <state width="1159" height="229" key="GridCell.Tab.0.left/0.0.1203.720@0.0.1203.720" timestamp="1602919395624" />
+    <state width="1159" height="229" key="GridCell.Tab.0.left/0.0.1203.720@0.0.1203.720" timestamp="1602919602023" />
     <state width="1174" height="202" key="GridCell.Tab.0.left/0.0.1217.720@0.0.1217.720" timestamp="1596502556620" />
     <state width="1175" height="226" key="GridCell.Tab.0.left/0.0.1218.720@0.0.1218.720" timestamp="1601058762962" />
-    <state width="1159" height="229" key="GridCell.Tab.0.right" timestamp="1602919395624">
+    <state width="1159" height="229" key="GridCell.Tab.0.right" timestamp="1602919602023">
       <screen x="0" y="0" width="1203" height="720" />
     </state>
-    <state width="1159" height="229" key="GridCell.Tab.0.right/0.0.1203.720@0.0.1203.720" timestamp="1602919395624" />
+    <state width="1159" height="229" key="GridCell.Tab.0.right/0.0.1203.720@0.0.1203.720" timestamp="1602919602023" />
     <state width="1174" height="202" key="GridCell.Tab.0.right/0.0.1217.720@0.0.1217.720" timestamp="1596502556620" />
     <state width="1175" height="226" key="GridCell.Tab.0.right/0.0.1218.720@0.0.1218.720" timestamp="1601058762963" />
     <state width="1175" height="226" key="GridCell.Tab.1.bottom" timestamp="1601058762963">
