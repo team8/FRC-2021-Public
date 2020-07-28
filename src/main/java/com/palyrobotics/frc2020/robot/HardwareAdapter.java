@@ -136,7 +136,6 @@ public class HardwareAdapter {
 		}
 	}
 
-
 	/**
 	 * 1 Compressor, 1 PDP, 1 Fisheye USB Camera
 	 */
