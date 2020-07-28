@@ -49,7 +49,9 @@ public class Commands {
 	/* Miscellaneous */
 	public boolean wantedCompression;
 	/* Shooter */
-	public Shooter.ShooterState wantedShooterState;
+	private Shooter.ShooterState wantedShooterState;
+	private Shooter.HoodState wantedShooterHoodState; // Only needed for custom
+	private double wantedShooterVelocity; // Only needed for custom
 
 	public void addWantedRoutines(RoutineBase... wantedRoutines) {
 		for (RoutineBase wantedRoutine : wantedRoutines) {
@@ -76,6 +78,46 @@ public class Commands {
 		driveWantedState = Drive.State.VISION_ALIGN;
 		visionWantedPipeline = visionPipeline;
 		visionWanted = true;
+	}
+
+	/* Shoooter */
+
+	/**
+	 * Self documenting code down here, sets the shooter to IDLE, this means it will set the flywheel velocity to 0, and
+	 * keep the same hood state.
+	 */
+	public void setIdleShooterState() {
+		this.wantedShooterState = Shooter.ShooterState.IDLE;
+	}
+
+	/**
+	 * Also self documenting: Sets the shooter state to VISION, this means it will try and set the hood state to the best
+	 * of its knowledge using interpolation from the "carefully" chosen data points we have tested.
+	 */
+	public void setVisionShooterState() {
+		this.wantedShooterState = Shooter.ShooterState.VISION;
+	}
+
+	/**
+	 * With all this solve pnp stuff going around, I wanted to make a mode to help out.
+	 * This will only set the hood state and nothing else in order to be quicker, probably unnecessary because
+	 * switching hood state is probably faster than accelerating the fly wheel, however in the small chance that it
+	 * isn't, I want to have a way to do it.
+	 */
+	public void setVisionTargeting() {
+		this.wantedShooterState = Shooter.ShooterState.TARGETING;
+	}
+
+	/**
+	 * This should not be used in the match, it only exists to allow us to test velocities and hood states for data to be
+	 * used in interpolation.
+	 * @param velocity The velocity to be tested
+	 * @param hoodState The hood state to be tested
+	 */
+	public void setCustomShooterState(double velocity, Shooter.HoodState hoodState) {
+		this.wantedShooterState = Shooter.ShooterState.CUSTOM;
+		this.wantedShooterVelocity = velocity;
+		this.wantedShooterHoodState = hoodState;
 	}
 
 	public void setDriveTeleop() {
