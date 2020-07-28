@@ -120,5 +120,4 @@ public class Shooter extends SubsystemBase {
 	public boolean getHoodOutput() {
 		return mHoodOutput;
 	}
-
 }
