@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 @SuppressWarnings ("java:S1104")
 public class RobotState {
 
+
 	public enum GamePeriod {
 		AUTO, TELEOP, TESTING, DISABLED
 	}
@@ -38,8 +39,9 @@ public class RobotState {
 	public boolean driveIsGyroReady;
 	public boolean inShootingQuadrant;
 	/* Shooter */
-	public boolean shooterHoodPistonIsExtended, shooterBlockingIsExtended, shooterHoodTransitioning;
-	public double shooterFlywheelVelocity;
+	public boolean blockingSolenoidState;
+	public boolean hoodSolenoidState;
+	public double shooterVelocity;
 	/* Turret */
 	public double turretYawDegrees;
 

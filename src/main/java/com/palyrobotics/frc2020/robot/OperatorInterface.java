@@ -88,7 +88,7 @@ public class OperatorInterface {
 
 		/* Shooting */
 		if (mOperatorXboxController.getRightTriggerPressed()) {
-			commands.setShooterWantedCustomFlywheelVelocity(mShooterConfig.noVisionVelocity);
+			commands.setShooterWantedCustomFlywheelVelocity(0);
 			commands.setShooterVisionAssisted(commands.visionWantedPipeline);
 			commands.wantedCompression = false;
 		} else if (mOperatorXboxController.getLeftTriggerPressed()) {
