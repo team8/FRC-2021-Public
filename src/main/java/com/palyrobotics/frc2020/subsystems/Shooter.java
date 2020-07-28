@@ -32,6 +32,18 @@ public class Shooter extends SubsystemBase {
 
     }
 
+    public ControllerOutput updateFlywheelVelocity(Commands commands, RobotState state, HoodState hoodState, double targetDistance) {
+        return null;
+    }
+
+    public HoodState updateHood(Commands commands, RobotState state, double targetDistance) {
+        return null;
+    }
+
+    private double getTargetDistance(Commands commands, RobotState robotState) {
+        return -1;
+    }
+
     public Shooter getInstance() {
         return sInstance;
     }
