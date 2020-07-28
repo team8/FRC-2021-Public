@@ -5,4 +5,6 @@ import com.palyrobotics.frc2020.util.control.Gains;
 
 public class ShooterConfig extends ConfigBase {
     public Gains shooterGains;
+    public double rumbleError;
+    public double rumbleTimeSeconds;
 }
