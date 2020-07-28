@@ -35,7 +35,6 @@ public class OperatorInterface {
 		commands.shouldClearCurrentRoutines = mDriveStick.getTriggerPressed();
 
 		updateDriveCommands(commands);
-		updateIntakeCommands(commands);
 		updateLightingCommands(commands, state);
 		updateSuperstructureCommands(commands, state);
 		mOperatorXboxController.updateLastInputs();

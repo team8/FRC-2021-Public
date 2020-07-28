@@ -8,6 +8,7 @@ import com.palyrobotics.frc2020.subsystems.Drive;
 import com.palyrobotics.frc2020.subsystems.Intake;
 import com.palyrobotics.frc2020.subsystems.Lighting;
 import com.palyrobotics.frc2020.subsystems.Indexer;
+import com.palyrobotics.frc2020.subsystems.Shooter;
 import com.palyrobotics.frc2020.util.control.DriveOutputs;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -50,6 +51,8 @@ public class Commands {
 	public boolean wantedCompression;
 	/* Lighting */
 	public ArrayList<Lighting.State> lightingWantedStates;
+	/* Shooter */
+	public Shooter.ShooterState wantedShooterState;
 
 	public void addWantedRoutines(RoutineBase... wantedRoutines) {
 		for (RoutineBase wantedRoutine : wantedRoutines) {
