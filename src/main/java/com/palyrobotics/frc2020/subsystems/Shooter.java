@@ -218,7 +218,7 @@ public class Shooter extends SubsystemBase {
     }
 
     /* Getters */
-    public Shooter getInstance() {
+    public static Shooter getInstance() {
         return sInstance;
     }
 

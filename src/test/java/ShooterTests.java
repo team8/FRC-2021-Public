@@ -1,0 +1,58 @@
+import com.palyrobotics.frc2020.robot.Commands;
+import com.palyrobotics.frc2020.robot.RobotState;
+import com.palyrobotics.frc2020.subsystems.Shooter;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+import com.palyrobotics.frc2020.util.Util;
+
+import static com.palyrobotics.frc2020.config.constants.ShooterConstants.kTimeToShootPerBallSeconds;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class ShooterTests {
+
+    Shooter shooter = Shooter.getInstance();
+    Commands commands = new Commands();
+    RobotState state = new RobotState();
+
+    @Test
+    @Tag("slow")
+    public void testRumble() throws InterruptedException {
+
+        // First tests are making sure the rumble is off when it needs to be
+        assertFalse(shooter.getRumbleOutput());
+        shooter.update(commands, state);
+        assertFalse(shooter.getRumbleOutput());
+
+        commands.setIdleShooterState();
+        shooter.update(commands, state);
+        assertFalse(shooter.getRumbleOutput());
+
+        commands.setCustomShooterState(10, Shooter.HoodState.LOW);
+        shooter.update(commands, state);
+        assertFalse(shooter.getRumbleOutput());
+
+        state.shooterVelocity = 2;
+        shooter.update(commands, state);
+        assertFalse(shooter.getRumbleOutput());
+
+        // Second set of tests are making sure that the rumble turns on when it needs to turn off
+        state.shooterVelocity = 10;
+        state.blockingSolenoidState = false;
+        state.hoodSolenoidState = false;
+        shooter.update(commands, state);
+        assertTrue(shooter.getRumbleOutput());
+
+        Thread.sleep((long) (Util.clamp(kTimeToShootPerBallSeconds - 0.1 * 1000, 0, Double.MAX_VALUE)));
+        shooter.update(commands, state);
+        assertTrue(shooter.getRumbleOutput());
+
+        Thread.sleep(200);
+        shooter.update(commands, state);
+        assertFalse(shooter.getRumbleOutput());
+    }
+
+    @Test
+    public void testHoodState() {
+        
+    }
+}
