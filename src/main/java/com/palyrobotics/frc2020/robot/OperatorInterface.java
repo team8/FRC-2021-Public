@@ -12,6 +12,7 @@ import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.subsystems.Intake;
 import com.palyrobotics.frc2020.subsystems.Indexer;
 import com.palyrobotics.frc2020.util.config.Configs;
+import com.palyrobotics.frc2020.subsystems.Shooter;
 import com.palyrobotics.frc2020.util.input.Joystick;
 import com.palyrobotics.frc2020.util.input.XboxController;
 
@@ -101,6 +102,18 @@ public class OperatorInterface {
 			commands.setTurretVisionAlign();
 		} else {
 			commands.setTurretIdle();
+		}
+	}
+
+	public void updateShooterCommands(Commands commands) {
+		if (mOperatorXboxController.getDPadDownPressed()) {
+			commands.setCustomShooterState(0, Shooter.HoodState.LOW);
+		}
+		if (mOperatorXboxController.getLeftBumperPressed()) {
+			commands.setCustomShooterState(0, Shooter.HoodState.MEDIUM);
+		}
+		if (mOperatorXboxController.getRightBumperPressed()) {
+			commands.setCustomShooterState(0, Shooter.HoodState.HIGH);
 		}
 	}
 
