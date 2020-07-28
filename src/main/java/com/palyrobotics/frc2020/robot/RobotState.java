@@ -2,6 +2,7 @@ package com.palyrobotics.frc2020.robot;
 
 import com.esotericsoftware.minlog.Log;
 import com.palyrobotics.frc2020.config.constants.DriveConstants;
+import com.palyrobotics.frc2020.subsystems.Shooter;
 import com.palyrobotics.frc2020.util.Util;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -30,6 +31,10 @@ public class RobotState {
 	public Pose2d drivePoseMeters = new Pose2d();
 	public double driveVelocityMetersPerSecond;
 	public boolean driveIsGyroReady;
+	/* Shooter */
+	public boolean blockingSolenoidState;
+	public boolean hoodSolenoidState;
+	public double shooterVelocity;
 
 	/* Intake */
 	public boolean intakeExtended, intakeTransitioning, intakeStalled;

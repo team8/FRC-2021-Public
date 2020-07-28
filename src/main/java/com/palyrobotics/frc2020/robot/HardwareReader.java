@@ -52,7 +52,6 @@ public class HardwareReader {
 
 	private void readGameAndFieldState(RobotState state) {
 		state.gameData = DriverStation.getInstance().getGameSpecificMessage();
-		state.gameTime = mTimer.get();
 	}
 
 	private void readDriveState(RobotState state) {
@@ -70,10 +69,28 @@ public class HardwareReader {
 		state.driveRightVelocity = hardware.rightMasterFalcon.getConvertedVelocity();
 		state.driveLeftPosition = hardware.leftMasterFalcon.getConvertedPosition();
 		state.driveRightPosition = hardware.rightMasterFalcon.getConvertedPosition();
-
+//		LiveGraph.add("x", state.drivePoseMeters.getTranslation().getX());
+//		LiveGraph.add("y", state.drivePoseMeters.getTranslation().getY());
+//		LiveGraph.add("leftPosition", state.driveLeftPosition);
+//		LiveGraph.add("rightPosition", state.driveRightPosition);
 		/* Odometry */
 		state.updateOdometry(state.driveYawDegrees, state.driveLeftPosition, state.driveRightPosition);
+//		LiveGraph.add("driveLeftPosition", state.driveLeftPosition);
+
+		LiveGraph.add("driveLeftVelocity", state.driveLeftVelocity);
+//		LiveGraph.add("driveRightPosition", state.driveRightPosition);
+		LiveGraph.add("driveRightVelocity", state.driveRightVelocity);
+//		LiveGraph.add("driveYaw", state.driveYawDegrees);
+//		LiveGraph.add("driveRightPercentOutput", hardware.rightMasterFalcon.getMotorOutputPercent());
+//		LiveGraph.add("driveLeftPercentOutput", hardware.leftMasterFalcon.getMotorOutputPercent());
 		hardware.falcons.forEach(this::checkFalconFaults);
+	}
+
+	private void readShooterState(RobotState state) {
+		var hardware = HardwareAdapter.ShooterHardware.getInstance();
+		state.blockingSolenoidState = hardware.blockingSolenoid.isExtended();
+		state.hoodSolenoidState = hardware.hoodSolenoid.isExtended();
+		state.shooterVelocity = hardware.masterEncoder.getVelocity();
 	}
 
 	private void readIndexerState(RobotState state) {
@@ -131,17 +148,6 @@ public class HardwareReader {
 			}
 			if (wasAnyFault) {
 				spark.clearFaults();
-			}
-		}
-	}
-
-	private void checkFalconFaults(Falcon falcon) {
-		if (mRobotConfig.checkFaults) {
-			var faults = new StickyFaults();
-			falcon.getStickyFaults(faults);
-			if (faults.hasAnyFault()) {
-				Log.error(kLoggerTag, String.format("%s faults: %s", falcon.getName(), faults));
-				falcon.clearStickyFaults();
 			}
 		}
 	}
