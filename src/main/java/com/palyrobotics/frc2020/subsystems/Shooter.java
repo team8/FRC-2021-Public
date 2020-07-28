@@ -13,6 +13,7 @@ import com.palyrobotics.frc2020.robot.RobotState;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.ControllerOutput;
 import com.palyrobotics.frc2020.vision.Limelight;
+import edu.wpi.first.wpilibj.Timer;
 
 import edu.wpi.first.wpilibj.MedianFilter;
 
@@ -36,6 +37,7 @@ public class Shooter extends SubsystemBase {
 
     private boolean mChanged = false; // If the target velocity has been changed (for rumble)
     private double mTargetVelocity; // Current target velocity (for rumble)
+    private Timer mTimer = new Timer();
 
     /* Outputs */
     private ControllerOutput mFlywheelOutput = new ControllerOutput(); // Flywheel
@@ -51,7 +53,7 @@ public class Shooter extends SubsystemBase {
     private Double mTargetDistance;
 
     private Shooter() {
-
+        mTimer.start();
     }
 
     @Override
@@ -69,7 +71,7 @@ public class Shooter extends SubsystemBase {
                 updateIdle();
                 break;
             case CUSTOM:
-                updateCustom();
+                updateCustom(commands.getWantedShooterVelocity(), commands.getWantedShooterHoodState());
                 break;
         }
 
@@ -115,8 +117,17 @@ public class Shooter extends SubsystemBase {
     }
 
     private void updateRumble() {
-        if (Math.abs(mShooterVelocity - mTargetVelocity) <= mConfig.rumble) {
-            mRumbleOutput
+        if (Math.abs(mShooterVelocity - mTargetVelocity) <= mConfig.rumbleError) {
+            mRumbleOutput = true;
+
+            if (mChanged) {
+                mTimer.reset();
+                mChanged = false;
+            } else if (mTimer.hasElapsed(mConfig.rumbleTimeSeconds)) {
+                mRumbleOutput = false;
+            }
+        } else {
+            mRumbleOutput = false;
         }
     }
 
