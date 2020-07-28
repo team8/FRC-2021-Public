@@ -33,7 +33,7 @@ public class Shooter extends SubsystemBase {
 
     private Limelight mLimelight = Limelight.getInstance();
 
-    private ControllerOutput mFlyWheelOutput = new ControllerOutput(); // Flywheel
+    private ControllerOutput mFlywheelOutput = new ControllerOutput(); // Flywheel
     private boolean mBlockingOutput, mHoodOutput; // Two solenoids to control the hood
     private boolean mRumbleOutput; // XBox controller rumble
 
@@ -44,9 +44,29 @@ public class Shooter extends SubsystemBase {
     @Override
     public void update(Commands commands, RobotState state) {
 
-	}
+    }
 
-	public boolean getHoodOutput() {
-		return mHoodOutput;
-	}
+    public static Shooter getInstance() {
+        return sInstance;
+    }
+
+    public ControllerOutput getFlywheelOutput() {
+        return mFlywheelOutput;
+    }
+
+    public boolean getHoodOutput() {
+        return mHoodOutput;
+    }
+
+    public boolean getBlockingOutput() {
+        return mBlockingOutput;
+    }
+
+    public boolean getRumbleOutput() {
+        return mRumbleOutput;
+    }
+
+    public boolean isReadyToShoot() {
+        return mIsReadyToShoot;
+    }
 }
