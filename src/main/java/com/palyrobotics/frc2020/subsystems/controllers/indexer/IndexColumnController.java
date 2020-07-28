@@ -42,6 +42,6 @@ public class IndexColumnController extends Indexer.IndexerColumnController {
 
 	@Override
 	protected boolean isFinished(RobotState state) {
-		return (Math.abs(mMasterSparkEncWantedPosition - state.indexerMasterEncPosition) < mConfig.indexFinishedMinThreshold && Math.abs(mSlaveSparkEncWantedPosition - state.indexerSlaveEncPosition) < mConfig.indexFinishedMinThreshold) || mTimer.get() > kTimeout;
+		return (Math.abs(mMasterSparkEncWantedPosition - state.indexerMasterEncPosition) < mConfig.indexFinishedMinThreshold && Math.abs(mSlaveSparkEncWantedPosition - state.indexerSlaveEncPosition) < mConfig.indexFinishedMinThreshold) || mTimer.get() > kTimeout || state.indexerPos4Blocked;
 	}
 }

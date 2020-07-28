@@ -8,7 +8,7 @@ public class IndexerConfig extends SubsystemConfigBase {
 	public int columnStallCurrentLimit, columnFreeCurrentLimit, vTalonCurrentLimit;
 	public double rampRate, powercellIndexDistance,
 			feedSpeed, reverseFeedSpeed, rightVTalonPo, leftVTalonPo, rightVTalonSlowerPo, indexFinishedMinThreshold,
-			indexDuration, indexControllerDuration, maximumIndexerColumnPo;
+			indexDuration, indexControllerDuration, maximumIndexerColumnPo, vTalonStallCurrentDraw;
 	public boolean blockingSolenoidExtended, hopperSolenoidExtended;
 	public Gains masterSparkPositionGains, masterSparkVelocityGains, slaveSparkPositionGains, slaveSparkVelocityGains;
 
