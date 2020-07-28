@@ -37,6 +37,8 @@ public class OperatorInterface {
 
 		updateDriveCommands(commands);
 		updateLightingCommands(commands, state);
+		updateIntakeCommands(commands);
+		updateShooterCommands(commands);
 		updateSuperstructureCommands(commands, state);
 		mOperatorXboxController.updateLastInputs();
 

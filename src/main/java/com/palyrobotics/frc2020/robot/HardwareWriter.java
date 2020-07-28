@@ -200,8 +200,8 @@ public class HardwareWriter {
 	private void updateShooter() {
 		var hardware = HardwareAdapter.ShooterHardware.getInstance();
 
-		hardware.blockingSolenoid.setExtended(mShooter.getBlockingOutput());
-		hardware.hoodSolenoid.setExtended(mShooter.getHoodOutput());
+		hardware.blockingSolenoid.set(mShooter.getBlockingOutput());
+		hardware.hoodSolenoid.set(mShooter.getHoodOutput());
 		hardware.masterSpark.setOutput(mShooter.getFlywheelOutput());
 	}
 
