@@ -11,7 +11,7 @@ import com.palyrobotics.frc2020.vision.Limelight;
 public class Shooter extends SubsystemBase {
 
     public enum  ShooterState {
-        IDLE, VISION, TARGETING, CUSTOM
+        IDLE, VISION, CUSTOM
     }
 
     public enum HoodState {
@@ -22,6 +22,9 @@ public class Shooter extends SubsystemBase {
 
     private Limelight mLimelight = Limelight.getInstance();
     private ShooterConfig mConfig = Configs.get(ShooterConfig.class);
+
+    private boolean mChanged = false; // If the target velocity has been changed (for rumble)
+    private double mTargetVelocity; // Current target velocity (for rumble)
 
     /* Outputs */
     private ControllerOutput mFlywheelOutput = new ControllerOutput(); // Flywheel
@@ -51,11 +54,6 @@ public class Shooter extends SubsystemBase {
                     updateVision();
                     break;
                 }
-            case TARGETING:
-                if (mTargetDistance != null) {
-                    updateTargeting();
-                    break;
-                }
             case IDLE:
                 updateIdle();
                 break;
@@ -63,6 +61,8 @@ public class Shooter extends SubsystemBase {
                 updateCustom();
                 break;
         }
+
+        updateRumble();
     }
 
     /**
@@ -81,14 +81,16 @@ public class Shooter extends SubsystemBase {
      * Updates all of the outputs for the IDLE shooting state
      */
     private void updateIdle() {
-
+        mFlywheelOutput.setTargetVelocity(0, mConfig.shooterGains);
+        mChanged = false;
     }
 
     /**
      * Updates all of the outputs for the IDLE shooting state
      */
     private void updateVision() {
-
+        // TODO: finish the rest
+        mChanged = true;
     }
 
     /**
@@ -96,16 +98,32 @@ public class Shooter extends SubsystemBase {
      */
     private void updateCustom(double shooterVelocity, HoodState hoodState) {
         mFlywheelOutput.setTargetVelocity(shooterVelocity, mConfig.shooterGains);
+        translateHoodState(hoodState);
+
+        mTargetVelocity = shooterVelocity;
     }
 
-    /**
-     * Updates all of the outputs for the IDLE shooting state
-     */
-    private void updateTargeting() {
-
+    private void updateRumble() {
+        if (Math.abs(mShooterVelocity - mTargetVelocity) <= mConfig.rumble) {
+            mRumbleOutput
+        }
     }
 
     /* Translates HoodState to outputs */
+
+    private void translateHoodState(HoodState hoodState) {
+        switch (hoodState) {
+            case LOW:
+                setHoodLow();
+                break;
+            case MEDIUM:
+                setHoodMedium();
+                break;
+            case HIGH:
+                setHoodHigh();
+                break;
+        }
+    }
 
     private void setHoodLow() {
         /*
