@@ -13,5 +13,6 @@ public class ShooterConstants {
     public static final Map<Shooter.HoodState, InterpolatingDoubleTreeMap> kTargetDistanceToVelocity = new EnumMap<>(Shooter.HoodState.class);
     public static final NavigableMap<Double, Shooter.HoodState> kTargetDistanceToHoodState = new TreeMap<>();
     public static final double kTimeToShootPerBallSeconds = 1.0;
-
+    public static final double kMaxVelocity = 1.0;
+    public static final double kMinVelocity = 0.0;
 }
