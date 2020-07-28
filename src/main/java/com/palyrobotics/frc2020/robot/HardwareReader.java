@@ -81,9 +81,13 @@ public class HardwareReader {
 		state.indexerMasterEncVelocity = hardware.masterColumnSparkEncoder.getVelocity();
 		state.indexerSlaveEncPosition = hardware.slaveColumnSparkEncoder.getPosition();
 		state.indexerSlaveEncVelocity = hardware.slaveColumnSparkEncoder.getVelocity();
+		state.indexerRightVTalonCurrentDraw = hardware.rightVTalon.getStatorCurrent();
+		state.indexerLeftVTalonCurrentDraw = hardware.leftVTalon.getStatorCurrent();
 		LiveGraph.add("masterIndexerEncoderPosition", state.indexerMasterEncPosition);
 		LiveGraph.add("masterIndexerEncoderVelocity", state.indexerMasterEncVelocity);
 		LiveGraph.add("slaveIndexerEncoderPosition", state.indexerSlaveEncPosition);
+		LiveGraph.add("rightVTalonCurrentDraw", hardware.rightVTalon.getStatorCurrent());
+		LiveGraph.add("leftVTalonCurrentDraw", hardware.leftVTalon.getStatorCurrent());
 	}
 
 	private void checkSparkFaults(Spark spark) {
