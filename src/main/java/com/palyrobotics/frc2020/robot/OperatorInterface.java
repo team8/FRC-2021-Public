@@ -9,6 +9,7 @@ import com.palyrobotics.frc2020.config.subsystem.IntakeConfig;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.Joysticks;
 import com.palyrobotics.frc2020.subsystems.Indexer;
 import com.palyrobotics.frc2020.util.config.Configs;
+import com.palyrobotics.frc2020.subsystems.Shooter;
 import com.palyrobotics.frc2020.util.input.Joystick;
 import com.palyrobotics.frc2020.util.input.XboxController;
 
@@ -109,6 +110,18 @@ public class OperatorInterface {
 			commands.indexerColumnWantedState = Indexer.ColumnState.IDLE;
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.IDLE;
 			//Stop Flywheel
+		}
+	}
+
+	public void updateShooterCommands(Commands commands) {
+		if (mOperatorXboxController.getDPadDownPressed()) {
+			commands.setCustomShooterState(0, Shooter.HoodState.LOW);
+		}
+		if (mOperatorXboxController.getLeftBumperPressed()) {
+			commands.setCustomShooterState(0, Shooter.HoodState.MEDIUM);
+		}
+		if (mOperatorXboxController.getRightBumperPressed()) {
+			commands.setCustomShooterState(0, Shooter.HoodState.HIGH);
 		}
 	}
 
