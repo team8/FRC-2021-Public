@@ -14,7 +14,8 @@
   "indexFinishedMinThreshold" : 3,
   "indexDuration" : 0.15,
   "indexControllerDuration" : 1.2,
-  "maximumIndexerColumnPo" : 0.7,
+  "maximumIndexerColumnPo" : 0.5,
+  "vTalonStallCurrentDraw" : 20,
   "masterSparkPositionGains": {
     "p": 0.8,
     "i": 0.01,

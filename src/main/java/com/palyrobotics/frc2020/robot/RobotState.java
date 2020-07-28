@@ -49,7 +49,8 @@ public class RobotState {
 
 	/* Indexer */
 	public boolean indexerPos1Blocked, indexerPos4Blocked;
-	public double indexerMasterEncPosition, indexerMasterEncVelocity, indexerSlaveEncPosition, indexerSlaveEncVelocity;
+	public double indexerMasterEncPosition, indexerMasterEncVelocity, indexerSlaveEncPosition, indexerSlaveEncVelocity,
+			indexerLeftVTalonCurrentDraw, indexerRightVTalonCurrentDraw;
 
 	public GamePeriod gamePeriod = GamePeriod.DISABLED;
 	public double gameTime = 0;
