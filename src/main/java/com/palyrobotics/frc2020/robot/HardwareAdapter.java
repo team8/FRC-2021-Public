@@ -2,6 +2,7 @@ package com.palyrobotics.frc2020.robot;
 
 import java.util.List;
 
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.palyrobotics.frc2020.config.PortConstants;
 import com.palyrobotics.frc2020.util.config.Configs;
@@ -15,6 +16,7 @@ import com.revrobotics.CANEncoder;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.Solenoid;
 
 /**
  * Represents all hardware components of the robot. Singleton class. Should only be used in robot
@@ -46,6 +48,27 @@ public class HardwareAdapter {
 			if (sInstance == null) sInstance = new DriveHardware();
 			return sInstance;
 		}
+	}
+
+	static class IntakeHardware {
+
+		private static IntakeHardware sInstance;
+
+		final Talon talon = new Talon(sPortConstants.nariIntakeId, "intake");
+		final Solenoid solenoid = new Solenoid(sPortConstants.nariIntakeSolenoidId);
+
+
+		private IntakeHardware() {
+			
+		}
+
+		static IntakeHardware getInstance() {
+			if (sInstance == null) sInstance = new IntakeHardware();
+			return sInstance;
+		}
+
+
+
 	}
 
 	/**

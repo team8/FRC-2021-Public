@@ -16,6 +16,7 @@ import com.palyrobotics.frc2020.config.constants.DriveConstants;
 import com.palyrobotics.frc2020.robot.RobotState.GamePeriod;
 import com.palyrobotics.frc2020.subsystems.Drive;
 import com.palyrobotics.frc2020.subsystems.Shooter;
+import com.palyrobotics.frc2020.subsystems.Intake;
 import com.palyrobotics.frc2020.subsystems.SubsystemBase;
 import com.palyrobotics.frc2020.subsystems.Turret;
 import com.palyrobotics.frc2020.util.Util;
@@ -40,12 +41,14 @@ public class HardwareWriter {
 	private final Drive mDrive = Drive.getInstance();
 	private final Shooter mShooter = Shooter.getInstance();
 	private final Turret mTurret = Turret.getInstance();
+	private final Intake mIntake = Intake.getInstance();
 	private boolean mRumbleOutput;
 
 	void configureHardware(Set<SubsystemBase> enabledSubsystems) {
 		if (enabledSubsystems.contains(mDrive)) configureDriveHardware();
 		if (enabledSubsystems.contains(mShooter)) configureShooterHardware();
 		if (enabledSubsystems.contains(mTurret)) configureTurretHardware();
+		if (enabledSubsystems.contains(mIntake)) configureIntakeHardware();
 		configureMiscellaneousHardware();
 	}
 
@@ -112,6 +115,11 @@ public class HardwareWriter {
 		talon.setSelectedSensorPosition(0, kPidIndex, kTimeoutMs); //zeros encoder; starting position for turret will be all the way to the left
 	}
 
+	private void configureIntakeHardware() {
+		var hardware = HardwareAdapter.IntakeHardware.getInstance();
+
+	}
+
 	public void resetDriveSensors(Pose2d pose) {
 		double heading = pose.getRotation().getDegrees();
 		var hardware = HardwareAdapter.DriveHardware.getInstance();
@@ -136,6 +144,7 @@ public class HardwareWriter {
 			if (enabledSubsystems.contains(mDrive) && robotState.gamePeriod != GamePeriod.TESTING) updateDrivetrain();
 			if (enabledSubsystems.contains(mShooter)) updateShooter();
 			if (enabledSubsystems.contains(mTurret)) updateTurret();
+			if (enabledSubsystems.contains(mIntake)) updateIntake();
 			Robot.sLoopDebugger.addPoint("writeDrive");
 		}
 		var joystickHardware = HardwareAdapter.Joysticks.getInstance();
@@ -162,6 +171,12 @@ public class HardwareWriter {
 		var talon = HardwareAdapter.TurretHardware.getInstance().talon;
 		talon.handleReset();
 		talon.setOutput(mTurret.getOutput());
+	}
+
+	private void updateIntake() {
+		var hardware = HardwareAdapter.IntakeHardware.getInstance();
+		hardware.solenoid.set(mIntake.getSolenoidOutput());
+		hardware.talon.setOutput(mIntake.getOutput());
 	}
 
 	private void setPigeonStatusFramePeriods(PigeonIMU gyro) {
