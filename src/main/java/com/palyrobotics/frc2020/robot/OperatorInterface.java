@@ -35,10 +35,10 @@ public class OperatorInterface {
 		updateSuperstructure(commands, state);
 		mOperatorXboxController.updateLastInputs();
 
-		if (mOperatorXboxController.getRightTriggerPressed()) {
+		if (mOperatorXboxController.getDPadLeft()) {
 			commands.setIntakeWantedState(Intake.State.INTAKE);
 		}
-		if (mOperatorXboxController.getRightTriggerReleased()) {
+		if (mOperatorXboxController.getDPadLeftReleased()) {
 			commands.setIntakeWantedState(Intake.State.IDLE);
 		}
 

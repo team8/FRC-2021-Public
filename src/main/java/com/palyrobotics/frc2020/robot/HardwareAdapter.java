@@ -2,7 +2,6 @@ package com.palyrobotics.frc2020.robot;
 
 import java.util.List;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.palyrobotics.frc2020.config.PortConstants;
 import com.palyrobotics.frc2020.util.config.Configs;
@@ -57,17 +56,14 @@ public class HardwareAdapter {
 		final Talon talon = new Talon(sPortConstants.nariIntakeId, "intake");
 		final Solenoid solenoid = new Solenoid(sPortConstants.nariIntakeSolenoidId);
 
-
 		private IntakeHardware() {
-			
+
 		}
 
 		static IntakeHardware getInstance() {
 			if (sInstance == null) sInstance = new IntakeHardware();
 			return sInstance;
 		}
-
-
 
 	}
 
