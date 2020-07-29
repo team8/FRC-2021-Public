@@ -7,6 +7,7 @@ import com.ctre.phoenix.sensors.PigeonIMU.PigeonState;
 import com.esotericsoftware.minlog.Log;
 import com.palyrobotics.frc2020.config.RobotConfig;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.DriveHardware;
+import com.palyrobotics.frc2020.robot.HardwareAdapter.IntakeHardware;
 import com.palyrobotics.frc2020.subsystems.Drive;
 import com.palyrobotics.frc2020.subsystems.SubsystemBase;
 import com.palyrobotics.frc2020.util.Util;
@@ -91,6 +92,11 @@ public class HardwareReader {
 				spark.clearFaults();
 			}
 		}
+	}
+
+	private void readIntakeState(RobotState state) {
+		var hardware = IntakeHardware.getInstance();
+		state.intake = hardware.solenoid.get();
 	}
 
 	private void checkTalonFaults(Talon talon) {

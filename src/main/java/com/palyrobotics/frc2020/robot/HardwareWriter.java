@@ -14,6 +14,7 @@ import com.palyrobotics.frc2020.config.RobotConfig;
 import com.palyrobotics.frc2020.config.constants.DriveConstants;
 import com.palyrobotics.frc2020.robot.RobotState.GamePeriod;
 import com.palyrobotics.frc2020.subsystems.Drive;
+import com.palyrobotics.frc2020.subsystems.Intake;
 import com.palyrobotics.frc2020.subsystems.SubsystemBase;
 import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.config.Configs;
@@ -35,10 +36,12 @@ public class HardwareWriter {
 			true, 30.0, 35.0, 1.0);
 	private final RobotConfig mRobotConfig = Configs.get(RobotConfig.class);
 	private final Drive mDrive = Drive.getInstance();
+	private final Intake mIntake = Intake.getInstance();
 	private boolean mRumbleOutput;
 
 	void configureHardware(Set<SubsystemBase> enabledSubsystems) {
 		if (enabledSubsystems.contains(mDrive)) configureDriveHardware();
+		if (enabledSubsystems.contains(mIntake)) configureIntakeHardware();
 		configureMiscellaneousHardware();
 	}
 
@@ -82,6 +85,11 @@ public class HardwareWriter {
 		resetDriveSensors(new Pose2d());
 	}
 
+	private void configureIntakeHardware() {
+		var hardware = HardwareAdapter.IntakeHardware.getInstance();
+
+	}
+
 	public void resetDriveSensors(Pose2d pose) {
 		double heading = pose.getRotation().getDegrees();
 		var hardware = HardwareAdapter.DriveHardware.getInstance();
@@ -104,6 +112,7 @@ public class HardwareWriter {
 		mRumbleOutput = false;
 		if (!mRobotConfig.disableHardwareUpdates) {
 			if (enabledSubsystems.contains(mDrive) && robotState.gamePeriod != GamePeriod.TESTING) updateDrivetrain();
+			if (enabledSubsystems.contains(mIntake)) updateIntake();
 			Robot.sLoopDebugger.addPoint("writeDrive");
 		}
 		var joystickHardware = HardwareAdapter.Joysticks.getInstance();
@@ -117,6 +126,13 @@ public class HardwareWriter {
 		hardware.leftMasterFalcon.setOutput(mDrive.getDriveSignal().leftOutput);
 		hardware.rightMasterFalcon.setOutput(mDrive.getDriveSignal().rightOutput);
 		handleReset(hardware.gyro);
+	}
+
+	private void updateIntake() {
+		var hardware = HardwareAdapter.IntakeHardware.getInstance();
+		hardware.solenoid.set(mIntake.getSolenoidOutput());
+		hardware.talon.setOutput(mIntake.getOutput());
+		
 	}
 
 	private void setPigeonStatusFramePeriods(PigeonIMU gyro) {

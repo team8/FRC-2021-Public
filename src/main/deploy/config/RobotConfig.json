@@ -5,7 +5,8 @@
 		"telemetryService"
 	],
 	"enabledSubsystems": [
-		"drive"
+		"drive",
+	  	"intake"
 	],
 	"checkFaults": false,
 	"coastDriveWhenDisabled": false,

@@ -14,11 +14,19 @@ public class Intake extends SubsystemBase {
     private static Intake sInstance = new Intake();
     private State mState;
     private ControllerOutput mOutput = new ControllerOutput();
+    private boolean mSolenoidOutput;
 
     private Intake() {}
 
     public static Intake getInstance() {
         return sInstance;
+    }
+
+    public ControllerOutput getOutput() {
+        return mOutput;
+    }
+    public boolean getSolenoidOutput() {
+        return mSolenoidOutput;
     }
 
     @Override
@@ -29,11 +37,12 @@ public class Intake extends SubsystemBase {
         if (isNewState) {
             switch (wantedState) {
                 case INTAKE:
-                    // intake
-
+                    mSolenoidOutput = true;
+                    mOutput.setPercentOutput(0.2);
                     break;
                 case IDLE:
                     mOutput.setIdle();
+                    mSolenoidOutput = false;
                     break;
             }
         }

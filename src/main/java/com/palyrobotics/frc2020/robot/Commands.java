@@ -136,6 +136,8 @@ public class Commands {
 
 	public Intake.State getIntakeWantedState() { return intakeWantedState; }
 
+	public void setIntakeWantedState(Intake.State state) { intakeWantedState = state; }
+
 	@Override
 	public String toString() {
 		var log = new StringBuilder();

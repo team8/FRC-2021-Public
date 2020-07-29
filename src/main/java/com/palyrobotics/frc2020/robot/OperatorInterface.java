@@ -5,6 +5,7 @@ import static com.palyrobotics.frc2020.vision.Limelight.kOneTimesZoomPipelineId;
 import static com.palyrobotics.frc2020.vision.Limelight.kTwoTimesZoomPipelineId;
 
 import com.palyrobotics.frc2020.robot.HardwareAdapter.Joysticks;
+import com.palyrobotics.frc2020.subsystems.Intake;
 import com.palyrobotics.frc2020.util.input.Joystick;
 import com.palyrobotics.frc2020.util.input.XboxController;
 import com.palyrobotics.frc2020.vision.Limelight;
@@ -30,6 +31,13 @@ public class OperatorInterface {
 
 		updateDriveCommands(commands);
 		mOperatorXboxController.updateLastInputs();
+
+		if (mOperatorXboxController.getRightTriggerPressed()) {
+			commands.setIntakeWantedState(Intake.State.INTAKE);
+		}
+		if (mOperatorXboxController.getRightTriggerReleased()) {
+			commands.setIntakeWantedState(Intake.State.IDLE);
+		}
 
 		Robot.sLoopDebugger.addPoint("updateCommands");
 	}
