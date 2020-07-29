@@ -132,7 +132,7 @@ public class HardwareWriter {
 		var hardware = HardwareAdapter.IntakeHardware.getInstance();
 		hardware.solenoid.set(mIntake.getSolenoidOutput());
 		hardware.talon.setOutput(mIntake.getOutput());
-		
+
 	}
 
 	private void setPigeonStatusFramePeriods(PigeonIMU gyro) {

@@ -134,9 +134,13 @@ public class Commands {
 		return driveWantedSignal;
 	}
 
-	public Intake.State getIntakeWantedState() { return intakeWantedState; }
+	public Intake.State getIntakeWantedState() {
+		return intakeWantedState;
+	}
 
-	public void setIntakeWantedState(Intake.State state) { intakeWantedState = state; }
+	public void setIntakeWantedState(Intake.State state) {
+		intakeWantedState = state;
+	}
 
 	@Override
 	public String toString() {
