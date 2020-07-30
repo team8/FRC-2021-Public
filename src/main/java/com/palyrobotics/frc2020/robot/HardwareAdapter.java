@@ -7,12 +7,12 @@ import com.palyrobotics.frc2020.config.PortConstants;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.Falcon;
 import com.palyrobotics.frc2020.util.control.Talon;
+import com.palyrobotics.frc2020.util.control.TimedSolenoid;
 import com.palyrobotics.frc2020.util.input.Joystick;
 import com.palyrobotics.frc2020.util.input.XboxController;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
-import edu.wpi.first.wpilibj.Solenoid;
 
 /**
  * Represents all hardware components of the robot. Singleton class. Should only be used in robot
@@ -51,7 +51,7 @@ public class HardwareAdapter {
 		private static IntakeHardware sInstance;
 
 		final Talon talon = new Talon(sPortConstants.nariIntakeId, "intake");
-		final Solenoid solenoid = new Solenoid(sPortConstants.nariIntakeSolenoidId);
+		final TimedSolenoid solenoid = new TimedSolenoid(sPortConstants.nariIntakeSolenoidId, 1, false);
 
 		private IntakeHardware() {
 

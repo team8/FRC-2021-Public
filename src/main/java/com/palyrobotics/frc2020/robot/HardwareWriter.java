@@ -87,6 +87,7 @@ public class HardwareWriter {
 
 	private void configureIntakeHardware() {
 		var hardware = HardwareAdapter.IntakeHardware.getInstance();
+		hardware.talon.setInverted(true);
 
 	}
 
@@ -131,7 +132,9 @@ public class HardwareWriter {
 	private void updateIntake() {
 		var hardware = HardwareAdapter.IntakeHardware.getInstance();
 		hardware.solenoid.set(mIntake.getSolenoidOutput());
-		hardware.talon.setOutput(mIntake.getOutput());
+		if (!hardware.solenoid.isInTransition()) {
+			hardware.talon.setOutput(mIntake.getOutput());
+		}
 
 	}
 

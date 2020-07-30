@@ -98,7 +98,7 @@ public class HardwareReader {
 
 	private void readIntakeState(RobotState state) {
 		var hardware = IntakeHardware.getInstance();
-		state.intake = hardware.solenoid.get();
+		state.intakeExtended = hardware.solenoid.get();
 	}
 
 	private void checkTalonFaults(Talon talon) {

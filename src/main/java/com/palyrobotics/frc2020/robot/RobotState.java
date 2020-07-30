@@ -31,7 +31,7 @@ public class RobotState {
 	public double driveVelocityMetersPerSecond;
 	public boolean driveIsGyroReady;
 
-	public boolean intake;
+	public boolean intakeExtended;
 
 	public GamePeriod gamePeriod = GamePeriod.DISABLED;
 	public String gameData;

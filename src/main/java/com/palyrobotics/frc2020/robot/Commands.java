@@ -39,7 +39,7 @@ public class Commands {
 	public boolean wantedCompression;
 
 	// Intake
-	private Intake.State intakeWantedState;
+	public Intake.State intakeWantedState;
 
 	public void addWantedRoutines(RoutineBase... wantedRoutines) {
 		for (RoutineBase wantedRoutine : wantedRoutines) {
@@ -132,14 +132,6 @@ public class Commands {
 
 	public DriveOutputs getDriveWantedSignal() {
 		return driveWantedSignal;
-	}
-
-	public Intake.State getIntakeWantedState() {
-		return intakeWantedState;
-	}
-
-	public void setIntakeWantedState(Intake.State state) {
-		intakeWantedState = state;
 	}
 
 	@Override
