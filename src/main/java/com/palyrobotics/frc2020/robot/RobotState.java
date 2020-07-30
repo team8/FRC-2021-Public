@@ -43,7 +43,7 @@ public class RobotState {
 	/* Turret */
 	public double turretYawDegrees;
 
-	public boolean intake;
+	public boolean intakeExtended;
 
 	public GamePeriod gamePeriod = GamePeriod.DISABLED;
 	public String gameData;

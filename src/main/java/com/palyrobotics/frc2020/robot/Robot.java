@@ -17,10 +17,7 @@ import com.palyrobotics.frc2020.behavior.RoutineManager;
 import com.palyrobotics.frc2020.behavior.routines.drive.DrivePathRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DriveSetOdometryRoutine;
 import com.palyrobotics.frc2020.config.RobotConfig;
-import com.palyrobotics.frc2020.subsystems.Drive;
-import com.palyrobotics.frc2020.subsystems.Shooter;
-import com.palyrobotics.frc2020.subsystems.SubsystemBase;
-import com.palyrobotics.frc2020.subsystems.Turret;
+import com.palyrobotics.frc2020.subsystems.*;
 import com.palyrobotics.frc2020.util.LoopOverrunDebugger;
 import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.commands.CommandReceiverService;
@@ -59,8 +56,10 @@ public class Robot extends TimedRobot {
 	private final Drive mDrive = Drive.getInstance();
 	private final Shooter mShooter = Shooter.getInstance();
 	private final Turret mTurret = Turret.getInstance();
+	private final Intake mIntake = Intake.getInstance();
 
-	private Set<SubsystemBase> mSubsystems = Set.of(mDrive, mShooter, mTurret),
+
+	private Set<SubsystemBase> mSubsystems = Set.of(mDrive, mShooter, mTurret, mIntake),
 			mEnabledSubsystems;
 	private Set<RobotService> mServices = Set.of(new CommandReceiverService(), new NetworkLoggerService(),
 			new TelemetryService()),

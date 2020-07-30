@@ -33,14 +33,8 @@ public class OperatorInterface {
 		commands.shouldClearCurrentRoutines = mDriveStick.getTriggerPressed();
 		updateDriveCommands(commands);
 		updateSuperstructure(commands, state);
+		updateIntakeCommands(commands);
 		mOperatorXboxController.updateLastInputs();
-
-		if (mOperatorXboxController.getDPadLeft()) {
-			commands.setIntakeWantedState(Intake.State.INTAKE);
-		}
-		if (mOperatorXboxController.getDPadLeftReleased()) {
-			commands.setIntakeWantedState(Intake.State.IDLE);
-		}
 
 		Robot.sLoopDebugger.addPoint("updateCommands");
 	}
@@ -81,6 +75,15 @@ public class OperatorInterface {
 		}
 	}
 
+	private void updateIntakeCommands(Commands commands) {
+		if (mOperatorXboxController.getDPadLeft()) {
+			commands.intakeWantedState = Intake.State.INTAKE;
+		}
+		if (mOperatorXboxController.getDPadLeftReleased()) {
+			commands.intakeWantedState = Intake.State.IDLE;
+		}
+	}
+
 	public void resetPeriodic(Commands commands) {
 	}
 
@@ -89,6 +92,7 @@ public class OperatorInterface {
 		commands.setDriveNeutral();
 		commands.wantedCompression = true;
 		commands.visionWanted = false;
+		commands.intakeWantedState = Intake.State.IDLE;
 		mOperatorXboxController.clearLastInputs();
 	}
 }

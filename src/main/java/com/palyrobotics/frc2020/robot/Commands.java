@@ -53,7 +53,7 @@ public class Commands {
 	public boolean wantedCompression;
 
 	// Intake
-	private Intake.State intakeWantedState;
+	public Intake.State intakeWantedState;
 
 	public void addWantedRoutines(RoutineBase... wantedRoutines) {
 		for (RoutineBase wantedRoutine : wantedRoutines) {
