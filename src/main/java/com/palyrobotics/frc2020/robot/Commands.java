@@ -49,9 +49,9 @@ public class Commands {
 	/* Miscellaneous */
 	public boolean wantedCompression;
 	/* Shooter */
-	private Shooter.ShooterState wantedShooterState;
-	private Shooter.HoodState wantedShooterHoodState; // Only needed for custom
-	private double wantedShooterVelocity; // Only needed for custom
+	private Shooter.ShooterState shooterWantedState;
+	private Shooter.HoodState shooterWantedHoodState; // Only needed for custom
+	private double shooterWantedVelocity; // Only needed for custom
 
 	public void addWantedRoutines(RoutineBase... wantedRoutines) {
 		for (RoutineBase wantedRoutine : wantedRoutines) {
@@ -87,7 +87,7 @@ public class Commands {
 	 * velocity to 0, and keep the same hood state.
 	 */
 	public void setIdleShooterState() {
-		this.wantedShooterState = Shooter.ShooterState.IDLE;
+		this.shooterWantedState = Shooter.ShooterState.IDLE;
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class Commands {
 	 * have tested.
 	 */
 	public void setVisionShooterState() {
-		this.wantedShooterState = Shooter.ShooterState.VISION;
+		this.shooterWantedState = Shooter.ShooterState.VISION;
 	}
 
 	/**
@@ -107,9 +107,9 @@ public class Commands {
 	 * @param hoodState The hood state to be tested
 	 */
 	public void setCustomShooterState(double velocity, Shooter.HoodState hoodState) {
-		this.wantedShooterState = Shooter.ShooterState.CUSTOM;
-		this.wantedShooterVelocity = velocity;
-		this.wantedShooterHoodState = hoodState;
+		this.shooterWantedState = Shooter.ShooterState.CUSTOM;
+		this.shooterWantedVelocity = velocity;
+		this.shooterWantedHoodState = hoodState;
 	}
 
 	public void setDriveTeleop() {
@@ -195,16 +195,16 @@ public class Commands {
 		return intakeWantedPo;
 	}
 
-	public double getWantedShooterVelocity() {
-		return wantedShooterVelocity;
+	public double getShooterWantedVelocity() {
+		return shooterWantedVelocity;
 	}
 
-	public Shooter.HoodState getWantedShooterHoodState() {
-		return wantedShooterHoodState;
+	public Shooter.HoodState getShooterWantedHoodState() {
+		return shooterWantedHoodState;
 	}
 
-	public Shooter.ShooterState getWantedShooterState() {
-		return wantedShooterState;
+	public Shooter.ShooterState getShooterWantedState() {
+		return shooterWantedState;
 	}
 
 	@Override
