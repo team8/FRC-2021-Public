@@ -147,22 +147,6 @@ public class HardwareReader {
 		LiveGraph.add("leftVTalonCurrentDraw", hardware.leftVTalon.getStatorCurrent());
 	}
 
-	private void checkSparkFaults(Spark spark) {
-		if (mRobotConfig.checkFaults) {
-			boolean wasAnyFault = false;
-			for (var value : FaultID.values()) {
-				boolean isFaulted = spark.getStickyFault(value);
-				if (isFaulted) {
-					Log.error(kLoggerTag, String.format("Spark %d fault: %s", spark.getDeviceId(), value));
-					wasAnyFault = true;
-				}
-			}
-			if (wasAnyFault) {
-				spark.clearFaults();
-			}
-		}
-	}
-
 	private void readIntakeState(RobotState state) {
 		var hardware = IntakeHardware.getInstance();
 		state.intakeExtended = hardware.solenoid.get();
@@ -176,6 +160,22 @@ public class HardwareReader {
 			if (faults.hasAnyFault()) {
 				Log.error(kLoggerTag, String.format("%s faults: %s", talon.getName(), faults));
 				talon.clearStickyFaults();
+			}
+		}
+	}
+
+	private void checkSparkFaults(Spark spark) {
+		if (mRobotConfig.checkFaults) {
+			boolean wasAnyFault = false;
+			for (var value : FaultID.values()) {
+				boolean isFaulted = spark.getStickyFault(value);
+				if (isFaulted) {
+					Log.error(kLoggerTag, String.format("Spark %d fault: %s", spark.getDeviceId(), value));
+					wasAnyFault = true;
+				}
+			}
+			if (wasAnyFault) {
+				spark.clearFaults();
 			}
 		}
 	}

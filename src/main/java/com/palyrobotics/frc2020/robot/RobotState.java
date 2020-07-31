@@ -53,8 +53,8 @@ public class RobotState {
 			indexerLeftVTalonCurrentDraw, indexerRightVTalonCurrentDraw;
 
 	public GamePeriod gamePeriod = GamePeriod.DISABLED;
-	public double gameTime = 0;
 	public String gameData;
+	public double gameTime;
 
 	public void resetOdometry(Pose2d pose) {
 		driveOdometry.resetPosition(pose, pose.getRotation());

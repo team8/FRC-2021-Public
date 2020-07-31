@@ -86,24 +86,28 @@ public class OperatorInterface {
 	}
 
 	private void updateSuperstructureCommands(Commands commands, RobotState state) {
-
-		if (mOperatorXboxController.getYButton() && !state.indexerPos1Blocked) {
-			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.FORWARD;
+		if (mOperatorXboxController.getYButton()) {
 			commands.intakeWantedState = Intake.State.INTAKE;
+			commands.indexerVSingulatorWantedState = state.indexerPos1Blocked ? Indexer.VSingulatorState.IDLE : Indexer.VSingulatorState.FORWARD;
 		} else if (mOperatorXboxController.getAButton()) {
+			commands.intakeWantedState = Intake.State.IDLE;
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.REVERSE;
 		} else {
-			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.IDLE;
 			commands.intakeWantedState = Intake.State.IDLE;
+			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.IDLE;
 		}
-		if (mOperatorXboxController.getDPadRight()) {
+		if (mOperatorXboxController.getRightTrigger()) {
 			commands.indexerColumnWantedState = Indexer.ColumnState.FEED;
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.FORWARD;
-		} else if (mOperatorXboxController.getDPadDown()) {
+		} else if (mOperatorXboxController.getLeftTrigger()) {
 			commands.indexerColumnWantedState = Indexer.ColumnState.REVERSE_FEED;
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.REVERSE;
-		} else if (state.indexerPos1Blocked && !state.indexerPos4Blocked) {
+		} else if (state.indexerPos1Blocked && !state.indexerPos4Blocked || mOperatorXboxController.getDPadUp()) {
 			commands.indexerColumnWantedState = Indexer.ColumnState.INDEX;
+			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.FORWARD;
+		} else if (mOperatorXboxController.getDPadDown()) {
+			commands.indexerColumnWantedState =Indexer.ColumnState.UN_INDEX;
+			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.REVERSE;
 		} else {
 			commands.indexerColumnWantedState = Indexer.ColumnState.IDLE;
 		}

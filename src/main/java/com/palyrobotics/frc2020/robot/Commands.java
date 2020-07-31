@@ -52,14 +52,15 @@ public class Commands {
 	/* Indexer */
 	public Indexer.ColumnState indexerColumnWantedState;
 	public Indexer.VSingulatorState indexerVSingulatorWantedState;
+
+	/* Intake */
+	public Intake.State intakeWantedState;
+
 	/* Vision */
 	public int visionWantedPipeline;
 	public boolean visionWanted;
 	/* Miscellaneous */
 	public boolean wantedCompression;
-
-	// Intake
-	public Intake.State intakeWantedState;
 
 	public void addWantedRoutines(RoutineBase... wantedRoutines) {
 		for (RoutineBase wantedRoutine : wantedRoutines) {
