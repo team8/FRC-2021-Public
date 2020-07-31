@@ -86,7 +86,7 @@ public class Commands {
 	 * Self documenting code down here, sets the shooter to IDLE, this means it will set the flywheel
 	 * velocity to 0, and keep the same hood state.
 	 */
-	public void setIdleShooterState() {
+	public void setShooterIdleState() {
 		this.shooterWantedState = Shooter.ShooterState.IDLE;
 	}
 
@@ -95,7 +95,7 @@ public class Commands {
 	 * state to the best of its knowledge using interpolation from the "carefully" chosen data points we
 	 * have tested.
 	 */
-	public void setVisionShooterState() {
+	public void setShooterVisionState() {
 		this.shooterWantedState = Shooter.ShooterState.VISION;
 	}
 
@@ -105,7 +105,7 @@ public class Commands {
 	 * @param velocity  The velocity to be tested
 	 * @param hoodState The hood state to be tested
 	 */
-	public void setCustomShooterState(double velocity, Shooter.HoodState hoodState) {
+	public void setShooterCustomState(double velocity, Shooter.HoodState hoodState) {
 		this.shooterWantedState = Shooter.ShooterState.CUSTOM;
 		this.shooterWantedVelocity = velocity;
 		this.shooterWantedHoodState = hoodState;
