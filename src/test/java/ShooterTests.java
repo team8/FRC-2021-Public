@@ -28,7 +28,7 @@ public class ShooterTests {
 		shooter.update(commands, state);
 		assertFalse(shooter.getRumbleOutput());
 
-		commands.setCustomShooterState(10, Shooter.HoodState.LOW);
+		commands.setShooterCustomState(10, Shooter.HoodState.LOW);
 		shooter.update(commands, state);
 		assertFalse(shooter.getRumbleOutput());
 
