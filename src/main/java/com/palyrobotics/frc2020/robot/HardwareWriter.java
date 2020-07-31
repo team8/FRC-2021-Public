@@ -100,17 +100,6 @@ public class HardwareWriter {
 		resetDriveSensors(new Pose2d());
 	}
 
-	private void configureShooterHardware() {
-		var hardware = HardwareAdapter.ShooterHardware.getInstance();
-		hardware.masterSpark.restoreFactoryDefaults();
-		hardware.slaveSpark.restoreFactoryDefaults();
-		hardware.masterSpark.setInverted(true);
-		hardware.slaveSpark.follow(hardware.masterSpark, true);
-
-		/* Flywheel velocity in RPM, adjusted for gearing ratio */
-		hardware.masterEncoder.setVelocityConversionFactor(1.0 / 0.76923076);
-	}
-
 	private void configureTurretHardware() {
 		var talon = HardwareAdapter.TurretHardware.getInstance().talon;
 		talon.configFactoryDefault(kTimeoutMs);
