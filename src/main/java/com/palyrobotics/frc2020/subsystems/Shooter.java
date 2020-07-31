@@ -120,7 +120,7 @@ public class Shooter extends SubsystemBase {
 
 		targetFlywheelVelocity = kTargetDistanceToVelocity.get(mHoodState).getInterpolated(mTargetDistance);
 
-		mTargetVelocity = clamp(targetFlywheelVelocity, 0.0, kMaxVelocity);
+		mTargetVelocity = clamp(targetFlywheelVelocity, kMinVelocity, kMaxVelocity);
 		mFlywheelOutput.setTargetVelocity(mTargetVelocity, mConfig.shooterGains);
 	}
 
