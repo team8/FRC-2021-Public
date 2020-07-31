@@ -99,6 +99,7 @@ public class HardwareReader {
 	private void readIntakeState(RobotState state) {
 		var hardware = IntakeHardware.getInstance();
 		state.intakeExtended = hardware.solenoid.get();
+		state.intakeTransitioning = hardware.solenoid.isInTransition();
 	}
 
 	private void checkTalonFaults(Talon talon) {

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.palyrobotics.frc2020.config.PortConstants;
+import com.palyrobotics.frc2020.config.subsystem.IntakeConfig;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.Falcon;
 import com.palyrobotics.frc2020.util.control.Talon;
@@ -49,9 +50,10 @@ public class HardwareAdapter {
 	static class IntakeHardware {
 
 		private static IntakeHardware sInstance;
+		private final IntakeConfig mConfig = Configs.get(IntakeConfig.class);
 
 		final Talon talon = new Talon(sPortConstants.nariIntakeId, "intake");
-		final TimedSolenoid solenoid = new TimedSolenoid(sPortConstants.nariIntakeSolenoidId, 1, false);
+		final TimedSolenoid solenoid = new TimedSolenoid(sPortConstants.nariIntakeSolenoidId, mConfig.solenoidActuation, false);
 
 		private IntakeHardware() {
 

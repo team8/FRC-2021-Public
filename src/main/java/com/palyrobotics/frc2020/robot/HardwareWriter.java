@@ -132,9 +132,7 @@ public class HardwareWriter {
 	private void updateIntake() {
 		var hardware = HardwareAdapter.IntakeHardware.getInstance();
 		hardware.solenoid.set(mIntake.getSolenoidOutput());
-		if (!hardware.solenoid.isInTransition()) {
-			hardware.talon.setOutput(mIntake.getOutput());
-		}
+		hardware.talon.setOutput(mIntake.getOutput());
 
 	}
 

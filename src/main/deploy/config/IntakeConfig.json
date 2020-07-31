@@ -1,3 +1,4 @@
 {
-  "intakeOutput" : 0.7
+  "intakeOutput" : 0.7,
+  "solenoidActuation": 1.0
 }

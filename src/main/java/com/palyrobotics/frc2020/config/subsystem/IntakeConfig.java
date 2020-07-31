@@ -5,5 +5,6 @@ import com.palyrobotics.frc2020.util.config.SubsystemConfigBase;
 public class IntakeConfig extends SubsystemConfigBase {
 
 	public double intakeOutput;
+	public double solenoidActuation;
 
 }
