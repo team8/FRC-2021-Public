@@ -53,6 +53,7 @@ public class HardwareWriter {
 		if (enabledSubsystems.contains(mDrive)) configureDriveHardware();
 		if (enabledSubsystems.contains(mIntake)) configureIntakeHardware();
 		if (enabledSubsystems.contains(mLighting)) configureLightingHardware();
+		if (enabledSubsystems.contains(mShooter)) configureShooterHardware();
 		if (enabledSubsystems.contains(mIndexer)) configureIndexerHardware();
 		configureMiscellaneousHardware();
 	}
@@ -128,6 +129,16 @@ public class HardwareWriter {
 			talon.configSupplyCurrentLimit(vTalonSupplyCurrentLimit);
 			talon.setInverted(true);
 		}
+	}
+
+	private void configureShooterHardware() {
+		var hardware = HardwareAdapter.ShooterHardware.getInstance();
+		hardware.masterSpark.restoreFactoryDefaults();
+		hardware.slaveSpark.restoreFactoryDefaults();
+		hardware.slaveSpark.follow(hardware.masterSpark, true);
+		hardware.masterSpark.setInverted(true);
+		/* Flywheel velocity in RPM, adjusted for gearing ratio */
+		hardware.masterEncoder.setVelocityConversionFactor(1.0 / 0.76923076);
 	}
 
 	public void resetDriveSensors(Pose2d pose) {
