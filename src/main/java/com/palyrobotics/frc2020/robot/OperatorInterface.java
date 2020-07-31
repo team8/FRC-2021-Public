@@ -116,13 +116,13 @@ public class OperatorInterface {
 
 	public void updateShooterCommands(Commands commands) {
 		if (mOperatorXboxController.getDPadDownPressed()) {
-			commands.setCustomShooterState(0, Shooter.HoodState.LOW);
+			commands.setShooterCustomState(0, Shooter.HoodState.LOW);
 		}
 		if (mOperatorXboxController.getLeftBumperPressed()) {
-			commands.setCustomShooterState(0, Shooter.HoodState.MEDIUM);
+			commands.setShooterCustomState(0, Shooter.HoodState.MEDIUM);
 		}
 		if (mOperatorXboxController.getRightBumperPressed()) {
-			commands.setCustomShooterState(0, Shooter.HoodState.HIGH);
+			commands.setShooterCustomState(0, Shooter.HoodState.HIGH);
 		}
 	}
 
@@ -135,6 +135,7 @@ public class OperatorInterface {
 		commands.wantedCompression = true;
 		commands.visionWanted = false;
 		commands.setIntakeStowed();
+		commands.setShooterIdleState();
 		commands.indexerColumnWantedState = Indexer.ColumnState.IDLE;
 		commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.IDLE;
 		mOperatorXboxController.clearLastInputs();

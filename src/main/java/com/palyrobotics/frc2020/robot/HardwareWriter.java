@@ -42,6 +42,7 @@ public class HardwareWriter {
 	private final Drive mDrive = Drive.getInstance();
 	private final Intake mIntake = Intake.getInstance();
 	private final Shooter mShooter = Shooter.getInstance();
+	private final Indexer mIndexer = Indexer.getInstance();
 	private boolean mRumbleOutput;
 
 	void configureHardware(Set<SubsystemBase> enabledSubsystems) {
@@ -192,8 +193,8 @@ public class HardwareWriter {
 	private void updateShooter() {
 		var hardware = HardwareAdapter.ShooterHardware.getInstance();
 
-		hardware.blockingSolenoid.setExtended(mShooter.getBlockingOutput());
-		hardware.hoodSolenoid.setExtended(mShooter.getHoodOutput());
+		hardware.blockingSolenoid.set(mShooter.getBlockingOutput());
+		hardware.hoodSolenoid.set(mShooter.getHoodOutput());
 		hardware.masterSpark.setOutput(mShooter.getFlywheelOutput());
 	}
 
