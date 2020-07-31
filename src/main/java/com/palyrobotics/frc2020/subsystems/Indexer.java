@@ -23,6 +23,7 @@ public class Indexer extends SubsystemBase {
 
 	public abstract static class IndexerColumnController {
 
+		protected final IndexerConfig mConfig = Configs.get(IndexerConfig.class);
 		protected ControllerOutput mMasterSparkOutput = new ControllerOutput(), mSlaveSparkOutput = new ControllerOutput();
 
 		protected IndexerColumnController(@ReadOnly RobotState state) {
@@ -38,7 +39,6 @@ public class Indexer extends SubsystemBase {
 
 	private static final Indexer sInstance = new Indexer();
 	private static final IndexerConfig mConfig = Configs.get(IndexerConfig.class);
-	private static ColumnState mActiveColumnState = ColumnState.IDLE;
 	private static IndexerColumnController mRunningController = null;
 	private static ControllerOutput mMasterIndexerColumnOutput = new ControllerOutput(),
 			mSlaveIndexerColumnOutput = new ControllerOutput(), mRightVTalonOutput = new ControllerOutput(),
@@ -56,23 +56,18 @@ public class Indexer extends SubsystemBase {
 		if (isNewColumnState) {
 			switch (commands.indexerColumnWantedState) {
 				case FEED:
-					mActiveColumnState = ColumnState.FEED;
 					mRunningController = new FeedColumnController(state);
 					break;
 				case REVERSE_FEED:
-					mActiveColumnState = ColumnState.REVERSE_FEED;
 					mRunningController = new ReverseFeedColumnController(state);
 					break;
 				case INDEX:
-					mActiveColumnState = ColumnState.INDEX;
 					mRunningController = new IndexColumnController(state);
 					break;
 				case UN_INDEX:
-					mActiveColumnState = ColumnState.UN_INDEX;
 					mRunningController = new UnIndexColumnController(state);
 					break;
 				default:
-					mActiveColumnState = ColumnState.IDLE;
 					mRunningController = null;
 			}
 		}
@@ -86,7 +81,7 @@ public class Indexer extends SubsystemBase {
 			mSlaveIndexerColumnOutput.setIdle();
 		}
 
-		if (commands.indexerVSingulatorWantedState == VSingulatorState.FORWARD && mActiveColumnState != ColumnState.INDEX) {
+		if (commands.indexerVSingulatorWantedState == VSingulatorState.FORWARD && commands.indexerColumnWantedState != ColumnState.INDEX) {
 			if ((int) state.gameTime % 2 == 0 || state.indexerPos4Blocked) {
 				mLeftVTalonOutput.setPercentOutput(mConfig.leftVTalonPo);
 				mRightVTalonOutput.setPercentOutput(mConfig.rightVTalonPo);
