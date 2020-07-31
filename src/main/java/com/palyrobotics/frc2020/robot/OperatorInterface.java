@@ -37,7 +37,7 @@ public class OperatorInterface {
 		updateDriveCommands(commands);
 		updateIntakeCommands(commands);
 		updateLightingCommands(commands, state);
-		updateIndexerCommands(commands, state);
+		updateSuperstructureCommands(commands, state);
 		mOperatorXboxController.updateLastInputs();
 
 		Robot.sLoopDebugger.addPoint("updateCommands");
@@ -89,13 +89,15 @@ public class OperatorInterface {
 		//Need to implement
 	}
 
-	private void updateIndexerCommands(Commands commands, RobotState state) {
+	private void updateSuperstructureCommands(Commands commands, RobotState state) {
 		if (mOperatorXboxController.getYButton() && !state.indexerPos1Blocked) {
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.FORWARD;
+			commands.intakeWantedState = Intake.State.INTAKE;
 		} else if (mOperatorXboxController.getAButton()) {
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.REVERSE;
 		} else {
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.IDLE;
+			commands.intakeWantedState = Intake.State.IDLE;
 		}
 		if (mOperatorXboxController.getDPadRight()) {
 			commands.indexerColumnWantedState = Indexer.ColumnState.FEED;
