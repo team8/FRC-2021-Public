@@ -31,6 +31,7 @@ public class RobotState {
 	public double driveVelocityMetersPerSecond;
 	public boolean driveIsGyroReady;
 
+	/* Intake */
 	public boolean intakeExtended;
 	public boolean intakeTransitioning;
 

@@ -13,8 +13,8 @@ public class Intake extends SubsystemBase {
 		INTAKE, IDLE
 	}
 
-	private static Intake sInstance = new Intake();
-	private ControllerOutput mOutput = new ControllerOutput();
+	private static final Intake sInstance = new Intake();
+	private final ControllerOutput mOutput = new ControllerOutput();
 	private boolean mSolenoidOutput;
 	private final IntakeConfig mConfig = Configs.get(IntakeConfig.class);
 
@@ -37,12 +37,12 @@ public class Intake extends SubsystemBase {
 	public void update(@ReadOnly Commands commands, @ReadOnly RobotState state) {
 		switch (commands.intakeWantedState) {
 			case INTAKE:
-				mSolenoidOutput = true;
 				if (!state.intakeTransitioning && state.intakeExtended) {
 					mOutput.setPercentOutput(mConfig.intakeOutput);
 				} else {
 					mOutput.setIdle();
 				}
+				mSolenoidOutput = true;
 				break;
 			case IDLE:
 				mOutput.setIdle();
