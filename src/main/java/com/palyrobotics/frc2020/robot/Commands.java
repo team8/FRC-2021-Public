@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.palyrobotics.frc2020.behavior.RoutineBase;
 import com.palyrobotics.frc2020.subsystems.Drive;
+import com.palyrobotics.frc2020.subsystems.Intake;
 import com.palyrobotics.frc2020.util.control.DriveOutputs;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -36,6 +37,9 @@ public class Commands {
 	public boolean visionWanted;
 	/* Miscellaneous */
 	public boolean wantedCompression;
+
+	// Intake
+	public Intake.State intakeWantedState;
 
 	public void addWantedRoutines(RoutineBase... wantedRoutines) {
 		for (RoutineBase wantedRoutine : wantedRoutines) {

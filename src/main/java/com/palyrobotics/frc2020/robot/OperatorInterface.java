@@ -5,6 +5,7 @@ import static com.palyrobotics.frc2020.vision.Limelight.kOneTimesZoomPipelineId;
 import static com.palyrobotics.frc2020.vision.Limelight.kTwoTimesZoomPipelineId;
 
 import com.palyrobotics.frc2020.robot.HardwareAdapter.Joysticks;
+import com.palyrobotics.frc2020.subsystems.Intake;
 import com.palyrobotics.frc2020.util.input.Joystick;
 import com.palyrobotics.frc2020.util.input.XboxController;
 import com.palyrobotics.frc2020.vision.Limelight;
@@ -29,6 +30,7 @@ public class OperatorInterface {
 		commands.shouldClearCurrentRoutines = mDriveStick.getTriggerPressed();
 
 		updateDriveCommands(commands);
+		updateIntakeCommands(commands);
 		mOperatorXboxController.updateLastInputs();
 
 		Robot.sLoopDebugger.addPoint("updateCommands");
@@ -68,6 +70,14 @@ public class OperatorInterface {
 //		}
 	}
 
+	private void updateIntakeCommands(Commands commands) {
+		if (mOperatorXboxController.getDPadLeft()) {
+			commands.intakeWantedState = Intake.State.INTAKE;
+		} else {
+			commands.intakeWantedState = Intake.State.IDLE;
+		}
+	}
+
 	public void resetPeriodic(Commands commands) {
 	}
 
@@ -76,6 +86,7 @@ public class OperatorInterface {
 		commands.setDriveNeutral();
 		commands.wantedCompression = true;
 		commands.visionWanted = false;
+		commands.intakeWantedState = Intake.State.IDLE;
 		mOperatorXboxController.clearLastInputs();
 	}
 }

@@ -4,8 +4,11 @@ import java.util.List;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.palyrobotics.frc2020.config.PortConstants;
+import com.palyrobotics.frc2020.config.subsystem.IntakeConfig;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.Falcon;
+import com.palyrobotics.frc2020.util.control.Talon;
+import com.palyrobotics.frc2020.util.control.TimedSolenoid;
 import com.palyrobotics.frc2020.util.input.Joystick;
 import com.palyrobotics.frc2020.util.input.XboxController;
 
@@ -40,6 +43,22 @@ public class HardwareAdapter {
 
 		static DriveHardware getInstance() {
 			if (sInstance == null) sInstance = new DriveHardware();
+			return sInstance;
+		}
+	}
+
+	static class IntakeHardware {
+
+		private static IntakeHardware sInstance;
+
+		final Talon talon = new Talon(sPortConstants.nariIntakeId, "intake");
+		final TimedSolenoid solenoid = new TimedSolenoid(sPortConstants.nariIntakeSolenoidId, Configs.get(IntakeConfig.class).solenoidActuationDurationSec, false);
+
+		private IntakeHardware() {
+		}
+
+		static IntakeHardware getInstance() {
+			if (sInstance == null) sInstance = new IntakeHardware();
 			return sInstance;
 		}
 	}
