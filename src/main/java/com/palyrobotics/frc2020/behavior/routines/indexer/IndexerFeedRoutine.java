@@ -9,18 +9,19 @@ import com.palyrobotics.frc2020.subsystems.Indexer;
 import com.palyrobotics.frc2020.subsystems.SubsystemBase;
 
 public class IndexerFeedRoutine extends RoutineBase {
-    private boolean mFirstRun = true;
+
+	private boolean mFirstRun = true;
 
 	@Override
 	protected void update(Commands commands, RobotState state) {
-	    if (mFirstRun) {
-            commands.indexerColumnWantedState = Indexer.ColumnState.UN_INDEX;
-            commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.IDLE;
-            mFirstRun = false;
-            return;
-        }
-            commands.indexerColumnWantedState = Indexer.ColumnState.FEED;
-            commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.FORWARD;
+		if (mFirstRun) {
+			commands.indexerColumnWantedState = Indexer.ColumnState.UN_INDEX;
+			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.IDLE;
+			mFirstRun = false;
+			return;
+		}
+		commands.indexerColumnWantedState = Indexer.ColumnState.FEED;
+		commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.FORWARD;
 	}
 
 	@Override
