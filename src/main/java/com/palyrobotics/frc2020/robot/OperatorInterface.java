@@ -76,6 +76,8 @@ public class OperatorInterface {
 	private void updateIntakeCommands(Commands commands) {
 		if (mOperatorXboxController.getDPadLeft()) {
 			commands.intakeWantedState = Intake.State.INTAKE;
+		} else if (mOperatorXboxController.getDPadRight()) {
+			commands.intakeWantedState = Intake.State.REVERSE;
 		} else {
 			commands.intakeWantedState = Intake.State.IDLE;
 		}
