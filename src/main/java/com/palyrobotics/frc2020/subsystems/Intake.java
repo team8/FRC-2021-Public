@@ -14,7 +14,6 @@ public class Intake extends SubsystemBase {
 	}
 
 	private static Intake sInstance = new Intake();
-	private State mState;
 	private ControllerOutput mOutput = new ControllerOutput();
 	private boolean mSolenoidOutput;
 	private final IntakeConfig mConfig = Configs.get(IntakeConfig.class);
@@ -39,7 +38,9 @@ public class Intake extends SubsystemBase {
 		switch (commands.intakeWantedState) {
 			case INTAKE:
 				mSolenoidOutput = true;
-				mOutput.setPercentOutput(mConfig.intakeOutput);
+				if (!state.intakeTransitioning) {
+					mOutput.setPercentOutput(mConfig.intakeOutput);
+				}
 				break;
 			case IDLE:
 				mOutput.setIdle();
