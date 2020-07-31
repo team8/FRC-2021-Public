@@ -88,7 +88,6 @@ public class HardwareWriter {
 	private void configureIntakeHardware() {
 		var hardware = HardwareAdapter.IntakeHardware.getInstance();
 		hardware.talon.setInverted(true);
-
 	}
 
 	public void resetDriveSensors(Pose2d pose) {
@@ -133,7 +132,6 @@ public class HardwareWriter {
 		var hardware = HardwareAdapter.IntakeHardware.getInstance();
 		hardware.solenoid.set(mIntake.getSolenoidOutput());
 		hardware.talon.setOutput(mIntake.getOutput());
-
 	}
 
 	private void setPigeonStatusFramePeriods(PigeonIMU gyro) {
