@@ -1,7 +1,7 @@
 {
     "shooterGains": null,
     "rumbleError": 0.0,
-    "rumbleTimeSeconds": 0.5
+    "rumbleTimeSeconds": 0.5,
     "hoodSolenoid": 0.4,
     "blockingSolenoid": 0.2
 }
