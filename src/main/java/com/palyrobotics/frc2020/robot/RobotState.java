@@ -43,6 +43,7 @@ public class RobotState {
 	/* Turret */
 	public double turretYawDegrees;
 
+	/* Intake */
 	public boolean intakeExtended;
 	public boolean intakeTransitioning;
 

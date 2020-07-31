@@ -52,20 +52,17 @@ public class HardwareAdapter {
 	static class IntakeHardware {
 
 		private static IntakeHardware sInstance;
-		private final IntakeConfig mConfig = Configs.get(IntakeConfig.class);
 
 		final Talon talon = new Talon(sPortConstants.nariIntakeId, "intake");
-		final TimedSolenoid solenoid = new TimedSolenoid(sPortConstants.nariIntakeSolenoidId, mConfig.solenoidActuationDurationSec, false);
+		final TimedSolenoid solenoid = new TimedSolenoid(sPortConstants.nariIntakeSolenoidId, Configs.get(IntakeConfig.class).solenoidActuationDurationSec, false);
 
 		private IntakeHardware() {
-
 		}
 
 		static IntakeHardware getInstance() {
 			if (sInstance == null) sInstance = new IntakeHardware();
 			return sInstance;
 		}
-
 	}
 
 	/**
