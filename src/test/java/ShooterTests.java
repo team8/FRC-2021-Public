@@ -24,7 +24,7 @@ public class ShooterTests {
 		shooter.update(commands, state);
 		assertFalse(shooter.getRumbleOutput());
 
-		commands.setIdleShooterState();
+		commands.setShooterIdleState();
 		shooter.update(commands, state);
 		assertFalse(shooter.getRumbleOutput());
 
