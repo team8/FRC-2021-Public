@@ -1,13 +1,9 @@
 package com.palyrobotics.frc2020.subsystems.controllers.indexer;
 
-import com.palyrobotics.frc2020.config.subsystem.IndexerConfig;
 import com.palyrobotics.frc2020.robot.RobotState;
 import com.palyrobotics.frc2020.subsystems.Indexer;
-import com.palyrobotics.frc2020.util.config.Configs;
 
 public class ReverseFeedColumnController extends Indexer.IndexerColumnController {
-
-	private final IndexerConfig mConfig = Configs.get(IndexerConfig.class);
 
 	public ReverseFeedColumnController(RobotState state) {
 		super(state);
@@ -16,8 +12,8 @@ public class ReverseFeedColumnController extends Indexer.IndexerColumnController
 	@Override
 	protected void update(RobotState state) {
 		System.out.println("Running Reverse Feed Controller");
-		mMasterSparkOutput.setPercentOutput(-0.8);
-		mSlaveSparkOutput.setPercentOutput(-0.8);
+		mMasterSparkOutput.setPercentOutput(mConfig.masterSparkReverseFeedPo);
+		mSlaveSparkOutput.setPercentOutput(mConfig.slaveSparkReverseFeedPo);
 	}
 
 	@Override
