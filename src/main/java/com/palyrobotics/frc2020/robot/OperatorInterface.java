@@ -5,8 +5,8 @@ import static com.palyrobotics.frc2020.vision.Limelight.kOneTimesZoomPipelineId;
 import static com.palyrobotics.frc2020.vision.Limelight.kTwoTimesZoomPipelineId;
 
 import com.palyrobotics.frc2020.robot.HardwareAdapter.Joysticks;
-import com.palyrobotics.frc2020.subsystems.Intake;
 import com.palyrobotics.frc2020.subsystems.Indexer;
+import com.palyrobotics.frc2020.subsystems.Intake;
 import com.palyrobotics.frc2020.util.input.Joystick;
 import com.palyrobotics.frc2020.util.input.XboxController;
 import com.palyrobotics.frc2020.vision.Limelight;
@@ -31,8 +31,7 @@ public class OperatorInterface {
 		commands.shouldClearCurrentRoutines = mDriveStick.getTriggerPressed();
 
 		updateDriveCommands(commands);
-		updateIntakeCommands(commands);
-		updateIndexerCommands(commands, state);
+		updateSuperstructureCommands(commands, state);
 
 		mOperatorXboxController.updateLastInputs();
 
@@ -81,13 +80,15 @@ public class OperatorInterface {
 		}
 	}
 
-	private void updateIndexerCommands(Commands commands, RobotState state) {
+	private void updateSuperstructureCommands(Commands commands, RobotState state) {
 		if (mOperatorXboxController.getYButton() && !state.indexerPos1Blocked) {
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.FORWARD;
+			commands.intakeWantedState = Intake.State.INTAKE;
 		} else if (mOperatorXboxController.getAButton()) {
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.REVERSE;
 		} else {
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.IDLE;
+			commands.intakeWantedState = Intake.State.IDLE;
 		}
 		if (mOperatorXboxController.getDPadRight()) {
 			commands.indexerColumnWantedState = Indexer.ColumnState.FEED;
