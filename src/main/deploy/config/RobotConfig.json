@@ -7,7 +7,8 @@
 	"enabledSubsystems": [
 		"drive",
 	  	"intake",
-		"indexer"
+		"indexer",
+		"shooter"
 	],
 	"checkFaults": false,
 	"coastDriveWhenDisabled": false,
