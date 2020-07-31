@@ -4,6 +4,7 @@ import static com.palyrobotics.frc2020.util.Util.handleDeadBand;
 import static com.palyrobotics.frc2020.vision.Limelight.kOneTimesZoomPipelineId;
 import static com.palyrobotics.frc2020.vision.Limelight.kTwoTimesZoomPipelineId;
 
+import com.palyrobotics.frc2020.behavior.routines.indexer.IndexerFeedRoutine;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.Joysticks;
 import com.palyrobotics.frc2020.subsystems.Indexer;
 import com.palyrobotics.frc2020.subsystems.Intake;
@@ -91,9 +92,8 @@ public class OperatorInterface {
 			commands.intakeWantedState = Intake.State.IDLE;
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.IDLE;
 		}
-		if (mOperatorXboxController.getRightTrigger()) {
-			commands.indexerColumnWantedState = Indexer.ColumnState.FEED;
-			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.FORWARD;
+		if (mOperatorXboxController.getRightTriggerPressed()) {
+			commands.addWantedRoutine(new IndexerFeedRoutine());
 		} else if (mOperatorXboxController.getLeftTrigger()) {
 			commands.indexerColumnWantedState = Indexer.ColumnState.REVERSE_FEED;
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.REVERSE;
