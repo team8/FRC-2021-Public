@@ -8,4 +8,6 @@ public class ShooterConfig extends ConfigBase {
 	public Gains shooterGains;
 	public double rumbleError;
 	public double rumbleTimeSeconds;
+	public double hoodSolenoid;
+	public double blockingSolenoid;
 }
