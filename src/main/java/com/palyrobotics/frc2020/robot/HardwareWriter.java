@@ -118,7 +118,6 @@ public class HardwareWriter {
 	private void configureIntakeHardware() {
 		var hardware = HardwareAdapter.IntakeHardware.getInstance();
 		hardware.talon.setInverted(true);
-
 	}
 
 	public void resetDriveSensors(Pose2d pose) {

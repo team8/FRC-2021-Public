@@ -55,7 +55,7 @@ public class HardwareAdapter {
 		private final IntakeConfig mConfig = Configs.get(IntakeConfig.class);
 
 		final Talon talon = new Talon(sPortConstants.nariIntakeId, "intake");
-		final TimedSolenoid solenoid = new TimedSolenoid(sPortConstants.nariIntakeSolenoidId, mConfig.solenoidActuation, false);
+		final TimedSolenoid solenoid = new TimedSolenoid(sPortConstants.nariIntakeSolenoidId, mConfig.solenoidActuationDurationSec, false);
 
 		private IntakeHardware() {
 

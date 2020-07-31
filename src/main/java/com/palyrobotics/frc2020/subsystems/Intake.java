@@ -38,8 +38,10 @@ public class Intake extends SubsystemBase {
 		switch (commands.intakeWantedState) {
 			case INTAKE:
 				mSolenoidOutput = true;
-				if (!state.intakeTransitioning) {
+				if (!state.intakeTransitioning && state.intakeExtended) {
 					mOutput.setPercentOutput(mConfig.intakeOutput);
+				} else {
+					mOutput.setIdle();
 				}
 				break;
 			case IDLE:
