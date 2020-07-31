@@ -100,8 +100,7 @@ public class Commands {
 	}
 
 	/**
-	 * This should not be used in the match, it only exists to allow us to test velocities and hood
-	 * states for data to be used in interpolation.
+	 * This should not be used by the operator, only during autos and testing.
 	 *
 	 * @param velocity  The velocity to be tested
 	 * @param hoodState The hood state to be tested
