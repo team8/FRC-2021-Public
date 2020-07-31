@@ -54,15 +54,15 @@ public class MiscTests {
 	@Test
 	public void testSolenoidState() {
 		var state = new TimedSolenoid(0, 0.1, true);
-		state.setExtended(true);
+		state.set(true);
 		assertFalse(state.isExtended());
 		Timer.delay(0.11);
-		state.setExtended(true);
+		state.set(true);
 		assertTrue(state.isExtended());
-		state.setExtended(false);
+		state.set(false);
 		assertTrue(state.isExtended());
 		Timer.delay(0.11);
-		state.setExtended(false);
+		state.set(false);
 		assertFalse(state.isExtended());
 	}
 
