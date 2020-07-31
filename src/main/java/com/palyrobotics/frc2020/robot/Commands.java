@@ -38,6 +38,10 @@ public class Commands {
 	/* Indexer */
 	public Indexer.ColumnState indexerColumnWantedState;
 	public Indexer.VSingulatorState indexerVSingulatorWantedState;
+
+	/* Intake */
+	public Intake.State intakeWantedState;
+
 	/* Vision */
 	public int visionWantedPipeline;
 	public boolean visionWanted;
@@ -45,9 +49,6 @@ public class Commands {
 	public boolean wantedCompression;
 	/* Lighting */
 	public ArrayList<Lighting.State> lightingWantedStates;
-
-	// Intake
-	public Intake.State intakeWantedState;
 
 	public void addWantedRoutines(RoutineBase... wantedRoutines) {
 		for (RoutineBase wantedRoutine : wantedRoutines) {
