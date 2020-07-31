@@ -23,12 +23,12 @@
       <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/config/constants/ShooterConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/config/constants/ShooterConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/deploy/config/ShooterConfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/deploy/config/ShooterConfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/config/subsystem/ShooterConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/config/subsystem/ShooterConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/robot/Commands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/robot/Commands.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/robot/HardwareAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/robot/HardwareAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/robot/HardwareWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/robot/HardwareWriter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/robot/OperatorInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/robot/OperatorInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/robot/RobotState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/robot/RobotState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/subsystems/Shooter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/subsystems/Shooter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -291,7 +291,7 @@
       <workItem from="1602691711914" duration="509000" />
       <workItem from="1602692288629" duration="3185000" />
       <workItem from="1602911497514" duration="6053000" />
-      <workItem from="1602919980185" duration="346000" />
+      <workItem from="1602919980185" duration="731000" />
     </task>
     <servers />
   </component>
@@ -335,28 +335,28 @@
       <screen x="0" y="0" width="1217" height="720" />
     </state>
     <state x="390" y="116" key="FileChooserDialogImpl/0.0.1217.720@0.0.1217.720" timestamp="1596173783225" />
-    <state width="1159" height="229" key="GridCell.Tab.0.bottom" timestamp="1602919961956">
+    <state width="1159" height="229" key="GridCell.Tab.0.bottom" timestamp="1602920711151">
       <screen x="0" y="0" width="1203" height="720" />
     </state>
-    <state width="1159" height="229" key="GridCell.Tab.0.bottom/0.0.1203.720@0.0.1203.720" timestamp="1602919961956" />
+    <state width="1159" height="229" key="GridCell.Tab.0.bottom/0.0.1203.720@0.0.1203.720" timestamp="1602920711151" />
     <state width="1174" height="202" key="GridCell.Tab.0.bottom/0.0.1217.720@0.0.1217.720" timestamp="1596502556620" />
     <state width="1175" height="226" key="GridCell.Tab.0.bottom/0.0.1218.720@0.0.1218.720" timestamp="1601058762963" />
-    <state width="1159" height="229" key="GridCell.Tab.0.center" timestamp="1602919961954">
+    <state width="1159" height="229" key="GridCell.Tab.0.center" timestamp="1602920711151">
       <screen x="0" y="0" width="1203" height="720" />
     </state>
-    <state width="1159" height="229" key="GridCell.Tab.0.center/0.0.1203.720@0.0.1203.720" timestamp="1602919961954" />
+    <state width="1159" height="229" key="GridCell.Tab.0.center/0.0.1203.720@0.0.1203.720" timestamp="1602920711151" />
     <state width="1174" height="202" key="GridCell.Tab.0.center/0.0.1217.720@0.0.1217.720" timestamp="1596502556620" />
     <state width="1175" height="226" key="GridCell.Tab.0.center/0.0.1218.720@0.0.1218.720" timestamp="1601058762963" />
-    <state width="1159" height="229" key="GridCell.Tab.0.left" timestamp="1602919961954">
+    <state width="1159" height="229" key="GridCell.Tab.0.left" timestamp="1602920711151">
       <screen x="0" y="0" width="1203" height="720" />
     </state>
-    <state width="1159" height="229" key="GridCell.Tab.0.left/0.0.1203.720@0.0.1203.720" timestamp="1602919961954" />
+    <state width="1159" height="229" key="GridCell.Tab.0.left/0.0.1203.720@0.0.1203.720" timestamp="1602920711151" />
     <state width="1174" height="202" key="GridCell.Tab.0.left/0.0.1217.720@0.0.1217.720" timestamp="1596502556620" />
     <state width="1175" height="226" key="GridCell.Tab.0.left/0.0.1218.720@0.0.1218.720" timestamp="1601058762962" />
-    <state width="1159" height="229" key="GridCell.Tab.0.right" timestamp="1602919961954">
+    <state width="1159" height="229" key="GridCell.Tab.0.right" timestamp="1602920711151">
       <screen x="0" y="0" width="1203" height="720" />
     </state>
-    <state width="1159" height="229" key="GridCell.Tab.0.right/0.0.1203.720@0.0.1203.720" timestamp="1602919961954" />
+    <state width="1159" height="229" key="GridCell.Tab.0.right/0.0.1203.720@0.0.1203.720" timestamp="1602920711151" />
     <state width="1174" height="202" key="GridCell.Tab.0.right/0.0.1217.720@0.0.1217.720" timestamp="1596502556620" />
     <state width="1175" height="226" key="GridCell.Tab.0.right/0.0.1218.720@0.0.1218.720" timestamp="1601058762963" />
     <state width="1175" height="226" key="GridCell.Tab.1.bottom" timestamp="1601058762963">
@@ -379,20 +379,20 @@
     </state>
     <state width="1046" height="209" key="GridCell.Tab.1.right/0.0.1217.720@0.0.1217.720" timestamp="1595636835225" />
     <state width="1175" height="226" key="GridCell.Tab.1.right/0.0.1218.720@0.0.1218.720" timestamp="1601058762963" />
-    <state x="312" y="64" width="579" height="656" key="find.popup" timestamp="1602919909024">
+    <state x="312" y="64" width="579" height="656" key="find.popup" timestamp="1602920474503">
       <screen x="0" y="0" width="1203" height="720" />
     </state>
-    <state x="312" y="64" width="579" height="656" key="find.popup/0.0.1203.720@0.0.1203.720" timestamp="1602919909024" />
+    <state x="312" y="64" width="579" height="656" key="find.popup/0.0.1203.720@0.0.1203.720" timestamp="1602920474503" />
     <state x="316" y="77" width="585" height="566" key="find.popup/0.0.1217.720@0.0.1217.720" timestamp="1596392064028" />
     <state x="316" y="77" width="586" height="566" key="find.popup/0.0.1218.720@0.0.1218.720" timestamp="1596917472254" />
     <state x="266" y="161" key="run.anything.popup" timestamp="1595529709068">
       <screen x="0" y="0" width="1217" height="720" />
     </state>
     <state x="266" y="161" key="run.anything.popup/0.0.1217.720@0.0.1217.720" timestamp="1595529709068" />
-    <state x="600" y="93" width="672" height="678" key="search.everywhere.popup" timestamp="1602919007346">
+    <state x="600" y="93" width="672" height="678" key="search.everywhere.popup" timestamp="1602920510994">
       <screen x="0" y="0" width="1203" height="720" />
     </state>
-    <state x="600" y="93" width="672" height="678" key="search.everywhere.popup/0.0.1203.720@0.0.1203.720" timestamp="1602919007346" />
+    <state x="600" y="93" width="672" height="678" key="search.everywhere.popup/0.0.1203.720@0.0.1203.720" timestamp="1602920510994" />
     <state x="607" y="93" width="672" height="678" key="search.everywhere.popup/0.0.1217.720@0.0.1217.720" timestamp="1596500961051" />
     <state x="607" y="93" width="673" height="678" key="search.everywhere.popup/0.0.1218.720@0.0.1218.720" timestamp="1601058862402" />
   </component>

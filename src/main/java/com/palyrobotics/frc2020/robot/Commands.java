@@ -31,10 +31,6 @@ public class Commands {
 	public boolean shouldClearCurrentRoutines;
 	/* Drive */
 	private Drive.State driveWantedState;
-	/* Shooter Commands */
-	private Shooter.ShooterState shooterWantedState;
-	private Shooter.HoodState hoodWantedState;
-	private double shooterWantedFlywheelVelocity;
 	/* Turret Commands */
 	private Turret.TurretState turretWantedState;
 	private double turretWantedAngle; //[0, TurretConstants.turretAngleHardStopRange]
@@ -190,36 +186,6 @@ public class Commands {
 
 	public DriveOutputs getDriveWantedSignal() {
 		return driveWantedSignal;
-	}
-
-	public void setShooterWantedCustomFlywheelVelocity(double flywheelWantedVelocity) {
-		this.shooterWantedFlywheelVelocity = flywheelWantedVelocity;
-	}
-
-	public void setShooterWantedCustomFlywheelVelocity(double flywheelWantedVelocity, Shooter.HoodState hoodWantedState) {
-		this.hoodWantedState = hoodWantedState;
-		this.shooterWantedFlywheelVelocity = flywheelWantedVelocity;
-	}
-
-	public void setShooterVisionAssisted(int pipelineWanted) {
-		visionWantedPipeline = pipelineWanted;
-		shooterWantedState = Shooter.ShooterState.VISION;
-	}
-
-	public void setShooterIdle() {
-		shooterWantedState = Shooter.ShooterState.IDLE;
-	}
-
-	public double getShooterWantedCustomFlywheelVelocity() {
-		return shooterWantedFlywheelVelocity;
-	}
-
-	public Shooter.ShooterState getShooterWantedState() {
-		return shooterWantedState;
-	}
-
-	public Shooter.HoodState getHoodWantedState() {
-		return hoodWantedState;
 	}
 
 	public void setTurretCustomAngle(double turretWantedAngle) {

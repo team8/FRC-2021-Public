@@ -90,11 +90,10 @@ public class OperatorInterface {
 
 		/* Shooting */
 		if (mOperatorXboxController.getRightTriggerPressed()) {
-			commands.setShooterWantedCustomFlywheelVelocity(0);
-			commands.setShooterVisionAssisted(commands.visionWantedPipeline);
+			commands.setCustomShooterState(0, Shooter.HoodState.HIGH);
 			commands.wantedCompression = false;
 		} else if (mOperatorXboxController.getLeftTriggerPressed()) {
-			commands.setShooterIdle();
+			commands.setIdleShooterState();
 			commands.visionWanted = false;
 			commands.wantedCompression = true;
 		}
