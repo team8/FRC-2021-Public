@@ -5,6 +5,7 @@ import java.util.List;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.palyrobotics.frc2020.config.PortConstants;
 import com.palyrobotics.frc2020.config.subsystem.IntakeConfig;
+import com.palyrobotics.frc2020.config.subsystem.ShooterConfig;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.Falcon;
 import com.palyrobotics.frc2020.util.control.Talon;
@@ -104,11 +105,14 @@ public class HardwareAdapter {
 	static class ShooterHardware {
 
 		private static ShooterHardware sInstance;
+
+		private ShooterConfig mConfig = Configs.get(ShooterConfig.class);
+
 		final Spark masterSpark = new Spark(sPortConstants.nariShooterMasterId, "Shooter Master"),
 				slaveSpark = new Spark(sPortConstants.nariShooterSlaveId, "Shooter Slave");
 		final CANEncoder masterEncoder = masterSpark.getEncoder();
-		final TimedSolenoid hoodSolenoid = new TimedSolenoid(sPortConstants.nariShooterHoodSolenoid, 0.4, true),
-				blockingSolenoid = new TimedSolenoid(sPortConstants.nariShooterBlockingSolenoidId, 0.2, false);
+		final TimedSolenoid hoodSolenoid = new TimedSolenoid(sPortConstants.nariShooterHoodSolenoid, mConfig.hoodSolenoid, true),
+				blockingSolenoid = new TimedSolenoid(sPortConstants.nariShooterBlockingSolenoidId, mConfig.blockingSolenoid, false);
 
 		private ShooterHardware() {
 		}
