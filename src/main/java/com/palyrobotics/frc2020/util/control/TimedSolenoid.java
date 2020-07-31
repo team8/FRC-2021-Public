@@ -29,10 +29,11 @@ public class TimedSolenoid extends Solenoid {
 		mIsExtendedByDefault = isExtendedByDefault;
 	}
 
-	public void setExtended(boolean isExtended) {
+	@Override
+	public void set(boolean isExtended) {
 		// Account for extension state of piston(s) given default solenoid state (off)
 		boolean isOn = mIsExtendedByDefault != isExtended;
-		set(isOn);
+		super.set(isOn);
 		updateExtended(isExtended);
 	}
 
