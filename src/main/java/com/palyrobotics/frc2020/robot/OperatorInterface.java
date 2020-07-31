@@ -10,6 +10,7 @@ import com.palyrobotics.frc2020.robot.HardwareAdapter.Joysticks;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.subsystems.Intake;
 import com.palyrobotics.frc2020.subsystems.Indexer;
+import com.palyrobotics.frc2020.subsystems.Intake;
 import com.palyrobotics.frc2020.util.input.Joystick;
 import com.palyrobotics.frc2020.util.input.XboxController;
 import com.palyrobotics.frc2020.vision.Limelight;
@@ -35,8 +36,6 @@ public class OperatorInterface {
 		updateDriveCommands(commands);
 		updateSuperstructure(commands, state);
 		updateIntakeCommands(commands);
-		updateIndexerCommands(commands, state);
-
 		mOperatorXboxController.updateLastInputs();
 
 		Robot.sLoopDebugger.addPoint("updateCommands");
@@ -86,13 +85,16 @@ public class OperatorInterface {
 		}
 	}
 
-	private void updateIndexerCommands(Commands commands, RobotState state) {
+	private void updateSuperstructureCommands(Commands commands, RobotState state) {
+
 		if (mOperatorXboxController.getYButton() && !state.indexerPos1Blocked) {
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.FORWARD;
+			commands.intakeWantedState = Intake.State.INTAKE;
 		} else if (mOperatorXboxController.getAButton()) {
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.REVERSE;
 		} else {
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.IDLE;
+			commands.intakeWantedState = Intake.State.IDLE;
 		}
 		if (mOperatorXboxController.getDPadRight()) {
 			commands.indexerColumnWantedState = Indexer.ColumnState.FEED;
@@ -104,6 +106,23 @@ public class OperatorInterface {
 			commands.indexerColumnWantedState = Indexer.ColumnState.INDEX;
 		} else {
 			commands.indexerColumnWantedState = Indexer.ColumnState.IDLE;
+		}
+		/* Shooting */
+		if (mOperatorXboxController.getRightTriggerPressed()) {
+			commands.setShooterWantedCustomFlywheelVelocity(mShooterConfig.noVisionVelocity);
+			commands.setShooterVisionAssisted(commands.visionWantedPipeline);
+			commands.wantedCompression = false;
+		} else if (mOperatorXboxController.getLeftTriggerPressed()) {
+			commands.setShooterIdle();
+			commands.visionWanted = false;
+			commands.wantedCompression = true;
+		}
+
+		/* Turret */
+		if (state.inShootingQuadrant) {
+			commands.setTurretVisionAlign();
+		} else {
+			commands.setTurretIdle();
 		}
 	}
 
