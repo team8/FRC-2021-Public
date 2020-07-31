@@ -35,7 +35,6 @@ public class OperatorInterface {
 	void updateCommands(Commands commands, @ReadOnly RobotState state) {
 		commands.shouldClearCurrentRoutines = mDriveStick.getTriggerPressed();
 		updateDriveCommands(commands);
-		updateIntakeCommands(commands);
 		updateShooterCommands(commands);
 		updateSuperstructureCommands(commands, state);
 		mOperatorXboxController.updateLastInputs();

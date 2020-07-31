@@ -57,7 +57,7 @@ public class Shooter extends SubsystemBase {
 	public void update(@ReadOnly Commands commands, @ReadOnly RobotState state) {
 		updateStates(state);
 
-		ShooterState wantedShooterState = commands.getWantedShooterState();
+		ShooterState wantedShooterState = commands.getShooterWantedState();
 		switch (wantedShooterState) {
 			case VISION:
 				if (mTargetDistance != null) {
@@ -68,7 +68,7 @@ public class Shooter extends SubsystemBase {
 				updateIdle();
 				break;
 			case CUSTOM:
-				updateCustom(commands.getWantedShooterVelocity(), commands.getWantedShooterHoodState());
+				updateCustom(commands.getShooterWantedVelocity(), commands.getShooterWantedHoodState());
 				break;
 		}
 
