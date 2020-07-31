@@ -10,7 +10,7 @@ import com.palyrobotics.frc2020.util.control.ControllerOutput;
 public class Intake extends SubsystemBase {
 
 	public enum State {
-		INTAKE, IDLE
+		INTAKE, REVERSE, IDLE
 	}
 
 	private static final Intake sInstance = new Intake();
@@ -39,6 +39,14 @@ public class Intake extends SubsystemBase {
 			case INTAKE:
 				if (!state.intakeTransitioning && state.intakeExtended) {
 					mOutput.setPercentOutput(mConfig.intakeOutput);
+				} else {
+					mOutput.setIdle();
+				}
+				mSolenoidOutput = true;
+				break;
+			case REVERSE:
+				if (!state.intakeTransitioning && state.intakeExtended) {
+					mOutput.setPercentOutput(-mConfig.intakeOutput);
 				} else {
 					mOutput.setIdle();
 				}
