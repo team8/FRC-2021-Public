@@ -24,6 +24,9 @@ public abstract class RoutineBase {
 
 	/** Only should be used for {@link #getRequiredSubsystems()} */
 	protected final Drive mDrive = Drive.getInstance();
+	protected final Indexer mIndexer = Indexer.getInstance();
+	protected final Intake mIntake = Intake.getInstance();
+
 	private State mState = State.INIT;
 
 	/**

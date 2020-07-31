@@ -70,6 +70,7 @@ public class HardwareReader {
 		if (enabledSubsystems.contains(Turret.getInstance())) readTurretState(state);
 		if (enabledSubsystems.contains(Intake.getInstance())) readIntakeState(state);
 		if (enabledSubsystems.contains(Indexer.getInstance())) readIndexerState(state);
+		readJoystickState(state);
 	}
 
 	private void readGameAndFieldState(RobotState state) {
@@ -151,6 +152,11 @@ public class HardwareReader {
 		var hardware = IntakeHardware.getInstance();
 		state.intakeExtended = hardware.solenoid.get();
 		state.intakeTransitioning = hardware.solenoid.isInTransition();
+	}
+
+	private void readJoystickState(RobotState state) {
+		var joystickHardware = HardwareAdapter.Joysticks.getInstance();
+		state.joystickRightTriggerPressed = joystickHardware.operatorXboxController.getRightTrigger();
 	}
 
 	private void checkTalonFaults(Talon talon) {
