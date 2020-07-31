@@ -110,8 +110,7 @@ public class OperatorInterface {
 			commands.indexerColumnWantedState = Indexer.ColumnState.INDEX;
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.FORWARD;
 		} else if (mOperatorXboxController.getDPadDown()) {
-			commands.indexerColumnWantedState =[]\
-			Indexer.ColumnState.UN_INDEX;
+			commands.indexerColumnWantedState = Indexer.ColumnState.UN_INDEX;
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.REVERSE;
 		} else {
 			commands.indexerColumnWantedState = Indexer.ColumnState.IDLE;
