@@ -40,6 +40,9 @@ public class RobotState {
 	public double indexerMasterEncPosition, indexerMasterEncVelocity, indexerSlaveEncPosition, indexerSlaveEncVelocity,
 			indexerLeftVTalonCurrentDraw, indexerRightVTalonCurrentDraw;
 
+	/* Joystick */
+	public boolean joystickRightTriggerPressed;
+
 	public GamePeriod gamePeriod = GamePeriod.DISABLED;
 	public String gameData;
 	public double gameTime;
