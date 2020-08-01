@@ -95,7 +95,7 @@ public class OperatorInterface {
 			commands.intakeWantedState = Intake.State.INTAKE;
 			commands.indexerVSingulatorWantedState = state.indexerPos1Blocked ? Indexer.VSingulatorState.IDLE : Indexer.VSingulatorState.FORWARD;
 		} else if (mOperatorXboxController.getAButton()) {
-			commands.intakeWantedState = Intake.State.IDLE;
+			commands.intakeWantedState = Intake.State.REVERSE;
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.REVERSE;
 		} else {
 			commands.intakeWantedState = Intake.State.IDLE;
@@ -106,6 +106,7 @@ public class OperatorInterface {
 		} else if (mOperatorXboxController.getLeftTrigger()) {
 			commands.indexerColumnWantedState = Indexer.ColumnState.REVERSE_FEED;
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.REVERSE;
+			commands.intakeWantedState = Intake.State.REVERSE;
 		} else if (state.indexerPos1Blocked && !state.indexerPos4Blocked || mOperatorXboxController.getDPadUp()) {
 			commands.indexerColumnWantedState = Indexer.ColumnState.INDEX;
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.FORWARD;
