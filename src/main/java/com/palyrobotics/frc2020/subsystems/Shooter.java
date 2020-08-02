@@ -168,6 +168,7 @@ public class Shooter extends SubsystemBase {
 		This is how other states tell if we are down instead of just resting on top
 		of the block, since the hood piston is retracted in case those two cases,
 		meaning its extension state can't be used to determine physical position.
+		Because of how this is done, there is no need for checks here.
 		*/
 		mBlockingOutput = false;
 		mHoodOutput = mBlockingSolenoidState;
@@ -175,16 +176,20 @@ public class Shooter extends SubsystemBase {
 
 	private void setHoodMedium() {
 		if (mBlockingSolenoidState) {
-			/* Hood is already at the top or middle state */
+			/* Hood is already at the top or middle state. If we were in low state,
+			* BlockingSolenoidState would be false. */
 			mHoodOutput = false;
 			mBlockingOutput = true;
 		} else {
-			/* We are at the low hood position. */
+			/* We are at the low hood position. Because mBlockingSolenoidState is false,
+			* We can only be low. If we are transitioning from low to high, it will still
+			* be false. */
 			mHoodOutput = true;
 			/*
 			Unblock until the hood reaches the top, then block.
 			This moves to the first if condition and moves the
-			hood down to rest on top of the blocking piston.
+			hood down to rest on top of the blocking piston. This
+			will prevent errors from occurring during the transition phase.
 			*/
 			mBlockingOutput = mHoodSolenoidState;
 		}
@@ -198,10 +203,10 @@ public class Shooter extends SubsystemBase {
 		*/
 		mHoodOutput = true;
 		if (mBlockingSolenoidState) {
-			// If we are in middle state continue locking
+			/* If we are in middle state continue locking */
 			mBlockingOutput = true;
 		} else {
-			// We are in bottom state, wait until hood is fully extended to lock
+			/* We are in bottom state, wait until hood is fully extended to lock */
 			mBlockingOutput = mHoodSolenoidState;
 		}
 	}
