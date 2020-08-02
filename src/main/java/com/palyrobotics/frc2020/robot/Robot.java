@@ -61,6 +61,7 @@ public class Robot extends TimedRobot {
 
 	private Set<SubsystemBase> mSubsystems = Set.of(mDrive, mIntake, mLighting, mIndexer, mShooter),
 			mEnabledSubsystems;
+
 	private Set<RobotService> mServices = Set.of(new CommandReceiverService(), new NetworkLoggerService(),
 			new TelemetryService()),
 			mEnabledServices;
