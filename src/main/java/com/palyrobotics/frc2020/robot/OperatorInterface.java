@@ -6,14 +6,14 @@ import static com.palyrobotics.frc2020.vision.Limelight.kTwoTimesZoomPipelineId;
 
 import com.palyrobotics.frc2020.config.subsystem.ShooterConfig;
 import com.palyrobotics.frc2020.behavior.routines.indexer.IndexerFeedRoutine;
+import com.palyrobotics.frc2020.config.subsystem.IntakeConfig;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.Joysticks;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.subsystems.Intake;
 import com.palyrobotics.frc2020.subsystems.Indexer;
-import com.palyrobotics.frc2020.subsystems.Intake;
+import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.input.Joystick;
 import com.palyrobotics.frc2020.util.input.XboxController;
-import com.palyrobotics.frc2020.vision.Limelight;
 
 /**
  * Used to produce {@link Commands}'s from human input. Should only be used in robot package.
@@ -25,8 +25,8 @@ public class OperatorInterface {
 	private final ShooterConfig mShooterConfig = Configs.get(ShooterConfig.class);
 	private final Joystick mDriveStick = Joysticks.getInstance().driveStick,
 			mTurnStick = Joysticks.getInstance().turnStick;
-	private Limelight mLimelight = Limelight.getInstance();
 	private final XboxController mOperatorXboxController = Joysticks.getInstance().operatorXboxController;
+	private final IntakeConfig mIntakeConfig = Configs.get(IntakeConfig.class);
 
 	/**
 	 * Modifies commands based on operator input devices.
@@ -57,11 +57,13 @@ public class OperatorInterface {
 	}
 
 	private void updateSuperstructureCommands(Commands commands, RobotState state) {
-		if (mOperatorXboxController.getDPadDown()) {
-			commands.intakeWantedState = Intake.State.INTAKE;
+		if (mOperatorXboxController.getDPadDownPressed() || mOperatorXboxController.getDPadDownReleased()) {
+			commands.setIntakeRunning(0);
+		} else if (mOperatorXboxController.getDPadDown()) {
+			commands.setIntakeRunning(mIntakeConfig.intakeRollerPo);
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.FORWARD;
 		} else if (mOperatorXboxController.getDPadUp()) {
-			commands.intakeWantedState = Intake.State.IDLE;
+			commands.setIntakeStowed();
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.IDLE;
 		}
 		if (mOperatorXboxController.getRightTriggerPressed()) {
@@ -89,14 +91,12 @@ public class OperatorInterface {
 			commands.visionWanted = false;
 			commands.wantedCompression = true;
 		}
-
 		/* Turret */
 		if (state.inShootingQuadrant) {
 			commands.setTurretVisionAlign();
 		} else {
 			commands.setTurretIdle();
 		}
-
 	}
 
 	public void resetPeriodic(Commands commands) {
@@ -107,7 +107,7 @@ public class OperatorInterface {
 		commands.setDriveNeutral();
 		commands.wantedCompression = true;
 		commands.visionWanted = false;
-		commands.intakeWantedState = Intake.State.IDLE;
+		commands.setIntakeStowed();
 		commands.indexerColumnWantedState = Indexer.ColumnState.IDLE;
 		commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.IDLE;
 		mOperatorXboxController.clearLastInputs();

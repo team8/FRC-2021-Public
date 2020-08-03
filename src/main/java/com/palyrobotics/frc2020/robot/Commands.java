@@ -54,7 +54,8 @@ public class Commands {
 	public Indexer.VSingulatorState indexerVSingulatorWantedState;
 
 	/* Intake */
-	public Intake.State intakeWantedState;
+	private Intake.State intakeWantedState;
+	private double intakeWantedPo;
 
 	/* Vision */
 	public int visionWantedPipeline;
@@ -207,12 +208,21 @@ public class Commands {
 	public double getTurretWantedAngle() {
 		return turretWantedAngle;
 	}
+	public void setIntakeRunning(double intakeWantedPo) {
+		intakeWantedState = Intake.State.RUNNING;
+		this.intakeWantedPo = intakeWantedPo;
+	}
+
+	public void setIntakeStowed() {
+		intakeWantedState = Intake.State.STOWED;
+	}
+
 	public Intake.State getIntakeWantedState() {
 		return intakeWantedState;
 	}
 
-	public void setIntakeWantedState(Intake.State state) {
-		intakeWantedState = state;
+	public double getIntakeWantedPo() {
+		return intakeWantedPo;
 	}
 
 	@Override
