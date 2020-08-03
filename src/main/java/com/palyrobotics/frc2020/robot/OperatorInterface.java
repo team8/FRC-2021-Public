@@ -6,13 +6,14 @@ import static com.palyrobotics.frc2020.vision.Limelight.kTwoTimesZoomPipelineId;
 import java.util.ArrayList;
 import java.util.Arrays;
 import com.palyrobotics.frc2020.behavior.routines.indexer.IndexerFeedRoutine;
+import com.palyrobotics.frc2020.config.subsystem.IntakeConfig;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.Joysticks;
 import com.palyrobotics.frc2020.subsystems.Intake;
 import com.palyrobotics.frc2020.subsystems.Lighting;
 import com.palyrobotics.frc2020.subsystems.Indexer;
+import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.input.Joystick;
 import com.palyrobotics.frc2020.util.input.XboxController;
-import com.palyrobotics.frc2020.vision.Limelight;
 
 /**
  * Used to produce {@link Commands}'s from human input. Should only be used in robot package.
@@ -23,8 +24,8 @@ public class OperatorInterface {
 	public static final int kOnesTimesZoomAlignButton = 3, kTwoTimesZoomAlignButton = 4;
 	private final Joystick mDriveStick = Joysticks.getInstance().driveStick,
 			mTurnStick = Joysticks.getInstance().turnStick;
-	private Limelight mLimelight = Limelight.getInstance();
 	private final XboxController mOperatorXboxController = Joysticks.getInstance().operatorXboxController;
+	private final IntakeConfig mIntakeConfig = Configs.get(IntakeConfig.class);
 
 	/**
 	 * Modifies commands based on operator input devices.
@@ -76,26 +77,18 @@ public class OperatorInterface {
 //		}
 	}
 
-	private void updateIntakeCommands(Commands commands) {
-		if (mOperatorXboxController.getDPadLeft()) {
-			commands.intakeWantedState = Intake.State.INTAKE;
-		} else if (mOperatorXboxController.getDPadRight()) {
-			commands.intakeWantedState = Intake.State.REVERSE;
-		} else {
-			commands.intakeWantedState = Intake.State.IDLE;
-		}
-	}
-
 	private void updateLightingCommands(Commands commands, @ReadOnly RobotState state) {
 		//Need to implement
 	}
 
 	private void updateSuperstructureCommands(Commands commands, RobotState state) {
-		if (mOperatorXboxController.getDPadDown()) {
-			commands.intakeWantedState = Intake.State.INTAKE;
+		if (mOperatorXboxController.getDPadDownPressed() || mOperatorXboxController.getDPadDownReleased()) {
+			commands.setIntakeRunning(0);
+		} else if (mOperatorXboxController.getDPadDown()) {
+			commands.setIntakeRunning(mIntakeConfig.intakeRollerPo);
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.FORWARD;
 		} else if (mOperatorXboxController.getDPadUp()) {
-			commands.intakeWantedState = Intake.State.IDLE;
+			commands.setIntakeStowed();
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.IDLE;
 		}
 		if (mOperatorXboxController.getRightTriggerPressed()) {
@@ -115,7 +108,7 @@ public class OperatorInterface {
 		if (mOperatorXboxController.getRightBumper()) {
 			//Start Flywheel
 		} else if (mOperatorXboxController.getLeftBumper()) {
-			commands.intakeWantedState = Intake.State.IDLE;
+			commands.setIntakeStowed();
 			commands.indexerColumnWantedState = Indexer.ColumnState.IDLE;
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.IDLE;
 			//Stop Flywheel
@@ -131,8 +124,8 @@ public class OperatorInterface {
 		commands.setDriveNeutral();
 		commands.wantedCompression = true;
 		commands.visionWanted = false;
-		commands.intakeWantedState = Intake.State.IDLE;
 		commands.lightingWantedStates = new ArrayList<>(Arrays.asList(Lighting.State.IDLE));
+		commands.setIntakeStowed();
 		commands.indexerColumnWantedState = Indexer.ColumnState.IDLE;
 		commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.IDLE;
 		mOperatorXboxController.clearLastInputs();
