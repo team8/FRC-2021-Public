@@ -81,7 +81,7 @@ public class Indexer extends SubsystemBase {
 			mSlaveIndexerColumnOutput.setIdle();
 		}
 
-		if (commands.indexerVSingulatorWantedState == VSingulatorState.FORWARD && commands.indexerColumnWantedState != ColumnState.INDEX) {
+		if (commands.indexerVSingulatorWantedState == VSingulatorState.FORWARD && commands.indexerColumnWantedState != ColumnState.INDEX && !state.indexerPos1Blocked) {
 			if ((int) state.gameTime % 2 == 0 || state.indexerPos4Blocked) {
 				mLeftVTalonOutput.setPercentOutput(mConfig.leftVTalonPo);
 				mRightVTalonOutput.setPercentOutput(mConfig.rightVTalonPo);
