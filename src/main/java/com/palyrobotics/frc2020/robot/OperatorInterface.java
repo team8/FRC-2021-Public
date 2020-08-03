@@ -91,13 +91,10 @@ public class OperatorInterface {
 	}
 
 	private void updateSuperstructureCommands(Commands commands, RobotState state) {
-		if (mOperatorXboxController.getYButton()) {
+		if (mOperatorXboxController.getDPadDown()) {
 			commands.intakeWantedState = Intake.State.INTAKE;
-			commands.indexerVSingulatorWantedState = state.indexerPos1Blocked ? Indexer.VSingulatorState.IDLE : Indexer.VSingulatorState.FORWARD;
-		} else if (mOperatorXboxController.getAButton()) {
-			commands.intakeWantedState = Intake.State.REVERSE;
-			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.REVERSE;
-		} else {
+			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.FORWARD;
+		} else if (mOperatorXboxController.getDPadUp()) {
 			commands.intakeWantedState = Intake.State.IDLE;
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.IDLE;
 		}
@@ -106,15 +103,22 @@ public class OperatorInterface {
 		} else if (mOperatorXboxController.getLeftTrigger()) {
 			commands.indexerColumnWantedState = Indexer.ColumnState.REVERSE_FEED;
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.REVERSE;
-			commands.intakeWantedState = Intake.State.REVERSE;
-		} else if (state.indexerPos1Blocked && !state.indexerPos4Blocked || mOperatorXboxController.getDPadUp()) {
+		} else if ((state.indexerPos1Blocked && !state.indexerPos4Blocked) || mOperatorXboxController.getXButton()) {
 			commands.indexerColumnWantedState = Indexer.ColumnState.INDEX;
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.FORWARD;
-		} else if (mOperatorXboxController.getDPadDown()) {
+		} else if (mOperatorXboxController.getBButton()) {
 			commands.indexerColumnWantedState = Indexer.ColumnState.UN_INDEX;
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.REVERSE;
 		} else {
 			commands.indexerColumnWantedState = Indexer.ColumnState.IDLE;
+		}
+		if (mOperatorXboxController.getRightBumper()) {
+			//Start Flywheel
+		} else if (mOperatorXboxController.getLeftBumper()) {
+			commands.intakeWantedState = Intake.State.IDLE;
+			commands.indexerColumnWantedState = Indexer.ColumnState.IDLE;
+			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.IDLE;
+			//Stop Flywheel
 		}
 	}
 
