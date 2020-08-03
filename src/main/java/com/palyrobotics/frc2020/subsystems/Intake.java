@@ -1,22 +1,19 @@
 package com.palyrobotics.frc2020.subsystems;
 
-import com.palyrobotics.frc2020.config.subsystem.IntakeConfig;
 import com.palyrobotics.frc2020.robot.Commands;
 import com.palyrobotics.frc2020.robot.ReadOnly;
 import com.palyrobotics.frc2020.robot.RobotState;
-import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.ControllerOutput;
 
 public class Intake extends SubsystemBase {
 
 	public enum State {
-		INTAKE, REVERSE, IDLE
+		RUNNING, STOWED
 	}
 
 	private static final Intake sInstance = new Intake();
 	private final ControllerOutput mOutput = new ControllerOutput();
 	private boolean mSolenoidOutput;
-	private final IntakeConfig mConfig = Configs.get(IntakeConfig.class);
 
 	private Intake() {
 	}
@@ -35,24 +32,16 @@ public class Intake extends SubsystemBase {
 
 	@Override
 	public void update(@ReadOnly Commands commands, @ReadOnly RobotState state) {
-		switch (commands.intakeWantedState) {
-			case INTAKE:
+		switch (commands.getIntakeWantedState()) {
+			case RUNNING:
 				if (!state.intakeTransitioning && state.intakeExtended) {
-					mOutput.setPercentOutput(mConfig.intakeOutput);
+					mOutput.setPercentOutput(commands.getIntakeWantedPo());
 				} else {
 					mOutput.setIdle();
 				}
 				mSolenoidOutput = true;
 				break;
-			case REVERSE:
-				if (!state.intakeTransitioning && state.intakeExtended) {
-					mOutput.setPercentOutput(-mConfig.intakeOutput);
-				} else {
-					mOutput.setIdle();
-				}
-				mSolenoidOutput = true;
-				break;
-			case IDLE:
+			case STOWED:
 				mOutput.setIdle();
 				mSolenoidOutput = false;
 				break;
