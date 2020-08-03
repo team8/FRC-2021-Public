@@ -34,8 +34,7 @@ public class OperatorInterface {
 	void updateCommands(Commands commands, @ReadOnly RobotState state) {
 		commands.shouldClearCurrentRoutines = mDriveStick.getTriggerPressed();
 		updateDriveCommands(commands);
-		updateSuperstructure(commands, state);
-		updateIntakeCommands(commands);
+		updateSuperstructureCommands(commands, state);
 		mOperatorXboxController.updateLastInputs();
 
 		Robot.sLoopDebugger.addPoint("updateCommands");
@@ -57,34 +56,11 @@ public class OperatorInterface {
 		}
 	}
 
-	private void updateSuperstructure(Commands commands, RobotState state) {
-		/* Shooting */
-		if (mOperatorXboxController.getRightTriggerPressed()) {
-			commands.setShooterWantedCustomFlywheelVelocity(mShooterConfig.noVisionVelocity);
-			commands.setShooterVisionAssisted(commands.visionWantedPipeline);
-			commands.wantedCompression = false;
-		} else if (mOperatorXboxController.getLeftTriggerPressed()) {
-			commands.setShooterIdle();
-			commands.visionWanted = false;
-			commands.wantedCompression = true;
-		}
-
-		/* Turret */
-		if (state.inShootingQuadrant) {
-			commands.setTurretVisionAlign();
-		} else {
-			commands.setTurretIdle();
-		}
-	}
-
 	private void updateSuperstructureCommands(Commands commands, RobotState state) {
-		if (mOperatorXboxController.getYButton()) {
+		if (mOperatorXboxController.getDPadDown()) {
 			commands.intakeWantedState = Intake.State.INTAKE;
-			commands.indexerVSingulatorWantedState = state.indexerPos1Blocked ? Indexer.VSingulatorState.IDLE : Indexer.VSingulatorState.FORWARD;
-		} else if (mOperatorXboxController.getAButton()) {
-			commands.intakeWantedState = Intake.State.REVERSE;
-			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.REVERSE;
-		} else {
+			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.FORWARD;
+		} else if (mOperatorXboxController.getDPadUp()) {
 			commands.intakeWantedState = Intake.State.IDLE;
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.IDLE;
 		}
@@ -93,16 +69,16 @@ public class OperatorInterface {
 		} else if (mOperatorXboxController.getLeftTrigger()) {
 			commands.indexerColumnWantedState = Indexer.ColumnState.REVERSE_FEED;
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.REVERSE;
-			commands.intakeWantedState = Intake.State.REVERSE;
-		} else if (state.indexerPos1Blocked && !state.indexerPos4Blocked || mOperatorXboxController.getDPadUp()) {
+		} else if ((state.indexerPos1Blocked && !state.indexerPos4Blocked) || mOperatorXboxController.getXButton()) {
 			commands.indexerColumnWantedState = Indexer.ColumnState.INDEX;
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.FORWARD;
-		} else if (mOperatorXboxController.getDPadDown()) {
+		} else if (mOperatorXboxController.getBButton()) {
 			commands.indexerColumnWantedState = Indexer.ColumnState.UN_INDEX;
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.REVERSE;
 		} else {
 			commands.indexerColumnWantedState = Indexer.ColumnState.IDLE;
 		}
+
 		/* Shooting */
 		if (mOperatorXboxController.getRightTriggerPressed()) {
 			commands.setShooterWantedCustomFlywheelVelocity(mShooterConfig.noVisionVelocity);
@@ -120,6 +96,7 @@ public class OperatorInterface {
 		} else {
 			commands.setTurretIdle();
 		}
+
 	}
 
 	public void resetPeriodic(Commands commands) {
