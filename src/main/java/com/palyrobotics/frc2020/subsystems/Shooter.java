@@ -37,7 +37,6 @@ public class Shooter extends SubsystemBase {
 	private ControllerOutput mFlywheelOutput = new ControllerOutput(); // Flywheel
 	private boolean mBlockingOutput, mHoodOutput; // Two solenoids to control the hood
 	private boolean mRumbleOutput; // XBox controller rumble
-	private boolean mIsReadyToShoot; // Whether the hood and fly wheel are close enough to their wanted states
 
 	/* States */
 	private HoodState mHoodState;
@@ -247,9 +246,5 @@ public class Shooter extends SubsystemBase {
 	 */
 	public boolean getRumbleOutput() {
 		return mRumbleOutput;
-	}
-
-	public boolean isReadyToShoot() {
-		return mIsReadyToShoot;
 	}
 }
