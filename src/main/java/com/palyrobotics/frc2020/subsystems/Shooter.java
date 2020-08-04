@@ -42,10 +42,6 @@ public class Shooter extends SubsystemBase {
 	private boolean mRumbleOutput; // XBox controller rumble
 
 	/* States */
-	private HoodState mHoodState;
-	private boolean mBlockingSolenoidState;
-	private boolean mHoodSolenoidState;
-	private double mShooterVelocity;
 	private Double mTargetDistance;
 
 	private Shooter() {
@@ -60,18 +56,18 @@ public class Shooter extends SubsystemBase {
 		switch (wantedShooterState) {
 			case VISION:
 				if (mTargetDistance != null) {
-					updateVision();
+					updateVision(state);
 					break;
 				}
 			case IDLE:
-				updateIdle();
+				updateIdle(state);
 				break;
 			case CUSTOM:
-				updateCustom(commands.getShooterWantedVelocity(), commands.getShooterWantedHoodState());
+				updateCustom(state, commands.getShooterWantedVelocity(), commands.getShooterWantedHoodState());
 				break;
 		}
 
-		updateRumble();
+		updateRumble(state);
 	}
 
 	/**
@@ -81,16 +77,15 @@ public class Shooter extends SubsystemBase {
 	 */
 	private void updateStates(@ReadOnly RobotState state) {
 		// Not updating mHoodState here because that will be what it is currently supposed to be
-		mBlockingSolenoidState = state.blockingSolenoidState;
-		mHoodSolenoidState = state.hoodSolenoidState;
-		mShooterVelocity = state.shooterVelocity;
+		state.hoodSolenoidState = state.hoodSolenoidState;
+		state.shooterVelocity = state.shooterVelocity;
 		mTargetDistance = getTargetDistance();
 	}
 
 	/**
 	 * Updates all of the outputs for the IDLE shooting state
 	 */
-	private void updateIdle() {
+	private void updateIdle(@ReadOnly RobotState state) {
 		mFlywheelOutput.setTargetVelocity(0, mConfig.shooterGains);
 		mVelocityChanged = false;
 	}
@@ -98,7 +93,7 @@ public class Shooter extends SubsystemBase {
 	/**
 	 * Updates all of the outputs for the IDLE shooting state
 	 */
-	private void updateVision() {
+	private void updateVision(@ReadOnly RobotState state) {
 		// Updating the hood
 		Map.Entry<Double, HoodState> floorEntry = kTargetDistanceToHoodState.floorEntry(mTargetDistance);
 		Map.Entry<Double, HoodState> ceilingEntry = kTargetDistanceToHoodState.ceilingEntry(mTargetDistance);
@@ -111,13 +106,13 @@ public class Shooter extends SubsystemBase {
 			closestEntry = mTargetDistance - floorEntry.getKey() < ceilingEntry
 					.getKey() - mTargetDistance ? floorEntry : ceilingEntry;
 		}
-		mHoodState = closestEntry.getValue();
-		translateHoodState(mHoodState);
+		HoodState hoodState = closestEntry.getValue();
+		translateHoodState(state, hoodState);
 
 		// Updating the velocity
 		double targetFlywheelVelocity;
 
-		targetFlywheelVelocity = kTargetDistanceToVelocity.get(mHoodState).getInterpolated(mTargetDistance);
+		targetFlywheelVelocity = kTargetDistanceToVelocity.get(hoodState).getInterpolated(mTargetDistance);
 
 		mTargetVelocity = clamp(targetFlywheelVelocity, kMinVelocity, kMaxVelocity);
 		mFlywheelOutput.setTargetVelocity(mTargetVelocity, mConfig.shooterGains);
@@ -126,15 +121,15 @@ public class Shooter extends SubsystemBase {
 	/**
 	 * Updates all of the outputs for the IDLE shooting state
 	 */
-	private void updateCustom(double shooterVelocity, HoodState hoodState) {
+	private void updateCustom(@ReadOnly RobotState state, double shooterVelocity, HoodState hoodState) {
 		mFlywheelOutput.setTargetVelocity(shooterVelocity, mConfig.shooterGains);
-		translateHoodState(hoodState);
+		translateHoodState(state, hoodState);
 
 		mTargetVelocity = shooterVelocity;
 	}
 
-	private void updateRumble() {
-		if (Math.abs(mShooterVelocity - mTargetVelocity) <= mConfig.rumbleError) {
+	private void updateRumble(@ReadOnly RobotState state) {
+		if (Math.abs(state.shooterVelocity - mTargetVelocity) <= mConfig.rumbleError) {
 			mRumbleOutput = true;
 
 			if (mVelocityChanged) {
@@ -150,21 +145,21 @@ public class Shooter extends SubsystemBase {
 
 	/* Translates HoodState to outputs */
 
-	private void translateHoodState(HoodState hoodState) {
+	private void translateHoodState(@ReadOnly RobotState state, HoodState hoodState) {
 		switch (hoodState) {
 			case LOW:
-				setHoodLow();
+				setHoodLow(state);
 				break;
 			case MEDIUM:
-				setHoodMedium();
+				setHoodMedium(state);
 				break;
 			case HIGH:
-				setHoodHigh();
+				setHoodHigh(state);
 				break;
 		}
 	}
 
-	private void setHoodLow() {
+	private void setHoodLow(@ReadOnly RobotState state) {
 		/*
 		When we are down, always make sure our locking piston is set to unblocking.
 		This is how other states tell if we are down instead of just resting on top
@@ -173,17 +168,19 @@ public class Shooter extends SubsystemBase {
 		Because of how this is done, there is no need for checks here.
 		*/
 		mBlockingOutput = false;
-		mHoodOutput = mBlockingSolenoidState;
+		mHoodOutput = state.blockingSolenoidState;
 	}
 
-	private void setHoodMedium() {
-		if (mBlockingSolenoidState) {
+	private void setHoodMedium(@ReadOnly RobotState state) {
+		if (state.blockingSolenoidState) {
 			/* Hood is already at the top or middle state. If we were in low state,
 			* BlockingSolenoidState would be false. */
 			mHoodOutput = false;
 			mBlockingOutput = true;
 		} else {
-			/* We are at the low hood position. Because mBlockingSolenoidState is false,
+			/* We are at the low hood position. Because state.blockingSolenoidState
+			
+			is false,
 			* We can only be low. If we are transitioning from low to high, it will still
 			* be false. */
 			mHoodOutput = true;
@@ -193,23 +190,23 @@ public class Shooter extends SubsystemBase {
 			hood down to rest on top of the blocking piston. This
 			will prevent errors from occurring during the transition phase.
 			*/
-			mBlockingOutput = mHoodSolenoidState;
+			mBlockingOutput = state.hoodSolenoidState;
 		}
 	}
 
-	private void setHoodHigh() {
+	private void setHoodHigh(@ReadOnly RobotState state) {
 		/*
 		This assumes that we will never be in the state where
 		our blocking piston is extended and our hood is pushing
 		upwards against it.
 		*/
 		mHoodOutput = true;
-		if (mBlockingSolenoidState) {
+		if (state.blockingSolenoidState) {
 			/* If we are in middle state continue locking */
 			mBlockingOutput = true;
 		} else {
 			/* We are in bottom state, wait until hood is fully extended to lock */
-			mBlockingOutput = mHoodSolenoidState;
+			mBlockingOutput = state.hoodSolenoidState;
 		}
 	}
 
