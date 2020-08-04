@@ -119,7 +119,7 @@ public class Shooter extends SubsystemBase {
 	}
 
 	/**
-	 * Updates all of the outputs for the IDLE shooting state
+	 * Updates all of the outputs for the VISION shooting state
 	 */
 	private void updateCustom(@ReadOnly RobotState state, double shooterVelocity, HoodState hoodState) {
 		mFlywheelOutput.setTargetVelocity(shooterVelocity, mConfig.shooterGains);
