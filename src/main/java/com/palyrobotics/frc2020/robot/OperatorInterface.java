@@ -57,7 +57,7 @@ public class OperatorInterface {
 	}
 
 	private void updateSuperstructureCommands(Commands commands, RobotState state) {
-		if (mOperatorXboxController.getDPadDownPressed() || mOperatorXboxController.getDPadDownReleased()) {
+		if (mOperatorXboxController.getDPadDownReleased()) {
 			commands.setIntakeRunning(0);
 		} else if (mOperatorXboxController.getDPadDown()) {
 			commands.setIntakeRunning(mIntakeConfig.intakeRollerPo);
