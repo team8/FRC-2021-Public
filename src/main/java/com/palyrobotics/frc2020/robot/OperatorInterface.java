@@ -33,7 +33,6 @@ public class OperatorInterface {
 		commands.shouldClearCurrentRoutines = mDriveStick.getTriggerPressed();
 
 		updateDriveCommands(commands);
-		updateShooterCommands(commands);
 		updateSuperstructureCommands(commands, state);
 
 		mOperatorXboxController.updateLastInputs();
@@ -112,9 +111,8 @@ public class OperatorInterface {
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.IDLE;
 			//Stop Flywheel
 		}
-	}
 
-	public void updateShooterCommands(Commands commands) {
+		// Shooter commands TODO: EDIT THESE
 		if (mOperatorXboxController.getDPadDownPressed()) {
 			commands.setShooterCustomState(0, Shooter.HoodState.LOW);
 		}
