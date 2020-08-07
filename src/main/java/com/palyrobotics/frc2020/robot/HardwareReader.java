@@ -202,4 +202,15 @@ public class HardwareReader {
 			}
 		}
 	}
+
+	private void checkFalconFaults(Falcon falcon) {
+		if (mRobotConfig.checkFaults) {
+			var faults = new StickyFaults();
+			falcon.getStickyFaults(faults);
+			if (faults.hasAnyFault()) {
+				Log.error(kLoggerTag, String.format("%s faults: %s", falcon.getName(), faults));
+				falcon.clearStickyFaults();
+			}
+		}
+	}
 }

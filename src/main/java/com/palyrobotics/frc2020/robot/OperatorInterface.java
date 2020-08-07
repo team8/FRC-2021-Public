@@ -35,7 +35,6 @@ public class OperatorInterface {
 	void updateCommands(Commands commands, @ReadOnly RobotState state) {
 		commands.shouldClearCurrentRoutines = mDriveStick.getTriggerPressed();
 		updateDriveCommands(commands);
-		updateShooterCommands(commands);
 		updateSuperstructureCommands(commands, state);
 		mOperatorXboxController.updateLastInputs();
 
@@ -103,9 +102,8 @@ public class OperatorInterface {
 		} else {
 			commands.setTurretIdle();
 		}
-	}
 
-	public void updateShooterCommands(Commands commands) {
+		// Shooter commands TODO: EDIT THESE
 		if (mOperatorXboxController.getDPadDownPressed()) {
 			commands.setShooterCustomState(0, Shooter.HoodState.LOW);
 		}
