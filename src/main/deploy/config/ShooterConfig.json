@@ -1,5 +1,12 @@
 {
-    "shooterGains": null,
+    "shooterVelocityGains": {
+        "f": 0.000176,
+        "p": 0.000185,
+        "i": 0.0000005,
+        "d": 0.00009,
+        "iZone": 150.0,
+        "iMax": 0.0
+    },
     "rumbleError": 0.0,
     "rumbleTimeSeconds": 0.5,
     "hoodSolenoid": 0.5,
