@@ -11,8 +11,8 @@ import com.palyrobotics.frc2020.robot.HardwareAdapter.Joysticks;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.subsystems.Intake;
 import com.palyrobotics.frc2020.subsystems.Indexer;
-import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.subsystems.Shooter;
+import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.input.Joystick;
 import com.palyrobotics.frc2020.util.input.XboxController;
 
@@ -103,15 +103,13 @@ public class OperatorInterface {
 			commands.setTurretIdle();
 		}
 
-		// Shooter commands TODO: EDIT THESE
-		if (mOperatorXboxController.getDPadDownPressed()) {
-			commands.setShooterCustomState(0, Shooter.HoodState.LOW);
-		}
-		if (mOperatorXboxController.getLeftBumperPressed()) {
-			commands.setShooterCustomState(0, Shooter.HoodState.MEDIUM);
-		}
-		if (mOperatorXboxController.getRightBumperPressed()) {
-			commands.setShooterCustomState(0, Shooter.HoodState.HIGH);
+		if (mOperatorXboxController.getRightBumper()) {
+			commands.setShooterCustomState(1500, Shooter.HoodState.MEDIUM);
+		} else if (mOperatorXboxController.getLeftBumper()) {
+			commands.setIntakeStowed();
+			commands.indexerColumnWantedState = Indexer.ColumnState.IDLE;
+			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.IDLE;
+			commands.setShooterIdleState();
 		}
 	}
 

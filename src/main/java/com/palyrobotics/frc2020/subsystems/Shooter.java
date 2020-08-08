@@ -86,7 +86,7 @@ public class Shooter extends SubsystemBase {
 	 * Updates all of the outputs for the IDLE shooting state
 	 */
 	private void updateIdle(@ReadOnly RobotState state) {
-		mFlywheelOutput.setTargetVelocity(0, mConfig.shooterGains);
+		mFlywheelOutput.setTargetVelocity(0, mConfig.shooterVelocityGains);
 		mVelocityChanged = false;
 	}
 
@@ -115,14 +115,14 @@ public class Shooter extends SubsystemBase {
 		targetFlywheelVelocity = kTargetDistanceToVelocity.get(hoodState).getInterpolated(mTargetDistance);
 
 		mTargetVelocity = clamp(targetFlywheelVelocity, kMinVelocity, kMaxVelocity);
-		mFlywheelOutput.setTargetVelocity(mTargetVelocity, mConfig.shooterGains);
+		mFlywheelOutput.setTargetVelocity(mTargetVelocity, mConfig.shooterVelocityGains);
 	}
 
 	/**
 	 * Updates all of the outputs for the VISION shooting state
 	 */
 	private void updateCustom(@ReadOnly RobotState state, double shooterVelocity, HoodState hoodState) {
-		mFlywheelOutput.setTargetVelocity(shooterVelocity, mConfig.shooterGains);
+		mFlywheelOutput.setTargetVelocity(shooterVelocity, mConfig.shooterVelocityGains);
 		translateHoodState(state, hoodState);
 
 		mTargetVelocity = shooterVelocity;
