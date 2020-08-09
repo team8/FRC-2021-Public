@@ -37,7 +37,7 @@ public class RobotState {
 	/* Indexer */
 	public boolean indexerPos1Blocked, indexerPos4Blocked;
 	public double indexerMasterEncPosition, indexerMasterEncVelocity, indexerSlaveEncPosition, indexerSlaveEncVelocity,
-			indexerLeftVTalonCurrentDraw, indexerRightVTalonCurrentDraw;
+			indexerLeftVTalonCurrentDraw, indexerRightVTalonCurrentDraw, indexerSlaveCurrentDraw;
 
 	/* Joystick */
 	public boolean joystickRightTriggerPressed;
