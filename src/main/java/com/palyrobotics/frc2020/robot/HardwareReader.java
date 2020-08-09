@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.StickyFaults;
 import com.ctre.phoenix.sensors.PigeonIMU.PigeonState;
 import com.esotericsoftware.minlog.Log;
 import com.palyrobotics.frc2020.config.RobotConfig;
+import com.palyrobotics.frc2020.config.subsystem.IntakeConfig;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.DriveHardware;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.IntakeHardware;
 import com.palyrobotics.frc2020.subsystems.Drive;
@@ -29,6 +30,7 @@ public class HardwareReader {
 	private static final int kYawIndex = 0, kYawAngularVelocityIndex = 2;
 	private static final Timer mTimer = new Timer();
 	private final RobotConfig mRobotConfig = Configs.get(RobotConfig.class);
+	private final IntakeConfig mIntakeConfig = Configs.get(IntakeConfig.class);
 
 	private final double[] mGyroAngles = new double[3], mGyroAngularVelocities = new double[3];
 
@@ -95,6 +97,8 @@ public class HardwareReader {
 		var hardware = IntakeHardware.getInstance();
 		state.intakeExtended = hardware.solenoid.get();
 		state.intakeTransitioning = hardware.solenoid.isInTransition();
+		state.intakeStalled = hardware.talon.getStatorCurrent() >= mIntakeConfig.rollerStallCurrent;
+		LiveGraph.add("intakeCurrentDraw", hardware.talon.getStatorCurrent());
 	}
 
 	private void readJoystickState(RobotState state) {

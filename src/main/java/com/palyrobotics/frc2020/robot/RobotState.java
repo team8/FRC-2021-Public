@@ -32,8 +32,7 @@ public class RobotState {
 	public boolean driveIsGyroReady;
 
 	/* Intake */
-	public boolean intakeExtended;
-	public boolean intakeTransitioning;
+	public boolean intakeExtended, intakeTransitioning, intakeStalled;
 
 	/* Indexer */
 	public boolean indexerPos1Blocked, indexerPos4Blocked;
