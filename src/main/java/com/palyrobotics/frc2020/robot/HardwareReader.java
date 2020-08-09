@@ -86,11 +86,13 @@ public class HardwareReader {
 		state.indexerSlaveEncVelocity = hardware.slaveColumnSparkEncoder.getVelocity();
 		state.indexerRightVTalonCurrentDraw = hardware.rightVTalon.getStatorCurrent();
 		state.indexerLeftVTalonCurrentDraw = hardware.leftVTalon.getStatorCurrent();
+		state.indexerSlaveCurrentDraw = hardware.slaveColumnSpark.getOutputCurrent();
 		LiveGraph.add("masterIndexerEncoderPosition", state.indexerMasterEncPosition);
 		LiveGraph.add("masterIndexerEncoderVelocity", state.indexerMasterEncVelocity);
 		LiveGraph.add("slaveIndexerEncoderPosition", state.indexerSlaveEncPosition);
-		LiveGraph.add("rightVTalonCurrentDraw", hardware.rightVTalon.getStatorCurrent());
-		LiveGraph.add("leftVTalonCurrentDraw", hardware.leftVTalon.getStatorCurrent());
+		LiveGraph.add("rightVTalonCurrentDraw", state.indexerRightVTalonCurrentDraw);
+		LiveGraph.add("leftVTalonCurrentDraw", state.indexerLeftVTalonCurrentDraw);
+		LiveGraph.add("slaveIndexerCurrentDraw", state.indexerSlaveCurrentDraw);
 	}
 
 	private void readIntakeState(RobotState state) {
