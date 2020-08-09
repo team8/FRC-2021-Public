@@ -14,6 +14,7 @@ import com.palyrobotics.frc2020.subsystems.Drive;
 import com.palyrobotics.frc2020.subsystems.Shooter;
 import com.palyrobotics.frc2020.subsystems.SubsystemBase;
 import com.palyrobotics.frc2020.subsystems.Turret;
+import com.palyrobotics.frc2020.config.subsystem.IntakeConfig;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.DriveHardware;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.IntakeHardware;
 import com.palyrobotics.frc2020.subsystems.Drive;
@@ -48,6 +49,7 @@ public class HardwareReader {
 	private static final Timer mTimer = new Timer();
 	private final RobotConfig mRobotConfig = Configs.get(RobotConfig.class);
 	private final DriveConfig mDriveConfig = Configs.get(DriveConfig.class);
+	private final IntakeConfig mIntakeConfig = Configs.get(IntakeConfig.class);
 	private final VisionConfig mVisionConfig = Configs.get(VisionConfig.class);
 	private Limelight mLimelight = Limelight.getInstance();
 	private MedianFilter mVisionPnPXFilter = new MedianFilter(mVisionConfig.visionPnPMedianFilterSize),
@@ -152,6 +154,8 @@ public class HardwareReader {
 		var hardware = IntakeHardware.getInstance();
 		state.intakeExtended = hardware.solenoid.get();
 		state.intakeTransitioning = hardware.solenoid.isInTransition();
+		state.intakeStalled = hardware.talon.getStatorCurrent() >= mIntakeConfig.rollerStallCurrent;
+		LiveGraph.add("intakeCurrentDraw", hardware.talon.getStatorCurrent());
 	}
 
 	private void readJoystickState(RobotState state) {

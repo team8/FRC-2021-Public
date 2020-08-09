@@ -60,7 +60,12 @@ public class OperatorInterface {
 		if (mOperatorXboxController.getDPadDownReleased()) {
 			commands.setIntakeRunning(0);
 		} else if (mOperatorXboxController.getDPadDown()) {
-			commands.setIntakeRunning(mIntakeConfig.intakeRollerPo);
+			if (!state.intakeStalled) {
+				commands.setIntakeRunning(mIntakeConfig.rollerPo);
+			}
+			else {
+				commands.setIntakeRunning(-mIntakeConfig.rollerPo);
+			}
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.FORWARD;
 		} else if (mOperatorXboxController.getDPadUp()) {
 			commands.setIntakeStowed();
