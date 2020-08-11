@@ -12,9 +12,11 @@ import com.ctre.phoenix.sensors.SensorInitializationStrategy;
 import com.esotericsoftware.minlog.Log;
 import com.palyrobotics.frc2020.config.RobotConfig;
 import com.palyrobotics.frc2020.config.constants.DriveConstants;
+import com.palyrobotics.frc2020.config.subsystem.LightingConfig;
 import com.palyrobotics.frc2020.robot.RobotState.GamePeriod;
 import com.palyrobotics.frc2020.subsystems.Drive;
 import com.palyrobotics.frc2020.subsystems.Intake;
+import com.palyrobotics.frc2020.subsystems.Lighting;
 import com.palyrobotics.frc2020.subsystems.SubsystemBase;
 import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.config.Configs;
@@ -37,6 +39,7 @@ public class HardwareWriter {
 	private final RobotConfig mRobotConfig = Configs.get(RobotConfig.class);
 	private final Drive mDrive = Drive.getInstance();
 	private final Intake mIntake = Intake.getInstance();
+	private final Lighting mLighting = Lighting.getInstance();
 	private boolean mRumbleOutput;
 
 	void configureHardware(Set<SubsystemBase> enabledSubsystems) {
@@ -90,6 +93,13 @@ public class HardwareWriter {
 		hardware.talon.setInverted(true);
 	}
 
+	private void configureLightingHardware() {
+		var hardware = HardwareAdapter.LightingHardware.getInstance();
+		hardware.ledStrip.setLength(Configs.get(LightingConfig.class).ledCount);
+		hardware.ledStrip.start();
+		hardware.ledStrip.setData(mLighting.getOutput());
+	}
+
 	public void resetDriveSensors(Pose2d pose) {
 		double heading = pose.getRotation().getDegrees();
 		var hardware = HardwareAdapter.DriveHardware.getInstance();
@@ -126,6 +136,11 @@ public class HardwareWriter {
 		hardware.leftMasterFalcon.setOutput(mDrive.getDriveSignal().leftOutput);
 		hardware.rightMasterFalcon.setOutput(mDrive.getDriveSignal().rightOutput);
 		handleReset(hardware.gyro);
+	}
+
+	public void updateLighting() {
+		var hardware = HardwareAdapter.LightingHardware.getInstance();
+		hardware.ledStrip.setData(mLighting.getOutput());
 	}
 
 	private void updateIntake() {

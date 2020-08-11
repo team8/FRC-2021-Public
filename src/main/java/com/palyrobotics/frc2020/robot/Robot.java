@@ -55,8 +55,9 @@ public class Robot extends TimedRobot {
 	/* Subsystems */
 	private final Drive mDrive = Drive.getInstance();
 	private final Intake mIntake = Intake.getInstance();
+	private final Lighting mLighting = Lighting.getInstance();
 
-	private Set<SubsystemBase> mSubsystems = Set.of(mDrive, mIntake),
+	private Set<SubsystemBase> mSubsystems = Set.of(mDrive, mIntake, mLighting),
 			mEnabledSubsystems;
 	private Set<RobotService> mServices = Set.of(new CommandReceiverService(), new NetworkLoggerService(),
 			new TelemetryService()),
@@ -139,6 +140,10 @@ public class Robot extends TimedRobot {
 
 		CSVWriter.write();
 
+		if (kCanUseHardware && mEnabledSubsystems.contains(mLighting)) {
+			mLighting.update(mCommands, mRobotState);
+			mHardwareWriter.updateLighting();
+		}
 	}
 
 	@Override

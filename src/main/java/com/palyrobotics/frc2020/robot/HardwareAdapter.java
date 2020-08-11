@@ -12,6 +12,7 @@ import com.palyrobotics.frc2020.util.control.TimedSolenoid;
 import com.palyrobotics.frc2020.util.input.Joystick;
 import com.palyrobotics.frc2020.util.input.XboxController;
 
+import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
@@ -59,6 +60,23 @@ public class HardwareAdapter {
 
 		static IntakeHardware getInstance() {
 			if (sInstance == null) sInstance = new IntakeHardware();
+			return sInstance;
+		}
+	}
+
+	/**
+	 * 1 WS2812B LED Strip connected to roboRIO via PWM
+	 */
+	static class LightingHardware {
+
+		private static LightingHardware sInstance;
+		final AddressableLED ledStrip = new AddressableLED(sPortConstants.nariLightingPwmPort);
+
+		private LightingHardware() {
+		}
+
+		static LightingHardware getInstance() {
+			if (sInstance == null) sInstance = new LightingHardware();
 			return sInstance;
 		}
 	}

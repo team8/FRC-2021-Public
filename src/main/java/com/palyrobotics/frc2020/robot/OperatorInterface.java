@@ -31,6 +31,7 @@ public class OperatorInterface {
 
 		updateDriveCommands(commands);
 		updateIntakeCommands(commands);
+		updateLightingCommands(commands, state);
 		mOperatorXboxController.updateLastInputs();
 
 		Robot.sLoopDebugger.addPoint("updateCommands");
@@ -76,6 +77,10 @@ public class OperatorInterface {
 		} else {
 			commands.intakeWantedState = Intake.State.IDLE;
 		}
+	}
+
+	private void updateLightingCommands(Commands commands, @ReadOnly RobotState state) {
+		//Need to implement
 	}
 
 	public void resetPeriodic(Commands commands) {
