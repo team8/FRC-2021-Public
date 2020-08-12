@@ -91,7 +91,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void simulationInit() {
 		Log.info(kLoggerTag, "Writing path CSV file...");
-		pathToCsv();
+		//pathToCsv();
 	}
 
 	private void pathToCsv() {
@@ -185,7 +185,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void simulationPeriodic() {
-
 	}
 
 	@Override
@@ -241,6 +240,7 @@ public class Robot extends TimedRobot {
 	}
 
 	private void updateSubsystemsAndApplyOutputs() {
+		System.out.println("e");
 		resetOdometryIfWanted();
 		for (SubsystemBase subsystem : mEnabledSubsystems) {
 			subsystem.update(mCommands, mRobotState);

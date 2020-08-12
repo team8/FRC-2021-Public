@@ -6,6 +6,7 @@ import static com.palyrobotics.frc2020.vision.Limelight.kTwoTimesZoomPipelineId;
 
 import com.palyrobotics.frc2020.robot.HardwareAdapter.Joysticks;
 import com.palyrobotics.frc2020.subsystems.Intake;
+import com.palyrobotics.frc2020.subsystems.Lighting;
 import com.palyrobotics.frc2020.util.input.Joystick;
 import com.palyrobotics.frc2020.util.input.XboxController;
 import com.palyrobotics.frc2020.vision.Limelight;
@@ -84,6 +85,7 @@ public class OperatorInterface {
 	}
 
 	public void resetPeriodic(Commands commands) {
+		commands.lightingWantedState = Lighting.State.IDLE;
 	}
 
 	public void reset(Commands commands) {
@@ -92,6 +94,7 @@ public class OperatorInterface {
 		commands.wantedCompression = true;
 		commands.visionWanted = false;
 		commands.intakeWantedState = Intake.State.IDLE;
+		commands.lightingWantedState = Lighting.State.IDLE;
 		mOperatorXboxController.clearLastInputs();
 	}
 }

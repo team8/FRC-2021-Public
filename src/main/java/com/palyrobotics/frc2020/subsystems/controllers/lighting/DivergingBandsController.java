@@ -23,20 +23,19 @@ public class DivergingBandsController extends Lighting.LEDController {
 	 * @param backgroundColor Background color upon which converging effect will occur.
 	 */
 
-	public DivergingBandsController(int startIndex, int lastIndex, Color.HSV bandColor, Color.HSV backgroundColor, int bandLedCount, double speed) {
-		super(startIndex, lastIndex);
+	public DivergingBandsController(int startIndex, int lastIndex, Color.HSV bandColor, Color.HSV backgroundColor, int bandLedCount, double speed, int priority) {
+		super(startIndex, lastIndex, priority);
 		mStartIndex = startIndex;
 		mLastIndex = lastIndex;
 		mBandColor = bandColor;
 		mBackgroundColor = backgroundColor;
 		mBandLedCount = bandLedCount;
 		mSpeed = speed == 0 ? kZeroSpeed : speed;
-		kPriority = 1;
 		mTimer.start();
 	}
 
-	public DivergingBandsController(int startIndex, int lastIndex, Color.HSV bandColor, Color.HSV backgroundColor, int bandLedCount, double speed, int duration) {
-		super(startIndex, lastIndex);
+	public DivergingBandsController(int startIndex, int lastIndex, Color.HSV bandColor, Color.HSV backgroundColor, int bandLedCount, double speed, int duration, int priority) {
+		super(startIndex, lastIndex, priority);
 		mStartIndex = startIndex;
 		mLastIndex = lastIndex;
 		mBandColor = bandColor;
@@ -44,7 +43,6 @@ public class DivergingBandsController extends Lighting.LEDController {
 		mBandLedCount = bandLedCount;
 		mSpeed = speed == 0 ? kZeroSpeed : speed;
 		mDuration = duration;
-		kPriority = 1;
 		mTimer.start();
 	}
 

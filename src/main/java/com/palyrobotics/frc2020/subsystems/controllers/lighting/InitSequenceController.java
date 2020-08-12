@@ -16,13 +16,12 @@ public class InitSequenceController extends Lighting.LEDController {
 	 * @param speed      Speed of animation
 	 */
 
-	public InitSequenceController(int startIndex, int lastIndex, double speed) {
-		super(startIndex, lastIndex);
+	public InitSequenceController(int startIndex, int lastIndex, double speed, int priority) {
+		super(startIndex, lastIndex, priority);
 		mStartIndex = startIndex;
 		mLastIndex = lastIndex;
 		mCurrentLedIndex = mStartIndex;
 		mSpeed = speed == 0 ? kZeroSpeed : speed;
-		kPriority = 4;
 		mTimer.start();
 	}
 

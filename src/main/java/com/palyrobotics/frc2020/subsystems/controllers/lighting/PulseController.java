@@ -24,15 +24,14 @@ public class PulseController extends Lighting.LEDController {
 	 * @param speed              Speed of pulse movement
 	 */
 
-	public PulseController(int startIndex, int lastIndex, List<Color.HSV> pulseColorSequence, double speed) {
-		super(startIndex, lastIndex);
+	public PulseController(int startIndex, int lastIndex, List<Color.HSV> pulseColorSequence, double speed, int priority) {
+		super(startIndex, lastIndex, priority);
 		mStartIndex = startIndex;
 		mLastIndex = startIndex + pulseColorSequence.size() - 1;
 		mPulseEndIndex = lastIndex;
 		mPulseStartIndex = startIndex;
 		mSpeed = speed == 0 ? kZeroSpeed : speed;
 		mPulse = pulseColorSequence;
-		kPriority = 0;
 		if (lastIndex <= startIndex) {
 			mIsReversed = true;
 		}

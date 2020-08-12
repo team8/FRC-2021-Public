@@ -45,6 +45,7 @@ public class HardwareWriter {
 	void configureHardware(Set<SubsystemBase> enabledSubsystems) {
 		if (enabledSubsystems.contains(mDrive)) configureDriveHardware();
 		if (enabledSubsystems.contains(mIntake)) configureIntakeHardware();
+		if (enabledSubsystems.contains(mLighting)) configureLightingHardware();
 		configureMiscellaneousHardware();
 	}
 

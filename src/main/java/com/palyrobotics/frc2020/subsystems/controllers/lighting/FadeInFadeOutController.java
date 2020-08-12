@@ -18,24 +18,22 @@ public class FadeInFadeOutController extends Lighting.LEDController {
 	 * @param flashedColor Color to be flashed on white background
 	 */
 
-	public FadeInFadeOutController(int startIndex, int lastIndex, Color.HSV flashedColor, double delay) {
-		super(startIndex, lastIndex);
+	public FadeInFadeOutController(int startIndex, int lastIndex, Color.HSV flashedColor, double delay, int priority) {
+		super(startIndex, lastIndex, priority);
 		mStartIndex = startIndex;
 		mLastIndex = lastIndex;
 		mFlashedColor = flashedColor;
 		mSpeed = delay == 0 ? kZeroSpeed : delay;
-		kPriority = 1;
 		mTimer.start();
 	}
 
-	public FadeInFadeOutController(int startIndex, int lastIndex, Color.HSV flashedColor, double delay, double duration) {
-		super(startIndex, lastIndex);
+	public FadeInFadeOutController(int startIndex, int lastIndex, Color.HSV flashedColor, double delay, double duration, int priority) {
+		super(startIndex, lastIndex, priority);
 		mStartIndex = startIndex;
 		mLastIndex = lastIndex;
 		mFlashedColor = flashedColor;
 		mSpeed = delay == 0 ? kZeroSpeed : delay;
 		mDuration = duration;
-		kPriority = 1;
 		mTimer.start();
 	}
 

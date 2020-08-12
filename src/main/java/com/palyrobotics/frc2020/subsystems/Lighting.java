@@ -33,10 +33,11 @@ public class Lighting extends SubsystemBase {
 		protected double mSpeed;
 		protected int kPriority;
 
-		protected LEDController(int startIndex, int lastIndex) {
+		protected LEDController(int startIndex, int lastIndex, int priority) {
 			for (var i = 0; i <= Math.abs(lastIndex - startIndex); i++) {
 				mOutputs.lightingOutput.add(new Color.HSV());
 			}
+			kPriority = priority;
 			mTimer.reset();
 		}
 
@@ -64,11 +65,11 @@ public class Lighting extends SubsystemBase {
 	private static Lighting sInstance = new Lighting();
 	private LightingConfig mConfig = Configs.get(LightingConfig.class);
 	private AddressableLEDBuffer mOutputBuffer = new AddressableLEDBuffer(mConfig.ledCount);
-	private State mState;
+	//private State mState;
+	private PriorityQueue<State> mStates = new PriorityQueue<>(10, Comparator.comparingInt(this::getLightingEnumValueInt));
 	private PriorityQueue<LEDController> mLEDControllers = new PriorityQueue<>(1, Comparator.comparingInt(o -> o.kPriority));
 
 	private Lighting() {
-
 	}
 
 	public static Lighting getInstance() {
@@ -79,56 +80,64 @@ public class Lighting extends SubsystemBase {
 	public void update(@ReadOnly Commands commands, @ReadOnly RobotState state) {
 		State wantedState = commands.lightingWantedState;
 		if (RobotController.getBatteryVoltage() < mConfig.minVoltageToFunction) wantedState = State.OFF;
-		boolean isNewState = mState != wantedState;
-		mState = wantedState;
+		boolean isNewState = mStates.contains(wantedState);
+//		mState = wantedState;
 		if (isNewState) {
-			switch (mState) {
+			mStates.add(wantedState);
+			int controllerPriority = getLightingEnumValueInt(wantedState);
+			switch (wantedState) {
 				case OFF:
 					resetLedStrip();
 					mLEDControllers.clear();
+					mStates.clear();
 					break;
 				case IDLE:
 					break;
 				case INIT:
 				case DISABLE:
 					resetLedStrip();
-					mLEDControllers.clear();
-					addToControllers(new OneColorController(mConfig.totalSegmentFirstIndex, mConfig.totalSegmentLastIndex, Color.HSV.kAqua));
+					addToControllers(new OneColorController(mConfig.totalSegmentFirstIndex, mConfig.totalSegmentLastIndex, Color.HSV.kAqua, controllerPriority));
 					break;
 				case TARGET_FOUND:
 					addToControllers(new FadeInFadeOutController(mConfig.spinnerSegmentFirstIndex,
 							mConfig.spinnerSegmentLastIndex, Color.HSV.kYellow, 1, 2));
 					break;
 				case SPINNER_DONE:
-					addToControllers(new OneColorController(mConfig.frontLeftSegmentFirstIndex, mConfig.frontRightSegmentLastIndex, Color.HSV.kBlue, 2));
+					addToControllers(new OneColorController(mConfig.frontLeftSegmentFirstIndex, mConfig.frontRightSegmentLastIndex, Color.HSV.kBlue, 2, controllerPriority));
 					break;
 				case BALL_ENTERED:
-					addToControllers(new DivergingBandsController(mConfig.frontLeftSegmentFirstIndex, mConfig.frontRightSegmentLastIndex, Color.HSV.kOrange, Color.HSV.kOff, 2, 1.0 / 6.0, 2));
-					addToControllers(new DivergingBandsController(mConfig.spinnerSegmentFirstIndex, mConfig.spinnerSegmentLastIndex, Color.HSV.kOrange, Color.HSV.kOff, 3, 1.0 / 6.0, 2));
+					addToControllers(new DivergingBandsController(mConfig.frontLeftSegmentFirstIndex, mConfig.frontRightSegmentLastIndex, Color.HSV.kOrange, Color.HSV.kOff, 2, 1.0 / 6.0, 2, controllerPriority));
+					addToControllers(new DivergingBandsController(mConfig.spinnerSegmentFirstIndex, mConfig.spinnerSegmentLastIndex, Color.HSV.kOrange, Color.HSV.kOff, 3, 1.0 / 6.0, 2, controllerPriority));
 					break;
 				case CLIMB_DONE:
 					addToControllers(new FadeInController(mConfig.totalSegmentFirstIndex,
-							mConfig.totalSegmentLastIndex, Color.HSV.kPink, 0.5, 3));
+							mConfig.totalSegmentLastIndex, Color.HSV.kPink, 0.5, 3, controllerPriority));
 					break;
 				case INTAKE_EXTENDED:
-					addToControllers(new DivergingBandsController(mConfig.frontLeftSegmentFirstIndex, mConfig.frontRightSegmentLastIndex, Color.HSV.kPurple, Color.HSV.kOff, 2, 1.0 / 6.0, 2));
-					addToControllers(new DivergingBandsController(mConfig.spinnerSegmentFirstIndex, mConfig.spinnerSegmentLastIndex, Color.HSV.kPurple, Color.HSV.kOff, 3, 1.0 / 6.0, 2));
+					addToControllers(new DivergingBandsController(mConfig.frontLeftSegmentFirstIndex, mConfig.frontRightSegmentLastIndex, Color.HSV.kPurple, Color.HSV.kOff, 2, 1.0 / 6.0, 2, controllerPriority));
+					addToControllers(new DivergingBandsController(mConfig.spinnerSegmentFirstIndex, mConfig.spinnerSegmentLastIndex, Color.HSV.kPurple, Color.HSV.kOff, 3, 1.0 / 6.0, 2, controllerPriority));
 					break;
 				case ROBOT_ALIGNED:
-					addToControllers(new OneColorController(mConfig.spinnerSegmentFirstIndex, mConfig.spinnerSegmentLastIndex, Color.HSV.kLime, 2));
+					addToControllers(new OneColorController(mConfig.spinnerSegmentFirstIndex, mConfig.spinnerSegmentLastIndex, Color.HSV.kLime, 2, controllerPriority));
 					break;
 				case SHOOTER_FULLRPM:
-					addToControllers(new FadeInFadeOutController(mConfig.spinnerSegmentFirstIndex, mConfig.spinnerSegmentLastIndex, Color.HSV.kGreen, 0.5, 5));
+					addToControllers(new FadeInFadeOutController(mConfig.spinnerSegmentFirstIndex, mConfig.spinnerSegmentLastIndex, Color.HSV.kGreen, 0.5, 5, controllerPriority));
 					break;
 				case BALL_SHOT:
-					addToControllers(new OneColorController(mConfig.spinnerSegmentFirstIndex, mConfig.spinnerSegmentLastIndex, Color.HSV.kBlue, 0.25));
+					addToControllers(new OneColorController(mConfig.spinnerSegmentFirstIndex, mConfig.spinnerSegmentLastIndex, Color.HSV.kBlue, 0.25, controllerPriority));
 			}
 		}
 
 		resetLedStrip();
-		if (mLEDControllers.removeIf(LEDController::checkFinished)) {
-			mState = State.DO_NOTHING;
+		for(LEDController ledController : mLEDControllers){
+			if(ledController.checkFinished()){
+				mStates.removeIf(state1 -> getLightingEnumValueInt(state1) == ledController.kPriority);
+			}
 		}
+		mLEDControllers.removeIf(LEDController::checkFinished);
+		/*if (mLEDControllers.removeIf(LEDController::checkFinished)) { //seems problematic
+			mState = State.DO_NOTHING;
+		}*/
 
 		for (LEDController ledController : mLEDControllers) {
 			LightingOutputs controllerOutput = ledController.update(commands, state);
@@ -140,7 +149,6 @@ public class Lighting extends SubsystemBase {
 	}
 
 	private void addToControllers(LEDController controller) {
-		mLEDControllers.removeIf(controller::equals);
 		mLEDControllers.add(controller);
 	}
 
@@ -152,5 +160,15 @@ public class Lighting extends SubsystemBase {
 
 	public AddressableLEDBuffer getOutput() {
 		return mOutputBuffer;
+	}
+
+	private int getLightingEnumValueInt(State state){
+		State[] states = State.values();
+		for(var i = 0;i < states.length;i++){
+			if(state.equals(states[i])){
+				return i;
+			}
+		}
+		return -1;
 	}
 }

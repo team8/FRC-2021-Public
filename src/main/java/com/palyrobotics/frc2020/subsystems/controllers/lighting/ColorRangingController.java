@@ -16,11 +16,10 @@ public class ColorRangingController extends Lighting.LEDController {
 	 * @param lastIndex  End index upon which led patterns should stop
 	 */
 
-	public ColorRangingController(int startIndex, int lastIndex) {
-		super(startIndex, lastIndex);
+	public ColorRangingController(int startIndex, int lastIndex, int priority) {
+		super(startIndex, lastIndex, priority);
 		mStartIndex = startIndex;
 		mLastIndex = lastIndex;
-		kPriority = 4;
 	}
 
 	@Override
