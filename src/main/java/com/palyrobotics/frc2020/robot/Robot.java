@@ -22,6 +22,7 @@ import com.palyrobotics.frc2020.util.LoopOverrunDebugger;
 import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.commands.CommandReceiverService;
 import com.palyrobotics.frc2020.util.config.Configs;
+import com.palyrobotics.frc2020.util.control.PointLinkTime;
 import com.palyrobotics.frc2020.util.csvlogger.CSVWriter;
 import com.palyrobotics.frc2020.util.dashboard.LiveGraph;
 import com.palyrobotics.frc2020.util.service.NetworkLoggerService;
@@ -94,21 +95,23 @@ public class Robot extends TimedRobot {
 	}
 
 	private void pathToCsv() {
+		// Todo: figure out some way to use trajectory instead of getting auto routine
 		RoutineBase drivePath = AutoSelector.getAuto().getRoutine();
 		try (var writer = new PrintWriter(new BufferedWriter(new FileWriter("auto.csv")))) {
 			writer.write("x,y,d" + '\n');
-			var points = new LinkedList<Pose2d>();
+			var points = new LinkedList<PointLinkTime>();
 			recurseRoutine(drivePath, points);
-			for (Pose2d pose : points) {
-				Translation2d point = pose.getTranslation();
-				writer.write(String.format("%f,%f,%f%n", point.getY() * -39.37, point.getX() * 39.37, pose.getRotation().getDegrees()));
+			for (PointLinkTime pointLink : points) {
+				Pose2d pose = pointLink.getPose();
+				Translation2d point = pointLink.getPose().getTranslation();
+				writer.write(String.format("%f,%f,%f%n,%f", point.getY() * -39.37, point.getX() * 39.37, pose.getRotation().getDegrees(), pointLink.getTime()));
 			}
 		} catch (IOException writeException) {
 			writeException.printStackTrace();
 		}
 	}
 
-	private void recurseRoutine(RoutineBase routine, Deque<Pose2d> points) {
+	private void recurseRoutine(RoutineBase routine, Deque<PointLinkTime> points) {
 		if (routine instanceof MultipleRoutineBase) {
 			var multiple = (MultipleRoutineBase) routine;
 			for (RoutineBase childRoutine : multiple.getRoutines()) {
@@ -117,14 +120,16 @@ public class Robot extends TimedRobot {
 		} else if (routine instanceof DriveSetOdometryRoutine) {
 			var odometry = (DriveSetOdometryRoutine) routine;
 			var pose = odometry.getTargetPose();
-			points.addLast(pose);
+			//TODO: Make these take time, change time from 0
+			points.addLast(new PointLinkTime(pose, 0));
 		} else if (routine instanceof DrivePathRoutine) {
 			var path = (DrivePathRoutine) routine;
 			System.out.println(points.getLast());
-			path.generateTrajectory(points.getLast());
+			path.generateTrajectory(points.getLast().getPose());
 			for (Trajectory.State state : path.getTrajectory().getStates()) {
 				var pose = state.poseMeters;
-				points.addLast(pose);
+				var time = state.timeSeconds;
+				points.addLast(new PointLinkTime(pose,time));
 			}
 		}
 	}
