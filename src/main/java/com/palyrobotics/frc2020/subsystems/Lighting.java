@@ -129,8 +129,8 @@ public class Lighting extends SubsystemBase {
 		}
 
 		resetLedStrip();
-		for(LEDController ledController : mLEDControllers){
-			if(ledController.checkFinished()){
+		for (LEDController ledController : mLEDControllers) {
+			if (ledController.checkFinished()) {
 				mStates.removeIf(state1 -> getLightingEnumValueInt(state1) == ledController.kPriority);
 			}
 		}
@@ -162,10 +162,10 @@ public class Lighting extends SubsystemBase {
 		return mOutputBuffer;
 	}
 
-	private int getLightingEnumValueInt(State state){
+	private int getLightingEnumValueInt(State state) {
 		State[] states = State.values();
-		for(var i = 0;i < states.length;i++){
-			if(state.equals(states[i])){
+		for (var i = 0; i < states.length; i++) {
+			if (state.equals(states[i])) {
 				return i;
 			}
 		}
