@@ -1,8 +1,8 @@
 package com.palyrobotics.frc2020.subsystems.controllers.indexer;
 
+import com.palyrobotics.frc2020.config.constants.IndexerConstants;
 import com.palyrobotics.frc2020.robot.RobotState;
 import com.palyrobotics.frc2020.subsystems.Indexer;
-import com.palyrobotics.frc2020.config.constants.IndexerConstants;
 
 public class FeedColumnController extends Indexer.IndexerColumnController {
 
