@@ -276,6 +276,9 @@ public class Robot extends TimedRobot {
 			mLimelight.setLEDMode(LimelightControlMode.LedMode.FORCE_OFF);
 		}
 		mLimelight.setPipeline(visionPipeline);
+
+		// TODO: find a more permanent solution for this if we need more things from vision to be put in robot state
+		mRobotState.targetDistance = mLimelight.isTargetFound() ? mLimelight.getEstimatedDistanceInches() : null; // TODO: this should be part of the limelight class
 	}
 
 	private String setupSubsystemsAndServices() {
