@@ -22,6 +22,9 @@ public class RobotState {
 
 	public static final String kLoggerTag = Util.classToJsonName(RobotState.class);
 
+	/* Misc */
+	public double targetDistance;
+
 	/* Drive */
 	private final DifferentialDriveOdometry driveOdometry = new DifferentialDriveOdometry(new Rotation2d());
 	public double driveYawDegrees, driveYawAngularVelocityDegrees;
