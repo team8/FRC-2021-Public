@@ -26,6 +26,9 @@ public class RobotState {
 
 	public static final String kLoggerTag = Util.classToJsonName(RobotState.class);
 
+	/* Misc */
+	public double targetDistance;
+
 	/* Drive */
 	private final DifferentialDriveOdometry driveOdometry = new DifferentialDriveOdometry(new Rotation2d());
 	public CircularTreeMap<Pose2d> pastPoses = new CircularTreeMap<>(Configs.get(DriveConfig.class).pastPosesSize); //pose rotation degree is bounded between [-180, 180)
