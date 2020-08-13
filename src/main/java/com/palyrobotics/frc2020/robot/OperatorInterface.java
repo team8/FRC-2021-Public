@@ -63,8 +63,7 @@ public class OperatorInterface {
 		} else if (mOperatorXboxController.getDPadDown()) {
 			if (!state.intakeStalled) {
 				commands.setIntakeRunning(mIntakeConfig.rollerPo);
-			}
-			else {
+			} else {
 				commands.setIntakeRunning(-mIntakeConfig.rollerPo);
 			}
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.FORWARD;
