@@ -112,6 +112,7 @@ public class Robot extends TimedRobot {
 	}
 
 	private void recurseRoutine(RoutineBase routine, Deque<PointLinkTime> points) {
+		//Todo: Test
 		if (routine instanceof MultipleRoutineBase) {
 			var multiple = (MultipleRoutineBase) routine;
 			for (RoutineBase childRoutine : multiple.getRoutines()) {
@@ -129,7 +130,7 @@ public class Robot extends TimedRobot {
 			for (Trajectory.State state : path.getTrajectory().getStates()) {
 				var pose = state.poseMeters;
 				var time = state.timeSeconds;
-				points.addLast(new PointLinkTime(pose,time));
+				points.addLast(new PointLinkTime(pose, time));
 			}
 		}
 	}
