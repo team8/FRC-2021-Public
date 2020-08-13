@@ -2,6 +2,7 @@ package com.palyrobotics.frc2020.subsystems.controllers.indexer;
 
 import com.palyrobotics.frc2020.robot.RobotState;
 import com.palyrobotics.frc2020.subsystems.Indexer;
+import com.palyrobotics.frc2020.config.constants.IndexerConstants;
 
 public class FeedColumnController extends Indexer.IndexerColumnController {
 
@@ -12,9 +13,10 @@ public class FeedColumnController extends Indexer.IndexerColumnController {
 	@Override
 	protected void update(RobotState state) {
 		System.out.println("Running Feed Controller");
-		//todo: fix
-		mMasterSparkOutput.setPercentOutput(0.8);
-		mSlaveSparkOutput.setPercentOutput(0.8);
+
+		double indexerOutput = IndexerConstants.kTargetDistanceToIndexerVelocity.getInterpolated(state.targetDistance);
+		mMasterSparkOutput.setPercentOutput(indexerOutput);
+		mSlaveSparkOutput.setPercentOutput(indexerOutput);
 	}
 
 	@Override
