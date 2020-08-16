@@ -6,6 +6,7 @@ import java.util.List;
 import com.palyrobotics.frc2020.behavior.RoutineBase;
 import com.palyrobotics.frc2020.subsystems.Drive;
 import com.palyrobotics.frc2020.subsystems.Intake;
+import com.palyrobotics.frc2020.subsystems.Spinner;
 import com.palyrobotics.frc2020.util.control.DriveOutputs;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -38,8 +39,11 @@ public class Commands {
 	/* Miscellaneous */
 	public boolean wantedCompression;
 
-	// Intake
+	/* Intake */
 	public Intake.State intakeWantedState;
+
+	/* Spinner */
+	public Spinner.State spinnerWantedState;
 
 	public void addWantedRoutines(RoutineBase... wantedRoutines) {
 		for (RoutineBase wantedRoutine : wantedRoutines) {
