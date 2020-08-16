@@ -7,7 +7,11 @@ import com.palyrobotics.frc2020.behavior.RoutineBase;
 import com.palyrobotics.frc2020.subsystems.Drive;
 import com.palyrobotics.frc2020.subsystems.Indexer;
 import com.palyrobotics.frc2020.subsystems.Intake;
+<<<<<<< HEAD
 import com.palyrobotics.frc2020.subsystems.Shooter;
+=======
+import com.palyrobotics.frc2020.subsystems.Spinner;
+>>>>>>> started spinner
 import com.palyrobotics.frc2020.util.control.DriveOutputs;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -48,10 +52,17 @@ public class Commands {
 	public boolean visionWanted;
 	/* Miscellaneous */
 	public boolean wantedCompression;
+
 	/* Shooter */
 	private Shooter.ShooterState shooterWantedState;
 	private Shooter.HoodState shooterWantedHoodState; // Only needed for custom
 	private double shooterWantedVelocity; // Only needed for custom
+
+	/* Intake */
+	public Intake.State intakeWantedState;
+
+	/* Spinner */
+	public Spinner.State spinnerWantedState;
 
 	public void addWantedRoutines(RoutineBase... wantedRoutines) {
 		for (RoutineBase wantedRoutine : wantedRoutines) {
