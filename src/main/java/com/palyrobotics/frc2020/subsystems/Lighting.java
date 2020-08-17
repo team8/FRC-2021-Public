@@ -65,7 +65,6 @@ public class Lighting extends SubsystemBase {
 	private static Lighting sInstance = new Lighting();
 	private LightingConfig mConfig = Configs.get(LightingConfig.class);
 	private AddressableLEDBuffer mOutputBuffer = new AddressableLEDBuffer(mConfig.ledCount);
-	//private State mState;
 	private PriorityQueue<State> mStates = new PriorityQueue<>(10, Comparator.comparingInt(this::getLightingEnumValueInt));
 	private PriorityQueue<LEDController> mLEDControllers = new PriorityQueue<>(1, Comparator.comparingInt(o -> o.kPriority));
 
@@ -81,7 +80,6 @@ public class Lighting extends SubsystemBase {
 		State wantedState = commands.lightingWantedState;
 		if (RobotController.getBatteryVoltage() < mConfig.minVoltageToFunction) wantedState = State.OFF;
 		boolean isNewState = mStates.contains(wantedState);
-//		mState = wantedState;
 		if (isNewState) {
 			mStates.add(wantedState);
 			int controllerPriority = getLightingEnumValueInt(wantedState);
@@ -135,9 +133,6 @@ public class Lighting extends SubsystemBase {
 			}
 		}
 		mLEDControllers.removeIf(LEDController::checkFinished);
-		/*if (mLEDControllers.removeIf(LEDController::checkFinished)) { //seems problematic
-			mState = State.DO_NOTHING;
-		}*/
 
 		for (LEDController ledController : mLEDControllers) {
 			LightingOutputs controllerOutput = ledController.update(commands, state);
