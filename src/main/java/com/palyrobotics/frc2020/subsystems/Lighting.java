@@ -77,52 +77,54 @@ public class Lighting extends SubsystemBase {
 
 	@Override
 	public void update(@ReadOnly Commands commands, @ReadOnly RobotState state) {
-		State wantedState = commands.lightingWantedState;
-		if (RobotController.getBatteryVoltage() < mConfig.minVoltageToFunction) wantedState = State.OFF;
-		boolean isNewState = mStates.contains(wantedState);
-		if (isNewState) {
-			mStates.add(wantedState);
-			int controllerPriority = getLightingEnumValueInt(wantedState);
-			switch (wantedState) {
-				case OFF:
-					resetLedStrip();
-					mLEDControllers.clear();
-					mStates.clear();
-					break;
-				case IDLE:
-					break;
-				case INIT:
-				case DISABLE:
-					resetLedStrip();
-					addToControllers(new OneColorController(mConfig.totalSegmentFirstIndex, mConfig.totalSegmentLastIndex, Color.HSV.kAqua, controllerPriority));
-					break;
-				case TARGET_FOUND:
-					addToControllers(new FadeInFadeOutController(mConfig.spinnerSegmentFirstIndex,
-							mConfig.spinnerSegmentLastIndex, Color.HSV.kYellow, 1, 2));
-					break;
-				case SPINNER_DONE:
-					addToControllers(new OneColorController(mConfig.frontLeftSegmentFirstIndex, mConfig.frontRightSegmentLastIndex, Color.HSV.kBlue, 2, controllerPriority));
-					break;
-				case BALL_ENTERED:
-					addToControllers(new DivergingBandsController(mConfig.frontLeftSegmentFirstIndex, mConfig.frontRightSegmentLastIndex, Color.HSV.kOrange, Color.HSV.kOff, 2, 1.0 / 6.0, 2, controllerPriority));
-					addToControllers(new DivergingBandsController(mConfig.spinnerSegmentFirstIndex, mConfig.spinnerSegmentLastIndex, Color.HSV.kOrange, Color.HSV.kOff, 3, 1.0 / 6.0, 2, controllerPriority));
-					break;
-				case CLIMB_DONE:
-					addToControllers(new FadeInController(mConfig.totalSegmentFirstIndex,
-							mConfig.totalSegmentLastIndex, Color.HSV.kPink, 0.5, 3, controllerPriority));
-					break;
-				case INTAKE_EXTENDED:
-					addToControllers(new DivergingBandsController(mConfig.frontLeftSegmentFirstIndex, mConfig.frontRightSegmentLastIndex, Color.HSV.kPurple, Color.HSV.kOff, 2, 1.0 / 6.0, 2, controllerPriority));
-					addToControllers(new DivergingBandsController(mConfig.spinnerSegmentFirstIndex, mConfig.spinnerSegmentLastIndex, Color.HSV.kPurple, Color.HSV.kOff, 3, 1.0 / 6.0, 2, controllerPriority));
-					break;
-				case ROBOT_ALIGNED:
-					addToControllers(new OneColorController(mConfig.spinnerSegmentFirstIndex, mConfig.spinnerSegmentLastIndex, Color.HSV.kLime, 2, controllerPriority));
-					break;
-				case SHOOTER_FULLRPM:
-					addToControllers(new FadeInFadeOutController(mConfig.spinnerSegmentFirstIndex, mConfig.spinnerSegmentLastIndex, Color.HSV.kGreen, 0.5, 5, controllerPriority));
-					break;
-				case BALL_SHOT:
-					addToControllers(new OneColorController(mConfig.spinnerSegmentFirstIndex, mConfig.spinnerSegmentLastIndex, Color.HSV.kBlue, 0.25, controllerPriority));
+		ArrayList<State> wantedStates = commands.lightingWantedStates;
+		for (State wantedState : wantedStates) {
+			if (RobotController.getBatteryVoltage() < mConfig.minVoltageToFunction) wantedState = State.OFF;
+			boolean isNewState = mStates.contains(wantedState);
+			if (isNewState) {
+				mStates.add(wantedState);
+				int controllerPriority = getLightingEnumValueInt(wantedState);
+				switch (wantedState) {
+					case OFF:
+						resetLedStrip();
+						mLEDControllers.clear();
+						mStates.clear();
+						break;
+					case IDLE:
+						break;
+					case INIT:
+					case DISABLE:
+						resetLedStrip();
+						addToControllers(new OneColorController(mConfig.totalSegmentFirstIndex, mConfig.totalSegmentLastIndex, Color.HSV.kAqua, controllerPriority));
+						break;
+					case TARGET_FOUND:
+						addToControllers(new FadeInFadeOutController(mConfig.spinnerSegmentFirstIndex,
+								mConfig.spinnerSegmentLastIndex, Color.HSV.kYellow, 1, 2));
+						break;
+					case SPINNER_DONE:
+						addToControllers(new OneColorController(mConfig.frontLeftSegmentFirstIndex, mConfig.frontRightSegmentLastIndex, Color.HSV.kBlue, 2, controllerPriority));
+						break;
+					case BALL_ENTERED:
+						addToControllers(new DivergingBandsController(mConfig.frontLeftSegmentFirstIndex, mConfig.frontRightSegmentLastIndex, Color.HSV.kOrange, Color.HSV.kOff, 2, 1.0 / 6.0, 2, controllerPriority));
+						addToControllers(new DivergingBandsController(mConfig.spinnerSegmentFirstIndex, mConfig.spinnerSegmentLastIndex, Color.HSV.kOrange, Color.HSV.kOff, 3, 1.0 / 6.0, 2, controllerPriority));
+						break;
+					case CLIMB_DONE:
+						addToControllers(new FadeInController(mConfig.totalSegmentFirstIndex,
+								mConfig.totalSegmentLastIndex, Color.HSV.kPink, 0.5, 3, controllerPriority));
+						break;
+					case INTAKE_EXTENDED:
+						addToControllers(new DivergingBandsController(mConfig.frontLeftSegmentFirstIndex, mConfig.frontRightSegmentLastIndex, Color.HSV.kPurple, Color.HSV.kOff, 2, 1.0 / 6.0, 2, controllerPriority));
+						addToControllers(new DivergingBandsController(mConfig.spinnerSegmentFirstIndex, mConfig.spinnerSegmentLastIndex, Color.HSV.kPurple, Color.HSV.kOff, 3, 1.0 / 6.0, 2, controllerPriority));
+						break;
+					case ROBOT_ALIGNED:
+						addToControllers(new OneColorController(mConfig.spinnerSegmentFirstIndex, mConfig.spinnerSegmentLastIndex, Color.HSV.kLime, 2, controllerPriority));
+						break;
+					case SHOOTER_FULLRPM:
+						addToControllers(new FadeInFadeOutController(mConfig.spinnerSegmentFirstIndex, mConfig.spinnerSegmentLastIndex, Color.HSV.kGreen, 0.5, 5, controllerPriority));
+						break;
+					case BALL_SHOT:
+						addToControllers(new OneColorController(mConfig.spinnerSegmentFirstIndex, mConfig.spinnerSegmentLastIndex, Color.HSV.kBlue, 0.25, controllerPriority));
+				}
 			}
 		}
 

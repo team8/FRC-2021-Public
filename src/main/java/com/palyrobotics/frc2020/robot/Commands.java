@@ -39,7 +39,7 @@ public class Commands {
 	/* Miscellaneous */
 	public boolean wantedCompression;
 	/* Lighting */
-	public Lighting.State lightingWantedState;
+	public ArrayList<Lighting.State> lightingWantedStates;
 
 	// Intake
 	public Intake.State intakeWantedState;
