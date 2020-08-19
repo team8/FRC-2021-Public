@@ -9,10 +9,12 @@ import com.palyrobotics.frc2020.config.RobotConfig;
 import com.palyrobotics.frc2020.config.subsystem.IntakeConfig;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.DriveHardware;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.IntakeHardware;
+import com.palyrobotics.frc2020.robot.HardwareAdapter.SpinnerHardware;
 import com.palyrobotics.frc2020.subsystems.Drive;
 import com.palyrobotics.frc2020.subsystems.Indexer;
 import com.palyrobotics.frc2020.subsystems.Intake;
 import com.palyrobotics.frc2020.subsystems.Shooter;
+import com.palyrobotics.frc2020.subsystems.Spinner;
 import com.palyrobotics.frc2020.subsystems.SubsystemBase;
 import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.config.Configs;
@@ -51,6 +53,7 @@ public class HardwareReader {
 		if (enabledSubsystems.contains(Shooter.getInstance())) readShooterState(state);
 		if (enabledSubsystems.contains(Indexer.getInstance())) readIndexerState(state);
 		readJoystickState(state);
+		if (enabledSubsystems.contains(Spinner.getInstance())) readSpinnerState(state);
 		Robot.sLoopDebugger.addPoint("readDrive");
 	}
 
@@ -127,6 +130,12 @@ public class HardwareReader {
 	private void readJoystickState(RobotState state) {
 		var joystickHardware = HardwareAdapter.Joysticks.getInstance();
 		state.joystickRightTriggerPressed = joystickHardware.operatorXboxController.getRightTrigger();
+	}
+
+	private void readSpinnerState(RobotState state) {
+		var hardware = SpinnerHardware.getInstance();
+		state.spinnerDetectedColor = hardware.sensor.getColor();
+
 	}
 
 	private void checkTalonFaults(Talon talon) {

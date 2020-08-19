@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.util.Color;
 
 /**
  * Holds the current physical state of the robot from our sensors.
@@ -45,6 +46,9 @@ public class RobotState {
 
 	/* Joystick */
 	public boolean joystickRightTriggerPressed;
+
+	/* Spinner */
+	public Color spinnerDetectedColor;
 
 	public GamePeriod gamePeriod = GamePeriod.DISABLED;
 	public String gameData;

@@ -17,6 +17,10 @@ import com.revrobotics.CANEncoder;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
+import com.revrobotics.ColorSensorV3;
+
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Solenoid;
 
@@ -64,6 +68,22 @@ public class HardwareAdapter {
 
 		static IntakeHardware getInstance() {
 			if (sInstance == null) sInstance = new IntakeHardware();
+			return sInstance;
+		}
+	}
+
+	static class SpinnerHardware {
+
+		private static SpinnerHardware sInstance;
+
+		final Talon talon = new Talon(sPortConstants.nariSpinnerId, "spinner");
+		final ColorSensorV3 sensor = new ColorSensorV3(I2C.Port.kOnboard);
+
+		private SpinnerHardware() {
+		}
+
+		static SpinnerHardware getInstance() {
+			if (sInstance == null) sInstance = new SpinnerHardware();
 			return sInstance;
 		}
 	}
