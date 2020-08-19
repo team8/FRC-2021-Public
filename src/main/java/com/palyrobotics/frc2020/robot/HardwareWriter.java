@@ -15,6 +15,7 @@ import com.palyrobotics.frc2020.config.constants.DriveConstants;
 import com.palyrobotics.frc2020.robot.RobotState.GamePeriod;
 import com.palyrobotics.frc2020.subsystems.Drive;
 import com.palyrobotics.frc2020.subsystems.Intake;
+import com.palyrobotics.frc2020.subsystems.Spinner;
 import com.palyrobotics.frc2020.subsystems.SubsystemBase;
 import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.config.Configs;
@@ -37,6 +38,7 @@ public class HardwareWriter {
 	private final RobotConfig mRobotConfig = Configs.get(RobotConfig.class);
 	private final Drive mDrive = Drive.getInstance();
 	private final Intake mIntake = Intake.getInstance();
+	private final Spinner mSpinner = Spinner.getInstance();
 	private boolean mRumbleOutput;
 
 	void configureHardware(Set<SubsystemBase> enabledSubsystems) {
@@ -132,6 +134,11 @@ public class HardwareWriter {
 		var hardware = HardwareAdapter.IntakeHardware.getInstance();
 		hardware.solenoid.set(mIntake.getSolenoidOutput());
 		hardware.talon.setOutput(mIntake.getOutput());
+	}
+
+	private void updateSpinner() {
+		var hardware = HardwareAdapter.SpinnerHardware.getInstance();
+		hardware.talon.setOutput(mSpinner.getOutput());
 	}
 
 	private void setPigeonStatusFramePeriods(PigeonIMU gyro) {

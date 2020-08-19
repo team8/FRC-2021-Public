@@ -8,8 +8,10 @@ import com.esotericsoftware.minlog.Log;
 import com.palyrobotics.frc2020.config.RobotConfig;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.DriveHardware;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.IntakeHardware;
+import com.palyrobotics.frc2020.robot.HardwareAdapter.SpinnerHardware;
 import com.palyrobotics.frc2020.subsystems.Drive;
 import com.palyrobotics.frc2020.subsystems.Intake;
+import com.palyrobotics.frc2020.subsystems.Spinner;
 import com.palyrobotics.frc2020.subsystems.SubsystemBase;
 import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.config.Configs;
@@ -41,6 +43,7 @@ public class HardwareReader {
 		Robot.sLoopDebugger.addPoint("readGameAndFieldState");
 		if (enabledSubsystems.contains(Drive.getInstance())) readDriveState(state);
 		if (enabledSubsystems.contains(Intake.getInstance())) readIntakeState(state);
+		if (enabledSubsystems.contains(Spinner.getInstance())) readSpinnerState(state);
 		Robot.sLoopDebugger.addPoint("readDrive");
 	}
 
@@ -100,6 +103,12 @@ public class HardwareReader {
 		var hardware = IntakeHardware.getInstance();
 		state.intakeExtended = hardware.solenoid.get();
 		state.intakeTransitioning = hardware.solenoid.isInTransition();
+	}
+
+	private void readSpinnerState(RobotState state) {
+		var hardware = SpinnerHardware.getInstance();
+		state.spinnerDetectedColor = hardware.sensor.getColor();
+
 	}
 
 	private void checkTalonFaults(Talon talon) {

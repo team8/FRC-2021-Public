@@ -11,8 +11,10 @@ import com.palyrobotics.frc2020.util.control.Talon;
 import com.palyrobotics.frc2020.util.control.TimedSolenoid;
 import com.palyrobotics.frc2020.util.input.Joystick;
 import com.palyrobotics.frc2020.util.input.XboxController;
+import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
 /**
@@ -59,6 +61,22 @@ public class HardwareAdapter {
 
 		static IntakeHardware getInstance() {
 			if (sInstance == null) sInstance = new IntakeHardware();
+			return sInstance;
+		}
+	}
+
+	static class SpinnerHardware {
+
+		private static SpinnerHardware sInstance;
+
+		final Talon talon = new Talon(sPortConstants.nariSpinnerId, "spinner");
+		final ColorSensorV3 sensor = new ColorSensorV3(I2C.Port.kOnboard);
+
+		private SpinnerHardware() {
+		}
+
+		static SpinnerHardware getInstance() {
+			if (sInstance == null) sInstance = new SpinnerHardware();
 			return sInstance;
 		}
 	}
