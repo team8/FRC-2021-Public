@@ -6,6 +6,8 @@ import static com.palyrobotics.frc2020.vision.Limelight.kTwoTimesZoomPipelineId;
 
 import com.palyrobotics.frc2020.behavior.routines.indexer.IndexerFeedRoutine;
 import com.palyrobotics.frc2020.config.subsystem.IntakeConfig;
+import com.palyrobotics.frc2020.behavior.routines.spinner.PositionControlRoutine;
+import com.palyrobotics.frc2020.behavior.routines.spinner.RotationControlRoutine;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.Joysticks;
 import com.palyrobotics.frc2020.subsystems.Indexer;
 import com.palyrobotics.frc2020.subsystems.Shooter;
@@ -109,6 +111,15 @@ public class OperatorInterface {
 			commands.indexerColumnWantedState = Indexer.ColumnState.IDLE;
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.IDLE;
 			commands.setShooterIdleState();
+		}
+	}
+
+	private void updateSpinnerCommands(Commands commands) {
+		if (mOperatorXboxController.getDPadDown()) {
+			commands.addWantedRoutine(new PositionControlRoutine());
+		}
+		if (mOperatorXboxController.getDPadUp()) {
+			commands.addWantedRoutine(new RotationControlRoutine());
 		}
 	}
 
