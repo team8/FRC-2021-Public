@@ -24,6 +24,7 @@ public abstract class RoutineBase {
 
 	/** Only should be used for {@link #getRequiredSubsystems()} */
 	protected final Drive mDrive = Drive.getInstance();
+	protected final Spinner mSpinner = Spinner.getInstance();
 	private State mState = State.INIT;
 
 	/**
