@@ -38,6 +38,7 @@ public class RobotState {
 
 	/* Spinner */
 	public Color spinnerDetectedColor;
+	public Color spinnerPositionControlColor; // todo update this somewhere
 
 	public GamePeriod gamePeriod = GamePeriod.DISABLED;
 	public String gameData;

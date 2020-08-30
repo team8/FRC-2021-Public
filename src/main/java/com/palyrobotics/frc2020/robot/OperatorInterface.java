@@ -81,10 +81,10 @@ public class OperatorInterface {
 	}
 
 	private void updateSpinnerCommands(Commands commands) {
-		if (mOperatorXboxController.getDPadDown()) {
+		if (mOperatorXboxController.getMenuButtonPressed()) {
 			commands.addWantedRoutine(new PositionControlRoutine());
 		}
-		if (mOperatorXboxController.getDPadUp()) {
+		if (mOperatorXboxController.getWindowButtonPressed()) {
 			commands.addWantedRoutine(new RotationControlRoutine());
 		}
 	}
