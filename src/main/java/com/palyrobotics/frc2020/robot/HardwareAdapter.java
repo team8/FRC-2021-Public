@@ -6,6 +6,7 @@ import com.ctre.phoenix.sensors.PigeonIMU;
 import com.palyrobotics.frc2020.config.PortConstants;
 import com.palyrobotics.frc2020.config.subsystem.IntakeConfig;
 import com.palyrobotics.frc2020.config.subsystem.ShooterConfig;
+import com.palyrobotics.frc2020.config.subsystem.SpinnerConfig;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.Falcon;
 import com.palyrobotics.frc2020.util.control.Spark;
@@ -78,6 +79,7 @@ public class HardwareAdapter {
 
 		final Talon talon = new Talon(sPortConstants.nariSpinnerId, "spinner");
 		final ColorSensorV3 sensor = new ColorSensorV3(I2C.Port.kOnboard);
+		final TimedSolenoid solenoid = new TimedSolenoid(sPortConstants.nariSpinnerSolenoidId, Configs.get(SpinnerConfig.class).spinnerSolenoidActuationDuration, false);
 
 		private SpinnerHardware() {
 		}

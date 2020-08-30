@@ -161,6 +161,7 @@ public class HardwareWriter {
 			if (enabledSubsystems.contains(mIntake)) updateIntake();
 			if (enabledSubsystems.contains(mShooter)) updateShooter();
 			if (enabledSubsystems.contains(mIndexer)) updateIndexer();
+			if (enabledSubsystems.contains(mSpinner)) updateSpinner();
 			Robot.sLoopDebugger.addPoint("writeDrive");
 		}
 		var joystickHardware = HardwareAdapter.Joysticks.getInstance();
@@ -202,6 +203,7 @@ public class HardwareWriter {
 	private void updateSpinner() {
 		var hardware = HardwareAdapter.SpinnerHardware.getInstance();
 		hardware.talon.setOutput(mSpinner.getOutput());
+		hardware.solenoid.set(mSpinner.getSolenoidOutput());
 	}
 
 	private void setPigeonStatusFramePeriods(PigeonIMU gyro) {

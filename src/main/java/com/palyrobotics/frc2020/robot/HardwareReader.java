@@ -135,6 +135,8 @@ public class HardwareReader {
 	private void readSpinnerState(RobotState state) {
 		var hardware = SpinnerHardware.getInstance();
 		state.spinnerDetectedColor = hardware.sensor.getColor();
+		state.spinnerExtended = hardware.solenoid.get();
+		state.spinnerTransitioning = hardware.solenoid.isInTransition();
 
 	}
 
