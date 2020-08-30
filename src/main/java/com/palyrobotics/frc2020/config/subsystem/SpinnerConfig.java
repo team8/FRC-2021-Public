@@ -6,5 +6,6 @@ public class SpinnerConfig extends SubsystemConfigBase {
 
 	public double spinnerOutput;
 	public int spinnerRotationColorsPassed;
+	public int spinnerSolenoidActuationDuration;
 
 }

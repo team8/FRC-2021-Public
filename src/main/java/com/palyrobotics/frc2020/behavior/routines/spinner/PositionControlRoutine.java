@@ -27,8 +27,11 @@ public class PositionControlRoutine extends RoutineBase {
 
 	@Override
 	protected void update(Commands commands, @ReadOnly RobotState state) {
-		if (state.spinnerDetectedColor == goalColor) {
-			stop(commands, state);
+		if (state.spinnerDetectedColor != goalColor) {
+			commands.spinnerWantedState = Spinner.State.SPINNING;
+		}
+		else {
+			commands.spinnerWantedState = Spinner.State.IDLE;
 		}
 	}
 

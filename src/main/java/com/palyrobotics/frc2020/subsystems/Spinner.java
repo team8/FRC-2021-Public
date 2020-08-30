@@ -15,6 +15,7 @@ public class Spinner extends SubsystemBase {
 
 	private static final Spinner sInstance = new Spinner();
 	private final ControllerOutput mOutput = new ControllerOutput();
+	private boolean mSolenoidOutput;
 	private final SpinnerConfig mConfig = Configs.get(SpinnerConfig.class);
 
 	private Spinner() {
@@ -28,15 +29,24 @@ public class Spinner extends SubsystemBase {
 		return mOutput;
 	}
 
+	public boolean getSolenoidOutput() {
+		return mSolenoidOutput;
+	}
+
 	@Override
 	public void update(@ReadOnly Commands commands, @ReadOnly RobotState state) {
 		switch (commands.spinnerWantedState) {
 			case SPINNING:
-				mOutput.setPercentOutput(mConfig.spinnerOutput);
+				if (!state.spinnerTransitioning && state.spinnerExtended) {
+					mOutput.setPercentOutput(mConfig.spinnerOutput);
+				} else {
+					mOutput.setIdle();
+				}
+				mSolenoidOutput = true;
 				break;
-
 			case IDLE:
 				mOutput.setIdle();
+				mSolenoidOutput = false;
 				break;
 		}
 	}

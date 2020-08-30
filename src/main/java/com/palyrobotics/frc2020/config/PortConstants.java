@@ -48,4 +48,5 @@ public class PortConstants extends ConfigBase {
 	 * Spinner
 	 */
 	public int nariSpinnerId;
+	public int nariSpinnerSolenoidId;
 }
