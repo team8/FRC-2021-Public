@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.wpilibj.util.Color;
 
 /**
  * Holds the current physical state of the robot from our sensors.
@@ -48,8 +47,7 @@ public class RobotState {
 	public boolean joystickRightTriggerPressed;
 
 	/* Spinner */
-	public Color spinnerDetectedColor;
-	public Color spinnerPositionControlColor; // todo update this somewhere
+	public String spinnerDetectedColor;
 	public boolean spinnerExtended;
 	public boolean spinnerTransitioning;
 
