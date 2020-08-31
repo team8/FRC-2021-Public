@@ -9,15 +9,13 @@ import com.palyrobotics.frc2020.robot.ReadOnly;
 import com.palyrobotics.frc2020.robot.RobotState;
 import com.palyrobotics.frc2020.subsystems.Spinner;
 import com.palyrobotics.frc2020.subsystems.SubsystemBase;
-
 import com.palyrobotics.frc2020.util.config.Configs;
-import edu.wpi.first.wpilibj.util.Color;
 
 public class RotationControlRoutine extends RoutineBase {
 
 	private int colorsSeen;
-	private Color previousColor;
-    private final SpinnerConfig mConfig = Configs.get(SpinnerConfig.class);
+	private String previousColor;
+	private final SpinnerConfig mConfig = Configs.get(SpinnerConfig.class);
 
 	@Override
 	public void start(Commands commands, @ReadOnly RobotState state) {
@@ -32,8 +30,7 @@ public class RotationControlRoutine extends RoutineBase {
 
 	@Override
 	protected void update(Commands commands, @ReadOnly RobotState state) {
-		if (state.spinnerDetectedColor != previousColor) {
-			// TODO the closest color thing
+		if (!state.spinnerDetectedColor.equals(previousColor)) {
 			colorsSeen++;
 		}
 		previousColor = state.spinnerDetectedColor;

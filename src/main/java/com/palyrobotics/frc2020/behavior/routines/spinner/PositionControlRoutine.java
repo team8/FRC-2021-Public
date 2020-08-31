@@ -8,29 +8,27 @@ import com.palyrobotics.frc2020.robot.ReadOnly;
 import com.palyrobotics.frc2020.robot.RobotState;
 import com.palyrobotics.frc2020.subsystems.Spinner;
 import com.palyrobotics.frc2020.subsystems.SubsystemBase;
-import edu.wpi.first.wpilibj.util.Color;
 
 public class PositionControlRoutine extends RoutineBase {
 
-	private Color goalColor;
+	private String goalColor;
 
 	@Override
 	public void start(Commands commands, @ReadOnly RobotState state) {
 		commands.spinnerWantedState = Spinner.State.SPINNING;
-		goalColor = state.spinnerPositionControlColor;
+		goalColor = state.gameData;
 	}
 
 	@Override
 	public boolean checkFinished(RobotState state) {
-		return goalColor == state.spinnerDetectedColor;
+		return goalColor.equals(state.spinnerDetectedColor);
 	}
 
 	@Override
 	protected void update(Commands commands, @ReadOnly RobotState state) {
-		if (state.spinnerDetectedColor != goalColor) {
+		if (!state.spinnerDetectedColor.equals(goalColor)) {
 			commands.spinnerWantedState = Spinner.State.SPINNING;
-		}
-		else {
+		} else {
 			commands.spinnerWantedState = Spinner.State.IDLE;
 		}
 	}

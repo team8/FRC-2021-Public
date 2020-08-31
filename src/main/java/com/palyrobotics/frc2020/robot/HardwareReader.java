@@ -20,8 +20,11 @@ import com.palyrobotics.frc2020.util.control.Spark;
 import com.palyrobotics.frc2020.util.control.Talon;
 import com.palyrobotics.frc2020.util.dashboard.LiveGraph;
 import com.revrobotics.CANSparkMax.FaultID;
+import com.revrobotics.ColorMatch;
+import com.revrobotics.ColorMatchResult;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.util.Color;
 
 public class HardwareReader {
 
@@ -29,9 +32,19 @@ public class HardwareReader {
 	private static final int kYawIndex = 0, kYawAngularVelocityIndex = 2;
 	private final RobotConfig mRobotConfig = Configs.get(RobotConfig.class);
 
+	private final ColorMatch mColorMatcher = new ColorMatch();
+	private final Color kBlueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);
+	private final Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);
+	private final Color kRedTarget = ColorMatch.makeColor(0.561, 0.232, 0.114);
+	private final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
+
 	private final double[] mGyroAngles = new double[3], mGyroAngularVelocities = new double[3];
 
 	public HardwareReader() {
+		mColorMatcher.addColorMatch(kBlueTarget);
+		mColorMatcher.addColorMatch(kGreenTarget);
+		mColorMatcher.addColorMatch(kRedTarget);
+		mColorMatcher.addColorMatch(kYellowTarget);
 	}
 
 	/**
@@ -107,10 +120,21 @@ public class HardwareReader {
 
 	private void readSpinnerState(RobotState state) {
 		var hardware = SpinnerHardware.getInstance();
-		state.spinnerDetectedColor = hardware.sensor.getColor();
 		state.spinnerExtended = hardware.solenoid.get();
 		state.spinnerTransitioning = hardware.solenoid.isInTransition();
 
+		ColorMatchResult match = mColorMatcher.matchClosestColor(hardware.sensor.getColor());
+		if (match.color == kBlueTarget) {
+			state.spinnerDetectedColor = "B";
+		} else if (match.color == kRedTarget) {
+			state.spinnerDetectedColor = "R";
+		} else if (match.color == kGreenTarget) {
+			state.spinnerDetectedColor = "G";
+		} else if (match.color == kYellowTarget) {
+			state.spinnerDetectedColor = "Y";
+		} else {
+			state.spinnerDetectedColor = "unknown";
+		}
 	}
 
 	private void checkTalonFaults(Talon talon) {
