@@ -7,6 +7,7 @@ import com.ctre.phoenix.sensors.PigeonIMU.PigeonState;
 import com.esotericsoftware.minlog.Log;
 import com.palyrobotics.frc2020.config.RobotConfig;
 import com.palyrobotics.frc2020.config.subsystem.IntakeConfig;
+import com.palyrobotics.frc2020.config.constants.SpinnerConstants;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.DriveHardware;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.IntakeHardware;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.SpinnerHardware;
@@ -39,10 +40,6 @@ public class HardwareReader {
 	private final IntakeConfig mIntakeConfig = Configs.get(IntakeConfig.class);
 
 	private final ColorMatch mColorMatcher = new ColorMatch();
-	private final Color kBlueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);
-	private final Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);
-	private final Color kRedTarget = ColorMatch.makeColor(0.561, 0.232, 0.114);
-	private final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
 
 	private final double[] mGyroAngles = new double[3], mGyroAngularVelocities = new double[3];
 
@@ -52,6 +49,10 @@ public class HardwareReader {
 		mColorMatcher.addColorMatch(kGreenTarget);
 		mColorMatcher.addColorMatch(kRedTarget);
 		mColorMatcher.addColorMatch(kYellowTarget);
+		mColorMatcher.addColorMatch(SpinnerConstants.kBlueTarget);
+		mColorMatcher.addColorMatch(SpinnerConstants.kGreenTarget);
+		mColorMatcher.addColorMatch(SpinnerConstants.kRedTarget);
+		mColorMatcher.addColorMatch(SpinnerConstants.kYellowTarget);
 	}
 
 	/**
@@ -151,13 +152,13 @@ public class HardwareReader {
 		state.spinnerTransitioning = hardware.solenoid.isInTransition();
 
 		ColorMatchResult match = mColorMatcher.matchClosestColor(hardware.sensor.getColor());
-		if (match.color == kBlueTarget) {
+		if (match.color == SpinnerConstants.kBlueTarget) {
 			state.spinnerDetectedColor = "B";
-		} else if (match.color == kRedTarget) {
+		} else if (match.color == SpinnerConstants.kRedTarget) {
 			state.spinnerDetectedColor = "R";
-		} else if (match.color == kGreenTarget) {
+		} else if (match.color == SpinnerConstants.kGreenTarget) {
 			state.spinnerDetectedColor = "G";
-		} else if (match.color == kYellowTarget) {
+		} else if (match.color == SpinnerConstants.kYellowTarget) {
 			state.spinnerDetectedColor = "Y";
 		} else {
 			state.spinnerDetectedColor = "unknown";
