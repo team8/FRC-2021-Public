@@ -11,7 +11,7 @@ import com.palyrobotics.frc2020.subsystems.Spinner;
 import com.palyrobotics.frc2020.subsystems.SubsystemBase;
 import com.palyrobotics.frc2020.util.config.Configs;
 
-public class RotationControlRoutine extends RoutineBase {
+public class SpinnerRotationControlRoutine extends RoutineBase {
 
 	private int colorsSeen;
 	private String previousColor;
