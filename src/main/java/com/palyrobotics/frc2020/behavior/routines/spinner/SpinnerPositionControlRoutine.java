@@ -9,7 +9,7 @@ import com.palyrobotics.frc2020.robot.RobotState;
 import com.palyrobotics.frc2020.subsystems.Spinner;
 import com.palyrobotics.frc2020.subsystems.SubsystemBase;
 
-public class PositionControlRoutine extends RoutineBase {
+public class SpinnerPositionControlRoutine extends RoutineBase {
 
 	private String goalColor;
 

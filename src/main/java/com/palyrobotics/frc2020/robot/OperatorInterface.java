@@ -4,8 +4,8 @@ import static com.palyrobotics.frc2020.util.Util.handleDeadBand;
 import static com.palyrobotics.frc2020.vision.Limelight.kOneTimesZoomPipelineId;
 import static com.palyrobotics.frc2020.vision.Limelight.kTwoTimesZoomPipelineId;
 
-import com.palyrobotics.frc2020.behavior.routines.spinner.PositionControlRoutine;
-import com.palyrobotics.frc2020.behavior.routines.spinner.RotationControlRoutine;
+import com.palyrobotics.frc2020.behavior.routines.spinner.SpinnerPositionControlRoutine;
+import com.palyrobotics.frc2020.behavior.routines.spinner.SpinnerRotationControlRoutine;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.Joysticks;
 import com.palyrobotics.frc2020.subsystems.Intake;
 import com.palyrobotics.frc2020.util.input.Joystick;
@@ -82,10 +82,10 @@ public class OperatorInterface {
 
 	private void updateSpinnerCommands(Commands commands) {
 		if (mOperatorXboxController.getMenuButtonPressed()) {
-			commands.addWantedRoutine(new PositionControlRoutine());
+			commands.addWantedRoutine(new SpinnerPositionControlRoutine());
 		}
 		if (mOperatorXboxController.getWindowButtonPressed()) {
-			commands.addWantedRoutine(new RotationControlRoutine());
+			commands.addWantedRoutine(new SpinnerRotationControlRoutine());
 		}
 	}
 
