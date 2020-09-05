@@ -19,7 +19,7 @@ public class SpinnerRotationControlRoutine extends RoutineBase {
 
 	@Override
 	public void start(Commands commands, @ReadOnly RobotState state) {
-		commands.spinnerWantedState = Spinner.State.SPINNING;
+		commands.spinnerWantedState = Spinner.State.SPINNING_RIGHT;
 		colorsSeen = 0;
 	}
 
