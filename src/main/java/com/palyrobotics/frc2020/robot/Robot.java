@@ -86,6 +86,7 @@ public class Robot extends TimedRobot {
 				updateDriveNeutralMode(config.coastDriveWhenDisabled);
 			}
 		});
+		simulationInit();
 	}
 
 	@Override
@@ -96,15 +97,15 @@ public class Robot extends TimedRobot {
 
 	private void pathToCsv() {
 		// Todo: figure out some way to use trajectory instead of getting auto routine
-		RoutineBase drivePath = AutoSelector.getAuto().getRoutine();
 		try (var writer = new PrintWriter(new BufferedWriter(new FileWriter("auto.csv")))) {
-			writer.write("x,y,d" + '\n');
+			RoutineBase drivePath = AutoSelector.getAuto().getRoutine();
+			writer.write("x,y,d,t" + '\n');
 			var points = new LinkedList<PointLinkTime>();
 			recurseRoutine(drivePath, points);
 			for (PointLinkTime pointLink : points) {
 				Pose2d pose = pointLink.getPose();
 				Translation2d point = pointLink.getPose().getTranslation();
-				writer.write(String.format("%f,%f,%f%n,%f", point.getY() * -39.37, point.getX() * 39.37, pose.getRotation().getDegrees(), pointLink.getTime()));
+				writer.write(String.format("%f,%f,%f,%f%n", -point.getY(), point.getX(), pose.getRotation().getDegrees(), pointLink.getTime()));
 			}
 		} catch (IOException writeException) {
 			writeException.printStackTrace();
@@ -125,7 +126,6 @@ public class Robot extends TimedRobot {
 			points.addLast(new PointLinkTime(pose, 0));
 		} else if (routine instanceof DrivePathRoutine) {
 			var path = (DrivePathRoutine) routine;
-			System.out.println(points.getLast());
 			path.generateTrajectory(points.getLast().getPose());
 			for (Trajectory.State state : path.getTrajectory().getStates()) {
 				var pose = state.poseMeters;
