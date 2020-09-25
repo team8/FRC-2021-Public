@@ -4,10 +4,10 @@ import static com.palyrobotics.frc2020.util.Util.handleDeadBand;
 
 import com.palyrobotics.frc2020.robot.HardwareAdapter.Joysticks;
 import com.palyrobotics.frc2020.subsystems.Intake;
+import com.palyrobotics.frc2020.subsystems.Vision;
 import com.palyrobotics.frc2020.util.control.Limelight;
 import com.palyrobotics.frc2020.util.input.Joystick;
 import com.palyrobotics.frc2020.util.input.XboxController;
-import com.palyrobotics.frc2020.subsystems.Vision;
 
 /**
  * Used to produce {@link Commands}'s from human input. Should only be used in robot package.

@@ -9,8 +9,8 @@ import com.palyrobotics.frc2020.robot.Commands;
 import com.palyrobotics.frc2020.robot.ReadOnly;
 import com.palyrobotics.frc2020.robot.RobotState;
 import com.palyrobotics.frc2020.subsystems.SubsystemBase;
-import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.subsystems.Vision;
+import com.palyrobotics.frc2020.util.config.Configs;
 
 public class DriveAlignYawAssistedRoutine extends DriveYawRoutine {
 

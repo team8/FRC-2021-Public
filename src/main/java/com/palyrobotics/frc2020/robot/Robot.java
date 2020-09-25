@@ -18,6 +18,7 @@ import com.palyrobotics.frc2020.behavior.routines.drive.DrivePathRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DriveSetOdometryRoutine;
 import com.palyrobotics.frc2020.config.RobotConfig;
 import com.palyrobotics.frc2020.subsystems.*;
+import com.palyrobotics.frc2020.subsystems.Vision;
 import com.palyrobotics.frc2020.util.LoopOverrunDebugger;
 import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.commands.CommandReceiverService;
@@ -27,7 +28,6 @@ import com.palyrobotics.frc2020.util.dashboard.LiveGraph;
 import com.palyrobotics.frc2020.util.service.NetworkLoggerService;
 import com.palyrobotics.frc2020.util.service.RobotService;
 import com.palyrobotics.frc2020.util.service.TelemetryService;
-import com.palyrobotics.frc2020.subsystems.Vision;
 
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.TimedRobot;

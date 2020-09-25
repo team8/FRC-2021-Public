@@ -65,6 +65,7 @@ public class HardwareAdapter {
 	}
 
 	static class VisionHardware {
+
 		private static VisionHardware sInstance;
 
 		final Limelight limelight = new Limelight();
