@@ -8,6 +8,7 @@ import com.esotericsoftware.minlog.Log;
 import com.palyrobotics.frc2020.config.RobotConfig;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.DriveHardware;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.IntakeHardware;
+import com.palyrobotics.frc2020.robot.HardwareAdapter.VisionHardware;
 import com.palyrobotics.frc2020.subsystems.Drive;
 import com.palyrobotics.frc2020.subsystems.Intake;
 import com.palyrobotics.frc2020.subsystems.SubsystemBase;
@@ -105,11 +106,11 @@ public class HardwareReader {
 	}
 
 	private void readVisionState(RobotState state) {
-		var vision = Vision.getInstance(); // not how our architecture works but I believe it must be done
+		var hardware = VisionHardware.getInstance();
 
-		state.visionCamMode = vision.getCamMode();
-		state.visionPipeline = vision.getPipeline();
-		state.visionTargetDistanceInches = vision.getVisionTargetInches();
+		state.visionCamMode = hardware.limelight.getCamMode();
+		state.visionPipeline = hardware.limelight.getPipeline();
+		state.visionTargetDistanceInches = hardware.limelight.getEstimatedDistanceInches();
 	}
 
 	private void checkTalonFaults(Talon talon) {

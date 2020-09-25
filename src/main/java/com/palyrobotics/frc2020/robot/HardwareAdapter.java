@@ -7,6 +7,7 @@ import com.palyrobotics.frc2020.config.PortConstants;
 import com.palyrobotics.frc2020.config.subsystem.IntakeConfig;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.Falcon;
+import com.palyrobotics.frc2020.util.control.Limelight;
 import com.palyrobotics.frc2020.util.control.Talon;
 import com.palyrobotics.frc2020.util.control.TimedSolenoid;
 import com.palyrobotics.frc2020.util.input.Joystick;
@@ -59,6 +60,19 @@ public class HardwareAdapter {
 
 		static IntakeHardware getInstance() {
 			if (sInstance == null) sInstance = new IntakeHardware();
+			return sInstance;
+		}
+	}
+
+	static class VisionHardware {
+		private static VisionHardware sInstance;
+
+		final Limelight limelight = new Limelight();
+
+		private VisionHardware() {
+		}
+
+		static VisionHardware getInstance() {
 			return sInstance;
 		}
 	}

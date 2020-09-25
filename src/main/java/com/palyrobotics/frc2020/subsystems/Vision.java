@@ -15,7 +15,9 @@ public class Vision extends SubsystemBase {
 
 	private static final Vision sInstance = new Vision();
 
-	private Limelight mLimelight = new Limelight();
+	private LedMode wantedLEDMode;
+	private CamMode wantedCamMode;
+	private int wantedPipeline;
 
 	private Vision() {
 	}
@@ -27,25 +29,25 @@ public class Vision extends SubsystemBase {
 	@Override
 	public void update(Commands commands, RobotState state) {
 		if (commands.visionWanted) {
-			mLimelight.setCamMode(LimelightControlMode.CamMode.VISION);
-			mLimelight.setLEDMode(LimelightControlMode.LedMode.FORCE_ON);
+			wantedCamMode = LimelightControlMode.CamMode.VISION;
+			wantedLEDMode = LimelightControlMode.LedMode.FORCE_ON;
 		} else {
-			mLimelight.setCamMode(LimelightControlMode.CamMode.DRIVER);
-			mLimelight.setLEDMode(LimelightControlMode.LedMode.FORCE_OFF);
+			wantedCamMode = LimelightControlMode.CamMode.DRIVER;
+			wantedLEDMode = LimelightControlMode.LedMode.FORCE_OFF;
 		}
 
-		mLimelight.setPipeline(commands.visionWantedPipeline);
-	}
-
-	public double getVisionTargetInches() {
-		return mLimelight.getEstimatedDistanceInches();
+		wantedPipeline = commands.visionWantedPipeline;
 	}
 
 	public int getPipeline() {
-		return mLimelight.getPipeline();
+		return wantedPipeline;
 	}
 
 	public CamMode getCamMode() {
-		return mLimelight.getCamMode();
+		return wantedCamMode;
+	}
+
+	public LedMode getLEDMode() {
+		return wantedLEDMode;
 	}
 }
