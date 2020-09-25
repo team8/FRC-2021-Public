@@ -63,8 +63,8 @@ public class AlignDriveController extends ChezyDriveController {
 		if (state.driveIsGyroReady) {
 			double gyroYawDegrees = state.driveYawDegrees;
 			double gyroYawAngularVelocity = state.driveYawAngularVelocityDegrees;
-			if (mLimelight.isTargetFound()) {
-				double visionYawToTargetDegrees = mLimelight.getYawToTarget();
+			if (state.visionTargetAligned) {
+				double visionYawToTargetDegrees = state.visionYawToTarget;
 				mTargetGyroYaw = mTargetYawFilter.calculate(gyroYawDegrees - visionYawToTargetDegrees);
 				mTargetFoundCount++;
 			} else {
@@ -75,8 +75,8 @@ public class AlignDriveController extends ChezyDriveController {
 				return;
 			}
 		} else {
-			if (mLimelight.isTargetFound()) {
-				calculate(0.0, mLimelight.getYawToTarget(), null);
+			if (state.visionTargetFound) {
+				calculate(0.0, state.visionYawToTarget, null);
 			}
 			mTargetFoundCount = 0;
 		}

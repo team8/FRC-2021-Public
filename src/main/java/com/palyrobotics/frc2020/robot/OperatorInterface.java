@@ -1,11 +1,10 @@
 package com.palyrobotics.frc2020.robot;
 
 import static com.palyrobotics.frc2020.util.Util.handleDeadBand;
-import static com.palyrobotics.frc2020.subsystems.Vision.kOneTimesZoomPipelineId;
-import static com.palyrobotics.frc2020.subsystems.Vision.kTwoTimesZoomPipelineId;
 
 import com.palyrobotics.frc2020.robot.HardwareAdapter.Joysticks;
 import com.palyrobotics.frc2020.subsystems.Intake;
+import com.palyrobotics.frc2020.util.control.Limelight;
 import com.palyrobotics.frc2020.util.input.Joystick;
 import com.palyrobotics.frc2020.util.input.XboxController;
 import com.palyrobotics.frc2020.subsystems.Vision;
@@ -46,9 +45,9 @@ public class OperatorInterface {
 				wantsTwoTimesAlign = mTurnStick.getRawButton(kTwoTimesZoomAlignButton);
 		// Vision align overwrites wanted drive state, using teleop commands when no target is in sight
 		if (wantsOneTimesAlign) {
-			commands.setDriveVisionAlign(kOneTimesZoomPipelineId);
+			commands.setDriveVisionAlign(Limelight.kOneTimesZoomPipelineId);
 		} else if (wantsTwoTimesAlign) {
-			commands.setDriveVisionAlign(kTwoTimesZoomPipelineId);
+			commands.setDriveVisionAlign(Limelight.kTwoTimesZoomPipelineId);
 		}
 		/* Path Following */
 //		if (mOperatorXboxController.getBButtonPressed()) {

@@ -27,7 +27,7 @@ public class DriveAlignYawAssistedRoutine extends DriveYawRoutine {
 	protected void update(Commands commands, @ReadOnly RobotState state) {
 		double yawErrorDegrees = getDifferenceInAngleDegrees(state.driveYawDegrees, mTargetYawDegrees);
 		commands.visionWanted = true;
-		if (mLimelight.isTargetFound() && Math.abs(yawErrorDegrees) < mVisionConfig.alignSwitchYawAngleMin) {
+		if (state.visionTargetFound && Math.abs(yawErrorDegrees) < mVisionConfig.alignSwitchYawAngleMin) {
 			commands.setDriveVisionAlign(mVisionPipeline);
 		} else {
 			commands.setDriveYaw(mTargetYawDegrees);
@@ -41,7 +41,7 @@ public class DriveAlignYawAssistedRoutine extends DriveYawRoutine {
 
 	@Override
 	public boolean checkIfFinishedEarly(@ReadOnly RobotState state) {
-		return mLimelight.isAligned();
+		return state.visionTargetAligned;
 	}
 
 	@Override

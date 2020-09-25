@@ -111,6 +111,9 @@ public class HardwareReader {
 		state.visionCamMode = hardware.limelight.getCamMode();
 		state.visionPipeline = hardware.limelight.getPipeline();
 		state.visionTargetDistanceInches = hardware.limelight.getEstimatedDistanceInches();
+		state.visionTargetFound = hardware.limelight.isTargetFound();
+		state.visionTargetAligned = hardware.limelight.isAligned();
+		state.visionYawToTarget = hardware.limelight.getYawToTarget();
 	}
 
 	private void checkTalonFaults(Talon talon) {

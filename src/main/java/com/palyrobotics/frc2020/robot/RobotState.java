@@ -40,6 +40,9 @@ public class RobotState {
 	public double visionTargetDistanceInches;
 	public int visionPipeline;
 	public LimelightControlMode.CamMode visionCamMode;
+	public boolean visionTargetFound;
+	public boolean visionTargetAligned;
+	public double visionYawToTarget;
 
 	public GamePeriod gamePeriod = GamePeriod.DISABLED;
 	public String gameData;
