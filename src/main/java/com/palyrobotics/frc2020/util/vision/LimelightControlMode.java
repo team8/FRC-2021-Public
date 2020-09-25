@@ -1,4 +1,4 @@
-package com.palyrobotics.frc2020.vision;
+package com.palyrobotics.frc2020.util.vision;
 
 import java.util.HashMap;
 import java.util.Map;

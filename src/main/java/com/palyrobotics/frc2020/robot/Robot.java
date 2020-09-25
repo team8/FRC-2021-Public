@@ -27,8 +27,8 @@ import com.palyrobotics.frc2020.util.dashboard.LiveGraph;
 import com.palyrobotics.frc2020.util.service.NetworkLoggerService;
 import com.palyrobotics.frc2020.util.service.RobotService;
 import com.palyrobotics.frc2020.util.service.TelemetryService;
-import com.palyrobotics.frc2020.vision.Limelight;
-import com.palyrobotics.frc2020.vision.LimelightControlMode;
+import com.palyrobotics.frc2020.util.vision.Limelight;
+import com.palyrobotics.frc2020.util.vision.LimelightControlMode;
 
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.TimedRobot;

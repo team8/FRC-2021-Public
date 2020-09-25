@@ -1,10 +1,10 @@
-package com.palyrobotics.frc2020.vision;
+package com.palyrobotics.frc2020.util.vision;
 
 import com.esotericsoftware.minlog.Log;
 import com.palyrobotics.frc2020.config.VisionConfig;
 import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.config.Configs;
-import com.palyrobotics.frc2020.vision.LimelightControlMode.*;
+import com.palyrobotics.frc2020.util.vision.LimelightControlMode.*;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;

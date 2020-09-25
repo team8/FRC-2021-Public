@@ -7,7 +7,7 @@ import com.palyrobotics.frc2020.robot.RobotState;
 import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.SynchronousPIDF;
-import com.palyrobotics.frc2020.vision.Limelight;
+import com.palyrobotics.frc2020.util.vision.Limelight;
 
 import edu.wpi.first.wpilibj.MedianFilter;
 
