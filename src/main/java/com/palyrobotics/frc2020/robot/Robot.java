@@ -27,8 +27,8 @@ import com.palyrobotics.frc2020.util.dashboard.LiveGraph;
 import com.palyrobotics.frc2020.util.service.NetworkLoggerService;
 import com.palyrobotics.frc2020.util.service.RobotService;
 import com.palyrobotics.frc2020.util.service.TelemetryService;
-import com.palyrobotics.frc2020.util.vision.Limelight;
-import com.palyrobotics.frc2020.util.vision.LimelightControlMode;
+import com.palyrobotics.frc2020.subsystems.Limelight;
+import com.palyrobotics.frc2020.util.LimelightControlMode;
 
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -56,11 +56,11 @@ public class Robot extends TimedRobot {
 	private final Drive mDrive = Drive.getInstance();
 	private final Intake mIntake = Intake.getInstance();
 
-	private Set<SubsystemBase> mSubsystems = Set.of(mDrive, mIntake),
-			mEnabledSubsystems;
-	private Set<RobotService> mServices = Set.of(new CommandReceiverService(), new NetworkLoggerService(),
-			new TelemetryService()),
-			mEnabledServices;
+	private final Set<SubsystemBase> mSubsystems = Set.of(mDrive, mIntake);
+	private Set<SubsystemBase> mEnabledSubsystems;
+	private final Set<RobotService> mServices = Set.of(new CommandReceiverService(), new NetworkLoggerService(),
+			new TelemetryService());
+	private Set<RobotService> mEnabledServices;
 
 	public static final LoopOverrunDebugger sLoopDebugger = new LoopOverrunDebugger("teleop", kPeriod);
 

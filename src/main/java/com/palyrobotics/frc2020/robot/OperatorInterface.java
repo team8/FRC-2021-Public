@@ -1,14 +1,14 @@
 package com.palyrobotics.frc2020.robot;
 
 import static com.palyrobotics.frc2020.util.Util.handleDeadBand;
-import static com.palyrobotics.frc2020.util.vision.Limelight.kOneTimesZoomPipelineId;
-import static com.palyrobotics.frc2020.util.vision.Limelight.kTwoTimesZoomPipelineId;
+import static com.palyrobotics.frc2020.subsystems.Limelight.kOneTimesZoomPipelineId;
+import static com.palyrobotics.frc2020.subsystems.Limelight.kTwoTimesZoomPipelineId;
 
 import com.palyrobotics.frc2020.robot.HardwareAdapter.Joysticks;
 import com.palyrobotics.frc2020.subsystems.Intake;
 import com.palyrobotics.frc2020.util.input.Joystick;
 import com.palyrobotics.frc2020.util.input.XboxController;
-import com.palyrobotics.frc2020.util.vision.Limelight;
+import com.palyrobotics.frc2020.subsystems.Limelight;
 
 /**
  * Used to produce {@link Commands}'s from human input. Should only be used in robot package.
@@ -19,7 +19,7 @@ public class OperatorInterface {
 	public static final int kOnesTimesZoomAlignButton = 3, kTwoTimesZoomAlignButton = 4;
 	private final Joystick mDriveStick = Joysticks.getInstance().driveStick,
 			mTurnStick = Joysticks.getInstance().turnStick;
-	private Limelight mLimelight = Limelight.getInstance();
+	private final Limelight mLimelight = Limelight.getInstance();
 	private final XboxController mOperatorXboxController = Joysticks.getInstance().operatorXboxController;
 
 	/**

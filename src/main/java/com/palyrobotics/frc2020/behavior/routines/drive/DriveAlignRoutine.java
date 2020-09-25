@@ -9,7 +9,7 @@ import com.palyrobotics.frc2020.robot.ReadOnly;
 import com.palyrobotics.frc2020.robot.RobotState;
 import com.palyrobotics.frc2020.subsystems.SubsystemBase;
 import com.palyrobotics.frc2020.util.config.Configs;
-import com.palyrobotics.frc2020.util.vision.Limelight;
+import com.palyrobotics.frc2020.subsystems.Limelight;
 
 public class DriveAlignRoutine extends TimeoutRoutineBase {
 

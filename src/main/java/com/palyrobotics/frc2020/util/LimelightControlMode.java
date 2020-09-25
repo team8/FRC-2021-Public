@@ -1,4 +1,4 @@
-package com.palyrobotics.frc2020.util.vision;
+package com.palyrobotics.frc2020.util;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +17,7 @@ public class LimelightControlMode {
 			}
 		}
 
-		private double value;
+		private final double value;
 
 		LedMode(double value) {
 			this.value = value;
@@ -49,7 +49,7 @@ public class LimelightControlMode {
 			}
 		}
 
-		private double value;
+		private final double value;
 
 		CamMode(double value) {
 			this.value = value;
@@ -81,7 +81,7 @@ public class LimelightControlMode {
 			}
 		}
 
-		private double value;
+		private final double value;
 
 		StreamType(double value) {
 			this.value = value;
@@ -113,7 +113,7 @@ public class LimelightControlMode {
 			}
 		}
 
-		private double value;
+		private final double value;
 
 		Snapshot(double value) {
 			this.value = value;
@@ -145,7 +145,7 @@ public class LimelightControlMode {
 			}
 		}
 
-		private Integer value;
+		private final Integer value;
 
 		AdvancedTarget(Integer value) {
 			this.value = value;
@@ -177,7 +177,7 @@ public class LimelightControlMode {
 			}
 		}
 
-		private Integer value;
+		private final Integer value;
 
 		AdvancedCrosshair(Integer value) {
 			this.value = value;
