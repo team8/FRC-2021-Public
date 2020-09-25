@@ -44,7 +44,6 @@ public class Robot extends TimedRobot {
 	private static final String kLoggerTag = Util.classToJsonName(Robot.class);
 	private static final boolean kCanUseHardware = RobotBase.isReal() || !System.getProperty("os.name").startsWith("Mac");
 	private final RobotState mRobotState = new RobotState();
-	private final Limelight mLimelight = Limelight.getInstance();
 	private final RobotConfig mConfig = Configs.get(RobotConfig.class);
 	private final OperatorInterface mOperatorInterface = new OperatorInterface();
 	private final RoutineManager mRoutineManager = new RoutineManager();
@@ -55,6 +54,7 @@ public class Robot extends TimedRobot {
 	/* Subsystems */
 	private final Drive mDrive = Drive.getInstance();
 	private final Intake mIntake = Intake.getInstance();
+	private final Limelight mLimelight = Limelight.getInstance();
 
 	private final Set<SubsystemBase> mSubsystems = Set.of(mDrive, mIntake);
 	private Set<SubsystemBase> mEnabledSubsystems;
