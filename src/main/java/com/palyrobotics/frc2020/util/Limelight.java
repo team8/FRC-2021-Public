@@ -1,8 +1,8 @@
-package com.palyrobotics.frc2020.subsystems;
+package com.palyrobotics.frc2020.util;
 
 import com.esotericsoftware.minlog.Log;
 import com.palyrobotics.frc2020.config.VisionConfig;
-import com.palyrobotics.frc2020.util.Util;
+import com.palyrobotics.frc2020.subsystems.Vision;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.LimelightControlMode.*;
 
@@ -14,22 +14,17 @@ import edu.wpi.first.wpilibj.XboxController;
 /**
  * Wrapper around the Limelight's network tables
  */
-public class Limelight2 {
+public class Limelight {
 
     public static final int kOneTimesZoomPipelineId = 0, kTwoTimesZoomPipelineId = 1;
-    private static final String kLoggerTag = Util.classToJsonName(Limelight.class);
+    private static final String kLoggerTag = Util.classToJsonName(Vision.class);
     private static final NetworkTableInstance sNetworkTableInstance = NetworkTableInstance.getDefault();
     private static final VisionConfig kVisionConfig = Configs.get(VisionConfig.class);
 
-    private static final Limelight sInstance = new Limelight();
     private final NetworkTable mTable;
 
-    public Limelight2() {
+    public Limelight() {
         mTable = sNetworkTableInstance.getTable("limelight");
-    }
-
-    public static Limelight getInstance() {
-        return sInstance;
     }
 
     /**

@@ -10,12 +10,12 @@ import com.palyrobotics.frc2020.robot.ReadOnly;
 import com.palyrobotics.frc2020.robot.RobotState;
 import com.palyrobotics.frc2020.subsystems.SubsystemBase;
 import com.palyrobotics.frc2020.util.config.Configs;
-import com.palyrobotics.frc2020.subsystems.Limelight;
+import com.palyrobotics.frc2020.subsystems.Vision;
 
 public class DriveAlignYawAssistedRoutine extends DriveYawRoutine {
 
 	private final VisionConfig mVisionConfig = Configs.get(VisionConfig.class);
-	private final Limelight mLimelight = Limelight.getInstance();
+	private final Vision mLimelight = Vision.getInstance();
 	private final int mVisionPipeline;
 
 	public DriveAlignYawAssistedRoutine(double yawDegrees, int visionPipeline) {

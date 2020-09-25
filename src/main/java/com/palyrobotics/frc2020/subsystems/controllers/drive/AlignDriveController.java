@@ -7,7 +7,7 @@ import com.palyrobotics.frc2020.robot.RobotState;
 import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.SynchronousPIDF;
-import com.palyrobotics.frc2020.subsystems.Limelight;
+import com.palyrobotics.frc2020.subsystems.Vision;
 
 import edu.wpi.first.wpilibj.MedianFilter;
 
@@ -15,7 +15,7 @@ public class AlignDriveController extends ChezyDriveController {
 
 	private static final String kLoggerTag = Util.classToJsonName(AlignDriveController.class);
 	public static final int kFilterSize = 3;
-	private final Limelight mLimelight = Limelight.getInstance();
+	private final Vision mLimelight = Vision.getInstance();
 	private final SynchronousPIDF mPidController = new SynchronousPIDF();
 	private final VisionConfig mVisionConfig = Configs.get(VisionConfig.class);
 	private final MedianFilter mTargetYawFilter = new MedianFilter(kFilterSize);

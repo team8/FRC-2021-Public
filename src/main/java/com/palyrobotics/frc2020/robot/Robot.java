@@ -27,7 +27,7 @@ import com.palyrobotics.frc2020.util.dashboard.LiveGraph;
 import com.palyrobotics.frc2020.util.service.NetworkLoggerService;
 import com.palyrobotics.frc2020.util.service.RobotService;
 import com.palyrobotics.frc2020.util.service.TelemetryService;
-import com.palyrobotics.frc2020.subsystems.Limelight;
+import com.palyrobotics.frc2020.subsystems.Vision;
 import com.palyrobotics.frc2020.util.LimelightControlMode;
 
 import edu.wpi.first.wpilibj.RobotBase;
@@ -54,7 +54,7 @@ public class Robot extends TimedRobot {
 	/* Subsystems */
 	private final Drive mDrive = Drive.getInstance();
 	private final Intake mIntake = Intake.getInstance();
-	private final Limelight mLimelight = Limelight.getInstance();
+	private final Vision mLimelight = Vision.getInstance();
 
 	private final Set<SubsystemBase> mSubsystems = Set.of(mDrive, mIntake);
 	private Set<SubsystemBase> mEnabledSubsystems;
