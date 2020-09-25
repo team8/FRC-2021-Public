@@ -1,4 +1,4 @@
-package com.palyrobotics.frc2020.util;
+package com.palyrobotics.frc2020.util.control;
 
 import java.util.HashMap;
 import java.util.Map;

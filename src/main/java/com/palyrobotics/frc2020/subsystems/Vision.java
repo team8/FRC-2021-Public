@@ -2,13 +2,9 @@ package com.palyrobotics.frc2020.subsystems;
 
 import com.palyrobotics.frc2020.robot.Commands;
 import com.palyrobotics.frc2020.robot.RobotState;
-import com.palyrobotics.frc2020.util.Limelight;
-import com.palyrobotics.frc2020.util.LimelightControlMode;
-import com.palyrobotics.frc2020.util.LimelightControlMode.*;
-
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
+import com.palyrobotics.frc2020.util.control.Limelight;
+import com.palyrobotics.frc2020.util.control.LimelightControlMode;
+import com.palyrobotics.frc2020.util.control.LimelightControlMode.*;
 
 /**
  * No longer a wrapper around the Limelight network tables, now it is a full on subsystem.
