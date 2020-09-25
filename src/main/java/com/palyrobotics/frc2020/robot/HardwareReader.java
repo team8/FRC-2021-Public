@@ -11,6 +11,7 @@ import com.palyrobotics.frc2020.robot.HardwareAdapter.IntakeHardware;
 import com.palyrobotics.frc2020.subsystems.Drive;
 import com.palyrobotics.frc2020.subsystems.Intake;
 import com.palyrobotics.frc2020.subsystems.SubsystemBase;
+import com.palyrobotics.frc2020.subsystems.Vision;
 import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.Falcon;
@@ -41,6 +42,7 @@ public class HardwareReader {
 		Robot.sLoopDebugger.addPoint("readGameAndFieldState");
 		if (enabledSubsystems.contains(Drive.getInstance())) readDriveState(state);
 		if (enabledSubsystems.contains(Intake.getInstance())) readIntakeState(state);
+		if (enabledSubsystems.contains(Vision.getInstance())) readVisionState(state);
 		Robot.sLoopDebugger.addPoint("readDrive");
 	}
 
@@ -100,6 +102,14 @@ public class HardwareReader {
 		var hardware = IntakeHardware.getInstance();
 		state.intakeExtended = hardware.solenoid.get();
 		state.intakeTransitioning = hardware.solenoid.isInTransition();
+	}
+
+	private void readVisionState(RobotState state) {
+		var vision = Vision.getInstance(); // not how our architecture works but I believe it must be done
+
+		state.visionCamMode = vision.getCamMode();
+		state.visionPipeline = vision.getPipeline();
+		state.visionTargetDistanceInches = vision.getVisionTargetInches();
 	}
 
 	private void checkTalonFaults(Talon talon) {

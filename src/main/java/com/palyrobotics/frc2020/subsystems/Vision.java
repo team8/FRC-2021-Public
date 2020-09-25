@@ -41,7 +41,7 @@ public class Vision extends SubsystemBase {
 		mLimelight.setPipeline(commands.visionWantedPipeline);
 	}
 
-	public double getDistanceInches() {
+	public double getVisionTargetInches() {
 		return mLimelight.getEstimatedDistanceInches();
 	}
 

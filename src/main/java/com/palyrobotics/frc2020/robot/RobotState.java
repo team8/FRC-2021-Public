@@ -2,6 +2,7 @@ package com.palyrobotics.frc2020.robot;
 
 import com.esotericsoftware.minlog.Log;
 import com.palyrobotics.frc2020.config.constants.DriveConstants;
+import com.palyrobotics.frc2020.util.LimelightControlMode;
 import com.palyrobotics.frc2020.util.Util;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -34,6 +35,11 @@ public class RobotState {
 	/* Intake */
 	public boolean intakeExtended;
 	public boolean intakeTransitioning;
+
+	/* Vision */
+	public double visionTargetDistanceInches;
+	public int visionPipeline;
+	public LimelightControlMode.CamMode visionCamMode;
 
 	public GamePeriod gamePeriod = GamePeriod.DISABLED;
 	public String gameData;

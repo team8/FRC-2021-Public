@@ -28,7 +28,6 @@ import com.palyrobotics.frc2020.util.service.NetworkLoggerService;
 import com.palyrobotics.frc2020.util.service.RobotService;
 import com.palyrobotics.frc2020.util.service.TelemetryService;
 import com.palyrobotics.frc2020.subsystems.Vision;
-import com.palyrobotics.frc2020.util.LimelightControlMode;
 
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -173,7 +172,7 @@ public class Robot extends TimedRobot {
 		for (RobotService robotService : mEnabledServices) {
 			robotService.update(mRobotState, mCommands);
 		}
-		LiveGraph.add("visionEstimatedDistance", mLimelight.getEstimatedDistanceInches());
+		LiveGraph.add("visionEstimatedDistance", mRobotState.visionTargetDistanceInches);
 		LiveGraph.add("isEnabled", isEnabled());
 		mOperatorInterface.resetPeriodic(mCommands);
 	}
@@ -185,7 +184,10 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledPeriodic() {
-		updateVision(mConfig.enableVisionWhenDisabled, mConfig.visionPipelineWhenDisabled);
+		mCommands.visionWanted = mConfig.enableVisionWhenDisabled;
+		mCommands.visionWantedPipeline = mConfig.visionPipelineWhenDisabled;
+		// The code below is what it was before the architecture changes
+//		updateVision(mConfig.enableVisionWhenDisabled, mConfig.visionPipelineWhenDisabled);
 	}
 
 	@Override
@@ -244,7 +246,6 @@ public class Robot extends TimedRobot {
 		if (kCanUseHardware) {
 			mHardwareWriter.writeHardware(mEnabledSubsystems, mRobotState);
 		}
-		updateVision(mCommands.visionWanted, mCommands.visionWantedPipeline);
 		updateCompressor();
 		sLoopDebugger.addPoint("updateSubsystemsAndApplyOutputs");
 	}
@@ -256,17 +257,6 @@ public class Robot extends TimedRobot {
 		} else {
 			compressor.stop();
 		}
-	}
-
-	private void updateVision(boolean visionWanted, int visionPipeline) {
-		if (visionWanted) {
-			mLimelight.setCamMode(LimelightControlMode.CamMode.VISION);
-			mLimelight.setLEDMode(LimelightControlMode.LedMode.FORCE_ON);
-		} else {
-			mLimelight.setCamMode(LimelightControlMode.CamMode.DRIVER);
-			mLimelight.setLEDMode(LimelightControlMode.LedMode.FORCE_OFF);
-		}
-		mLimelight.setPipeline(visionPipeline);
 	}
 
 	private String setupSubsystemsAndServices() {
