@@ -96,6 +96,7 @@ public class Robot extends TimedRobot {
 	}
 
 	private void pathToCsv() {
+		//Fix random 0s at a certain point (due to rotation)?
 		// Todo: figure out some way to use trajectory instead of getting auto routine
 		try (var writer = new PrintWriter(new BufferedWriter(new FileWriter("auto.csv")))) {
 			RoutineBase drivePath = AutoSelector.getAuto().getRoutine();
