@@ -46,7 +46,6 @@ public class HardwareWriter {
 	private final Lighting mLighting = Lighting.getInstance();
 	private final Indexer mIndexer = Indexer.getInstance();
 	private final Shooter mShooter = Shooter.getInstance();
-	private final Indexer mIndexer = Indexer.getInstance();
 	private boolean mRumbleOutput;
 
 	void configureHardware(Set<SubsystemBase> enabledSubsystems) {
