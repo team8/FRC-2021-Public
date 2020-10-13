@@ -85,10 +85,11 @@ public class HardwareAdapter {
 			return sInstance;
 		}
 	}
+
 	/*
-	 * 2 NEOs (controlled by Spark MAX) for indexer tower, 2 775s (controlled by Talon SRX) for v belts,
-	 * 2 Single Solenoids, 2 Infrared Sensors
-	 */
+	* 2 NEOs (controlled by Spark MAX) for indexer tower, 2 775s (controlled by Talon SRX) for v belts,
+	* 2 Single Solenoids, 2 Infrared Sensors
+	*/
 	static class IndexerHardware {
 
 		private static IndexerHardware sInstance;
