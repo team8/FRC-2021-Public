@@ -8,6 +8,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.transforms as mtransforms
 
+#round times to nearest smth seconds then run so as to have a stable refresh rate
 
 img = mpimg.imread("C:/Users/Nolan/Downloads/Image Download/infiniteRechargeFieldCrop2Vert.png")
 print("image gotten")

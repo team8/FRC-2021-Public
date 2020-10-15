@@ -115,6 +115,7 @@ public class Robot extends TimedRobot {
 
 	private void recurseRoutine(RoutineBase routine, Deque<PointLinkTime> points) {
 		//Todo: Test
+		//TODO: remove instanceof in code
 		if (routine instanceof MultipleRoutineBase) {
 			var multiple = (MultipleRoutineBase) routine;
 			for (RoutineBase childRoutine : multiple.getRoutines()) {
@@ -134,6 +135,7 @@ public class Robot extends TimedRobot {
 				points.addLast(new PointLinkTime(pose, time));
 			}
 		}
+		//TODO: figure out how to add wait time for other routines
 	}
 
 	@Override
