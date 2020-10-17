@@ -142,7 +142,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.FRC-2021-Private [build]">
+  <component name="RunManager" selected="Gradle.FRC-2021-Private [spotlessJavaApply]">
     <configuration name="RobotStarter" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.palyrobotics.frc2021.robot.RobotStarter" />
       <module name="FRC-2021-Private.main" />
@@ -234,8 +234,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.FRC-2021-Private [build]" />
         <item itemvalue="Gradle.FRC-2021-Private [spotlessJavaApply]" />
+        <item itemvalue="Gradle.FRC-2021-Private [build]" />
         <item itemvalue="Gradle.FRC-2021-Private [test]" />
         <item itemvalue="Application.RobotStarter" />
         <item itemvalue="Gradle.FRC-2021-Private [deploy]" />

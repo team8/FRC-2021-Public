@@ -135,7 +135,6 @@ public class Talon extends TalonSRX implements Controller {
 		return mController.setOutput(output);
 	}
 
-
 	/**
 	 * @param positionConversion Units per native encoder ticks
 	 */

@@ -1,8 +1,8 @@
 package com.palyrobotics.frc2020.subsystems;
 
+import static com.palyrobotics.frc2020.config.constants.ShooterConstants.*;
 import static com.palyrobotics.frc2020.config.constants.ShooterConstants.kTargetDistanceToHoodState;
 import static com.palyrobotics.frc2020.config.constants.ShooterConstants.kTargetDistanceToVelocity;
-import static com.palyrobotics.frc2020.config.constants.ShooterConstants.*;
 import static com.palyrobotics.frc2020.util.Util.clamp;
 
 import java.util.Map;
@@ -15,7 +15,6 @@ import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.ControllerOutput;
 import com.palyrobotics.frc2020.vision.Limelight;
 
-import static com.palyrobotics.frc2020.config.constants.ShooterConstants.*;
 import edu.wpi.first.wpilibj.Timer;
 
 public class Shooter extends SubsystemBase {

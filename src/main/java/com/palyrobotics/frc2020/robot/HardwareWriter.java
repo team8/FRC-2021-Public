@@ -16,8 +16,6 @@ import com.palyrobotics.frc2020.config.constants.DriveConstants;
 import com.palyrobotics.frc2020.config.subsystem.IndexerConfig;
 import com.palyrobotics.frc2020.robot.RobotState.GamePeriod;
 import com.palyrobotics.frc2020.subsystems.Drive;
-import com.palyrobotics.frc2020.subsystems.Shooter;
-import com.palyrobotics.frc2020.subsystems.Intake;
 import com.palyrobotics.frc2020.subsystems.Indexer;
 import com.palyrobotics.frc2020.subsystems.Intake;
 import com.palyrobotics.frc2020.subsystems.Shooter;

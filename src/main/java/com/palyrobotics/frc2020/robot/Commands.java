@@ -5,17 +5,12 @@ import java.util.List;
 
 import com.palyrobotics.frc2020.behavior.RoutineBase;
 import com.palyrobotics.frc2020.subsystems.Drive;
-
-import com.palyrobotics.frc2020.subsystems.Shooter;
-import com.palyrobotics.frc2020.subsystems.Turret;
-import com.palyrobotics.frc2020.util.control.DriveOutputs;
-
-import com.palyrobotics.frc2020.vision.Limelight;
-import com.palyrobotics.frc2020.subsystems.Intake;
 import com.palyrobotics.frc2020.subsystems.Indexer;
 import com.palyrobotics.frc2020.subsystems.Intake;
 import com.palyrobotics.frc2020.subsystems.Shooter;
+import com.palyrobotics.frc2020.subsystems.Turret;
 import com.palyrobotics.frc2020.util.control.DriveOutputs;
+import com.palyrobotics.frc2020.vision.Limelight;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
@@ -210,6 +205,7 @@ public class Commands {
 	public double getTurretWantedAngle() {
 		return turretWantedAngle;
 	}
+
 	public void setIntakeRunning(double intakeWantedPo) {
 		intakeWantedState = Intake.State.RUNNING;
 		this.intakeWantedPo = intakeWantedPo;

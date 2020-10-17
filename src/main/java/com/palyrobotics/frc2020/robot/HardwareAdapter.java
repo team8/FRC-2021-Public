@@ -3,7 +3,6 @@ package com.palyrobotics.frc2020.robot;
 import java.util.List;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
-
 import com.palyrobotics.frc2020.config.PortConstants;
 import com.palyrobotics.frc2020.config.subsystem.IntakeConfig;
 import com.palyrobotics.frc2020.config.subsystem.ShooterConfig;
@@ -20,7 +19,6 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Solenoid;
-
 
 /**
  * Represents all hardware components of the robot. Singleton class. Should only be used in robot
@@ -88,9 +86,9 @@ public class HardwareAdapter {
 	}
 
 	/*
-	 * 2 NEOs (controlled by Spark MAX) for indexer tower, 2 775s (controlled by Talon SRX) for v belts,
-	 * 2 Single Solenoids, 2 Infrared Sensors
-	 */
+	* 2 NEOs (controlled by Spark MAX) for indexer tower, 2 775s (controlled by Talon SRX) for v belts,
+	* 2 Single Solenoids, 2 Infrared Sensors
+	*/
 	static class IndexerHardware {
 
 		private static IndexerHardware sInstance;

@@ -9,12 +9,8 @@ import com.palyrobotics.frc2020.config.RobotConfig;
 import com.palyrobotics.frc2020.config.VisionConfig;
 import com.palyrobotics.frc2020.config.constants.FieldConstants;
 import com.palyrobotics.frc2020.config.subsystem.DriveConfig;
-import com.palyrobotics.frc2020.robot.HardwareAdapter.*;
-import com.palyrobotics.frc2020.subsystems.Drive;
-import com.palyrobotics.frc2020.subsystems.Shooter;
-import com.palyrobotics.frc2020.subsystems.SubsystemBase;
-import com.palyrobotics.frc2020.subsystems.Turret;
 import com.palyrobotics.frc2020.config.subsystem.IntakeConfig;
+import com.palyrobotics.frc2020.robot.HardwareAdapter.*;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.DriveHardware;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.IntakeHardware;
 import com.palyrobotics.frc2020.subsystems.Drive;
@@ -22,6 +18,7 @@ import com.palyrobotics.frc2020.subsystems.Indexer;
 import com.palyrobotics.frc2020.subsystems.Intake;
 import com.palyrobotics.frc2020.subsystems.Shooter;
 import com.palyrobotics.frc2020.subsystems.SubsystemBase;
+import com.palyrobotics.frc2020.subsystems.Turret;
 import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.Falcon;
@@ -38,10 +35,6 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.util.Units;
-import com.revrobotics.CANSparkMax.FaultID;
-
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Timer;
 
 public class HardwareReader {
 
@@ -110,8 +103,7 @@ public class HardwareReader {
 					FieldConstants.fieldDimensions.getX() - metersPnPTranslationY,
 					metersPnPTranslationX + FieldConstants.targetFieldLocation.getY()); //todo: maybe account for limelight and drivetrain pose offset
 			state.driveVisionPoseMeters = new Pose2d(visionRobotTranslation, Rotation2d.fromDegrees(state.driveYawDegrees)); //todo: try to derive rotation through vision.
-		}
-		else {
+		} else {
 			state.driveVisionPoseMeters = null;
 		}
 		state.updateOdometry(state.driveYawDegrees, state.driveLeftPosition, state.driveRightPosition);

@@ -19,7 +19,6 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 @SuppressWarnings ("java:S1104")
 public class RobotState {
 
-
 	public enum GamePeriod {
 		AUTO, TELEOP, TESTING, DISABLED
 	}
