@@ -13,27 +13,27 @@ import com.palyrobotics.frc2020.util.config.Configs;
 
 public class SpinnerRotationControlRoutine extends RoutineBase {
 
-	private int colorsSeen;
-	private String previousColor;
+	private int mColorsSeenCounter;
+	private String mPreviousColor;
 	private final SpinnerConfig mConfig = Configs.get(SpinnerConfig.class);
 
 	@Override
 	public void start(Commands commands, @ReadOnly RobotState state) {
-		commands.spinnerWantedState = Spinner.State.SPINNING_RIGHT;
-		colorsSeen = 0;
+		commands.spinnerWantedState = Spinner.State.SPIN_RIGHT;
+		mColorsSeenCounter = 0;
 	}
 
 	@Override
 	public boolean checkFinished(RobotState state) {
-		return colorsSeen > mConfig.spinnerRotationColorsPassed;
+		return mColorsSeenCounter > mConfig.spinnerRotationColorsPassed;
 	}
 
 	@Override
 	protected void update(Commands commands, @ReadOnly RobotState state) {
-		if (!state.spinnerDetectedColor.equals(previousColor)) {
-			colorsSeen++;
+		if (!state.spinnerDetectedColor.equals(mPreviousColor)) {
+			mColorsSeenCounter++;
 		}
-		previousColor = state.spinnerDetectedColor;
+		mPreviousColor = state.spinnerDetectedColor;
 	}
 
 	@Override

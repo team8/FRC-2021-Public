@@ -12,28 +12,23 @@ import com.palyrobotics.frc2020.subsystems.SubsystemBase;
 
 public class SpinnerPositionControlRoutine extends RoutineBase {
 
-	private String goalColor;
-	private Spinner.State direction;
+	private String mGoalColor;
+	private Spinner.State mDirection;
 
 	@Override
 	public void start(Commands commands, @ReadOnly RobotState state) {
-		goalColor = state.gameData;
-		direction = spinningDirection(state.spinnerDetectedColor, goalColor);
-		commands.spinnerWantedState = direction;
+		mGoalColor = state.gameData;
+		mDirection = spinningDirection(state.spinnerDetectedColor, mGoalColor);
+		commands.spinnerWantedState = mDirection;
 	}
 
 	@Override
 	public boolean checkFinished(RobotState state) {
-		return goalColor.equals(state.spinnerDetectedColor);
+		return mGoalColor.equals(state.spinnerDetectedColor);
 	}
 
 	@Override
 	protected void update(Commands commands, @ReadOnly RobotState state) {
-		if (!state.spinnerDetectedColor.equals(goalColor)) {
-			commands.spinnerWantedState = direction;
-		} else {
-			commands.spinnerWantedState = Spinner.State.IDLE;
-		}
 	}
 
 	@Override
@@ -49,11 +44,9 @@ public class SpinnerPositionControlRoutine extends RoutineBase {
 	private Spinner.State spinningDirection(String currentColor, String wantedColor) {
 		int distance = SpinnerConstants.colorOrder.indexOf(currentColor) - SpinnerConstants.colorOrder.indexOf(wantedColor);
 		if (distance < 0) {
-			if (Math.abs(distance) > SpinnerConstants.colorOrder.size() / 2) return Spinner.State.SPINNING_LEFT;
-			else return Spinner.State.SPINNING_RIGHT;
+			return (Math.abs(distance) > SpinnerConstants.colorOrder.size() / 2) ? Spinner.State.SPIN_LEFT : Spinner.State.SPIN_RIGHT;
 		} else {
-			if (distance > SpinnerConstants.colorOrder.size() / 2) return Spinner.State.SPINNING_RIGHT;
-			else return Spinner.State.SPINNING_LEFT;
+			return (distance > SpinnerConstants.colorOrder.size() / 2) ? Spinner.State.SPIN_RIGHT : Spinner.State.SPIN_LEFT;
 		}
 	}
 }

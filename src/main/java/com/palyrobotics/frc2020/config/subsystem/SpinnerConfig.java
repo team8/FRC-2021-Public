@@ -4,7 +4,7 @@ import com.palyrobotics.frc2020.util.config.SubsystemConfigBase;
 
 public class SpinnerConfig extends SubsystemConfigBase {
 
-	public double spinnerOutput;
+	public double spinnerPercentOutput;
 	public int spinnerRotationColorsPassed;
 	public int spinnerSolenoidActuationDuration;
 
