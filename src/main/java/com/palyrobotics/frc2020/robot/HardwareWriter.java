@@ -18,6 +18,7 @@ import com.palyrobotics.frc2020.subsystems.Drive;
 import com.palyrobotics.frc2020.subsystems.Indexer;
 import com.palyrobotics.frc2020.subsystems.Intake;
 import com.palyrobotics.frc2020.subsystems.Shooter;
+import com.palyrobotics.frc2020.subsystems.Spinner;
 import com.palyrobotics.frc2020.subsystems.SubsystemBase;
 import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.config.Configs;
@@ -43,6 +44,7 @@ public class HardwareWriter {
 	private final Intake mIntake = Intake.getInstance();
 	private final Shooter mShooter = Shooter.getInstance();
 	private final Indexer mIndexer = Indexer.getInstance();
+	private final Spinner mSpinner = Spinner.getInstance();
 	private boolean mRumbleOutput;
 
 	void configureHardware(Set<SubsystemBase> enabledSubsystems) {
@@ -159,6 +161,7 @@ public class HardwareWriter {
 			if (enabledSubsystems.contains(mIntake)) updateIntake();
 			if (enabledSubsystems.contains(mShooter)) updateShooter();
 			if (enabledSubsystems.contains(mIndexer)) updateIndexer();
+			if (enabledSubsystems.contains(mSpinner)) updateSpinner();
 			Robot.sLoopDebugger.addPoint("writeDrive");
 		}
 		var joystickHardware = HardwareAdapter.Joysticks.getInstance();
@@ -196,6 +199,12 @@ public class HardwareWriter {
 		hardware.blockingSolenoid.set(mShooter.getBlockingOutput());
 		hardware.hoodSolenoid.set(mShooter.getHoodOutput());
 		hardware.masterSpark.setOutput(mShooter.getFlywheelOutput());
+	}
+
+	private void updateSpinner() {
+		var hardware = HardwareAdapter.SpinnerHardware.getInstance();
+		hardware.talon.setOutput(mSpinner.getOutput());
+		hardware.solenoid.set(mSpinner.getSolenoidOutput());
 	}
 
 	private void setPigeonStatusFramePeriods(PigeonIMU gyro) {

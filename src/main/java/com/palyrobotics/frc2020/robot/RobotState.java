@@ -46,6 +46,11 @@ public class RobotState {
 	/* Joystick */
 	public boolean joystickRightTriggerPressed;
 
+	/* Spinner */
+	public String spinnerDetectedColor;
+	public boolean spinnerExtended;
+	public boolean spinnerTransitioning;
+
 	public GamePeriod gamePeriod = GamePeriod.DISABLED;
 	public String gameData;
 	public double gameTime;
