@@ -199,6 +199,7 @@ public class HardwareWriter {
 		hardware.blockingSolenoid.set(mShooter.getBlockingOutput());
 		hardware.hoodSolenoid.set(mShooter.getHoodOutput());
 		hardware.masterSpark.setOutput(mShooter.getFlywheelOutput());
+	}
 
 	private void updateSpinner() {
 		var hardware = HardwareAdapter.SpinnerHardware.getInstance();

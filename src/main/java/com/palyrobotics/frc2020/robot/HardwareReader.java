@@ -6,8 +6,8 @@ import com.ctre.phoenix.motorcontrol.StickyFaults;
 import com.ctre.phoenix.sensors.PigeonIMU.PigeonState;
 import com.esotericsoftware.minlog.Log;
 import com.palyrobotics.frc2020.config.RobotConfig;
-import com.palyrobotics.frc2020.config.subsystem.IntakeConfig;
 import com.palyrobotics.frc2020.config.constants.SpinnerConstants;
+import com.palyrobotics.frc2020.config.subsystem.IntakeConfig;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.DriveHardware;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.IntakeHardware;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.SpinnerHardware;
@@ -29,7 +29,6 @@ import com.revrobotics.ColorMatchResult;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.util.Color;
 
 public class HardwareReader {
 
@@ -45,10 +44,6 @@ public class HardwareReader {
 
 	public HardwareReader() {
 		mTimer.start();
-		mColorMatcher.addColorMatch(kBlueTarget);
-		mColorMatcher.addColorMatch(kGreenTarget);
-		mColorMatcher.addColorMatch(kRedTarget);
-		mColorMatcher.addColorMatch(kYellowTarget);
 		mColorMatcher.addColorMatch(SpinnerConstants.kBlueTarget);
 		mColorMatcher.addColorMatch(SpinnerConstants.kGreenTarget);
 		mColorMatcher.addColorMatch(SpinnerConstants.kRedTarget);
