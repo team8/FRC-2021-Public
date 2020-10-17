@@ -8,7 +8,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.transforms as mtransforms
 
-#TODO: need to fix 0s in time from other non drive path routines, figure out how to display graphics using intellij,
+#TODO: need to fix 0s in time from other non drive path routines, figure out how to display graphics using intellij, implement average time take
 
 img = mpimg.imread("C:/Users/Nolan/Downloads/Image Download/infiniteRechargeFieldCrop2Vert.png")
 print("image gotten")

@@ -16,25 +16,24 @@ import com.palyrobotics.frc2020.behavior.routines.drive.DriveYawRoutine;
  */
 public class TrenchStealTwoShootFiveRendezvousTwo implements AutoBase {
 
-    @Override
-    public RoutineBase getRoutine() {
-        var setInitialOdometry = new DriveSetOdometryRoutine(0, 0, 0);
-        var getTrenchBalls = new ParallelRaceRoutine(
-                new SequentialRoutine(
-                        new DrivePathRoutine(newWaypoint(92, 0, 0))
-                                .setMovement(1.5, 2.4),
-                        new DriveYawRoutine(15.0)));
+	@Override
+	public RoutineBase getRoutine() {
+		var setInitialOdometry = new DriveSetOdometryRoutine(0, 0, 0);
+		var getTrenchBalls = new ParallelRaceRoutine(
+				new SequentialRoutine(
+						new DrivePathRoutine(newWaypoint(92, 0, 0))
+								.setMovement(1.5, 2.4),
+						new DriveYawRoutine(15.0)));
 
-        var goToShoot = new DrivePathRoutine(newWaypoint(60, 70, 150))
-                        .setMovement(1.5, 2.4)
-                        .driveInReverse();
+		var goToShoot = new DrivePathRoutine(newWaypoint(60, 70, 150))
+				.setMovement(1.5, 2.4)
+				.driveInReverse();
 
-
-        var turnAndIntake = new ParallelRaceRoutine(
-                new SequentialRoutine(
-                        new DrivePathRoutine(newWaypoint(77, 113, 15.0))
-                                .setMovement(2.0, 2.0),
-                        new DriveYawRoutine(20.0)));
+		var turnAndIntake = new ParallelRaceRoutine(
+				new SequentialRoutine(
+						new DrivePathRoutine(newWaypoint(77, 113, 15.0))
+								.setMovement(2.0, 2.0),
+						new DriveYawRoutine(20.0)));
 //        var backupAndShoot = new SequentialRoutine(
 //                new DrivePathRoutine(newWaypoint(40.0, 113.0, 150.0))
 //                        .driveInReverse(),
@@ -49,7 +48,6 @@ public class TrenchStealTwoShootFiveRendezvousTwo implements AutoBase {
 //                                )))
 //        );
 //        return new SequentialRoutine(setInitialOdometry, getTrenchBalls, goToShoot, shootBalls, turnAndIntake, backupAndShoot);
-        return new SequentialRoutine(setInitialOdometry, getTrenchBalls, goToShoot, turnAndIntake);
-    }
+		return new SequentialRoutine(setInitialOdometry, getTrenchBalls, goToShoot, turnAndIntake);
+	}
 }
-
