@@ -76,8 +76,8 @@ public class Shooter extends SubsystemBase {
 	 */
 	private void updateStates(@ReadOnly RobotState state) {
 		// Not updating mHoodState here because that will be what it is currently supposed to be
-		state.hoodSolenoidState = state.hoodSolenoidState;
-		state.shooterVelocity = state.shooterVelocity;
+		state.shooterHoodSolenoidState = state.shooterHoodSolenoidState;
+		state.shooterFlywheelVelocity = state.shooterFlywheelVelocity;
 		mTargetDistance = getTargetDistance();
 	}
 
@@ -128,7 +128,7 @@ public class Shooter extends SubsystemBase {
 	}
 
 	private void updateRumble(@ReadOnly RobotState state) {
-		if (Math.abs(state.shooterVelocity - mTargetVelocity) <= mConfig.rumbleError) {
+		if (Math.abs(state.shooterFlywheelVelocity - mTargetVelocity) <= mConfig.rumbleError) {
 			mRumbleOutput = true;
 
 			if (mVelocityChanged) {
@@ -167,11 +167,11 @@ public class Shooter extends SubsystemBase {
 		Because of how this is done, there is no need for checks here.
 		*/
 		mBlockingOutput = false;
-		mHoodOutput = state.blockingSolenoidState;
+		mHoodOutput = state.shooterBlockingSolenoidState;
 	}
 
 	private void setHoodMedium(@ReadOnly RobotState state) {
-		if (state.blockingSolenoidState) {
+		if (state.shooterBlockingSolenoidState) {
 			/* Hood is already at the top or middle state. If we were in low state,
 			* BlockingSolenoidState would be false. */
 			mHoodOutput = false;
@@ -189,7 +189,7 @@ public class Shooter extends SubsystemBase {
 			hood down to rest on top of the blocking piston. This
 			will prevent errors from occurring during the transition phase.
 			*/
-			mBlockingOutput = state.hoodSolenoidState;
+			mBlockingOutput = state.shooterHoodSolenoidState;
 		}
 	}
 
@@ -200,12 +200,12 @@ public class Shooter extends SubsystemBase {
 		upwards against it.
 		*/
 		mHoodOutput = true;
-		if (state.blockingSolenoidState) {
+		if (state.shooterBlockingSolenoidState) {
 			/* If we are in middle state continue locking */
 			mBlockingOutput = true;
 		} else {
 			/* We are in bottom state, wait until hood is fully extended to lock */
-			mBlockingOutput = state.hoodSolenoidState;
+			mBlockingOutput = state.shooterHoodSolenoidState;
 		}
 	}
 

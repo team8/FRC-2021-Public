@@ -32,14 +32,14 @@ public class ShooterTests {
 		shooter.update(commands, state);
 		assertFalse(shooter.getRumbleOutput());
 
-		state.shooterVelocity = 2;
+		state.shooterFlywheelVelocity = 2;
 		shooter.update(commands, state);
 		assertFalse(shooter.getRumbleOutput());
 
 		// Second set of tests are making sure that the rumble turns on when it needs to turn off
-		state.shooterVelocity = 10;
-		state.blockingSolenoidState = false;
-		state.hoodSolenoidState = false;
+		state.shooterFlywheelVelocity = 10;
+		state.shooterBlockingSolenoidState = false;
+		state.shooterHoodSolenoidState = false;
 		shooter.update(commands, state);
 		assertTrue(shooter.getRumbleOutput());
 

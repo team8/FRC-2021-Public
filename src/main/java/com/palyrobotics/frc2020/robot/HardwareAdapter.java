@@ -69,7 +69,7 @@ public class HardwareAdapter {
 	}
 
 	/**
-	 * 1 TalonSRX and Encoder
+	 * Single Neo (controlled by Talon)
 	 */
 	static class TurretHardware {
 

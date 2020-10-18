@@ -66,7 +66,6 @@ public class HardwareReader {
 		if (enabledSubsystems.contains(Shooter.getInstance())) readShooterState(state);
 		if (enabledSubsystems.contains(Turret.getInstance())) readTurretState(state);
 		if (enabledSubsystems.contains(Intake.getInstance())) readIntakeState(state);
-		if (enabledSubsystems.contains(Shooter.getInstance())) readShooterState(state);
 		if (enabledSubsystems.contains(Indexer.getInstance())) readIndexerState(state);
 		readJoystickState(state);
 		Robot.sLoopDebugger.addPoint("readDrive");
@@ -126,9 +125,9 @@ public class HardwareReader {
 
 	private void readShooterState(RobotState state) {
 		var hardware = HardwareAdapter.ShooterHardware.getInstance();
-		state.blockingSolenoidState = hardware.blockingSolenoid.isExtended();
-		state.hoodSolenoidState = hardware.hoodSolenoid.isExtended();
-		state.shooterVelocity = hardware.masterEncoder.getVelocity();
+		state.shooterBlockingSolenoidState = hardware.blockingSolenoid.isExtended();
+		state.shooterHoodSolenoidState = hardware.hoodSolenoid.isExtended();
+		state.shooterFlywheelVelocity = hardware.masterEncoder.getVelocity();
 	}
 
 	private void readTurretState(RobotState state) {

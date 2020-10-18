@@ -37,10 +37,12 @@ public class RobotState {
 	public double driveLateralVelocityMetersPerSecond;
 	public boolean driveIsGyroReady;
 	public boolean inShootingQuadrant;
+
 	/* Shooter */
-	public boolean blockingSolenoidState;
-	public boolean hoodSolenoidState;
-	public double shooterVelocity;
+	public boolean shooterBlockingSolenoidState;
+	public boolean shooterHoodSolenoidState;
+	public double shooterFlywheelVelocity;
+
 	/* Turret */
 	public double turretYawDegrees;
 
@@ -70,6 +72,6 @@ public class RobotState {
 		drivePoseMeters = driveOdometry.update(Rotation2d.fromDegrees(yawDegrees), leftMeters, rightMeters);
 		ChassisSpeeds speeds = DriveConstants.kKinematics.toChassisSpeeds(new DifferentialDriveWheelSpeeds(driveLeftVelocity, driveRightVelocity));
 		driveVelocityMetersPerSecond = Math.sqrt(Math.pow(speeds.vxMetersPerSecond, 2) + Math.pow(speeds.vyMetersPerSecond, 2));
-		driveLateralVelocityMetersPerSecond = speeds.vyMetersPerSecond;
+		driveLateralVelocityMetersPerSecond = speeds.vyMetersPerSecond; //todo [INCORRECT]
 	}
 }
