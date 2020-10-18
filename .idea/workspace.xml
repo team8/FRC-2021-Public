@@ -20,35 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d6f1a065-87da-4eed-a47b-8ae2e4de1b98" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/classAnalysis.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/javaCompile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/deploy/config/DriveConfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/deploy/config/DriveConfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/deploy/config/PortConstants.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/deploy/config/PortConstants.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/deploy/config/RobotConfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/deploy/config/RobotConfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/deploy/config/VisionConfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/deploy/config/VisionConfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/config/PortConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/config/PortConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/config/VisionConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/config/VisionConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/config/subsystem/DriveConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/config/subsystem/DriveConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/robot/Commands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/robot/Commands.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/robot/HardwareAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/robot/HardwareAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/robot/HardwareReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/robot/HardwareReader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/robot/HardwareWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/robot/HardwareWriter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/robot/OperatorInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/robot/OperatorInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/robot/Robot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/robot/Robot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/robot/RobotState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/robot/RobotState.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/subsystems/Shooter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/subsystems/Shooter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/util/Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/util/Util.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/util/control/Talon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/util/control/Talon.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/vision/Limelight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/palyrobotics/frc2020/vision/Limelight.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ShooterTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ShooterTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -411,10 +383,10 @@
       <screen x="0" y="0" width="1217" height="720" />
     </state>
     <state x="266" y="161" key="run.anything.popup/0.0.1217.720@0.0.1217.720" timestamp="1595529709068" />
-    <state x="600" y="93" width="672" height="678" key="search.everywhere.popup" timestamp="1602994920107">
+    <state x="600" y="93" width="672" height="678" key="search.everywhere.popup" timestamp="1603041097537">
       <screen x="0" y="0" width="1203" height="720" />
     </state>
-    <state x="600" y="93" width="672" height="678" key="search.everywhere.popup/0.0.1203.720@0.0.1203.720" timestamp="1602994920107" />
+    <state x="600" y="93" width="672" height="678" key="search.everywhere.popup/0.0.1203.720@0.0.1203.720" timestamp="1603041097537" />
     <state x="607" y="93" width="672" height="678" key="search.everywhere.popup/0.0.1217.720@0.0.1217.720" timestamp="1596500961051" />
     <state x="607" y="93" width="673" height="678" key="search.everywhere.popup/0.0.1218.720@0.0.1218.720" timestamp="1601058862402" />
   </component>

@@ -30,7 +30,7 @@ public class Shooter extends SubsystemBase {
 	private Limelight mLimelight = Limelight.getInstance();
 	private ShooterConfig mConfig = Configs.get(ShooterConfig.class);
 	private boolean mVelocityChanged = false; // If the target velocity has been changed (for rumble)
-	private double mTargetVelocity; // Current target velocity (for rumble)
+	private double mTargetVelocity; // Current target velocity (stored here for rumble)
 	private Timer mTimer = new Timer();
 
 	/* Outputs */
@@ -47,6 +47,7 @@ public class Shooter extends SubsystemBase {
 
 	@Override
 	public void update(@ReadOnly Commands commands, @ReadOnly RobotState state) {
+		mTargetDistance = getTargetDistance();
 		ShooterState wantedShooterState = commands.getShooterWantedState();
 		switch (wantedShooterState) {
 			case VISION:
@@ -173,7 +174,7 @@ public class Shooter extends SubsystemBase {
 			hood down to rest on top of the blocking piston. This
 			will prevent errors from occurring during the transition phase.
 			*/
-			mBlockingOutput = state.hoodSolenoidState;
+			mBlockingOutput = state.shooterHoodSolenoidState;
 		}
 	}
 
