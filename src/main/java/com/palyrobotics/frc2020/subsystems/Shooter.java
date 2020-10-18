@@ -47,7 +47,7 @@ public class Shooter extends SubsystemBase {
 
 	@Override
 	public void update(@ReadOnly Commands commands, @ReadOnly RobotState state) {
-		updateStates(state);
+		mTargetDistance = getTargetDistance();
 
 		ShooterState wantedShooterState = commands.getShooterWantedState();
 		switch (wantedShooterState) {
@@ -65,18 +65,6 @@ public class Shooter extends SubsystemBase {
 		}
 
 		updateRumble(state);
-	}
-
-	/**
-	 * Updates the local states to those found in RobotState
-	 *
-	 * @param state RobotState
-	 */
-	private void updateStates(@ReadOnly RobotState state) {
-		// Not updating mHoodState here because that will be what it is currently supposed to be
-		state.hoodSolenoidState = state.hoodSolenoidState;
-		state.shooterVelocity = state.shooterVelocity;
-		mTargetDistance = getTargetDistance();
 	}
 
 	/**
