@@ -37,19 +37,19 @@ yOffset = 3.3
 #total time
 print(data.t[len(data.t) - 1])
 
-avgTime = data.t
 #we average the time here because it allows us to update the frames with a constant frame rate.
 #The difference between each time vs average time should not be so large that this causes serious error.
 def findAvgTime():
     return data.t[len(data.t) - 1] / len(data.t)
 
 def findAvgTimeDeviation():
-    avg = findAvgTime()
+    avgTime = findAvgTime()
     last = 0
     total = 0
     for i in data.t:
         #calculate time elapsed between now and last time to find time of this "segment"
         total += abs((i - last) - avgTime)
+        last = i
     return total / len(data.t)
 
 def animate(i):
@@ -67,5 +67,5 @@ def init():
     line.set_data([], [])
     return line,
 
-anim = animation.FuncAnimation(fig, animate, init_func=init, frames=len(data.x), interval= 25, blit=True)
+anim = animation.FuncAnimation(fig, animate, init_func=init, frames=len(data.x), interval = findAvgTime() * 1000, blit=True)
 plt.show()
