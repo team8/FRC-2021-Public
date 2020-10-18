@@ -10,7 +10,7 @@
 		"turret",
 	  	"intake",
 		"indexer",
-		"shooter"
+		"spinner"
 	],
 	"checkFaults": false,
 	"coastDriveWhenDisabled": false,

@@ -21,19 +21,20 @@ public class OperatorInterface {
 
 	public static final double kDeadBand = 0.05;
 	public static final int kOnesTimesZoomAlignButton = 3, kTwoTimesZoomAlignButton = 4;
-	private final ShooterConfig mShooterConfig = Configs.get(ShooterConfig.class);
 	private final Joystick mDriveStick = Joysticks.getInstance().driveStick,
 			mTurnStick = Joysticks.getInstance().turnStick;
 	private final XboxController mOperatorXboxController = Joysticks.getInstance().operatorXboxController;
 	private final IntakeConfig mIntakeConfig = Configs.get(IntakeConfig.class);
+	private final ShooterConfig mShooterConfig = Configs.get(ShooterConfig.class);
+
 
 	/**
 	 * Modifies commands based on operator input devices.
 	 */
 	void updateCommands(Commands commands, @ReadOnly RobotState state) {
-		commands.shouldClearCurrentRoutines = mDriveStick.getTriggerPressed();
 		updateDriveCommands(commands);
 		updateSuperstructureCommands(commands, state);
+
 		mOperatorXboxController.updateLastInputs();
 
 		Robot.sLoopDebugger.addPoint("updateCommands");
@@ -53,6 +54,24 @@ public class OperatorInterface {
 		} else if (wantsTwoTimesAlign) {
 			commands.setDriveVisionAlign(kTwoTimesZoomPipelineId);
 		}
+		/* Path Following */
+//		if (mOperatorXboxController.getBButtonPressed()) {
+//			commands.addWantedRoutine(new SequentialRoutine(
+//					new DriveSetOdometryRoutine(0.0, 0.0, 0.0),
+//					new DrivePathRoutine(newWaypoint(30.0, 0.0, 0.0))));
+//			commands.addWantedRoutine(new SequentialRoutine(
+//					new DriveSetOdometryRoutine(0.0, 0.0, 180.0),
+//					new DriveYawRoutine(0.0)));
+//			commands.addWantedRoutine(new DrivePathRoutine(newWaypoint(0.0, 0.0, 180.0)));
+//			commands.addWantedRoutine(new SequentialRoutine(
+//					new DriveSetOdometryRoutine(0.0, 0.0, 0.0),
+//					new DrivePathRoutine(newWaypoint(40.0, 0.0, 0.0))
+//							.setMovement(1.0, 1.0)
+//							.endingVelocity(0.5),
+//					new DrivePathRoutine(newWaypoint(80.0, 0.0, 0.0))
+//							.setMovement(0.5, 1.0)
+//							.startingVelocity(0.5)));
+//		}
 	}
 
 	private void updateSuperstructureCommands(Commands commands, RobotState state) {
@@ -84,15 +103,6 @@ public class OperatorInterface {
 			commands.indexerColumnWantedState = Indexer.ColumnState.IDLE;
 		}
 
-		/* Shooting */
-		if (mOperatorXboxController.getRightTriggerPressed()) {
-			commands.setShooterCustomState(0, Shooter.HoodState.HIGH);
-			commands.wantedCompression = false;
-		} else if (mOperatorXboxController.getLeftTriggerPressed()) {
-			commands.setShooterIdleState();
-			commands.visionWanted = false;
-			commands.wantedCompression = true;
-		}
 		/* Turret */
 		if (state.inShootingQuadrant) {
 			commands.setTurretVisionAlign();

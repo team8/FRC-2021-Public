@@ -1,8 +1,6 @@
 package com.palyrobotics.frc2020.subsystems;
 
 import static com.palyrobotics.frc2020.config.constants.ShooterConstants.*;
-import static com.palyrobotics.frc2020.config.constants.ShooterConstants.kTargetDistanceToHoodState;
-import static com.palyrobotics.frc2020.config.constants.ShooterConstants.kTargetDistanceToVelocity;
 import static com.palyrobotics.frc2020.util.Util.clamp;
 
 import java.util.Map;
@@ -49,8 +47,6 @@ public class Shooter extends SubsystemBase {
 
 	@Override
 	public void update(@ReadOnly Commands commands, @ReadOnly RobotState state) {
-		updateStates(state);
-
 		ShooterState wantedShooterState = commands.getShooterWantedState();
 		switch (wantedShooterState) {
 			case VISION:
@@ -67,18 +63,6 @@ public class Shooter extends SubsystemBase {
 		}
 
 		updateRumble(state);
-	}
-
-	/**
-	 * Updates the local states to those found in RobotState
-	 *
-	 * @param state RobotState
-	 */
-	private void updateStates(@ReadOnly RobotState state) {
-		// Not updating mHoodState here because that will be what it is currently supposed to be
-		state.shooterHoodSolenoidState = state.shooterHoodSolenoidState;
-		state.shooterFlywheelVelocity = state.shooterFlywheelVelocity;
-		mTargetDistance = getTargetDistance();
 	}
 
 	/**
@@ -173,12 +157,12 @@ public class Shooter extends SubsystemBase {
 	private void setHoodMedium(@ReadOnly RobotState state) {
 		if (state.shooterBlockingSolenoidState) {
 			/* Hood is already at the top or middle state. If we were in low state,
-			* BlockingSolenoidState would be false. */
+			 * BlockingSolenoidState would be false. */
 			mHoodOutput = false;
 			mBlockingOutput = true;
 		} else {
 			/* We are at the low hood position. Because state.blockingSolenoidState
-			
+
 			is false,
 			* We can only be low. If we are transitioning from low to high, it will still
 			* be false. */
@@ -189,7 +173,7 @@ public class Shooter extends SubsystemBase {
 			hood down to rest on top of the blocking piston. This
 			will prevent errors from occurring during the transition phase.
 			*/
-			mBlockingOutput = state.shooterHoodSolenoidState;
+			mBlockingOutput = state.hoodSolenoidState;
 		}
 	}
 

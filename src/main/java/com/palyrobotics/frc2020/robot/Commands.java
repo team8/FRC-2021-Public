@@ -11,6 +11,7 @@ import com.palyrobotics.frc2020.subsystems.Shooter;
 import com.palyrobotics.frc2020.subsystems.Turret;
 import com.palyrobotics.frc2020.util.control.DriveOutputs;
 import com.palyrobotics.frc2020.vision.Limelight;
+import com.palyrobotics.frc2020.util.control.DriveOutputs;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
@@ -26,9 +27,6 @@ public class Commands {
 	public boolean shouldClearCurrentRoutines;
 	/* Drive */
 	private Drive.State driveWantedState;
-	/* Turret Commands */
-	private Turret.TurretState turretWantedState;
-	private double turretWantedAngle; //[0, TurretConstants.turretAngleHardStopRange]
 
 	// Teleop
 	private double driveWantedThrottle, driveWantedWheel;
@@ -41,6 +39,10 @@ public class Commands {
 	// Turning
 	private double driveWantedYawDegrees;
 
+	/* Turret */
+	private Turret.TurretState turretWantedState;
+	private double turretWantedAngle; //[0, TurretConstants.turretAngleHardStopRange]
+
 	/* Indexer */
 	public Indexer.ColumnState indexerColumnWantedState;
 	public Indexer.VSingulatorState indexerVSingulatorWantedState;
@@ -52,12 +54,14 @@ public class Commands {
 	/* Vision */
 	public int visionWantedPipeline;
 	public boolean visionWanted;
-	/* Miscellaneous */
-	public boolean wantedCompression;
+
 	/* Shooter */
 	private Shooter.ShooterState shooterWantedState;
 	private Shooter.HoodState shooterWantedHoodState; // Only needed for custom
 	private double shooterWantedVelocity; // Only needed for custom
+
+	/* Miscellaneous */
+	public boolean wantedCompression;
 
 	public void addWantedRoutines(RoutineBase... wantedRoutines) {
 		for (RoutineBase wantedRoutine : wantedRoutines) {

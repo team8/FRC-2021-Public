@@ -53,7 +53,6 @@ public class HardwareWriter {
 		if (enabledSubsystems.contains(mShooter)) configureShooterHardware();
 		if (enabledSubsystems.contains(mTurret)) configureTurretHardware();
 		if (enabledSubsystems.contains(mIntake)) configureIntakeHardware();
-		if (enabledSubsystems.contains(mShooter)) configureShooterHardware();
 		if (enabledSubsystems.contains(mIndexer)) configureIndexerHardware();
 		configureMiscellaneousHardware();
 	}
@@ -176,7 +175,6 @@ public class HardwareWriter {
 			if (enabledSubsystems.contains(mShooter)) updateShooter();
 			if (enabledSubsystems.contains(mTurret)) updateTurret();
 			if (enabledSubsystems.contains(mIntake)) updateIntake();
-			if (enabledSubsystems.contains(mShooter)) updateShooter();
 			if (enabledSubsystems.contains(mIndexer)) updateIndexer();
 			Robot.sLoopDebugger.addPoint("writeDrive");
 		}
