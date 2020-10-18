@@ -30,7 +30,7 @@ public class Shooter extends SubsystemBase {
 	private Limelight mLimelight = Limelight.getInstance();
 	private ShooterConfig mConfig = Configs.get(ShooterConfig.class);
 	private boolean mVelocityChanged = false; // If the target velocity has been changed (for rumble)
-	private double mTargetVelocity; // Current target velocity (for rumble)
+	private double mTargetVelocity; // Current target velocity (stored here for rumble)
 	private Timer mTimer = new Timer();
 
 	/* Outputs */
@@ -47,7 +47,7 @@ public class Shooter extends SubsystemBase {
 
 	@Override
 	public void update(@ReadOnly Commands commands, @ReadOnly RobotState state) {
-		updateStates(state);
+		mTargetDistance = getTargetDistance();
 
 		ShooterState wantedShooterState = commands.getShooterWantedState();
 		switch (wantedShooterState) {
@@ -65,18 +65,6 @@ public class Shooter extends SubsystemBase {
 		}
 
 		updateRumble(state);
-	}
-
-	/**
-	 * Updates the local states to those found in RobotState
-	 *
-	 * @param state RobotState
-	 */
-	private void updateStates(@ReadOnly RobotState state) {
-		// Not updating mHoodState here because that will be what it is currently supposed to be
-		state.hoodSolenoidState = state.hoodSolenoidState;
-		state.shooterVelocity = state.shooterVelocity;
-		mTargetDistance = getTargetDistance();
 	}
 
 	/**
