@@ -115,7 +115,7 @@ public class Robot extends TimedRobot {
 
 	private void recurseRoutine(RoutineBase routine, Deque<PointLinkTime> points) {
 		//Todo: Test
-		//TODO: remove instanceof in code
+		//TODO: remove instanceof in code, need to figure out how parralel routines will work... (ignore shorter or path?)
 		if (routine instanceof MultipleRoutineBase) {
 			var multiple = (MultipleRoutineBase) routine;
 			for (RoutineBase childRoutine : multiple.getRoutines()) {
@@ -126,13 +126,16 @@ public class Robot extends TimedRobot {
 			var pose = odometry.getTargetPose();
 			//TODO: Make these take time, change time from 0
 			points.addLast(new PointLinkTime(pose, 0));
+
 		} else if (routine instanceof DrivePathRoutine) {
 			var path = (DrivePathRoutine) routine;
 			path.generateTrajectory(points.getLast().getPose());
+			double lastTime = points.getLast().getTime();
 			for (Trajectory.State state : path.getTrajectory().getStates()) {
 				var pose = state.poseMeters;
 				var time = state.timeSeconds;
-				points.addLast(new PointLinkTime(pose, time));
+				//Need to find some way to take last time dif or something in order to add to program
+				points.addLast(new PointLinkTime(pose, time + lastTime));
 			}
 		}
 		//TODO: figure out how to add wait time for other routines
