@@ -30,7 +30,7 @@ public class Shooter extends SubsystemBase {
 	private Limelight mLimelight = Limelight.getInstance();
 	private ShooterConfig mConfig = Configs.get(ShooterConfig.class);
 	private boolean mVelocityChanged = false; // If the target velocity has been changed (for rumble)
-	private double mTargetVelocity; // Current target velocity (for rumble)
+	private double mTargetVelocity; // Current target velocity (stored here for rumble)
 	private Timer mTimer = new Timer();
 
 	/* Outputs */
