@@ -11,7 +11,6 @@ import com.palyrobotics.frc2020.config.constants.FieldConstants;
 import com.palyrobotics.frc2020.config.subsystem.DriveConfig;
 import com.palyrobotics.frc2020.config.subsystem.IntakeConfig;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.*;
-import com.palyrobotics.frc2020.config.subsystem.IntakeConfig;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.DriveHardware;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.IntakeHardware;
 import com.palyrobotics.frc2020.subsystems.Drive;
@@ -36,10 +35,6 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.util.Units;
-import com.revrobotics.CANSparkMax.FaultID;
-
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Timer;
 
 public class HardwareReader {
 

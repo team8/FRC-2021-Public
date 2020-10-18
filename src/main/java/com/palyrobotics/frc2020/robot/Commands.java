@@ -11,7 +11,6 @@ import com.palyrobotics.frc2020.subsystems.Shooter;
 import com.palyrobotics.frc2020.subsystems.Turret;
 import com.palyrobotics.frc2020.util.control.DriveOutputs;
 import com.palyrobotics.frc2020.vision.Limelight;
-import com.palyrobotics.frc2020.util.control.DriveOutputs;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;

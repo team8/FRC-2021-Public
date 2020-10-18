@@ -27,7 +27,6 @@ public class OperatorInterface {
 	private final IntakeConfig mIntakeConfig = Configs.get(IntakeConfig.class);
 	private final ShooterConfig mShooterConfig = Configs.get(ShooterConfig.class);
 
-
 	/**
 	 * Modifies commands based on operator input devices.
 	 */

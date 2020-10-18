@@ -69,8 +69,7 @@ public class HardwareAdapter {
 	}
 
 	/**
-<<<<<<< HEAD
-	 * Single Neo (controlled by Talon)
+	 * <<<<<<< HEAD Single Neo (controlled by Talon)
 	 */
 	static class TurretHardware {
 
@@ -89,7 +88,7 @@ public class HardwareAdapter {
 	/*
 	* 2 NEOs (controlled by Spark MAX) for indexer tower, 2 775s (controlled by Talon SRX) for v belts,
 	* 2 Single Solenoids, 2 Infrared Sensors
-	 */
+	*/
 	static class IndexerHardware {
 
 		private static IndexerHardware sInstance;
