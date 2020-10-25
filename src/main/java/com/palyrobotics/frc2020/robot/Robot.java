@@ -53,9 +53,9 @@ public class Robot extends TimedRobot {
 	/* Subsystems */
 	private final Drive mDrive = Drive.getInstance();
 	private final Intake mIntake = Intake.getInstance();
-	private final Vision mLimelight = Vision.getInstance();
+	private final Vision mVision = Vision.getInstance();
 
-	private final Set<SubsystemBase> mSubsystems = Set.of(mDrive, mIntake);
+	private final Set<SubsystemBase> mSubsystems = Set.of(mDrive, mIntake, mVision);
 	private Set<SubsystemBase> mEnabledSubsystems;
 	private final Set<RobotService> mServices = Set.of(new CommandReceiverService(), new NetworkLoggerService(),
 			new TelemetryService());

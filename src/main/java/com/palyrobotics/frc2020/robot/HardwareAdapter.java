@@ -64,6 +64,9 @@ public class HardwareAdapter {
 		}
 	}
 
+	/**
+	 * 1 Limelight
+	 */
 	static class VisionHardware {
 
 		private static VisionHardware sInstance;
