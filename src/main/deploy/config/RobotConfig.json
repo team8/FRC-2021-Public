@@ -6,7 +6,8 @@
 	],
 	"enabledSubsystems": [
 		"drive",
-	  	"intake"
+	  	"intake",
+		"vision"
 	],
 	"checkFaults": false,
 	"coastDriveWhenDisabled": false,
