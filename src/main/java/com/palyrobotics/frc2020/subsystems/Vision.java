@@ -23,6 +23,7 @@ public class Vision extends SubsystemBase {
 
 	/**
 	 * A getter that should only be used in one place,
+	 *
 	 * @return
 	 */
 	public static Vision getInstance() {
@@ -43,8 +44,9 @@ public class Vision extends SubsystemBase {
 	}
 
 	/**
-	 * Gives the pipeline that we want to switch to. The pipeline is stored as an int from 0 to 9
-	 * TODO: double check this, I know there are 9 I just need to know if its 0 indexed
+	 * Gives the pipeline that we want to switch to. The pipeline is stored as an int from 0 to 9 TODO:
+	 * double check this, I know there are 9 I just need to know if its 0 indexed
+	 *
 	 * @return The pipeline we want to use
 	 */
 	public int getPipeline() {
@@ -53,6 +55,7 @@ public class Vision extends SubsystemBase {
 
 	/**
 	 * Gives the cam mode {@link CamMode} we want to switch to
+	 *
 	 * @return
 	 */
 	public CamMode getCamMode() {
@@ -61,6 +64,7 @@ public class Vision extends SubsystemBase {
 
 	/**
 	 * Gives the LED mode {@link LedMode} which we want to use
+	 *
 	 * @return
 	 */
 	public LedMode getLEDMode() {
