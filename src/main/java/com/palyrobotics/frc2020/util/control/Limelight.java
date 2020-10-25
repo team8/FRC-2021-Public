@@ -25,7 +25,11 @@ public class Limelight {
 	private final NetworkTable mTable;
 
 	public Limelight() {
-		mTable = sNetworkTableInstance.getTable("limelight");
+		this("limelight");
+	}
+
+	public Limelight(String networktable) {
+		mTable = sNetworkTableInstance.getTable(networktable);
 	}
 
 	/**
