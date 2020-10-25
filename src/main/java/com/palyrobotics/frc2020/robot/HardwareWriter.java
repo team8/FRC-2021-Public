@@ -21,6 +21,7 @@ import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.Falcon;
 
+import com.palyrobotics.frc2020.util.control.LimelightControlMode;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 
 public class HardwareWriter {
@@ -44,6 +45,7 @@ public class HardwareWriter {
 	void configureHardware(Set<SubsystemBase> enabledSubsystems) {
 		if (enabledSubsystems.contains(mDrive)) configureDriveHardware();
 		if (enabledSubsystems.contains(mIntake)) configureIntakeHardware();
+		if (enabledSubsystems.contains(mVision)) configureVision();
 		configureMiscellaneousHardware();
 	}
 
@@ -90,6 +92,11 @@ public class HardwareWriter {
 	private void configureIntakeHardware() {
 		var hardware = HardwareAdapter.IntakeHardware.getInstance();
 		hardware.talon.setInverted(true);
+	}
+
+	private void configureVision() {
+		var hardware = HardwareAdapter.VisionHardware.getInstance();
+		hardware.limelight.setCamMode(LimelightControlMode.CamMode.DRIVER);
 	}
 
 	public void resetDriveSensors(Pose2d pose) {
