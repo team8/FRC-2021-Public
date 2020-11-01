@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj.geometry.*;
 public class Turret extends SubsystemBase {
 
 	public enum TurretState {
-		IDLE, TARGET_ALIGN, CUSTOM_ANGLE_SETPOINT
+		IDLE, TARGET_ALIGN, CUSTOM_ANGLE_SETPOINT, TARGET_ALIGN_LIMELIGHT
 	}
 
 	private static Turret sInstance = new Turret();
@@ -39,6 +39,9 @@ public class Turret extends SubsystemBase {
 
 	@Override
 	public void update(@ReadOnly Commands commands, @ReadOnly RobotState state) {
+		double turretBoundPOMultiplier;
+		double turretFF;
+		double turretAngleError;
 		switch (commands.getTurretWantedState()) {
 			case TARGET_ALIGN:
 				/*
@@ -58,9 +61,17 @@ public class Turret extends SubsystemBase {
 						FieldConstants.targetFieldLocation.getX() - nextTurretPredictedTranslation.getX());
 				mPidController.setPIDF(mConfig.turretGains.p, mConfig.turretGains.i, mConfig.turretGains.d, mConfig.turretGains.f);
 
-				double turretAngleError = nextTurretPredictedPose.getRotation().getDegrees() - turretRelativeBearing;
-				double turretBoundPOMultiplier = (turretAngleError < 0 && state.turretYawDegrees > TurretConstants.turretAngleSoftStopRange) || (turretAngleError > 0 && state.turretYawDegrees < (TurretConstants.turretAngleHardStopRange - TurretConstants.turretAngleSoftStopRange)) ? turretAngleMultiplier.getInterpolated(state.turretYawDegrees) : 1; // Multiplier to prevent turret from hitting side bounds
-				double turretFF = clamp(state.driveLateralVelocityMetersPerSecond * mConfig.motionFFMultiplier, -mConfig.maxTurretFF, mConfig.maxTurretFF); //feedforward that accounts for drivetrain motion
+				turretAngleError = nextTurretPredictedPose.getRotation().getDegrees() - turretRelativeBearing;
+				turretBoundPOMultiplier = (turretAngleError < 0 && state.turretYawDegrees > TurretConstants.turretAngleSoftStopRange) || (turretAngleError > 0 && state.turretYawDegrees < (TurretConstants.turretAngleHardStopRange - TurretConstants.turretAngleSoftStopRange)) ? turretAngleMultiplier.getInterpolated(state.turretYawDegrees) : 1; // Multiplier to prevent turret from hitting side bounds
+				turretFF = clamp(state.driveLateralVelocityMetersPerSecond * mConfig.motionFFMultiplier, -mConfig.maxTurretFF, mConfig.maxTurretFF); //feedforward that accounts for drivetrain motion
+
+				mOutput.setPercentOutput(clamp(mPidController.calculate(turretAngleError * turretBoundPOMultiplier) + turretFF, -mConfig.maxTurretPO, mConfig.maxTurretPO));
+				break;
+			case TARGET_ALIGN_LIMELIGHT:
+				turretAngleError = mLimelight.getYawToTarget();
+				mPidController.setPIDF(mConfig.turretGains.p, mConfig.turretGains.i, mConfig.turretGains.d, mConfig.turretGains.f);
+				turretBoundPOMultiplier = (turretAngleError < 0 && state.turretYawDegrees > TurretConstants.turretAngleSoftStopRange) || (turretAngleError > 0 && state.turretYawDegrees < (TurretConstants.turretAngleHardStopRange - TurretConstants.turretAngleSoftStopRange)) ? turretAngleMultiplier.getInterpolated(state.turretYawDegrees) : 1; // Multiplier to prevent turret from hitting side bounds
+				turretFF = clamp(state.driveLateralVelocityMetersPerSecond * mConfig.motionFFMultiplier, -mConfig.maxTurretFF, mConfig.maxTurretFF); //feedforward that accounts for drivetrain motion
 
 				mOutput.setPercentOutput(clamp(mPidController.calculate(turretAngleError * turretBoundPOMultiplier) + turretFF, -mConfig.maxTurretPO, mConfig.maxTurretPO));
 				break;
