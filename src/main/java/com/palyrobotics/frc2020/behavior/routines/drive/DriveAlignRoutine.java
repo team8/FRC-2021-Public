@@ -13,12 +13,15 @@ import com.palyrobotics.frc2020.vision.Limelight;
 
 public class DriveAlignRoutine extends TimeoutRoutineBase {
 
+	private static final double kTimeout = 3.0;
+	private static final double kEstimatedTime = 1.0;
+
 	private final Limelight mLimelight = Limelight.getInstance();
 	private final VisionConfig mVisionConfig = Configs.get(VisionConfig.class);
 	private final int mVisionPipeline;
 
 	public DriveAlignRoutine(int visionPipeline) {
-		super(3.0);
+		super(kTimeout, kEstimatedTime);
 		mVisionPipeline = visionPipeline;
 	}
 

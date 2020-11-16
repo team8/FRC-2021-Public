@@ -14,6 +14,7 @@ import com.palyrobotics.frc2020.auto.AutoBase;
 import com.palyrobotics.frc2020.behavior.MultipleRoutineBase;
 import com.palyrobotics.frc2020.behavior.RoutineBase;
 import com.palyrobotics.frc2020.behavior.RoutineManager;
+import com.palyrobotics.frc2020.behavior.routines.TimedRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DrivePathRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DriveSetOdometryRoutine;
 import com.palyrobotics.frc2020.config.RobotConfig;
@@ -114,7 +115,8 @@ public class Robot extends TimedRobot {
 	}
 
 	private void recurseRoutine(RoutineBase routine, Deque<PointLinkTime> points) {
-		//Todo: Test
+		//Todo: Fix estimated time routines
+		//Todo: Make routine base have method instead of instanceof...
 		//TODO: remove instanceof in code, need to figure out how parralel routines will work... (ignore shorter or path?)
 		if (routine instanceof MultipleRoutineBase) {
 			var multiple = (MultipleRoutineBase) routine;
@@ -137,6 +139,8 @@ public class Robot extends TimedRobot {
 				//Need to find some way to take last time dif or something in order to add to program
 				points.addLast(new PointLinkTime(pose, time + lastTime));
 			}
+		} else if (routine instanceof TimedRoutine) {
+			//TODO: Fix interpolation in autographer
 		}
 		//TODO: figure out how to add wait time for other routines
 	}

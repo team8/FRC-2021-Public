@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 public class DriveSetOdometryRoutine extends TimeoutRoutineBase {
 
 	public static final double kTimeout = 0.5;
+	public static final double kEstimatedTime = 0.1;
 	private Pose2d mTargetPose;
 
 	public DriveSetOdometryRoutine() {
@@ -30,7 +31,7 @@ public class DriveSetOdometryRoutine extends TimeoutRoutineBase {
 	}
 
 	public DriveSetOdometryRoutine(double xInches, double yInches, double yawDegrees) {
-		super(kTimeout);
+		super(kTimeout, kEstimatedTime);
 		mTargetPose = newWaypoint(xInches, yInches, yawDegrees);
 	}
 

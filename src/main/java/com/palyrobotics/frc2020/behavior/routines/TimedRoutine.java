@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.Timer;
  */
 public class TimedRoutine extends RoutineBase {
 
+	protected double mEstimatedTime;
 	protected final Timer mTimer = new Timer();
 	protected double mTimeout;
 
@@ -27,6 +28,7 @@ public class TimedRoutine extends RoutineBase {
 	 */
 	public TimedRoutine(double durationSeconds) {
 		mTimeout = durationSeconds;
+		mEstimatedTime = mTimeout;
 	}
 
 	@Override

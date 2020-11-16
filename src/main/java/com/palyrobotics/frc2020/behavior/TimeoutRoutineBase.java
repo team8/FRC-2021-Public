@@ -16,11 +16,17 @@ import com.palyrobotics.frc2020.robot.RobotState;
 public abstract class TimeoutRoutineBase extends TimedRoutine {
 
 	protected TimeoutRoutineBase() {
-		this(0.0);
+		this(0.0, 0.0);
 	}
 
 	public TimeoutRoutineBase(double timeoutSeconds) {
 		super(timeoutSeconds);
+		super.mEstimatedTime = 0.5;
+	}
+
+	public TimeoutRoutineBase(double timeoutSeconds, double estimatedTime) {
+		super(timeoutSeconds);
+		super.mEstimatedTime = estimatedTime;
 	}
 
 	@Override

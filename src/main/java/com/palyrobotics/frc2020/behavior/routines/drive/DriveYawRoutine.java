@@ -32,6 +32,7 @@ public class DriveYawRoutine extends TimeoutRoutineBase {
 		super.start(commands, state);
 		mTimeout = DriveConstants.calculateTimeToFinishTurn(state.driveYawDegrees, mTargetYawDegrees) *
 				kTimeoutMultiplier;
+		mEstimatedTime = DriveConstants.calculateTimeToFinishTurn(state.driveYawDegrees, mTargetYawDegrees);
 	}
 
 	@Override
