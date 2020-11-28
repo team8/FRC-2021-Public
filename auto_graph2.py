@@ -11,7 +11,8 @@ import matplotlib.transforms as mtransforms
 
 #TODO: need to fix 0s in time from other non drive path routines, figure out how to display graphics using intellij, implement average time take
 
-timeDif = 0.07
+timeDif = 0.05
+#Time between frames
 
 img = mpimg.imread("C:/Users/Nolan/Downloads/Image Download/infiniteRechargeFieldCrop2Vert.png")
 print("image gotten")
@@ -106,5 +107,5 @@ def init():
     line.set_data([], [])
     return line,
 
-anim = animation.FuncAnimation(fig, animate, init_func=init, frames= normalizedLength, interval = normalizedLength * timeDif, blit=True)
+anim = animation.FuncAnimation(fig, animate, init_func=init, frames= normalizedLength, interval =  timeDif * 1000, blit=True)
 plt.show()
