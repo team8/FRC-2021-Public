@@ -101,7 +101,7 @@ public class Robot extends TimedRobot {
 		// Todo: figure out some way to use trajectory instead of getting auto routine
 		try (var writer = new PrintWriter(new BufferedWriter(new FileWriter("auto.csv")))) {
 			RoutineBase drivePath = AutoSelector.getAuto().getRoutine();
-			writer.write("x,y,d,t" + '\n');
+			writer.write("xPos,yPos,d,t" + '\n');
 			var points = new LinkedList<PointLinkTime>();
 			recurseRoutine(drivePath, points);
 			for (PointLinkTime pointLink : points) {
