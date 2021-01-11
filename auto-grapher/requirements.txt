@@ -1,0 +1,16 @@
+certifi==2020.6.20
+cycler==0.10.0
+kiwisolver==1.2.0
+matplotlib @ file:///C:/ci/matplotlib-base_1592846084747/work
+mkl-fft==1.1.0
+mkl-random==1.1.1
+mkl-service==2.3.0
+numpy @ file:///C:/ci/numpy_and_numpy_base_1596233945180/work
+pandas @ file:///C:/ci/pandas_1596824386248/work
+pyparsing==2.4.7
+python-dateutil==2.8.1
+pytz==2020.1
+scipy @ file:///C:/ci/scipy_1597686737426/work
+six==1.15.0
+tornado==6.0.4
+wincertstore==0.2
