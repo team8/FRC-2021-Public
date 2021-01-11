@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 import com.esotericsoftware.minlog.Log;
 import com.palyrobotics.frc2020.auto.AutoBase;
-import com.palyrobotics.frc2020.auto.TrenchStealTwoShootFiveRendezvousTwo;
+import com.palyrobotics.frc2020.auto.TrenchStealTwoShootFive;
 import com.palyrobotics.frc2020.util.Util;
 
 import org.reflections.Reflections;
@@ -19,7 +19,7 @@ public class AutoSelector {
 	// ============================================================= //
 	// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= //
 
-	private static AutoBase sChosenAuto = new TrenchStealTwoShootFiveRendezvousTwo();
+	private static AutoBase sChosenAuto = new TrenchStealTwoShootFive();
 
 	// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= //
 	// ============================================================= //
