@@ -31,9 +31,10 @@ public class RobotState {
 	public double driveVelocityMetersPerSecond;
 	public boolean driveIsGyroReady;
 	/* Shooter */
-	public boolean blockingSolenoidState;
-	public boolean hoodSolenoidState;
-	public double shooterVelocity;
+	public double shooterFlywheelVelocity;
+	public boolean shooterIsReadyToShoot;
+	public boolean shooterIsHoodExtended, shooterIsBlockingExtended;
+	public boolean shooterHoodIsInTransition;
 
 	/* Intake */
 	public boolean intakeExtended, intakeTransitioning, intakeStalled;

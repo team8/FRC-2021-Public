@@ -1,5 +1,5 @@
 {
-    "shooterVelocityGains": {
+    "velocityGains": {
         "f": 0.000176,
         "p": 0.000185,
         "i": 0.0000005,
@@ -7,8 +7,11 @@
         "iZone": 150.0,
         "iMax": 0.0
     },
-    "rumbleError": 0.0,
-    "rumbleTimeSeconds": 0.5,
-    "hoodSolenoid": 0.5,
-    "blockingSolenoid": 0.3
+    "maxVelocity": 5000.0,
+    "velocityTolerance": 50.0,
+    "acceptableDriveVelocity": 0.2,
+    "rumbleDurationSeconds": 0.5,
+    "hoodSwitchDistanceThreshold": 10.0,
+    "noTargetSpinUpVelocity": 1900,
+    "customVelocity": 1875
 }

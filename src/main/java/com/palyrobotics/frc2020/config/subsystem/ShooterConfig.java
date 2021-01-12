@@ -1,13 +1,16 @@
 package com.palyrobotics.frc2020.config.subsystem;
 
-import com.palyrobotics.frc2020.util.config.ConfigBase;
+import com.palyrobotics.frc2020.util.config.SubsystemConfigBase;
 import com.palyrobotics.frc2020.util.control.Gains;
 
-public class ShooterConfig extends ConfigBase {
+@SuppressWarnings ("squid:ClassVariableVisibilityCheck")
+public class ShooterConfig extends SubsystemConfigBase {
 
-	public Gains shooterVelocityGains;
-	public double rumbleError;
-	public double rumbleTimeSeconds;
-	public double hoodSolenoid;
-	public double blockingSolenoid;
+	public Gains velocityGains;
+	public double maxVelocity, velocityTolerance, acceptableDriveVelocity;
+	public double rumbleDurationSeconds;
+	public double hoodSwitchDistanceThreshold;
+	public double noTargetSpinUpVelocity;
+	// TODO: remove
+	public double customVelocity;
 }

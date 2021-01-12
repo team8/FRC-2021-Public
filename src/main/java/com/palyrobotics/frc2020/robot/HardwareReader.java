@@ -11,12 +11,7 @@ import com.palyrobotics.frc2020.config.subsystem.IntakeConfig;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.DriveHardware;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.IntakeHardware;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.SpinnerHardware;
-import com.palyrobotics.frc2020.subsystems.Drive;
-import com.palyrobotics.frc2020.subsystems.Indexer;
-import com.palyrobotics.frc2020.subsystems.Intake;
-import com.palyrobotics.frc2020.subsystems.Shooter;
-import com.palyrobotics.frc2020.subsystems.Spinner;
-import com.palyrobotics.frc2020.subsystems.SubsystemBase;
+import com.palyrobotics.frc2020.subsystems.*;
 import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.Falcon;
@@ -104,9 +99,14 @@ public class HardwareReader {
 
 	private void readShooterState(RobotState state) {
 		var hardware = HardwareAdapter.ShooterHardware.getInstance();
-		state.blockingSolenoidState = hardware.blockingSolenoid.isExtended();
-		state.hoodSolenoidState = hardware.hoodSolenoid.isExtended();
-		state.shooterVelocity = hardware.masterEncoder.getVelocity();
+//		LiveGraph.add("shooterFlywheelVelocity", hardware.masterEncoder.getVelocity());
+//		LiveGraph.add("shooterAppliedOutput", hardware.masterSpark.getAppliedOutput());
+		state.shooterFlywheelVelocity = hardware.masterEncoder.getVelocity();
+		state.shooterIsHoodExtended = hardware.hoodSolenoid.isExtended();
+		state.shooterIsBlockingExtended = hardware.blockingSolenoid.isExtended();
+		state.shooterHoodIsInTransition = hardware.hoodSolenoid.isInTransition() || hardware.blockingSolenoid.isInTransition();
+		checkSparkFaults(hardware.masterSpark);
+		checkSparkFaults(hardware.slaveSpark);
 	}
 
 	private void readIndexerState(RobotState state) {

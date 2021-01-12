@@ -14,12 +14,7 @@ import com.palyrobotics.frc2020.config.RobotConfig;
 import com.palyrobotics.frc2020.config.constants.DriveConstants;
 import com.palyrobotics.frc2020.config.subsystem.IndexerConfig;
 import com.palyrobotics.frc2020.robot.RobotState.GamePeriod;
-import com.palyrobotics.frc2020.subsystems.Drive;
-import com.palyrobotics.frc2020.subsystems.Indexer;
-import com.palyrobotics.frc2020.subsystems.Intake;
-import com.palyrobotics.frc2020.subsystems.Shooter;
-import com.palyrobotics.frc2020.subsystems.Spinner;
-import com.palyrobotics.frc2020.subsystems.SubsystemBase;
+import com.palyrobotics.frc2020.subsystems.*;
 import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.Falcon;
@@ -195,10 +190,15 @@ public class HardwareWriter {
 
 	private void updateShooter() {
 		var hardware = HardwareAdapter.ShooterHardware.getInstance();
-
-		hardware.blockingSolenoid.set(mShooter.getBlockingOutput());
-		hardware.hoodSolenoid.set(mShooter.getHoodOutput());
+//		handleReset(hardware.masterSpark, hardware.slaveSpark);
+//		Robot.mDebugger.addPoint("handleReset");
 		hardware.masterSpark.setOutput(mShooter.getFlywheelOutput());
+//		Robot.mDebugger.addPoint("masterSpark.setOutput");
+		hardware.blockingSolenoid.set(mShooter.getBlockingOutput());
+//		Robot.mDebugger.addPoint("blockingSolenoid.setOutput");
+		hardware.hoodSolenoid.set(mShooter.getHoodOutput());
+//		Robot.mDebugger.addPoint("hoodSolenoid.setOutput");
+		mRumbleOutput |= mShooter.getRumbleOutput();
 	}
 
 	private void updateSpinner() {

@@ -4,11 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.palyrobotics.frc2020.behavior.RoutineBase;
-import com.palyrobotics.frc2020.subsystems.Drive;
-import com.palyrobotics.frc2020.subsystems.Indexer;
-import com.palyrobotics.frc2020.subsystems.Intake;
-import com.palyrobotics.frc2020.subsystems.Shooter;
-import com.palyrobotics.frc2020.subsystems.Spinner;
+import com.palyrobotics.frc2020.subsystems.*;
 import com.palyrobotics.frc2020.util.control.DriveOutputs;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -52,8 +48,8 @@ public class Commands {
 
 	/* Shooter */
 	private Shooter.ShooterState shooterWantedState;
-	private Shooter.HoodState shooterWantedHoodState; // Only needed for custom
-	private double shooterWantedVelocity; // Only needed for custom
+	private double shooterWantedCustomFlywheelVelocity;
+	private Shooter.HoodState shooterWantedHoodState;
 
 	/* Spinner */
 	public Spinner.State spinnerWantedState;
@@ -86,34 +82,25 @@ public class Commands {
 	}
 
 	/* Shooter */
-
-	/**
-	 * Self documenting code down here, sets the shooter to IDLE, this means it will set the flywheel
-	 * velocity to 0, and keep the same hood state.
-	 */
-	public void setShooterIdleState() {
-		this.shooterWantedState = Shooter.ShooterState.IDLE;
+	public void setShooterIdle() {
+		shooterWantedState = Shooter.ShooterState.IDLE;
+		shooterWantedHoodState = Shooter.HoodState.HIGH;
 	}
 
-	/**
-	 * Also self documenting: Sets the shooter state to VISION, this means it will try and set the hood
-	 * state to the best of its knowledge using interpolation from the "carefully" chosen data points we
-	 * have tested.
-	 */
-	public void setShooterVisionState() {
-		this.shooterWantedState = Shooter.ShooterState.VISION;
+	public void setShooterCustomFlywheelVelocity(double wantedVelocity, Shooter.HoodState hoodState) {
+		shooterWantedState = Shooter.ShooterState.CUSTOM_VELOCITY;
+		shooterWantedCustomFlywheelVelocity = wantedVelocity;
+		shooterWantedHoodState = hoodState;
 	}
 
-	/**
-	 * This should not be used by the operator, only during autos and testing.
-	 *
-	 * @param velocity  The velocity to be tested
-	 * @param hoodState The hood state to be tested
-	 */
-	public void setShooterCustomState(double velocity, Shooter.HoodState hoodState) {
-		this.shooterWantedState = Shooter.ShooterState.CUSTOM;
-		this.shooterWantedVelocity = velocity;
-		this.shooterWantedHoodState = hoodState;
+	public void setShooterFlywheelSpinUpVelocity(double wantedVelocity) {
+		shooterWantedCustomFlywheelVelocity = wantedVelocity;
+	}
+
+	public void setShooterVisionAssisted(int visionPipeline) {
+		shooterWantedState = Shooter.ShooterState.VISION_VELOCITY;
+		visionWanted = true;
+		visionWantedPipeline = visionPipeline;
 	}
 
 	public void setDriveTeleop() {
@@ -199,16 +186,16 @@ public class Commands {
 		return intakeWantedPo;
 	}
 
-	public double getShooterWantedVelocity() {
-		return shooterWantedVelocity;
+	public Shooter.ShooterState getShooterWantedState() {
+		return shooterWantedState;
+	}
+
+	public double getShooterWantedCustomFlywheelVelocity() {
+		return shooterWantedCustomFlywheelVelocity;
 	}
 
 	public Shooter.HoodState getShooterWantedHoodState() {
 		return shooterWantedHoodState;
-	}
-
-	public Shooter.ShooterState getShooterWantedState() {
-		return shooterWantedState;
 	}
 
 	@Override
