@@ -10,6 +10,7 @@ import com.palyrobotics.frc2020.behavior.routines.spinner.SpinnerRotationControl
 import com.palyrobotics.frc2020.config.subsystem.IntakeConfig;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.Joysticks;
 import com.palyrobotics.frc2020.subsystems.Indexer;
+import com.palyrobotics.frc2020.subsystems.Shooter;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.input.Joystick;
 import com.palyrobotics.frc2020.util.input.XboxController;
@@ -103,19 +104,14 @@ public class OperatorInterface {
 		} else {
 			commands.indexerColumnWantedState = Indexer.ColumnState.IDLE;
 		}
-
-		// TODO: clean up operator interface to work with old shooter
-		/*
 		if (mOperatorXboxController.getRightBumper()) {
-			commands.setShooterCustomState(1500, Shooter.HoodState.MEDIUM);
+			commands.setShooterCustomFlywheelVelocity(1500, Shooter.HoodState.MIDDLE);
 		} else if (mOperatorXboxController.getLeftBumper()) {
 			commands.setIntakeStowed();
 			commands.indexerColumnWantedState = Indexer.ColumnState.IDLE;
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.IDLE;
-			commands.setShooterIdleState();
+			commands.setShooterIdle();
 		}
-		*/
-
 	}
 
 	private void updateSpinnerCommands(Commands commands) {
