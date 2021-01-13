@@ -5,7 +5,6 @@ import java.util.List;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.palyrobotics.frc2020.config.PortConstants;
 import com.palyrobotics.frc2020.config.subsystem.IntakeConfig;
-import com.palyrobotics.frc2020.config.subsystem.SpinnerConfig;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.Falcon;
 import com.palyrobotics.frc2020.util.control.Spark;
@@ -27,6 +26,25 @@ import edu.wpi.first.wpilibj.Solenoid;
  * package. Subdivides hardware into subsystems.
  */
 public class HardwareAdapter {
+
+	/**
+	 * 1 NEO (controlled by Spark MAX), 1 Solenoid
+	 */
+	static class ClimberHardware {
+
+		private static ClimberHardware sInstance;
+		final Spark spark = new Spark(sPortConstants.nariClimberId, "Climber");
+		final CANEncoder sparkEncoder = spark.getEncoder();
+		final TimedSolenoid solenoid = new TimedSolenoid(sPortConstants.nariClimberSolenoidId, 0.2, true);
+
+		ClimberHardware() {
+		}
+
+		static ClimberHardware getInstance() {
+			if (sInstance == null) sInstance = new ClimberHardware();
+			return sInstance;
+		}
+	}
 
 	/**
 	 * 4 Falcon 500s (controlled by Talon FX), 1 Pigeon IMU Gyro connected via Talon SRX data cable.
@@ -70,13 +88,14 @@ public class HardwareAdapter {
 		}
 	}
 
+	/**
+	 * 1 775 (controlled by Talon SRX), 1 Color Sensor V3
+	 */
 	static class SpinnerHardware {
 
-		private static SpinnerHardware sInstance;
-
-		final Talon talon = new Talon(sPortConstants.nariSpinnerId, "spinner");
-		final ColorSensorV3 sensor = new ColorSensorV3(I2C.Port.kOnboard);
-		final TimedSolenoid solenoid = new TimedSolenoid(sPortConstants.nariSpinnerSolenoidId, Configs.get(SpinnerConfig.class).spinnerSolenoidActuationDuration, false);
+		private static SpinnerHardware sInstance = new SpinnerHardware();
+		final Talon talon = new Talon(sPortConstants.nariSpinnerId, "Spinner");
+		final ColorSensorV3 colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
 
 		private SpinnerHardware() {
 		}

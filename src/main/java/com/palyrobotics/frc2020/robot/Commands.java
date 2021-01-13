@@ -32,6 +32,11 @@ public class Commands {
 	// Turning
 	private double driveWantedYawDegrees;
 
+	/* Climber */
+	public Climber.State climberWantedState;
+	public double climberPositionSetpoint;
+	public double climberWantedManualPercentOutput;
+	public boolean climberWantsSoftLimits;
 	/* Indexer */
 	public Indexer.ColumnState indexerColumnWantedState;
 	public Indexer.VSingulatorState indexerVSingulatorWantedState;
@@ -53,6 +58,7 @@ public class Commands {
 
 	/* Spinner */
 	public Spinner.State spinnerWantedState;
+	public double spinnerWantedPercentOutput;
 
 	public void addWantedRoutines(RoutineBase... wantedRoutines) {
 		for (RoutineBase wantedRoutine : wantedRoutines) {

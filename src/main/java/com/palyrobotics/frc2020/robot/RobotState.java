@@ -3,12 +3,14 @@ package com.palyrobotics.frc2020.robot;
 import com.esotericsoftware.minlog.Log;
 import com.palyrobotics.frc2020.config.constants.DriveConstants;
 import com.palyrobotics.frc2020.util.Util;
+import com.revrobotics.ColorMatchResult;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.util.Color;
 
 /**
  * Holds the current physical state of the robot from our sensors.
@@ -48,9 +50,10 @@ public class RobotState {
 	public boolean joystickRightTriggerPressed;
 
 	/* Spinner */
-	public String spinnerDetectedColor;
-	public boolean spinnerExtended;
-	public boolean spinnerTransitioning;
+	public String closestColorString;
+	public double closestColorConfidence;
+	public Color detectedRGBValues;
+	public ColorMatchResult closestColorRGB;
 
 	public GamePeriod gamePeriod = GamePeriod.DISABLED;
 	public String gameData;

@@ -52,12 +52,14 @@ public class Robot extends TimedRobot {
 	private final Commands mCommands = new Commands();
 
 	/* Subsystems */
+	private final Climber mClimber = Climber.getInstance();
 	private final Drive mDrive = Drive.getInstance();
 	private final Intake mIntake = Intake.getInstance();
 	private final Indexer mIndexer = Indexer.getInstance();
 	private final Shooter mShooter = Shooter.getInstance();
+	private final Spinner mSpinner = Spinner.getInstance();
 
-	private Set<SubsystemBase> mSubsystems = Set.of(mDrive, mShooter, mIntake, mIndexer),
+	private Set<SubsystemBase> mSubsystems = Set.of(mClimber, mDrive, mShooter, mIntake, mIndexer, mSpinner),
 			mEnabledSubsystems;
 
 	private Set<RobotService> mServices = Set.of(new CommandReceiverService(), new NetworkLoggerService(),
@@ -263,6 +265,7 @@ public class Robot extends TimedRobot {
 		}
 		if (kCanUseHardware) {
 			mHardwareWriter.writeHardware(mEnabledSubsystems, mRobotState);
+			mHardwareWriter.setClimberSoftLimitsEnabled(mCommands.climberWantsSoftLimits);
 		}
 		updateVision(mCommands.visionWanted, mCommands.visionWantedPipeline);
 		updateCompressor();

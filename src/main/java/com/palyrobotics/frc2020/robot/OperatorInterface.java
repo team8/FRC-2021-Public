@@ -9,11 +9,14 @@ import com.palyrobotics.frc2020.behavior.routines.spinner.SpinnerPositionControl
 import com.palyrobotics.frc2020.behavior.routines.spinner.SpinnerRotationControlRoutine;
 import com.palyrobotics.frc2020.config.subsystem.IntakeConfig;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.Joysticks;
+import com.palyrobotics.frc2020.subsystems.Climber;
 import com.palyrobotics.frc2020.subsystems.Indexer;
 import com.palyrobotics.frc2020.subsystems.Shooter;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.input.Joystick;
 import com.palyrobotics.frc2020.util.input.XboxController;
+
+import edu.wpi.first.wpilibj.GenericHID;
 
 /**
  * Used to produce {@link Commands}'s from human input. Should only be used in robot package.
@@ -34,12 +37,38 @@ public class OperatorInterface {
 
 		commands.shouldClearCurrentRoutines = mDriveStick.getTriggerPressed();
 
+		updateClimberCommands(commands);
 		updateDriveCommands(commands);
 		updateSuperstructureCommands(commands, state);
 
 		mOperatorXboxController.updateLastInputs();
 
 		Robot.sLoopDebugger.addPoint("updateCommands");
+	}
+
+	private void updateClimberCommands(Commands commands) {
+
+		if (mOperatorXboxController.getDPadUpPressed()) {
+			if (commands.climberWantedState != Climber.State.LOCKED) {
+				commands.climberWantedState = Climber.State.LOCKED;
+			} else {
+				commands.climberWantedState = Climber.State.IDLE;
+			}
+		}
+
+		commands.climberWantedManualPercentOutput = -mOperatorXboxController.getY(GenericHID.Hand.kLeft);
+
+		if (mOperatorXboxController.getStickButtonPressed(GenericHID.Hand.kLeft)) {
+			commands.climberWantsSoftLimits = false;
+		} else if (mOperatorXboxController.getStickButtonReleased(GenericHID.Hand.kLeft)) {
+			commands.climberWantsSoftLimits = true;
+		}
+
+		if (commands.climberWantedState != Climber.State.MANUAL && handleDeadBand(commands.climberWantedManualPercentOutput, kDeadBand) != 0) {
+			commands.climberWantedState = Climber.State.MANUAL;
+		} else if (commands.climberWantedState == Climber.State.IDLE && handleDeadBand(commands.climberWantedManualPercentOutput, kDeadBand) == 0) {
+			commands.climberWantedState = Climber.State.IDLE;
+		}
 	}
 
 	private void updateDriveCommands(Commands commands) {
@@ -128,6 +157,8 @@ public class OperatorInterface {
 
 	public void reset(Commands commands) {
 		commands.routinesWanted.clear();
+		commands.climberWantedState = Climber.State.IDLE;
+		commands.climberWantsSoftLimits = true;
 		commands.setDriveNeutral();
 		commands.wantedCompression = true;
 		commands.visionWanted = false;
