@@ -1,9 +1,6 @@
 package com.palyrobotics.frc2020.robot;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -97,7 +94,8 @@ public class Robot extends TimedRobot {
 	}
 
 	private void pathToCsv() {
-		try (var writer = new PrintWriter(new BufferedWriter(new FileWriter("auto.csv")))) {
+		String csv_path = "auto-grapher/resources/auto.csv";
+		try (var writer = new PrintWriter(new BufferedWriter(new FileWriter(csv_path)))) {
 			RoutineBase drivePath = AutoSelector.getAuto().getRoutine();
 			writer.write("xPos,yPos,d,t" + '\n');
 			var points = new LinkedList<PointLinkTime>();

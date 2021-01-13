@@ -11,3 +11,4 @@ scipy
 six==1.15.0
 tornado==6.0.4
 wincertstore==0.2
+PyQt5

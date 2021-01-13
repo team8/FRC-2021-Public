@@ -14,10 +14,11 @@ import matplotlib.transforms as mtransforms
 timeDif = 0.05
 #Time between frames
 
-img = mpimg.imread("C:/Users/Nolan/Downloads/Image Download/infiniteRechargeFieldCrop2Vert.png")
-print("image gotten")
-data = pd.read_csv('C:/Users/Nolan/Documents/Robotics/FRC-2021-Private/auto.csv')
-print("data gotten")
+img = mpimg.imread("./resources/infiniteRechargeField.png")
+print("Field Image Found")
+data = pd.read_csv('./resources/auto.csv')
+print("Auto Path Found")
+
 # Imports and checks data
 fig = plt.figure()
 ax = plt.axes(xlim=(0, 8), ylim=(0, 16))
