@@ -241,4 +241,7 @@ modules.xml
 # WPILib simulation configuration for GUI
 imgui.ini
 
+# Virtual Environment Python
+venv/
+
 # End of https://www.gitignore.io/api/intellij
