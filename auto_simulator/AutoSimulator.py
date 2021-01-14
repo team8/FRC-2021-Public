@@ -16,6 +16,14 @@ import matplotlib.patches as patches
 
 
 
+try:
+    sys.argv[1]
+except IndexError:
+    print("No option chosen - would you like to save or show simulation?")
+    print("Add the word show after the python run command to show a visualization of the auto")
+    print("Add the word save after the python run command to save the simulation as a gif in resources/")
+    exit()
+
 #TODO: need to fix 0s in time from other non drive path routines, figure out how to display graphics using intellij, implement average time take
 
 timeDif = 0.05
@@ -85,7 +93,7 @@ def interpData2Pts(x1, x2, y1, y2, t1, t2, tInput):
     return xout, yout
 
 def createProperData():
-     for i in range(0, normalizedLength - 2):
+    for i in range(0, normalizedLength - 2):
         pos1, pos2 = searchPts(normalizedDataTimes[i])
         normalizedDataX[i], normalizedDataY[i] = interpData2Pts(data.xPos[pos1], data.xPos[pos2], data.yPos[pos1], data.yPos[pos2], data.t[pos1], data.t[pos2], normalizedDataTimes[i])
         normalizedDataAngle[i] = (data.d[pos1] + data.d[pos2])/2
@@ -104,33 +112,36 @@ def findAvgTimeDeviation():
 
 createProperData()
 
-def animate(i, initial_time):
+frame_generator = [1]
+def animate(i):
+    global frame_generator
     x = normalizedDataX[i] + xOffset
     y = normalizedDataY[i] + yOffset
     d = normalizedDataAngle[i]
+    t = normalizedDataTimes[i]
     # print(x, y, d)
-    print(time.time() - initial_time)
     robot.set_width(0.5)
     robot.set_height(0.5)
     robot.set_xy([x, y])
     robot.set_transform(transforms.Affine2D().rotate_deg_around(x,y,d) + ax.transData)
-    timePassed = round((time.time() - initial_time) * 100) / 100
-
+    timePassed = round(t, 2)
+    print(timePassed)
     if timePassed > autoDuration:
         elapsedTime.set_color('red')
     else:
-        elapsedTime.set_text(timePassed)
+        elapsedTime.set_text('{:.2f}'.format(normalizedDataTimes[i]))
+        frame_generator.append(frame_generator[-1] + 1)
     return robot, elapsedTime
 
 def init():
     ax.add_patch(robot)
     return robot,
 
-initial_time = time.time()
-anim = animation.FuncAnimation(fig, animate, init_func=init, frames=150, fargs=(initial_time,), interval =  timeDif * 1000, blit=True, repeat=False)
 if (sys.argv[1] == 'save'):
+    anim = animation.FuncAnimation(fig, animate, init_func=init, frames=250,interval =  timeDif * 1000, blit=True, repeat=False)
     anim.save('resources/Autonomous Simulation.gif',writer=animation.PillowWriter(fps=30))
 elif (sys.argv[1] == 'show'):
+    anim = animation.FuncAnimation(fig, animate, init_func=init, frames=frame_generator,interval =  timeDif * 1000, blit=True, repeat=False)
     plt.show()
 else:
     print("Invalid Option")
