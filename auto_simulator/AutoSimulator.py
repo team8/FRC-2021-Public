@@ -3,11 +3,14 @@ import matplotlib
 from matplotlib import animation
 import matplotlib.image as mpimg
 import scipy as scp
-
+import random
 import math
 import pandas as pd
 import numpy as np
 import matplotlib.transforms as mtransforms
+import matplotlib.patches as patches
+
+
 
 #TODO: need to fix 0s in time from other non drive path routines, figure out how to display graphics using intellij, implement average time take
 
@@ -48,7 +51,9 @@ normalizedDataTimes = np.array([0.0] * normalizedLength)
 normalizedDataX = np.array([0.0] * normalizedLength)
 normalizedDataY = np.array([0.0] * normalizedLength)
 
+#robot = patches.Rectangle((normalizedDataX - 0.25, normalizedDataY - 0.25), 50, 50, fc='y') 
 
+robot = patches.Rectangle((0, 0 ),0, 0, fc='y') 
 #returns both points surrounding a given time.
 #also, it's pretty inefficient, but it doesnt matter and I think binary sort would be annoying to implement
 def searchPts(timeIn):
@@ -100,13 +105,18 @@ def animate(i):
     # return line,
     x = normalizedDataX[i] + xOffset
     y = normalizedDataY[i] + yOffset
-    line.set_data(np.linspace(x -0.02, x, 50), np.linspace(y - 0.02, y, 50))
-    return line,
+    print(x, y)
+    robot.set_width(0.5)
+    robot.set_height(0.5)
+    robot.set_xy([x, y])
+    return robot,
+    # line.set_data(np.linspace(x - random.randint(1, 5)/100.0, x, 50), np.linspace(y - 0.02, y, 50))
+    # return line,
 
 
 def init():
-    line.set_data([], [])
-    return line,
+    ax.add_patch(robot)
+    return robot,
 
 anim = animation.FuncAnimation(fig, animate, init_func=init, frames= normalizedLength, interval =  timeDif * 1000, blit=True)
 plt.show()
