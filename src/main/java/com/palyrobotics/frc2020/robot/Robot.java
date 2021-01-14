@@ -93,7 +93,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void simulationInit() {
 		Log.info(kLoggerTag, "Writing path CSV file...");
-		pathToCsv();
+		//pathToCsv();
 	}
 
 	private void pathToCsv() {
@@ -173,6 +173,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void robotPeriodic() {
+		mRobotState.driveLeftPosition = System.currentTimeMillis();
 		for (RobotService robotService : mEnabledServices) {
 			robotService.update(mRobotState, mCommands);
 		}

@@ -117,7 +117,9 @@ public class Configs {
 			sConfigMap.put(configClass, config);
 			sNameToClass.put(configClass.getSimpleName(), configClass);
 		}
+		System.out.println(config);
 		return config;
+
 	}
 
 	/**

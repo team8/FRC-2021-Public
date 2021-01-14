@@ -137,24 +137,38 @@ public class CommandReceiverService implements RobotService {
 			case "set":
 			case "save":
 			case "reload": {
+				//main field name is this
 				String configName = parse.getString("config_name");
-				if (commandName.equals("get") && configName.equals("configs")) {
-					return String.join(",", Configs.getActiveConfigNames());
+				//custom field name setup
+				if (commandName.equals("get")) {
+					switch (configName) {
+						case "configs":
+							//returns all config names
+							return String.join(",", Configs.getActiveConfigNames());
+					}
+				}
+				if(commandName.equals("set")){
+
 				}
 				try {
+					//get the config class from its name
 					Class<? extends ConfigBase> configClass = Configs.getClassFromName(configName);
 					if (configClass == null) throw new ClassNotFoundException();
+					//get the config object to read
 					ConfigBase configObject = Configs.get(configClass);
+					//get the rest of the fields
 					var allFieldNames = parse.getString("config_field");
 					try {
 						switch (commandName) {
 							case "set":
 							case "get": {
 								String[] fieldNames = allFieldNames == null ? null : allFieldNames.split("\\.");
+								//originally all the json, can become a field if specified
 								Object fieldValue = configObject, fieldParentValue = null;
 								Field field = null;
 								if (fieldNames != null && fieldNames.length != 0) {
 									for (String fieldName : fieldNames) {
+										//find the field (NOT FOR FULL FILE) that is trying to be set or get, get its type
 										field = getField(field == null ? configClass : field.getType(), fieldName);
 										fieldParentValue = fieldValue;
 										fieldValue = field.get(fieldValue);
@@ -162,15 +176,19 @@ public class CommandReceiverService implements RobotService {
 								}
 								switch (commandName) {
 									case "get": {
+										//return the field you want - be it the whole config or one field
 										String display = Configs.toJson(fieldValue);
+										//formatting and returning - try these commands in control center terminal for better understanding
 										return parse.getBoolean("raw") ? display :
 												String.format("[%s] %s: %s", configName,
 														allFieldNames == null ? "all" : allFieldNames, display);
 									}
 									case "set": {
 										if (field == null) return "Can't set entire config file yet!";
+										//value to set
 										String stringValue = parse.getString("config_value");
 										if (stringValue == null) return "Must provide a value to set!";
+										//formatting and returning - try these commands in control center terminal for better understanding
 										try {
 											Object newFieldValue = sMapper.readValue(stringValue, field.getType());
 											Configs.set(configObject, fieldParentValue, field, newFieldValue);
