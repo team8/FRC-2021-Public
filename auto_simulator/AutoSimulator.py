@@ -1,3 +1,5 @@
+import threading
+import time
 import matplotlib.transforms as transforms
 import matplotlib.pyplot as plt
 import matplotlib
@@ -34,7 +36,7 @@ line, = ax.plot([], [], lw=7)
 ax.imshow(img, extent=[0, 8.21, 0, 15.98])
 
 #total time
-print(data.t[len(data.t) - 1])
+autoDuration = data.t[len(data.t) - 1]
 
 
 # Graph setup above
@@ -55,7 +57,8 @@ normalizedDataAngle = np.array([0.0] * normalizedLength)
 
 #robot = patches.Rectangle((normalizedDataX - 0.25, normalizedDataY - 0.25), 50, 50, fc='y') 
 
-robot = patches.Rectangle((0, 0 ),0, 0, fc='y') 
+robot = patches.Rectangle((0, 0), 0, 0, fc='y') 
+elapsedTime = ax.text(0.05, 0.9, '', transform=ax.transAxes, color='white', fontsize=14)
 #returns both points surrounding a given time.
 #also, it's pretty inefficient, but it doesnt matter and I think binary sort would be annoying to implement
 def searchPts(timeIn):
@@ -100,29 +103,30 @@ def findAvgTimeDeviation():
 
 createProperData()
 
-def animate(i):
-    # x = np.linspace(0, 2, 1000)
-    # y = np.sin(2 * np.pi * (x - 0.01 * i))
-    # line.set_data(x, y)
-    # return line,
+def animate(i, initial_time):
     x = normalizedDataX[i] + xOffset
     y = normalizedDataY[i] + yOffset
     d = normalizedDataAngle[i]
-    print(x, y, d)
+    # print(x, y, d)
+    print(time.time() - initial_time)
     robot.set_width(0.5)
     robot.set_height(0.5)
     robot.set_xy([x, y])
     robot.set_transform(transforms.Affine2D().rotate_deg_around(x,y,d) + ax.transData)
+    timePassed = round((time.time() - initial_time) * 100) / 100
 
-
-    return robot,
-    # line.set_data(np.linspace(x - random.randint(1, 5)/100.0, x, 50), np.linspace(y - 0.02, y, 50))
-    # return line,
-
+    if timePassed > autoDuration:
+        elapsedTime.set_color('red')
+    else:
+        elapsedTime.set_text(timePassed)
+    return robot, elapsedTime
 
 def init():
     ax.add_patch(robot)
     return robot,
 
-anim = animation.FuncAnimation(fig, animate, init_func=init, frames= normalizedLength, interval =  timeDif * 1000, blit=True)
+initial_time = time.time()
+
+anim = animation.FuncAnimation(fig, animate, init_func=init, frames= normalizedLength, fargs=(initial_time,), interval =  timeDif * 1000, blit=True)
+# anim.save('resources/Autonomous Simulation.gif',writer=animation.PillowWriter(fps=30))
 plt.show()
