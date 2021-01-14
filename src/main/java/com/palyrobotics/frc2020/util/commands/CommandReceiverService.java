@@ -147,7 +147,7 @@ public class CommandReceiverService implements RobotService {
 							return String.join(",", Configs.getActiveConfigNames());
 					}
 				}
-				if(commandName.equals("set")){
+				if (commandName.equals("set")) {
 
 				}
 				try {
