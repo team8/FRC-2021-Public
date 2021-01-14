@@ -4,9 +4,9 @@ import static com.palyrobotics.frc2020.util.Util.handleDeadBand;
 import static com.palyrobotics.frc2020.vision.Limelight.kOneTimesZoomPipelineId;
 import static com.palyrobotics.frc2020.vision.Limelight.kTwoTimesZoomPipelineId;
 
-import com.palyrobotics.frc2020.behavior.routines.indexer.IndexerFeedRoutine;
 import com.palyrobotics.frc2020.behavior.routines.spinner.SpinnerPositionControlRoutine;
 import com.palyrobotics.frc2020.behavior.routines.spinner.SpinnerRotationControlRoutine;
+import com.palyrobotics.frc2020.behavior.routines.superstructure.IndexerFeedRoutine;
 import com.palyrobotics.frc2020.config.subsystem.IntakeConfig;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.Joysticks;
 import com.palyrobotics.frc2020.subsystems.Climber;

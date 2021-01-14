@@ -26,6 +26,7 @@ public abstract class RoutineBase {
 	protected final Drive mDrive = Drive.getInstance();
 	protected final Indexer mIndexer = Indexer.getInstance();
 	protected final Intake mIntake = Intake.getInstance();
+	protected final Shooter mShooter = Shooter.getInstance();
 	protected final Spinner mSpinner = Spinner.getInstance();
 	private State mState = State.INIT;
 
