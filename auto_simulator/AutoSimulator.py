@@ -1,3 +1,4 @@
+import sys
 import threading
 import time
 import matplotlib.transforms as transforms
@@ -126,7 +127,10 @@ def init():
     return robot,
 
 initial_time = time.time()
-
-anim = animation.FuncAnimation(fig, animate, init_func=init, frames= normalizedLength, fargs=(initial_time,), interval =  timeDif * 1000, blit=True)
-# anim.save('resources/Autonomous Simulation.gif',writer=animation.PillowWriter(fps=30))
-plt.show()
+anim = animation.FuncAnimation(fig, animate, init_func=init, frames=150, fargs=(initial_time,), interval =  timeDif * 1000, blit=True, repeat=False)
+if (sys.argv[1] == 'save'):
+    anim.save('resources/Autonomous Simulation.gif',writer=animation.PillowWriter(fps=30))
+elif (sys.argv[1] == 'show'):
+    plt.show()
+else:
+    print("Invalid Option")
