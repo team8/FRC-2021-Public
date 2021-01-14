@@ -45,4 +45,8 @@ public class TimedRoutine extends RoutineBase {
 	public Set<SubsystemBase> getRequiredSubsystems() {
 		return new HashSet<>();
 	}
+
+	public double getEstimatedTime() {
+		return mEstimatedTime;
+	}
 }

@@ -94,7 +94,7 @@ public class Robot extends TimedRobot {
 	}
 
 	private void pathToCsv() {
-		String csv_path = "auto-grapher/resources/auto.csv";
+		String csv_path = "auto_simulator/resources/auto.csv";
 		try (var writer = new PrintWriter(new BufferedWriter(new FileWriter(csv_path)))) {
 			RoutineBase drivePath = AutoSelector.getAuto().getRoutine();
 			writer.write("xPos,yPos,d,t" + '\n');
@@ -112,8 +112,9 @@ public class Robot extends TimedRobot {
 
 	private void recurseRoutine(RoutineBase routine, Deque<PointLinkTime> points) {
 		//Todo: Fix estimated time routines
+		//TODO: figure out how the estimated time of rotations will work
 		//Todo: Make routine base have method instead of instanceof...
-		//TODO: remove instanceof in code, need to figure out how parralel routines will work... (ignore shorter or path?)
+		//TODO: remove instanceof in code, need to figure out how parralel routines will work... (ignore shorter or path?) Also solve problem where wait routine + parallel routine adds in too much time
 		if (routine instanceof MultipleRoutineBase) {
 			var multiple = (MultipleRoutineBase) routine;
 			for (RoutineBase childRoutine : multiple.getRoutines()) {
@@ -136,7 +137,10 @@ public class Robot extends TimedRobot {
 				points.addLast(new PointLinkTime(pose, time + lastTime));
 			}
 		} else if (routine instanceof TimedRoutine) {
+			PointLinkTime last = points.getLast();
+			points.addLast(new PointLinkTime(last.getPose(), last.getTime() + ((TimedRoutine) routine).getEstimatedTime()));
 			//TODO: Fix interpolation in autographer
+
 		}
 		//TODO: figure out how to add wait time for other routines
 	}
