@@ -50,6 +50,7 @@ normalizedLength = (int)(len(data.t) // timeDif)
 normalizedDataTimes = np.array([0.0] * normalizedLength)
 normalizedDataX = np.array([0.0] * normalizedLength)
 normalizedDataY = np.array([0.0] * normalizedLength)
+normalizedDataAngle = np.array([0.0] * normalizedLength)
 
 #robot = patches.Rectangle((normalizedDataX - 0.25, normalizedDataY - 0.25), 50, 50, fc='y') 
 
@@ -82,7 +83,7 @@ def createProperData():
      for i in range(0, normalizedLength - 2):
         pos1, pos2 = searchPts(normalizedDataTimes[i])
         normalizedDataX[i], normalizedDataY[i] = interpData2Pts(data.xPos[pos1], data.xPos[pos2], data.yPos[pos1], data.yPos[pos2], data.t[pos1], data.t[pos2], normalizedDataTimes[i])
-
+        normalizedDataAngle[i] = (data.d[pos1] + data.d[pos2])/2
 def findAvgTime():
     return data.t[len(data.t) - 1] / len(data.t)
 
@@ -105,10 +106,12 @@ def animate(i):
     # return line,
     x = normalizedDataX[i] + xOffset
     y = normalizedDataY[i] + yOffset
-    print(x, y)
+    d = normalizedDataAngle[i]
+    print(x, y, d)
     robot.set_width(0.5)
     robot.set_height(0.5)
     robot.set_xy([x, y])
+   # robot.__angle = -np.rad2deg
     return robot,
     # line.set_data(np.linspace(x - random.randint(1, 5)/100.0, x, 50), np.linspace(y - 0.02, y, 50))
     # return line,
