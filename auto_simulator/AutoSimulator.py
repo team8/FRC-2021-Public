@@ -1,3 +1,4 @@
+import matplotlib.transforms as transforms
 import matplotlib.pyplot as plt
 import matplotlib
 from matplotlib import animation
@@ -111,7 +112,9 @@ def animate(i):
     robot.set_width(0.5)
     robot.set_height(0.5)
     robot.set_xy([x, y])
-   # robot.__angle = -np.rad2deg
+    robot.set_transform(transforms.Affine2D().rotate_deg_around(x,y,d) + ax.transData)
+
+
     return robot,
     # line.set_data(np.linspace(x - random.randint(1, 5)/100.0, x, 50), np.linspace(y - 0.02, y, 50))
     # return line,
