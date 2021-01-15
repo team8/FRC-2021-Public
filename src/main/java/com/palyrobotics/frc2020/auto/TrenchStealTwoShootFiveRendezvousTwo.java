@@ -7,7 +7,7 @@ import com.palyrobotics.frc2020.behavior.ParallelRoutine;
 import com.palyrobotics.frc2020.behavior.RoutineBase;
 import com.palyrobotics.frc2020.behavior.SequentialRoutine;
 import com.palyrobotics.frc2020.behavior.routines.TimedRoutine;
-import com.palyrobotics.frc2020.behavior.routines.drive.DriveAlignRoutine;
+import com.palyrobotics.frc2020.behavior.routines.drive.DriveAlignYawAssistedRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DrivePathRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DriveSetOdometryRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DriveYawRoutine;
@@ -38,7 +38,7 @@ public class TrenchStealTwoShootFiveRendezvousTwo implements AutoBase {
 						new TimedRoutine(0.2),
 						new TimedRoutine(Double.POSITIVE_INFINITY)));
 		var shootBalls = new SequentialRoutine(
-				new DriveAlignRoutine(0),
+				new DriveAlignYawAssistedRoutine(0, 0),
 				new ParallelRoutine(
 						new ShooterVisionRoutine(6),
 						new SequentialRoutine(
