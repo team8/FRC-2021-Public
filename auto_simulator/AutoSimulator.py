@@ -47,13 +47,13 @@ ax.imshow(img, extent=[0, 8.21, 0, 15.98])
 
 #total time
 autoDuration = data.t[len(data.t) - 1]
-
-
+selectedAuto = ""
 with open("resources/AutoConstants.json") as f:
     auto_constants = json.load(f)
+    selectedAuto = auto_constants['SelectedAuto']
     # Graph setup above
-    xOffset = auto_constants[auto_constants['SelectedAuto']]['xPosInit']
-    yOffset = auto_constants[auto_constants['SelectedAuto']]['yPosInit']
+    xOffset = auto_constants[selectedAuto]['xPosInit']
+    yOffset = auto_constants[selectedAuto]['yPosInit']
 
 
 #t[0] = t[1] because we have a reset routine
@@ -142,7 +142,7 @@ def init():
 
 if (sys.argv[1] == 'save'):
     anim = animation.FuncAnimation(fig, animate, init_func=init, frames=250,interval =  timeDif * 1000, blit=True, repeat=False)
-    anim.save('resources/Autonomous Simulation.gif',writer=animation.PillowWriter(fps=30))
+    anim.save('resources/' + selectedAuto + 'Simulation.gif',writer=animation.PillowWriter(fps=30))
 elif (sys.argv[1] == 'show'):
     anim = animation.FuncAnimation(fig, animate, init_func=init, frames=frame_generator,interval =  timeDif * 1000, blit=True, repeat=False)
     plt.tight_layout()
