@@ -14,6 +14,7 @@ import com.palyrobotics.frc2020.behavior.RoutineManager;
 import com.palyrobotics.frc2020.behavior.routines.TimedRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DrivePathRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DriveSetOdometryRoutine;
+import com.palyrobotics.frc2020.behavior.routines.drive.DriveYawRoutine;
 import com.palyrobotics.frc2020.config.RobotConfig;
 import com.palyrobotics.frc2020.subsystems.*;
 import com.palyrobotics.frc2020.util.LoopOverrunDebugger;
@@ -32,6 +33,7 @@ import com.palyrobotics.frc2020.vision.LimelightControlMode;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
@@ -116,6 +118,7 @@ public class Robot extends TimedRobot {
 	}
 
 	private void recurseRoutine(RoutineBase routine, Deque<PointLinkTime> points) {
+		//TODO: change reset odometry routine to change intial positions
 		//Todo: Fix estimated time routines
 		//TODO: figure out how the estimated time of rotations will work
 		//Todo: Make routine base have method instead of instanceof...
@@ -130,7 +133,6 @@ public class Robot extends TimedRobot {
 			var pose = odometry.getTargetPose();
 			//TODO: Make these take time, change time from 0
 			points.addLast(new PointLinkTime(pose, 0));
-
 		} else if (routine instanceof DrivePathRoutine) {
 			var path = (DrivePathRoutine) routine;
 			path.generateTrajectory(points.getLast().getPose());
@@ -141,6 +143,11 @@ public class Robot extends TimedRobot {
 				//Need to find some way to take last time dif or something in order to add to program
 				points.addLast(new PointLinkTime(pose, time + lastTime));
 			}
+		} else if (routine instanceof DriveYawRoutine) {
+			PointLinkTime last = points.getLast();
+			Pose2d endOfRot = new Pose2d(last.getPose().getTranslation(), (new Rotation2d(((DriveYawRoutine) routine).getTargetYawDegrees())));
+			points.addLast(new PointLinkTime(endOfRot, last.getTime() + ((TimedRoutine) routine).getEstimatedTime()));
+
 		} else if (routine instanceof TimedRoutine) {
 			PointLinkTime last = points.getLast();
 			points.addLast(new PointLinkTime(last.getPose(), last.getTime() + ((TimedRoutine) routine).getEstimatedTime()));

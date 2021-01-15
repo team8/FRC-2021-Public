@@ -51,4 +51,9 @@ public class DriveYawRoutine extends TimeoutRoutineBase {
 	public Set<SubsystemBase> getRequiredSubsystems() {
 		return Set.of(mDrive);
 	}
+
+	//TODO: delete this, shouldn't exist in code architecture. DON"T USE UNLESS FOR GRAPHER
+	public double getTargetYawDegrees() {
+		return mTargetYawDegrees;
+	}
 }
