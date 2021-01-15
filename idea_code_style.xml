@@ -4,7 +4,7 @@
     <option name="STATIC_FIELD_NAME_PREFIX" value="s" />
     <option name="SUBCLASS_NAME_SUFFIX" value="" />
     <REPEAT_ANNOTATIONS>
-      <ANNO name="com.palyrobotics.frc2021.robot.ReadOnly" />
+      <ANNO name="com.palyrobotics.frc2020.robot.ReadOnly" />
     </REPEAT_ANNOTATIONS>
   </JavaCodeStyleSettings>
   <codeStyleSettings language="JAVA">

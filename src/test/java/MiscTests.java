@@ -1,7 +1,7 @@
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.palyrobotics.frc2021.util.InterpolatingDoubleTreeMap;
-import com.palyrobotics.frc2021.util.control.*;
+import com.palyrobotics.frc2020.util.InterpolatingDoubleTreeMap;
+import com.palyrobotics.frc2020.util.control.*;
 
 import edu.wpi.first.wpilibj.Timer;
 
