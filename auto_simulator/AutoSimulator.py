@@ -1,3 +1,4 @@
+import json
 import sys
 import threading
 import time
@@ -48,9 +49,11 @@ ax.imshow(img, extent=[0, 8.21, 0, 15.98])
 autoDuration = data.t[len(data.t) - 1]
 
 
-# Graph setup above
-xOffset = 7.3
-yOffset = 3.3
+with open("resources/AutoConstants.json") as f:
+    auto_constants = json.load(f)
+    # Graph setup above
+    xOffset = auto_constants[auto_constants['SelectedAuto']]['xPosInit']
+    yOffset = auto_constants[auto_constants['SelectedAuto']]['yPosInit']
 
 
 #t[0] = t[1] because we have a reset routine
