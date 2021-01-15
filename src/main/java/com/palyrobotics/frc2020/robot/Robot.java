@@ -157,11 +157,11 @@ public class Robot extends TimedRobot {
 			Log.info(kLoggerTag, String.valueOf(points.getLast().getPose().toString()));
 			Log.info(kLoggerTag, "Last Pose Time");
 			Log.info(kLoggerTag, String.valueOf(last.getTime()));
-			Pose2d endOfRot = new Pose2d(last.getPose().getTranslation(), (new Rotation2d(((DriveYawRoutine) routine).getTargetYawDegrees() * Math.PI / 180)));
-			Log.info(kLoggerTag, "Point Link Time");
-			Log.info(kLoggerTag, String.valueOf(new PointLinkTime(endOfRot, last.getTime() + DriveConstants.calculateTimeToFinishTurn(last.getPose().getRotation().getDegrees(), ((DriveYawRoutine) routine).getTargetYawDegrees())).toString()));
-			points.addLast(new PointLinkTime(endOfRot, last.getTime() + DriveConstants.calculateTimeToFinishTurn(last.getPose().getRotation().getDegrees(), ((DriveYawRoutine) routine).getTargetYawDegrees())));
-
+			double rotationDuration = DriveConstants.calculateTimeToFinishTurn(last.getPose().getRotation().getDegrees(), ((DriveYawRoutine) routine).getTargetYawDegrees());
+			double targetYawRad = ((DriveYawRoutine) routine).getTargetYawDegrees() * Math.PI / 180;
+			for (int i = 0; i <= 10; i++) {
+				points.addLast(new PointLinkTime(new Pose2d(last.getPose().getTranslation(), (new Rotation2d(targetYawRad * i / 10.0))), last.getTime() + rotationDuration * i /10.0));
+			}
 		} else if (routine instanceof TimedRoutine) {
 			PointLinkTime last = points.getLast();
 			points.addLast(new PointLinkTime(last.getPose(), last.getTime() + ((TimedRoutine) routine).getEstimatedTime()));

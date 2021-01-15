@@ -18,7 +18,8 @@ public class AutoSelector {
 	// ============================================================= //
 	// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= //
 
-	private static AutoBase sChosenAuto = new StartCenterFriendlyTrenchThreeShootThree();
+	private static AutoBase sChosenAuto = new TrenchStealTwoShootFive();
+
 
 	// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= //
 	// ============================================================= //
