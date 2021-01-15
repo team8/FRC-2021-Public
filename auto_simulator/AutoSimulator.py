@@ -26,12 +26,23 @@ except IndexError:
 #TODO: need to fix 0s in time from other non drive path routines, figure out how to display graphics using intellij, implement average time take
 
 timeDif = 0.05
-#Time between frames
+autoCSVPath = ""
+selectedAuto = ""
+with open("resources/AutoConstants.json") as f:
+    auto_constants = json.load(f)
+    selectedAuto = auto_constants['SelectedAuto']
+    autoCSVPath = auto_constants[selectedAuto]['autoCSVPath']
+    
+    # Graph setup above
+    xOffset = auto_constants[selectedAuto]['xPosInit']
+    yOffset = auto_constants[selectedAuto]['yPosInit']
 
 img = mpimg.imread("./resources/infiniteRechargeField.png")
 print("Field Image Found")
-data = pd.read_csv('./resources/auto.csv')
+data = pd.read_csv('./' + autoCSVPath)
 print("Auto Path Found")
+
+autoDuration = data.t[len(data.t) - 1]        
 
 default_dpi = matplotlib.rcParamsDefault['figure.dpi']
 matplotlib.rcParams['figure.dpi'] = default_dpi*1.5 #scaling window to 1.5x the default size
@@ -44,16 +55,6 @@ line, = ax.plot([], [], lw=7)
 
 ax.imshow(img, extent=[0, 8.21, 0, 15.98])
 #ax.imshow(img, extent=[0, 16.42, 0, 31.98])
-
-#total time
-autoDuration = data.t[len(data.t) - 1]
-selectedAuto = ""
-with open("resources/AutoConstants.json") as f:
-    auto_constants = json.load(f)
-    selectedAuto = auto_constants['SelectedAuto']
-    # Graph setup above
-    xOffset = auto_constants[selectedAuto]['xPosInit']
-    yOffset = auto_constants[selectedAuto]['yPosInit']
 
 
 #t[0] = t[1] because we have a reset routine

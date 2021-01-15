@@ -2,10 +2,12 @@
   "SelectedAuto": "StartCenter",
   "TrenchStart": {
     "xPosInit": 7.3,
-    "yPosInit": 3.3
+    "yPosInit": 3.3,
+    "autoCSVPath": "/resources/trenchStealTwoShootFiveAuto.csv"
   },
   "StartCenter": {
     "xPosInit": 2.5,
-    "yPosInit": 3.3
+    "yPosInit": 3.3,
+    "autoCSVPath": "/resources/startCenterFriendlyTrenchThreeShootThreeAuto.csv"
   }
 }

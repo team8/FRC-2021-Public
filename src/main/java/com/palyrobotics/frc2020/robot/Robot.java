@@ -99,7 +99,7 @@ public class Robot extends TimedRobot {
 	}
 
 	private void pathToCsv() {
-		String csv_path = "auto_simulator/resources/auto.csv";
+		String csv_path = "auto_simulator/resources/" + AutoSelector.getAuto().getName() + "Auto.csv";
 		try (var writer = new PrintWriter(new BufferedWriter(new FileWriter(csv_path)))) {
 			RoutineBase drivePath = AutoSelector.getAuto().getRoutine();
 			writer.write("xPos,yPos,d,t" + '\n');
