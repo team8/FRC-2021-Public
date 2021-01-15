@@ -157,7 +157,7 @@ public class Robot extends TimedRobot {
 			Log.info(kLoggerTag, String.valueOf(points.getLast().getPose().toString()));
 			Log.info(kLoggerTag, "Last Pose Time");
 			Log.info(kLoggerTag, String.valueOf(last.getTime()));
-			Pose2d endOfRot = new Pose2d(last.getPose().getTranslation(), (new Rotation2d(((DriveYawRoutine) routine).getTargetYawDegrees()*Math.PI/180)));
+			Pose2d endOfRot = new Pose2d(last.getPose().getTranslation(), (new Rotation2d(((DriveYawRoutine) routine).getTargetYawDegrees() * Math.PI / 180)));
 			Log.info(kLoggerTag, "Point Link Time");
 			Log.info(kLoggerTag, String.valueOf(new PointLinkTime(endOfRot, last.getTime() + DriveConstants.calculateTimeToFinishTurn(0, ((DriveYawRoutine) routine).getTargetYawDegrees())).toString()));
 			points.addLast(new PointLinkTime(endOfRot, last.getTime() + DriveConstants.calculateTimeToFinishTurn(0, ((DriveYawRoutine) routine).getTargetYawDegrees())));
