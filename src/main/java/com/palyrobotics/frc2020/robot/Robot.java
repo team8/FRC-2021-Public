@@ -16,6 +16,7 @@ import com.palyrobotics.frc2020.behavior.routines.drive.DrivePathRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DriveSetOdometryRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DriveYawRoutine;
 import com.palyrobotics.frc2020.config.RobotConfig;
+import com.palyrobotics.frc2020.config.constants.DriveConstants;
 import com.palyrobotics.frc2020.subsystems.*;
 import com.palyrobotics.frc2020.util.LoopOverrunDebugger;
 import com.palyrobotics.frc2020.util.Util;
@@ -91,7 +92,6 @@ public class Robot extends TimedRobot {
 				updateDriveNeutralMode(config.coastDriveWhenDisabled);
 			}
 		});
-		simulationInit();
 	}
 
 	@Override
@@ -102,6 +102,7 @@ public class Robot extends TimedRobot {
 
 	private void pathToCsv() {
 		String csv_path = "auto_simulator/resources/" + AutoSelector.getAuto().getName() + "Auto.csv";
+		Log.info(kLoggerTag, AutoSelector.getAuto().getName());
 		try (var writer = new PrintWriter(new BufferedWriter(new FileWriter(csv_path)))) {
 			RoutineBase drivePath = AutoSelector.getAuto().getRoutine();
 			writer.write("xPos,yPos,d,t" + '\n');
@@ -144,9 +145,22 @@ public class Robot extends TimedRobot {
 				points.addLast(new PointLinkTime(pose, time + lastTime));
 			}
 		} else if (routine instanceof DriveYawRoutine) {
+
 			PointLinkTime last = points.getLast();
-			Pose2d endOfRot = new Pose2d(last.getPose().getTranslation(), (new Rotation2d(((DriveYawRoutine) routine).getTargetYawDegrees())));
-			points.addLast(new PointLinkTime(endOfRot, last.getTime() + ((TimedRoutine) routine).getEstimatedTime()));
+			Log.info(kLoggerTag, "Rotating __ Degrees");
+			Log.info(kLoggerTag, String.valueOf(((DriveYawRoutine) routine).getTargetYawDegrees()));
+			Log.info(kLoggerTag, "Time for rotation sec");
+			Log.info(kLoggerTag, String.valueOf(DriveConstants.calculateTimeToFinishTurn(0, ((DriveYawRoutine) routine).getTargetYawDegrees())));
+			Log.info(kLoggerTag, "First Pose");
+			Log.info(kLoggerTag, String.valueOf(points.getFirst().getPose().toString()));
+			Log.info(kLoggerTag, "Last Pose");
+			Log.info(kLoggerTag, String.valueOf(points.getLast().getPose().toString()));
+			Log.info(kLoggerTag, "Last Pose Time");
+			Log.info(kLoggerTag, String.valueOf(last.getTime()));
+			Pose2d endOfRot = new Pose2d(last.getPose().getTranslation(), (new Rotation2d(((DriveYawRoutine) routine).getTargetYawDegrees()*Math.PI/180)));
+			Log.info(kLoggerTag, "Point Link Time");
+			Log.info(kLoggerTag, String.valueOf(new PointLinkTime(endOfRot, last.getTime() + DriveConstants.calculateTimeToFinishTurn(0, ((DriveYawRoutine) routine).getTargetYawDegrees())).toString()));
+			points.addLast(new PointLinkTime(endOfRot, last.getTime() + DriveConstants.calculateTimeToFinishTurn(0, ((DriveYawRoutine) routine).getTargetYawDegrees())));
 
 		} else if (routine instanceof TimedRoutine) {
 			PointLinkTime last = points.getLast();

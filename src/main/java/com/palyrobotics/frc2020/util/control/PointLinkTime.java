@@ -26,4 +26,12 @@ public class PointLinkTime {
 	public Pose2d getPose() {
 		return mPose;
 	}
+
+	@Override
+	public String toString() {
+		return "PointLinkTime{" +
+				"mPose=" + mPose +
+				", mTime=" + mTime +
+				'}';
+	}
 }

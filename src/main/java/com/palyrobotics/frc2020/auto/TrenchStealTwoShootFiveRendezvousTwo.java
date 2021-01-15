@@ -27,10 +27,8 @@ public class TrenchStealTwoShootFiveRendezvousTwo implements AutoBase {
 		var getTrenchBalls = new ParallelRaceRoutine(
 				new SequentialRoutine(
 						new DrivePathRoutine(newWaypoint(92, 0, 0))
-								.setMovement(1.5, 2.4),
-						new DriveYawRoutine(15.0)),
-				new IndexerTimeRoutine(Double.POSITIVE_INFINITY),
-				new IntakeBallRoutine(Double.POSITIVE_INFINITY, 1.0));
+								.setMovement(1.5, 2.4)));
+
 		var goToShoot = new ParallelRaceRoutine(
 				new DrivePathRoutine(newWaypoint(60, 70, 150))
 						.setMovement(1.5, 2.4)
