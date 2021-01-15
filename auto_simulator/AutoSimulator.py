@@ -14,8 +14,6 @@ import numpy as np
 import matplotlib.transforms as mtransforms
 import matplotlib.patches as patches
 
-
-
 try:
     sys.argv[1]
 except IndexError:
@@ -34,6 +32,8 @@ print("Field Image Found")
 data = pd.read_csv('./resources/auto.csv')
 print("Auto Path Found")
 
+default_dpi = matplotlib.rcParamsDefault['figure.dpi']
+matplotlib.rcParams['figure.dpi'] = default_dpi*1.5 #scaling window to 1.5x the default size
 # Imports and checks data
 fig = plt.figure()
 ax = plt.axes(xlim=(0, 8), ylim=(0, 16))
@@ -41,8 +41,8 @@ ax = plt.axes(xlim=(0, 8), ylim=(0, 16))
 
 line, = ax.plot([], [], lw=7)
 
-# ax.imshow(img, extent=[0, 15.98, 0, 8.21])
 ax.imshow(img, extent=[0, 8.21, 0, 15.98])
+#ax.imshow(img, extent=[0, 16.42, 0, 31.98])
 
 #total time
 autoDuration = data.t[len(data.t) - 1]
@@ -142,6 +142,7 @@ if (sys.argv[1] == 'save'):
     anim.save('resources/Autonomous Simulation.gif',writer=animation.PillowWriter(fps=30))
 elif (sys.argv[1] == 'show'):
     anim = animation.FuncAnimation(fig, animate, init_func=init, frames=frame_generator,interval =  timeDif * 1000, blit=True, repeat=False)
+    plt.tight_layout()
     plt.show()
 else:
     print("Invalid Option")
