@@ -105,13 +105,13 @@ public class Robot extends TimedRobot {
 		Log.info(kLoggerTag, AutoSelector.getAuto().getName());
 		try (var writer = new PrintWriter(new BufferedWriter(new FileWriter(csv_path)))) {
 			RoutineBase drivePath = AutoSelector.getAuto().getRoutine();
-			writer.write("xPos,yPos,d,t" + '\n');
+			writer.write("xPos,yPos,d,t,a" + '\n');
 			var points = new LinkedList<PointLinkTime>();
 			recurseRoutine(drivePath, points);
 			for (PointLinkTime pointLink : points) {
 				Pose2d pose = pointLink.getPose();
 				Translation2d point = pointLink.getPose().getTranslation();
-				writer.write(String.format("%f,%f,%f,%f%n", -point.getY(), point.getX(), pose.getRotation().getDegrees(), pointLink.getTime()));
+				writer.write(String.format("%f,%f,%f,%f,%s,%n", -point.getY(), point.getX(), pose.getRotation().getDegrees(), pointLink.getTime(), pointLink.getRoutineName()));
 			}
 		} catch (IOException writeException) {
 			writeException.printStackTrace();
@@ -133,7 +133,7 @@ public class Robot extends TimedRobot {
 			var odometry = (DriveSetOdometryRoutine) routine;
 			var pose = odometry.getTargetPose();
 			//TODO: Make these take time, change time from 0
-			points.addLast(new PointLinkTime(pose, 0));
+			points.addLast(new PointLinkTime(pose, 0, routine.getName()));
 		} else if (routine instanceof DrivePathRoutine) {
 			var path = (DrivePathRoutine) routine;
 			path.generateTrajectory(points.getLast().getPose());
@@ -142,7 +142,7 @@ public class Robot extends TimedRobot {
 				var pose = state.poseMeters;
 				var time = state.timeSeconds;
 				//Need to find some way to take last time dif or something in order to add to program
-				points.addLast(new PointLinkTime(pose, time + lastTime));
+				points.addLast(new PointLinkTime(pose, time + lastTime, routine.getName()));
 			}
 		} else if (routine instanceof DriveYawRoutine) {
 
@@ -160,11 +160,11 @@ public class Robot extends TimedRobot {
 			double rotationDuration = DriveConstants.calculateTimeToFinishTurn(last.getPose().getRotation().getDegrees(), ((DriveYawRoutine) routine).getTargetYawDegrees());
 			double targetYawRad = ((DriveYawRoutine) routine).getTargetYawDegrees() * Math.PI / 180;
 			for (int i = 0; i <= 10; i++) {
-				points.addLast(new PointLinkTime(new Pose2d(last.getPose().getTranslation(), (new Rotation2d(targetYawRad * i / 10.0))), last.getTime() + rotationDuration * i /10.0));
+				points.addLast(new PointLinkTime(new Pose2d(last.getPose().getTranslation(), (new Rotation2d(targetYawRad * i / 10.0))), last.getTime() + rotationDuration * i / 10.0, routine.getName()));
 			}
 		} else if (routine instanceof TimedRoutine) {
 			PointLinkTime last = points.getLast();
-			points.addLast(new PointLinkTime(last.getPose(), last.getTime() + ((TimedRoutine) routine).getEstimatedTime()));
+			points.addLast(new PointLinkTime(last.getPose(), last.getTime() + ((TimedRoutine) routine).getEstimatedTime(), routine.getName()));
 			//TODO: Fix interpolation in autographer
 
 		}
