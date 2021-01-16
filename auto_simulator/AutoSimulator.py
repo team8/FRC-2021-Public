@@ -32,7 +32,7 @@ with open("resources/AutoConstants.json") as f:
     auto_constants = json.load(f)
     selectedAuto = auto_constants['SelectedAuto']
     autoCSVPath = auto_constants[selectedAuto]['autoCSVPath']
-    
+
     # Graph setup above
     xOffset = auto_constants[selectedAuto]['xPosInit']
     yOffset = auto_constants[selectedAuto]['yPosInit']
@@ -42,7 +42,7 @@ print("Field Image Found")
 data = pd.read_csv('./' + autoCSVPath)
 print("Auto Path Found")
 
-autoDuration = data.t[len(data.t) - 1]        
+autoDuration = data.t[len(data.t) - 1]
 
 default_dpi = matplotlib.rcParamsDefault['figure.dpi']
 matplotlib.rcParams['figure.dpi'] = default_dpi*1.5 #scaling window to 1.5x the default size
@@ -68,9 +68,9 @@ normalizedDataX = np.array([0.0] * normalizedLength)
 normalizedDataY = np.array([0.0] * normalizedLength)
 normalizedDataAngle = np.array([0.0] * normalizedLength)
 
-#robot = patches.Rectangle((normalizedDataX - 0.25, normalizedDataY - 0.25), 50, 50, fc='y') 
+#robot = patches.Rectangle((normalizedDataX - 0.25, normalizedDataY - 0.25), 50, 50, fc='y')
 
-robot = patches.Rectangle((0, 0), 0, 0, fc='y') 
+robot = patches.Rectangle((0, 0), 0, 0, fc='y')
 elapsedTime = ax.text(0.05, 0.9, '', transform=ax.transAxes, color='white', fontsize=14)
 #returns both points surrounding a given time.
 #also, it's pretty inefficient, but it doesnt matter and I think binary sort would be annoying to implement
@@ -97,7 +97,7 @@ def interpData2Pts(x1, x2, y1, y2, t1, t2, tInput):
     return xout, yout
 
 def createProperData():
-    for i in range(0, normalizedLength - 2):
+    for i in range(0, normalizedLength - 1):
         pos1, pos2 = searchPts(normalizedDataTimes[i])
         normalizedDataX[i], normalizedDataY[i] = interpData2Pts(data.xPos[pos1], data.xPos[pos2], data.yPos[pos1], data.yPos[pos2], data.t[pos1], data.t[pos2], normalizedDataTimes[i])
         normalizedDataAngle[i] = (data.d[pos1] + data.d[pos2])/2
