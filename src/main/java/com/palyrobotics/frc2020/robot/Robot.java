@@ -159,8 +159,8 @@ public class Robot extends TimedRobot {
 			Log.info(kLoggerTag, String.valueOf(last.getTime()));
 			double rotationDuration = DriveConstants.calculateTimeToFinishTurn(last.getPose().getRotation().getDegrees(), ((DriveYawRoutine) routine).getTargetYawDegrees());
 			double targetYawRad = ((DriveYawRoutine) routine).getTargetYawDegrees() * Math.PI / 180;
-			for (int i = 0; i <= 10; i++) {
-				points.addLast(new PointLinkTime(new Pose2d(last.getPose().getTranslation(), (new Rotation2d(targetYawRad * i / 10.0))), last.getTime() + rotationDuration * i / 10.0, routine.getName()));
+			for (int i = 0; i <= 5; i++) {
+				points.addLast(new PointLinkTime(new Pose2d(last.getPose().getTranslation(), (new Rotation2d(targetYawRad * i / 5))), last.getTime() + rotationDuration * i / 5, routine.getName()));
 			}
 		} else if (routine instanceof TimedRoutine) {
 			PointLinkTime last = points.getLast();

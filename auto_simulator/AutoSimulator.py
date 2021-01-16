@@ -21,6 +21,7 @@ except IndexError:
     print("No option chosen - would you like to save or show simulation?")
     print("Add the word show after the python run command to show a visualization of the auto")
     print("Add the word save after the python run command to save the simulation as a gif in resources/")
+    print("Add the word create after the python run command to find field coordinates for auto") 
     exit()
 
 #TODO: need to fix 0s in time from other non drive path routines, figure out how to display graphics using intellij, implement average time take
@@ -147,6 +148,9 @@ if (sys.argv[1] == 'save'):
 elif (sys.argv[1] == 'show'):
     anim = animation.FuncAnimation(fig, animate, init_func=init, frames=frame_generator,interval =  timeDif * 1000, blit=True, repeat=False)
     plt.tight_layout()
+    plt.show()
+elif (sys.argv[1] == 'create'): 
+    fig.show()
     plt.show()
 else:
     print("Invalid Option")
