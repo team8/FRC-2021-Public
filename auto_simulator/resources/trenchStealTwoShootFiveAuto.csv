@@ -1,4 +1,4 @@
-xPos,yPos,d,t,a
+xPos,yPos,d,t,a,
 -0.000000,0.000000,0.000000,0.000000,driveSetOdometryRoutine,
 -0.000000,0.000000,0.000000,0.000000,drivePathRoutine,
 -0.000000,0.087494,0.000000,0.270022,drivePathRoutine,

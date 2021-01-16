@@ -105,7 +105,7 @@ public class Robot extends TimedRobot {
 		Log.info(kLoggerTag, AutoSelector.getAuto().getName());
 		try (var writer = new PrintWriter(new BufferedWriter(new FileWriter(csv_path)))) {
 			RoutineBase drivePath = AutoSelector.getAuto().getRoutine();
-			writer.write("xPos,yPos,d,t,a" + '\n');
+			writer.write("xPos,yPos,d,t,a," + '\n');
 			var points = new LinkedList<PointLinkTime>();
 			recurseRoutine(drivePath, points);
 			for (PointLinkTime pointLink : points) {
