@@ -236,8 +236,6 @@ modules.xml
 # Sonarlint plugin
 .idea/sonarlint
 
-*.csv
-
 # WPILib simulation configuration for GUI
 imgui.ini
 
