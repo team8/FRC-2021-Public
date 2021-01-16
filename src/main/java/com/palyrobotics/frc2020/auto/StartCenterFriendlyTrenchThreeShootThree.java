@@ -60,7 +60,7 @@ public class StartCenterFriendlyTrenchThreeShootThree implements AutoBase {
 				new ParallelRaceRoutine(
 						new IndexerTimeRoutine(Double.POSITIVE_INFINITY),
 						new ShooterCustomVelocityRoutine(Double.POSITIVE_INFINITY, 2000.0, Shooter.HoodState.HIGH),
-						new DriveAlignYawAssistedRoutine(180, OperatorInterface.kOnesTimesZoomAlignButton)),
+						new DriveAlignYawAssistedRoutine(190, OperatorInterface.kOnesTimesZoomAlignButton)),
 				new ParallelRoutine(
 						new ShooterVisionRoutine(4.0),
 						new SequentialRoutine(

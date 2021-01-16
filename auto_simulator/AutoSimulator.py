@@ -126,7 +126,7 @@ def animate(i):
     # print(x, y, d)
     robot.set_width(0.5)
     robot.set_height(0.5)
-    robot.set_xy([x, y])
+    robot.set_xy([x-0.25, y-0.25])
     robot.set_transform(transforms.Affine2D().rotate_deg_around(x,y,d) + ax.transData)
     timePassed = round(t, 2)
     print(timePassed)

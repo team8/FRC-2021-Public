@@ -6,7 +6,7 @@
     "autoCSVPath": "/resources/trenchStealTwoShootFiveAuto.csv"
   },
   "StartCenter": {
-    "xPosInit": 2.5,
+    "xPosInit": 2.45,
     "yPosInit": 3.3,
     "autoCSVPath": "/resources/startCenterFriendlyTrenchThreeShootThreeAuto.csv"
   }
