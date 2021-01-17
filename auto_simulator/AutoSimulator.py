@@ -21,7 +21,7 @@ except IndexError:
     print("No option chosen - would you like to save or show simulation?")
     print("Add the word show after the python run command to show a visualization of the auto")
     print("Add the word save after the python run command to save the simulation as a gif in resources/")
-    print("Add the word create after the python run command to find field coordinates for auto") 
+    print("Add the word create after the python run command to find field coordinates for auto")
     exit()
 
 #TODO: need to fix 0s in time from other non drive path routines, figure out how to display graphics using intellij, implement average time take
@@ -68,6 +68,9 @@ normalizedDataTimes = np.array([0.0] * normalizedLength)
 normalizedDataX = np.array([0.0] * normalizedLength)
 normalizedDataY = np.array([0.0] * normalizedLength)
 normalizedDataAngle = np.array([0.0] * normalizedLength)
+#dtype here says that the string length will be any size
+normalizedDataRoutines = np.array([""] * normalizedLength,  dtype=object)
+
 
 #robot = patches.Rectangle((normalizedDataX - 0.25, normalizedDataY - 0.25), 50, 50, fc='y')
 
@@ -92,17 +95,33 @@ def searchPts(timeIn):
 for i in range(0, normalizedLength - 1):
     normalizedDataTimes[i] = timeDif * i
 
-def interpData2Pts(x1, x2, y1, y2, t1, t2, tInput):
+def interpLinear(x1, x2, t1, t2, tInput):
     if(t1 == t2):
-        return x1, y1
-    xout,yout = ((tInput - t1) / (t2 - t1) *(x2 - x1) + x1, (tInput - t1) / (t2 - t1) * (y2 - y1) + y1)
+        return x1
+    xout = ((tInput - t1) / (t2 - t1) *(x2 - x1) + x1)
+    return xout
+
+def interpData2Pts(x1, x2, y1, y2, t1, t2, tInput):
+    xout,yout = interpLinear(x1,x2,t1,t2,tInput), interpLinear(y1,y2,t1,t2,tInput)
     return xout, yout
+
+def interpData2Angles(r1, r2, t1, t2, tInput):
+    if(t1 == t2 or r1 == r2):
+        return r1
+    shortestAngle = (r2 - r1 + 180) % 360 - 180
+    amount = (tInput - t1) / (t2 - t1)
+    return (r1 + (shortestAngle * amount)) % 360
 
 def createProperData():
     for i in range(0, normalizedLength - 1):
         pos1, pos2 = searchPts(normalizedDataTimes[i])
         normalizedDataX[i], normalizedDataY[i] = interpData2Pts(data.xPos[pos1], data.xPos[pos2], data.yPos[pos1], data.yPos[pos2], data.t[pos1], data.t[pos2], normalizedDataTimes[i])
-        normalizedDataAngle[i] = (data.d[pos1] + data.d[pos2])/2
+        normalizedDataAngle[i] = interpData2Angles(data.d[pos1], data.d[pos2], data.t[pos1], data.t[pos2], normalizedDataTimes[i])
+    for j in range(0, normalizedLength - 1):
+        pos1, pos2 = searchPts(normalizedDataTimes[j])
+        normalizedDataRoutines[j] = data.a[pos2] if data.a[pos1] != data.a[pos2] else data.a[pos1]
+
+
 def findAvgTime():
     return data.t[len(data.t) - 1] / len(data.t)
 
@@ -125,14 +144,15 @@ def animate(i):
     y = normalizedDataY[i] + yOffset
     d = normalizedDataAngle[i]
     t = normalizedDataTimes[i]
-    # print(x, y, d)
     robot.set_width(0.5)
     robot.set_height(0.65)
     robot.set_xy([x-0.25, y-0.325])
     robot.set_transform(transforms.Affine2D().rotate_deg_around(x,y,d) + ax.transData)
     timePassed = round(t, 2)
-#    runningRoutine.set_text(data.a[i])
     print(timePassed)
+    runningRoutine.set_color("white")
+    runningRoutine.set_text(normalizedDataRoutines[i])
+    print(normalizedDataRoutines[i])
     if timePassed > autoDuration:
         elapsedTime.set_color('red')
     else:
@@ -151,7 +171,7 @@ elif (sys.argv[1] == 'show'):
     anim = animation.FuncAnimation(fig, animate, init_func=init, frames=frame_generator,interval =  timeDif * 1000, blit=True, repeat=False)
     plt.tight_layout()
     plt.show()
-elif (sys.argv[1] == 'create'): 
+elif (sys.argv[1] == 'create'):
     fig.show()
     plt.show()
 else:
