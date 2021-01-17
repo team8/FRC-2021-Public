@@ -73,6 +73,7 @@ normalizedDataAngle = np.array([0.0] * normalizedLength)
 
 robot = patches.Rectangle((0, 0), 0, 0, fc='y')
 elapsedTime = ax.text(0.05, 0.9, '', transform=ax.transAxes, color='white', fontsize=14)
+runningRoutine = ax.text(0.5, 0.9, '', transform=ax.transAxes, color='black', fontsize=14)
 #returns both points surrounding a given time.
 #also, it's pretty inefficient, but it doesnt matter and I think binary sort would be annoying to implement
 def searchPts(timeIn):
@@ -126,10 +127,11 @@ def animate(i):
     t = normalizedDataTimes[i]
     # print(x, y, d)
     robot.set_width(0.5)
-    robot.set_height(0.5)
-    robot.set_xy([x-0.25, y-0.25])
+    robot.set_height(0.65)
+    robot.set_xy([x-0.25, y-0.325])
     robot.set_transform(transforms.Affine2D().rotate_deg_around(x,y,d) + ax.transData)
     timePassed = round(t, 2)
+#    runningRoutine.set_text(data.a[i])
     print(timePassed)
     if timePassed > autoDuration:
         elapsedTime.set_color('red')
