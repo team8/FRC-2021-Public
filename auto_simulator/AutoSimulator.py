@@ -33,14 +33,20 @@ with open("resources/AutoConstants.json") as f:
     auto_constants = json.load(f)
     selectedAuto = auto_constants['SelectedAuto']
     autoCSVPath = auto_constants[selectedAuto]['autoCSVPath']
+    selectedField = auto_constants[selectedAuto]['SelectedField']
+    autoFieldImagePath = auto_constants[selectedField]['fieldPath']
+    fieldDimensionsX = auto_constants[selectedField]['fieldDimensionsX']
+    fieldDimensionsY = auto_constants[selectedField]['fieldDimensionsY']
+
+
 
     # Graph setup above
     xOffset = auto_constants[selectedAuto]['xPosInit']
     yOffset = auto_constants[selectedAuto]['yPosInit']
 
-img = mpimg.imread("./resources/infiniteRechargeField.png")
+img = mpimg.imread("." + autoFieldImagePath)
 print("Field Image Found")
-data = pd.read_csv('./' + autoCSVPath)
+data = pd.read_csv('.' + autoCSVPath)
 print("Auto Path Found")
 
 autoDuration = data.t[len(data.t) - 1]
@@ -49,12 +55,11 @@ default_dpi = matplotlib.rcParamsDefault['figure.dpi']
 matplotlib.rcParams['figure.dpi'] = default_dpi*1.5 #scaling window to 1.5x the default size
 # Imports and checks data
 fig = plt.figure()
-ax = plt.axes(xlim=(0, 8), ylim=(0, 16))
-# ax = plt.axes(xlim=(-8, 8), ylim=(-4, 4))
+ax = plt.axes(xlim=(0, fieldDimensionsX), ylim=(0, fieldDimensionsY))
 
 line, = ax.plot([], [], lw=7)
 
-ax.imshow(img, extent=[0, 8.21, 0, 15.98])
+ax.imshow(img, extent=[0, fieldDimensionsX, 0, fieldDimensionsY])
 #ax.imshow(img, extent=[0, 16.42, 0, 31.98])
 
 
@@ -76,7 +81,7 @@ normalizedDataRoutines = np.array([""] * normalizedLength,  dtype=object)
 
 robot = patches.Rectangle((0, 0), 0, 0, fc='y')
 elapsedTime = ax.text(0.05, 0.9, '', transform=ax.transAxes, color='white', fontsize=14)
-runningRoutine = ax.text(0.5, 0.9, '', transform=ax.transAxes, color='black', fontsize=14)
+runningRoutine = ax.text(0.5, 0.9, '', transform=ax.transAxes, color='white', fontsize=14)
 #returns both points surrounding a given time.
 #also, it's pretty inefficient, but it doesnt matter and I think binary sort would be annoying to implement
 def searchPts(timeIn):
@@ -150,7 +155,6 @@ def animate(i):
     robot.set_transform(transforms.Affine2D().rotate_deg_around(x,y,d) + ax.transData)
     timePassed = round(t, 2)
     print(timePassed)
-    runningRoutine.set_color("white")
     runningRoutine.set_text(normalizedDataRoutines[i])
     print(normalizedDataRoutines[i])
     if timePassed > autoDuration:

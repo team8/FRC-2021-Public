@@ -1,14 +1,26 @@
 {
   "SelectedAuto": "StartCenter",
-  "__SelectedAuto": "TrenchStart",
   "TrenchStart": {
+    "SelectedField": "Field2020",
     "xPosInit": 7.3,
     "yPosInit": 3.3,
     "autoCSVPath": "/resources/trenchStealTwoShootFiveAuto.csv"
   },
   "StartCenter": {
-    "xPosInit": 2.48,
+    "SelectedField": "Field2021",
+    "xPosInit": 2.5,
     "yPosInit": 3.3,
     "autoCSVPath": "/resources/startCenterFriendlyTrenchThreeShootThreeAuto.csv"
+  },
+  "Field2020": {
+    "fieldPath": "/resources/infiniteRechargeField.png",
+    "fieldDimensionsX": 8.21,
+    "fieldDimensionsY": 15.98
+  },
+  "Field2021" : {
+    "fieldPath" : "/resources/2021FieldCropped.png",
+    "fieldDimensionsX": 4.572,
+    "fieldDimensionsY": 9.144
   }
+
 }
