@@ -5,7 +5,7 @@ import time
 import matplotlib.transforms as transforms
 import matplotlib.pyplot as plt
 import matplotlib
-from matplotlib import animation
+from matplotlib import animation, pylab
 import matplotlib.image as mpimg
 import scipy as scp
 import random
@@ -155,7 +155,9 @@ def animate(i):
     robot.set_transform(transforms.Affine2D().rotate_deg_around(x,y,d) + ax.transData)
     timePassed = round(t, 2)
     print(timePassed)
-    runningRoutine.set_text(normalizedDataRoutines[i])
+    fig = pylab.gcf()
+    fig.canvas.set_window_title(normalizedDataRoutines[i])
+    # runningRoutine.set_text(normalizedDataRoutines[i])
     print(normalizedDataRoutines[i])
     if timePassed > autoDuration:
         elapsedTime.set_color('red')
