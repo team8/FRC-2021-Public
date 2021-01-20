@@ -1,5 +1,5 @@
 {
-  "SelectedAuto": "StartCenter",
+  "SelectedAuto": "TrenchStart",
   "TrenchStart": {
     "SelectedField": "Field2020",
     "xPosInit": 7.3,
@@ -7,7 +7,7 @@
     "autoCSVPath": "/resources/trenchStealTwoShootFiveAuto.csv"
   },
   "StartCenter": {
-    "SelectedField": "BarrelRacing",
+    "SelectedField": "Bounce",
     "xPosInit": 2.5,
     "yPosInit": 3.3,
     "autoCSVPath": "/resources/startCenterFriendlyTrenchThreeShootThreeAuto.csv"
