@@ -7,7 +7,7 @@
     "autoCSVPath": "/resources/trenchStealTwoShootFiveAuto.csv"
   },
   "StartCenter": {
-    "SelectedField": "Field2021",
+    "SelectedField": "BarrelRacing",
     "xPosInit": 2.5,
     "yPosInit": 3.3,
     "autoCSVPath": "/resources/startCenterFriendlyTrenchThreeShootThreeAuto.csv"
@@ -19,6 +19,31 @@
   },
   "Field2021" : {
     "fieldPath" : "/resources/2021FieldCropped.png",
+    "fieldDimensionsX": 4.572,
+    "fieldDimensionsY": 9.144
+  },
+  "BarrelRacing" : {
+    "fieldPath" : "/resources/BarrelRacing.png",
+    "fieldDimensionsX": 4.572,
+    "fieldDimensionsY": 9.144
+  },
+  "Bounce" : {
+    "fieldPath" : "/resources/Bounce.png",
+    "fieldDimensionsX": 4.572,
+    "fieldDimensionsY": 9.144
+  },
+  "GalacticSearchA" : {
+    "fieldPath" : "/resources/GalacticSearchA.png",
+    "fieldDimensionsX": 4.572,
+    "fieldDimensionsY": 9.144
+  },
+  "GalacticSearchB" : {
+    "fieldPath" : "/resources/GalacticSearchB.png",
+    "fieldDimensionsX": 4.572,
+    "fieldDimensionsY": 9.144
+  },
+  "Slalom" : {
+    "fieldPath" : "/resources/Slalom.png",
     "fieldDimensionsX": 4.572,
     "fieldDimensionsY": 9.144
   }

@@ -15,6 +15,10 @@ import numpy as np
 import matplotlib.transforms as mtransforms
 import matplotlib.patches as patches
 
+
+kRobotWidth = 0.5
+kRobotHeight = 0.65
+
 try:
     sys.argv[1]
 except IndexError:
@@ -73,15 +77,14 @@ normalizedDataTimes = np.array([0.0] * normalizedLength)
 normalizedDataX = np.array([0.0] * normalizedLength)
 normalizedDataY = np.array([0.0] * normalizedLength)
 normalizedDataAngle = np.array([0.0] * normalizedLength)
-#dtype here says that the string length will be any size
+#dtype here says that the string length can be any size
 normalizedDataRoutines = np.array([""] * normalizedLength,  dtype=object)
 
 
-#robot = patches.Rectangle((normalizedDataX - 0.25, normalizedDataY - 0.25), 50, 50, fc='y')
-
 robot = patches.Rectangle((0, 0), 0, 0, fc='y')
-elapsedTime = ax.text(0.05, 0.9, '', transform=ax.transAxes, color='white', fontsize=14)
-runningRoutine = ax.text(0.5, 0.9, '', transform=ax.transAxes, color='white', fontsize=14)
+robotPointer = patches.Rectangle((0,0),0,0, fc = 'y', color= 'brown')
+elapsedTime = ax.text(0.05, 0.9, '', transform=ax.transAxes, color='black', fontsize=14)
+runningRoutine = ax.text(0.5, 0.9, '', transform=ax.transAxes, color='black', fontsize=14)
 #returns both points surrounding a given time.
 #also, it's pretty inefficient, but it doesnt matter and I think binary sort would be annoying to implement
 def searchPts(timeIn):
@@ -149,10 +152,18 @@ def animate(i):
     y = normalizedDataY[i] + yOffset
     d = normalizedDataAngle[i]
     t = normalizedDataTimes[i]
-    robot.set_width(0.5)
-    robot.set_height(0.65)
-    robot.set_xy([x-0.25, y-0.325])
+
+    robot.set_width(kRobotWidth)
+    robot.set_height(kRobotHeight)
+    robot.set_xy([x - kRobotWidth/2, y - kRobotHeight/2])
     robot.set_transform(transforms.Affine2D().rotate_deg_around(x,y,d) + ax.transData)
+
+    robotPointer.set_width(kRobotWidth / 2)
+    robotPointer.set_height(kRobotHeight / 2)
+    robotPointer.set_xy([x - kRobotWidth/4, y - kRobotHeight/2])
+    robotPointer.set_transform(transforms.Affine2D().rotate_deg_around(x,y,d) + ax.transData)
+
+
     timePassed = round(t, 2)
     print(timePassed)
     fig = pylab.gcf()
@@ -164,11 +175,13 @@ def animate(i):
     else:
         elapsedTime.set_text('{:.2f}'.format(normalizedDataTimes[i]))
         frame_generator.append(frame_generator[-1] + 1)
-    return robot, elapsedTime
+    return   robot, robotPointer, elapsedTime
 
 def init():
+    ax.add_patch(robotPointer)
     ax.add_patch(robot)
-    return robot,
+    return robot, robotPointer,
+
 
 if (sys.argv[1] == 'save'):
     anim = animation.FuncAnimation(fig, animate, init_func=init, frames=250,interval =  timeDif * 1000, blit=True, repeat=False)
