@@ -8,9 +8,7 @@ import java.util.stream.Collectors;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.esotericsoftware.minlog.Log;
 import com.palyrobotics.frc2020.auto.AutoBase;
-import com.palyrobotics.frc2020.behavior.MultipleRoutineBase;
-import com.palyrobotics.frc2020.behavior.RoutineBase;
-import com.palyrobotics.frc2020.behavior.RoutineManager;
+import com.palyrobotics.frc2020.behavior.*;
 import com.palyrobotics.frc2020.behavior.routines.TimedRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DrivePathRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DriveSetOdometryRoutine;
@@ -34,7 +32,6 @@ import com.palyrobotics.frc2020.vision.LimelightControlMode;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
@@ -159,12 +156,8 @@ public class Robot extends TimedRobot {
 			Log.info(kLoggerTag, String.valueOf(last.getTime()));
 			double targetYawDeg = ((DriveYawRoutine) routine).getTargetYawDegrees();
 			Log.info(kLoggerTag, "Turn Frames");
-			Log.info(kLoggerTag, String.valueOf(Math.abs(targetYawDeg/4)));
-			double rotationDuration = DriveConstants.calculateTimeToFinishTurn(last.getPose().getRotation().getDegrees(), targetYawDeg);
-			double targetYawRad = targetYawDeg * Math.PI / 180;
-//			for (int i = 0; i <= Math.abs(targetYawDeg/4); i++) {
-//				points.addLast(new PointLinkTime(new Pose2d(last.getPose().getTranslation(), (new Rotation2d(targetYawRad * i / Math.abs(targetYawDeg / 4)))), last.getTime() + rotationDuration * i / Math.abs(targetYawDeg / 4), routine.getName()));
-//			}
+			Log.info(kLoggerTag, String.valueOf(Math.abs(targetYawDeg / 4)));
+
 		} else if (routine instanceof TimedRoutine) {
 			PointLinkTime last = points.getLast();
 			points.addLast(new PointLinkTime(last.getPose(), last.getTime() + ((TimedRoutine) routine).getEstimatedTime(), routine.getName()));

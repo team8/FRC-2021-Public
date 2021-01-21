@@ -38,11 +38,11 @@ with open("resources/AutoConstants.json") as f:
     selectedAuto = auto_constants['SelectedAuto']
     autoCSVPath = auto_constants[selectedAuto]['autoCSVPath']
     selectedField = auto_constants[selectedAuto]['SelectedField']
-    autoFieldImagePath = auto_constants[selectedField]['fieldPath']
-    fieldDimensionsX = auto_constants[selectedField]['fieldDimensionsX']
-    fieldDimensionsY = auto_constants[selectedField]['fieldDimensionsY']
-
-
+with open("resources/AutoFieldConstants.json") as g:
+    auto_field_constants = json.load(g)
+    autoFieldImagePath = auto_field_constants[selectedField]['fieldPath']
+    fieldDimensionsX = auto_field_constants[selectedField]['fieldDimensionsX']
+    fieldDimensionsY = auto_field_constants[selectedField]['fieldDimensionsY']
 
     # Graph setup above
     xOffset = auto_constants[selectedAuto]['xPosInit']

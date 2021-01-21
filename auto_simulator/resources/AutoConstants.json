@@ -1,5 +1,5 @@
 {
-  "SelectedAuto": "TrenchStart",
+  "SelectedAuto": "StartCenter",
   "TrenchStart": {
     "SelectedField": "Field2020",
     "xPosInit": 7.3,
@@ -7,45 +7,40 @@
     "autoCSVPath": "/resources/trenchStealTwoShootFiveAuto.csv"
   },
   "StartCenter": {
-    "SelectedField": "Bounce",
+    "SelectedField": "BarrelRacing",
     "xPosInit": 2.5,
     "yPosInit": 3.3,
     "autoCSVPath": "/resources/startCenterFriendlyTrenchThreeShootThreeAuto.csv"
   },
-  "Field2020": {
-    "fieldPath": "/resources/infiniteRechargeField.png",
-    "fieldDimensionsX": 8.21,
-    "fieldDimensionsY": 15.98
-  },
-  "Field2021" : {
-    "fieldPath" : "/resources/2021FieldCropped.png",
-    "fieldDimensionsX": 4.572,
-    "fieldDimensionsY": 9.144
-  },
-  "BarrelRacing" : {
-    "fieldPath" : "/resources/BarrelRacing.png",
-    "fieldDimensionsX": 4.572,
-    "fieldDimensionsY": 9.144
-  },
-  "Bounce" : {
-    "fieldPath" : "/resources/Bounce.png",
-    "fieldDimensionsX": 4.572,
-    "fieldDimensionsY": 9.144
-  },
-  "GalacticSearchA" : {
-    "fieldPath" : "/resources/GalacticSearchA.png",
-    "fieldDimensionsX": 4.572,
-    "fieldDimensionsY": 9.144
-  },
-  "GalacticSearchB" : {
-    "fieldPath" : "/resources/GalacticSearchB.png",
-    "fieldDimensionsX": 4.572,
-    "fieldDimensionsY": 9.144
-  },
-  "Slalom" : {
-    "fieldPath" : "/resources/Slalom.png",
-    "fieldDimensionsX": 4.572,
-    "fieldDimensionsY": 9.144
-  }
 
+  "BarrelRacing": {
+    "SelectedField": "BarrelRacing",
+    "xPosInit": 2.5,
+    "yPosInit": 3.3,
+    "autoCSVPath": "/resources/barrelRacing.csv"
+  },
+  "Bounce": {
+    "SelectedField": "Bounce",
+    "xPosInit": 2.5,
+    "yPosInit": 3.3,
+    "autoCSVPath": "/resources/bounce.csv"
+  },
+  "GalacticSearchA": {
+    "SelectedField": "GalacticSearchA",
+    "xPosInit": 2.5,
+    "yPosInit": 3.3,
+    "autoCSVPath": "/resources/galacticSearchA.csv"
+  },
+  "GalacticSearchB": {
+    "SelectedField": "GalacticSearchB",
+    "xPosInit": 2.5,
+    "yPosInit": 3.3,
+    "autoCSVPath": "/resources/galacticSearchB.csv"
+  },
+  "Slalom": {
+    "SelectedField": "Slalom",
+    "xPosInit": 2.5,
+    "yPosInit": 3.3,
+    "autoCSVPath": "/resources/slalom.csv"
+  }
 }
