@@ -1,15 +1,10 @@
 {
-	"enabledServices": [
-		"commandReceiverService",
-		"networkLoggerService",
-		"telemetryService"
-	],
-	"enabledSubsystems": [
-	],
-	"checkFaults": false,
-	"coastDriveWhenDisabled": false,
-	"enableVisionWhenDisabled": false,
-	"visionPipelineWhenDisabled": 0,
-	"motorOutputMultiplier": 1.0,
-	"disableHardwareUpdates": false
+  "coastDriveWhenDisabled" : false,
+  "disableHardwareUpdates" : false,
+  "enableVisionWhenDisabled" : false,
+  "checkFaults" : false,
+  "visionPipelineWhenDisabled" : 0,
+  "motorOutputMultiplier" : 1.0,
+  "enabledServices" : [ "commandReceiverService", "networkLoggerService", "telemetryService" ],
+  "enabledSubsystems" : [ "intake" ]
 }
