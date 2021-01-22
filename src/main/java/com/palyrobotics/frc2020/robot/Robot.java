@@ -108,7 +108,7 @@ public class Robot extends TimedRobot {
 			for (PointLinkTime pointLink : points) {
 				Pose2d pose = pointLink.getPose();
 				Translation2d point = pointLink.getPose().getTranslation();
-				writer.write(String.format("%f,%f,%f,%f,%s,%n", -point.getY(), point.getX(), pose.getRotation().getDegrees(), pointLink.getTime(), pointLink.getRoutineName()));
+				writer.write(String.format("%f,%f,%f,%f,%s,%n", point.getX(), point.getY(), pose.getRotation().getDegrees(), pointLink.getTime(), pointLink.getRoutineName()));
 			}
 		} catch (IOException writeException) {
 			writeException.printStackTrace();

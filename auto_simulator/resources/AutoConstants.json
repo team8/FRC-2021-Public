@@ -1,15 +1,15 @@
 {
-  "SelectedAuto": "GalacticSearchRed",
+  "SelectedAuto": "TrenchStart",
   "TrenchStart": {
     "SelectedField": "Field2020",
-    "xPosInit": 7.3,
-    "yPosInit": 3.3,
+    "xPosInit": 3.5,
+    "yPosInit": 0.8,
     "autoCSVPath": "/resources/trenchStealTwoShootFiveAuto.csv"
   },
   "StartCenter": {
     "SelectedField": "Field2020",
-    "xPosInit": 2.5,
-    "yPosInit": 3.3,
+    "xPosInit": 3.5,
+    "yPosInit": 0.8,
     "autoCSVPath": "/resources/startCenterFriendlyTrenchThreeShootThreeAuto.csv"
   },
   "BarrelRacing": {

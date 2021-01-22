@@ -61,7 +61,7 @@ default_dpi = matplotlib.rcParamsDefault['figure.dpi']
 matplotlib.rcParams['figure.dpi'] = default_dpi*1.5 #scaling window to 1.5x the default size
 # Imports and checks data
 fig = plt.figure()
-ax = plt.axes(xlim=(0, fieldDimensionsX), ylim=(0, fieldDimensionsY))
+ax = plt.axes(xlim=(0,fieldDimensionsX), ylim=(0, fieldDimensionsY))
 
 line, = ax.plot([], [], lw=7)
 
@@ -153,8 +153,10 @@ createProperData()
 frame_generator = [1]
 def animate(i):
     global frame_generator
-    x = normalizedDataX[i] + xOffset
-    y = normalizedDataY[i] + yOffset
+    x = fieldDimensionsX - (normalizedDataY[i] + yOffset)
+    y = normalizedDataX[i] + xOffset
+    print(x)
+    print(y)
     d = normalizedDataAngle[i]
     t = normalizedDataTimes[i]
 
