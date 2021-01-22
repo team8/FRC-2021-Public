@@ -61,7 +61,7 @@ default_dpi = matplotlib.rcParamsDefault['figure.dpi']
 matplotlib.rcParams['figure.dpi'] = default_dpi*1.5 #scaling window to 1.5x the default size
 # Imports and checks data
 fig = plt.figure()
-ax = plt.axes(xlim=(0,fieldDimensionsX), ylim=(0, fieldDimensionsY))
+ax = plt.axes(xlim=(0, fieldDimensionsX), ylim=(0, fieldDimensionsY))
 
 line, = ax.plot([], [], lw=7)
 
@@ -70,8 +70,13 @@ ax.imshow(img, extent=[0, fieldDimensionsX, 0, fieldDimensionsY])
 
 
 #t[0] = t[1] because we have a reset routine
+def displayMousePosition(event):
+    print(event.xdata, event.ydata)
+    fig.canvas.set_window_title("Mouse Click @ (" + str(int(event.ydata * 100) / 100) + ", " + str(fieldDimensionsX - int(event.xdata * 100) / 100) + ")")
 
+fig.canvas.mpl_connect('button_press_event', displayMousePosition)
 if (sys.argv[1] == 'create'):
+    fig.canvas.mpl_connect('button_press_event', displayMousePosition)
     fig.show()
     plt.show()
 

@@ -13,7 +13,7 @@ public class GalacticSearchRed implements AutoBase {
         double xPosInit = 0.76;
         double yPosInit = 2.3;
         var setInitialOdometry = new DriveSetOdometryRoutine(0.76, 2.3, 0);
-        var firstPowercell = new DrivePathRoutine(newWaypointMeters(5, 2.3, 30));
-        return new SequentialRoutine(setInitialOdometry, firstPowercell);
+        var secondPowercell = new DrivePathRoutine(newWaypointMeters(3.77, 0.77, 30));
+        return new SequentialRoutine(setInitialOdometry, secondPowercell);
     }
 }
