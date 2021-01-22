@@ -14,7 +14,16 @@ public class Util {
 	private Util() {
 	}
 
-	public static Pose2d newWaypoint(double xInches, double yInches, double yawDegrees) {
+
+	public static Pose2d newWaypointMeters(double xMeters, double yMeters, double yawDegrees) {
+		return new Pose2d(xMeters, yMeters,
+				Rotation2d.fromDegrees(yawDegrees));
+	}
+
+	/**
+	 * @deprecated DO NOT USE THIS - This is there for old autos. Use the meters version of this
+	 */
+	public static Pose2d newWaypointInches(double xInches, double yInches, double yawDegrees) {
 		return new Pose2d(Units.inchesToMeters(xInches), Units.inchesToMeters(yInches),
 				Rotation2d.fromDegrees(yawDegrees));
 	}

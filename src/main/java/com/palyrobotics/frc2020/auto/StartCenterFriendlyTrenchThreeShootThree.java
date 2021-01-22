@@ -1,6 +1,6 @@
 package com.palyrobotics.frc2020.auto;
 
-import static com.palyrobotics.frc2020.util.Util.newWaypoint;
+import static com.palyrobotics.frc2020.util.Util.newWaypointInches;
 
 import java.util.function.Predicate;
 
@@ -39,14 +39,14 @@ public class StartCenterFriendlyTrenchThreeShootThree implements AutoBase {
 						new IndexerFeedAllRoutine(2.2, false, true)));
 		Predicate<Pose2d> inTrenchTest = poseMeters -> poseMeters.getTranslation().getX() > Units.inchesToMeters(30.0);
 		var turnAndGetBalls = new SequentialRoutine(
-				new DrivePathRoutine(newWaypoint(20, -10, 90))
+				new DrivePathRoutine(newWaypointInches(20, -10, 90))
 						.setMovement(1.45, 1.4)
 						.driveInReverse(),
 				new IntakeBallRoutine(0.1, 1.0),
 				new DriveParallelPathRoutine(
 						new DrivePathRoutine(
-								newWaypoint(110, 71, 0),
-								newWaypoint(170, 71, 0))
+								newWaypointInches(110, 71, 0),
+								newWaypointInches(170, 71, 0))
 										.setMovement(3.2, 2.6)
 										// Slow down to intake balls
 										.limitWhen(1.1, inTrenchTest),

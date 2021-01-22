@@ -16,8 +16,8 @@ import matplotlib.transforms as mtransforms
 import matplotlib.patches as patches
 
 
-kRobotWidth = 0.5
-kRobotHeight = 0.65
+kRobotWidth = 0.40
+kRobotHeight = 0.55
 
 try:
     sys.argv[1]
@@ -38,7 +38,7 @@ with open("resources/AutoConstants.json") as f:
     selectedAuto = auto_constants['SelectedAuto']
     autoCSVPath = auto_constants[selectedAuto]['autoCSVPath']
     selectedField = auto_constants[selectedAuto]['SelectedField']
-with open("resources/AutoFieldConstants.json") as g:
+with open("resources/FieldConstants.json") as g:
     auto_field_constants = json.load(g)
     autoFieldImagePath = auto_field_constants[selectedField]['fieldPath']
     fieldDimensionsX = auto_field_constants[selectedField]['fieldDimensionsX']
@@ -52,6 +52,8 @@ img = mpimg.imread("." + autoFieldImagePath)
 print("Field Image Found")
 data = pd.read_csv('.' + autoCSVPath)
 print("Auto Path Found")
+
+
 
 autoDuration = data.t[len(data.t) - 1]
 
@@ -69,6 +71,9 @@ ax.imshow(img, extent=[0, fieldDimensionsX, 0, fieldDimensionsY])
 
 #t[0] = t[1] because we have a reset routine
 
+if (sys.argv[1] == 'create'):
+    fig.show()
+    plt.show()
 
 #we average the time here because it  allows us to update the frames with a constant frame rate.
 #The difference between each time vs average time should not be so large that this causes serious error.
@@ -82,7 +87,7 @@ normalizedDataRoutines = np.array([""] * normalizedLength,  dtype=object)
 
 
 robot = patches.Rectangle((0, 0), 0, 0, fc='y')
-robotPointer = patches.Rectangle((0,0),0,0, fc = 'y', color= 'brown')
+robotPointer = patches.Rectangle((0,0),0,0, fc = 'y', color= 'white')
 elapsedTime = ax.text(0.05, 0.9, '', transform=ax.transAxes, color='black', fontsize=14)
 runningRoutine = ax.text(0.5, 0.9, '', transform=ax.transAxes, color='black', fontsize=14)
 #returns both points surrounding a given time.
@@ -189,9 +194,6 @@ if (sys.argv[1] == 'save'):
 elif (sys.argv[1] == 'show'):
     anim = animation.FuncAnimation(fig, animate, init_func=init, frames=frame_generator,interval =  timeDif * 1000, blit=True, repeat=False)
     plt.tight_layout()
-    plt.show()
-elif (sys.argv[1] == 'create'):
-    fig.show()
     plt.show()
 else:
     print("Invalid Option")

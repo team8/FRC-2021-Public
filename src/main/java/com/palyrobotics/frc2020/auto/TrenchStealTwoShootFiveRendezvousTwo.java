@@ -1,6 +1,6 @@
 package com.palyrobotics.frc2020.auto;
 
-import static com.palyrobotics.frc2020.util.Util.newWaypoint;
+import static com.palyrobotics.frc2020.util.Util.newWaypointInches;
 
 import com.palyrobotics.frc2020.behavior.ParallelRaceRoutine;
 import com.palyrobotics.frc2020.behavior.ParallelRoutine;
@@ -26,11 +26,11 @@ public class TrenchStealTwoShootFiveRendezvousTwo implements AutoBase {
 		var setInitialOdometry = new DriveSetOdometryRoutine(0, 0, 0);
 		var getTrenchBalls = new ParallelRaceRoutine(
 				new SequentialRoutine(
-						new DrivePathRoutine(newWaypoint(92, 0, 0))
+						new DrivePathRoutine(newWaypointInches(92, 0, 0))
 								.setMovement(1.5, 2.4)));
 
 		var goToShoot = new ParallelRaceRoutine(
-				new DrivePathRoutine(newWaypoint(60, 70, 150))
+				new DrivePathRoutine(newWaypointInches(60, 70, 150))
 						.setMovement(1.5, 2.4)
 						.driveInReverse(),
 				new IndexerTimeRoutine(Double.POSITIVE_INFINITY),
@@ -48,7 +48,7 @@ public class TrenchStealTwoShootFiveRendezvousTwo implements AutoBase {
 										new IndexerFeedAllRoutine(4.6, false, true)))));
 		var turnAndIntake = new ParallelRaceRoutine(
 				new SequentialRoutine(
-						new DrivePathRoutine(newWaypoint(77, 113, 15.0))
+						new DrivePathRoutine(newWaypointInches(77, 113, 15.0))
 								.setMovement(2.0, 2.0),
 						new DriveYawRoutine(20.0)),
 				new IntakeBallRoutine(Double.POSITIVE_INFINITY),
