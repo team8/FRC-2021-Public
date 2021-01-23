@@ -14,9 +14,9 @@
   },
   "BarrelRacing": {
     "SelectedField": "BarrelRacing",
-    "xPosInit": 2.5,
-    "yPosInit": 3.3,
-    "autoCSVPath": "/resources/barrelRacing.csv"
+    "xPosInit": 0,
+    "yPosInit": 0,
+    "autoCSVPath": "/resources/barrelRacingAuto.csv"
   },
   "Bounce": {
     "SelectedField": "Bounce",
