@@ -18,8 +18,7 @@ import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.palyrobotics.frc2020.robot.*;
-import com.palyrobotics.frc2020.util.commands.commandclasses.AbstractCommand;
-import com.palyrobotics.frc2020.util.commands.commandclasses.Set;
+import com.palyrobotics.frc2020.util.commands.commandclasses.*;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.service.RobotService;
 
@@ -36,6 +35,10 @@ public class CommandReceiverService implements RobotService {
 	public CommandReceiverService() {
 		mCommandMap = new HashMap<>();
 		mCommandMap.put("set", Set.getInstance());
+		mCommandMap.put("get", Get.getInstance());
+		mCommandMap.put("save", Save.getInstance());
+		mCommandMap.put("reload", Reload.getInstance());
+
 	}
 
 	@Override

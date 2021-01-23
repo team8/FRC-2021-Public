@@ -1,6 +1,5 @@
 package com.palyrobotics.frc2020.util.commands.commandclasses;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -8,28 +7,29 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import com.esotericsoftware.minlog.Log;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.config.ConfigBase;
 import com.palyrobotics.frc2020.util.config.Configs;
 
-public class Set extends AbstractCommand {
+public class Get extends AbstractCommand {
 
-	public Set() {
-		super("set");
+	private static final Get sInstance = new Get();
+
+	public Get() {
+		super("get");
 	}
-
-	private static final Set sInstance = new Set();
 
 	@Override
 	public String execute(ObjectMapper mapper) {
-		String result;
-		if (mParams.length < 3) {
-			return "Not enough parameters specified \nFormat is : set [config_name] [field_name] [new_value]";
+		if (mParams.length < 1) {
+			return "Not enough parameters specified \nFormat is : get [config_name] (optional)[field_name] (optional)[is_raw]";
 		}
 		String configName = mParams[0];
-		//get the config class from its name
+		switch (configName) {
+			case "configs":
+				//returns all config names
+				return String.join(",", Configs.getActiveConfigNames());
+		}
 		Class<? extends ConfigBase> configClass = Configs.getClassFromName(configName);
 		if (configClass == null) {
 			return String.format("Config class does not exist: %s", configName);
@@ -37,17 +37,24 @@ public class Set extends AbstractCommand {
 		//get the config object to read
 		ConfigBase configObject = Configs.get(configClass);
 		//get the rest of the fields
-		var allFieldNames = mParams[1];
-		String[] fieldNames = allFieldNames == null ? null : allFieldNames.split("\\.");
+		var allFieldNames = "";
+		boolean isRaw = false;
+		if (mParams.length > 1) {
+			allFieldNames = mParams[1];
+		}
+		String[] fieldNames = allFieldNames == "" ? null : allFieldNames.split("\\.");
+		if (allFieldNames.equals("--raw")) {
+			fieldNames = null;
+			isRaw = true;
+		}
 		//originally all the json, can become a field if specified
-		Object fieldValue = configObject, fieldParentValue = null;
+		Object fieldValue = configObject;
 		Field field = null;
 		if (fieldNames != null && fieldNames.length != 0) {
 			for (String fieldName : fieldNames) {
 				try {
 					//find the field (NOT FOR FULL FILE) that is trying to be set or get, get its type
 					field = getField(field == null ? configClass : field.getType(), fieldName);
-					fieldParentValue = fieldValue;
 					fieldValue = field.get(fieldValue);
 				} catch (Exception e) {
 					return String.format("Unable to retrieve field: %s", fieldName);
@@ -55,28 +62,17 @@ public class Set extends AbstractCommand {
 
 			}
 		}
-
-		String stringValue = mParams[2];
-
-		//formatting and returning - try these commands in control center terminal for better understanding
-		try {
-			Object newFieldValue = mapper.readValue(stringValue, field.getType());
-			try {
-				Configs.set(configObject, fieldParentValue, field, newFieldValue);
-			} catch (IllegalAccessException illegalAccessException) {
-				var errorMessage = String.format("Error setting field %s", allFieldNames);
-				Log.warn(Util.classToJsonName(getClass()), errorMessage, illegalAccessException);
-				return errorMessage;
+		if (mParams.length > 2 && !isRaw) {
+			if (mParams[2].equals("--raw")) {
+				isRaw = true;
 			}
-
-			result = String.format("Set field %s on config %s to %s", allFieldNames,
-					configName, stringValue);
-		} catch (IOException parseException) {
-			return String.format("Error parsing %s for field %s on config %s",
-					stringValue, allFieldNames, configName);
 		}
-
-		return result;
+		//return the field you want - be it the whole config or one field
+		String display = Configs.toJson(fieldValue);
+		//formatting and returning - try these commands in control center terminal for better understanding
+		return isRaw ? display :
+				String.format("[%s] %s: %s", configName,
+						allFieldNames == null ? "all" : allFieldNames, display);
 	}
 
 	private Field getField(Class<?> clazz, String name) throws NoSuchFieldException {
@@ -88,7 +84,7 @@ public class Set extends AbstractCommand {
 		return Optional.ofNullable(fields.get(name)).orElseThrow(NoSuchFieldException::new);
 	}
 
-	public static Set getInstance() {
+	public static Get getInstance() {
 		return sInstance;
 	}
 }
