@@ -12,6 +12,7 @@ import com.palyrobotics.frc2020.robot.HardwareAdapter.Joysticks;
 import com.palyrobotics.frc2020.subsystems.Climber;
 import com.palyrobotics.frc2020.subsystems.Indexer;
 import com.palyrobotics.frc2020.subsystems.Shooter;
+import com.palyrobotics.frc2020.subsystems.Spinner;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.input.Joystick;
 import com.palyrobotics.frc2020.util.input.XboxController;
@@ -164,6 +165,7 @@ public class OperatorInterface {
 		commands.visionWanted = false;
 		commands.setIntakeStowed();
 		commands.setShooterIdle();
+		commands.spinnerWantedState = Spinner.State.IDLE;
 		commands.indexerColumnWantedState = Indexer.ColumnState.IDLE;
 		commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.IDLE;
 		mOperatorXboxController.clearLastInputs();
