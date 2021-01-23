@@ -1,6 +1,6 @@
 package com.palyrobotics.frc2020.auto;
 
-import com.palyrobotics.frc2020.util.Util;
+import static com.palyrobotics.frc2020.util.Util.newWaypointMeters;
 
 import com.palyrobotics.frc2020.behavior.ParallelRaceRoutine;
 import com.palyrobotics.frc2020.behavior.RoutineBase;
@@ -8,9 +8,8 @@ import com.palyrobotics.frc2020.behavior.SequentialRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DrivePathRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DriveSetOdometryRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DriveYawRoutine;
-import edu.wpi.first.wpilibj.util.Units;
 
-import static com.palyrobotics.frc2020.util.Util.newWaypointMeters;
+import edu.wpi.first.wpilibj.util.Units;
 
 /**
  * Start by facing and aligning the center of the intake to the middle of the two balls of the
