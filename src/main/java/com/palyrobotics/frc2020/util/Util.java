@@ -14,7 +14,6 @@ public class Util {
 	private Util() {
 	}
 
-
 	public static Pose2d newWaypointMeters(double xMeters, double yMeters, double yawDegrees) {
 		return new Pose2d(xMeters, yMeters,
 				Rotation2d.fromDegrees(yawDegrees));
