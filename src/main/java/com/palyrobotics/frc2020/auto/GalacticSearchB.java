@@ -10,22 +10,21 @@ import com.palyrobotics.frc2020.subsystems.Drive;
 import static com.palyrobotics.frc2020.util.Util.newWaypointInches;
 import static com.palyrobotics.frc2020.util.Util.newWaypointMeters;
 
-public class GalacticSearchRed implements AutoBase {
+public class GalacticSearchB implements AutoBase {
     @Override
     public RoutineBase getRoutine() {
-        double xPosInit = 0.76;
-        double yPosInit = 2.3;
-        var setInitialOdometry = new DriveSetOdometryRoutine(0.76, 2.3, 0);
+
+        var setInitialOdometry = new DriveSetOdometryRoutine(0.76, 3.048, 0);
         //will need to split apart for intaking.
         var path = new DrivePathRoutine(
-                newWaypointMeters(2.286, 2.286, 0),
-                newWaypointMeters(3.81, 1.524, 30),
-                newWaypointMeters(4.572,3.81, 60)
-//                newWaypointMeters(0.3,3.81, -180)
+                newWaypointMeters(2.286, 3.048, 0),
+                newWaypointMeters(3.81, 1.524, -40),
+                newWaypointMeters(5.334, 3.048, 0)
         );
+
         var returnHome = new DrivePathRoutine(
-                newWaypointMeters(8.763,3.81, 180)
-        ).driveInReverse();
+                newWaypointMeters(8.763, 3.048, 0)
+        );
         return new SequentialRoutine(setInitialOdometry, path, returnHome);
     }
 }

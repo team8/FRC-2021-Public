@@ -30,11 +30,11 @@
     "yPosInit": 0,
     "autoCSVPath": "/resources/galacticSearchRedAuto.csv"
   },
-  "GalacticSearchBlue": {
+  "GalacticSearchB": {
     "SelectedField": "GalacticSearchB",
     "xPosInit": 2.5,
     "yPosInit": 3.3,
-    "autoCSVPath": "/resources/galacticSearchB.csv"
+    "autoCSVPath": "/resources/galacticSearchBAuto.csv"
   },
   "Slalom": {
     "SelectedField": "Slalom",
