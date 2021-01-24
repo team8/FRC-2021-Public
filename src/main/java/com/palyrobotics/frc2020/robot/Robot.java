@@ -158,6 +158,7 @@ public class Robot extends TimedRobot {
 			double targetYawDeg = ((DriveYawRoutine) routine).getTargetYawDegrees();
 			Log.info(kLoggerTag, "Turn Frames");
 			Log.info(kLoggerTag, String.valueOf(Math.abs(targetYawDeg / 4)));
+			new PointLinkTime(last.getPose().getTranslation(), new Rotation2d(targetYawDeg * Math.PI / 180), last.getTime() + DriveConstants.calculateTimeToFinishTurn(last.getPose().getRotation().getDegrees(), targetYawDeg), routine.getName()));
 
 			points.addLast(
 					new PointLinkTime(last.getPose().getTranslation(), new Rotation2d(targetYawDeg * Math.PI / 180), last.getTime() + DriveConstants.calculateTimeToFinishTurn(last.getPose().getRotation().getDegrees(), targetYawDeg), routine.getName()));
