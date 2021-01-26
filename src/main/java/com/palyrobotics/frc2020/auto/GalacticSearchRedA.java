@@ -7,20 +7,22 @@ import com.palyrobotics.frc2020.behavior.SequentialRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DrivePathRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DriveSetOdometryRoutine;
 
-public class GalacticSearchBRed implements AutoBase {
+public class GalacticSearchRedA implements AutoBase {
 
 	@Override
 	public RoutineBase getRoutine() {
-
-		var setInitialOdometry = new DriveSetOdometryRoutine(0.76, 3.048, 0);
+		double xPosInit = 0.76;
+		double yPosInit = 2.3;
+		var setInitialOdometry = new DriveSetOdometryRoutine(0.76, 2.3, 0);
 		//will need to split apart for intaking.
 		var path = new DrivePathRoutine(
-				newWaypointMeters(2.286, 3.048, 0),
-				newWaypointMeters(3.81, 1.524, -40),
-				newWaypointMeters(5.334, 3.048, 0));
-
+				newWaypointMeters(2.286, 2.286, 0),
+				newWaypointMeters(3.81, 1.524, 30),
+				newWaypointMeters(4.572, 3.81, 60)
+//                newWaypointMeters(0.3,3.81, -180)
+		);
 		var returnHome = new DrivePathRoutine(
-				newWaypointMeters(8.763, 3.048, 0));
+				newWaypointMeters(8.763, 3.81, 180)).driveInReverse();
 		return new SequentialRoutine(setInitialOdometry, path, returnHome);
 	}
 }
