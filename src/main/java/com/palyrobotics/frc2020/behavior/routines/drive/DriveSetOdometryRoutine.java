@@ -1,6 +1,5 @@
 package com.palyrobotics.frc2020.behavior.routines.drive;
 
-import static com.palyrobotics.frc2020.util.Util.newWaypointInches;
 import static com.palyrobotics.frc2020.util.Util.newWaypointMeters;
 
 import java.util.Set;
