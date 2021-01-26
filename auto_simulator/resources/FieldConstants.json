@@ -19,12 +19,12 @@
     "fieldDimensionsX": 4.572,
     "fieldDimensionsY": 9.144
   },
-  "GalacticSearchRed": {
-    "fieldPath": "/resources/GalacticSearchRed.png",
+  "GalacticSearchARed": {
+    "fieldPath": "/resources/GalacticSearchA.png",
     "fieldDimensionsX": 4.572,
     "fieldDimensionsY": 9.144
   },
-  "GalacticSearchB": {
+  "GalacticSearchBBlue": {
     "fieldPath": "/resources/GalacticSearchB.png",
     "fieldDimensionsX": 4.572,
     "fieldDimensionsY": 9.144
