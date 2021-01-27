@@ -4,15 +4,15 @@ import com.palyrobotics.frc2020.behavior.RoutineBase;
 import com.palyrobotics.frc2020.vision.Limelight;
 import com.palyrobotics.frc2020.vision.LimelightControlMode;
 
-public class GalacticSearchRed implements AutoBase {
+public class GalacticSearchA implements AutoBase {
 
-	private static final double maxYawA = 10; // TODO: get an actual value
+	private static final double maxAreaBlue = 10; // TODO: get an actual value
 	private static final int pipeline = -1; // TODO: get another value
 
 	@Override
 	public RoutineBase getRoutine() {
-		GalacticSearchRedA galacticSearchRedA = new GalacticSearchRedA();
-		GalacticSearchRedB galacticSearchRedB = new GalacticSearchRedB();
+		GalacticSearchARed galacticSearchBlue = new GalacticSearchARed();
+		GalacticSearchBRed galacticSearchRed = new GalacticSearchBRed();
 
 		Limelight.getInstance().setPipeline(pipeline);
 		Limelight.getInstance().setCamMode(LimelightControlMode.CamMode.DRIVER); // we don't want the LED's
@@ -23,10 +23,10 @@ public class GalacticSearchRed implements AutoBase {
 
 			// If the ball found is a certain angle to the right then choose one routine, otherwise choose the other routine
 			// these may need to be swapped depending on where the balls are located in each TODO: confirm this
-			if (Limelight.getInstance().getYawToTarget() < maxYawA) {
-				return galacticSearchRedA.getRoutine();
+			if (Limelight.getInstance().getTargetArea() < maxAreaBlue) {
+				return galacticSearchBlue.getRoutine();
 			} else {
-				return galacticSearchRedB.getRoutine();
+				return galacticSearchRed.getRoutine();
 			}
 		}
 	}

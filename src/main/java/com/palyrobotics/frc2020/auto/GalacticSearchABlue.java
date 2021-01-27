@@ -7,7 +7,7 @@ import com.palyrobotics.frc2020.behavior.SequentialRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DrivePathRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DriveSetOdometryRoutine;
 
-public class GalacticSearchBlueA implements AutoBase {
+public class GalacticSearchABlue implements AutoBase {
 
 	@Override
 	public RoutineBase getRoutine() {
