@@ -16,18 +16,10 @@ public class GalacticSearchA implements AutoBase {
 
 		Limelight.getInstance().setPipeline(pipeline);
 		Limelight.getInstance().setCamMode(LimelightControlMode.CamMode.DRIVER); // we don't want the LED's
-		while (true) {
-			if (!Limelight.getInstance().isTargetFound()) {
-				continue;
-			}
-
-			// If the ball found is a certain angle to the right then choose one routine, otherwise choose the other routine
-			// these may need to be swapped depending on where the balls are located in each TODO: confirm this
-			if (Limelight.getInstance().getTargetArea() < maxAreaBlue) {
-				return galacticSearchBlue.getRoutine();
-			} else {
-				return galacticSearchRed.getRoutine();
-			}
-		}
+		while (!Limelight.getInstance().isTargetFound()) {}
+		// If the ball found is a certain angle to the right then choose one routine, otherwise choose the other routine
+		// these may need to be swapped depending on where the balls are located in each TODO: confirm this
+		return Limelight.getInstance().getTargetArea() < maxAreaBlue ?
+				galacticSearchBlue.getRoutine() : galacticSearchRed.getRoutine();
 	}
 }
