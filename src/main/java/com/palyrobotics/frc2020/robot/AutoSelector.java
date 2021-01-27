@@ -18,7 +18,7 @@ public class AutoSelector {
 	// ============================================================= //
 	// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= //
 
-	private static AutoBase sChosenAuto = new GalacticSearchARed();
+	private static AutoBase sChosenAuto = new GalacticSearchABlue();
 
 	// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= //
 	// ============================================================= //
