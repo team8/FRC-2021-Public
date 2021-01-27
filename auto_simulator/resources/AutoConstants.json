@@ -1,5 +1,5 @@
 {
-  "SelectedAuto": "galacticSearchA",
+  "SelectedAuto": "GalacticSearchARed",
   "TrenchStart": {
     "SelectedField": "Field2020",
     "xPosInit": 3.5,
@@ -28,7 +28,7 @@
     "SelectedField": "GalacticSearchARed",
     "xPosInit": 0,
     "yPosInit": 0,
-    "autoCSVPath": "/resources/galacticSearchRedAuto.csv"
+    "autoCSVPath": "/resources/galacticSearchARedAuto.csv"
   },
   "GalacticSearchBRed": {
     "SelectedField": "GalacticSearchBRed",
