@@ -14,8 +14,8 @@ import com.palyrobotics.frc2020.behavior.SequentialRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DrivePathRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DriveSetOdometryRoutine;
 import com.palyrobotics.frc2020.config.subsystem.DriveConfig;
-
 import com.palyrobotics.frc2020.util.config.Configs;
+
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 
 public class Slalom implements AutoBase {
