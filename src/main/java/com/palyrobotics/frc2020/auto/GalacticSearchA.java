@@ -19,7 +19,10 @@ public class GalacticSearchA implements AutoBase {
 		while (!Limelight.getInstance().isTargetFound()) {}
 		// If the ball found is a certain angle to the right then choose one routine, otherwise choose the other routine
 		// these may need to be swapped depending on where the balls are located in each TODO: confirm this
-		return Limelight.getInstance().getTargetArea() < maxAreaBlue ?
-				galacticSearchBlue.getRoutine() : galacticSearchRed.getRoutine();
+//		return Limelight.getInstance().getTargetArea() < maxAreaBlue ?
+//				galacticSearchBlue.getRoutine() : galacticSearchRed.getRoutine();
+
+		System.out.println(Limelight.getInstance().getTargetArea() < maxAreaBlue ? "Blue" : "Red");
+		return null; // TODO: remove this
 	}
 }
