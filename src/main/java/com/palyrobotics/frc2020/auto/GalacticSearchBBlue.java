@@ -2,10 +2,13 @@ package com.palyrobotics.frc2020.auto;
 
 import static com.palyrobotics.frc2020.util.Util.newWaypointMeters;
 
+import com.palyrobotics.frc2020.behavior.ParallelRoutine;
 import com.palyrobotics.frc2020.behavior.RoutineBase;
 import com.palyrobotics.frc2020.behavior.SequentialRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DrivePathRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DriveSetOdometryRoutine;
+import com.palyrobotics.frc2020.behavior.routines.superstructure.IntakeBallRoutine;
+import com.palyrobotics.frc2020.behavior.routines.superstructure.IntakeLowerRoutine;
 
 public class GalacticSearchBBlue implements AutoBase {
 
@@ -16,6 +19,9 @@ public class GalacticSearchBBlue implements AutoBase {
 		var secondBall = new DrivePathRoutine(newWaypointMeters(6.09, 3.07, 0));
 		var thirdBall = new DrivePathRoutine(newWaypointMeters(7.8, 1.5, 0));
 		var finishZone = new DrivePathRoutine(newWaypointMeters(8.75, 2.23, 0));
-		return new SequentialRoutine(setInitialOdometry, firstBall, secondBall, thirdBall, finishZone);
+		var path = new SequentialRoutine(firstBall, secondBall, thirdBall);
+		var pathAndIntake = new ParallelRoutine(path, new SequentialRoutine(new IntakeLowerRoutine(), new IntakeBallRoutine(6.0)));
+
+		return new SequentialRoutine(setInitialOdometry, pathAndIntake, finishZone);
 	}
 }
