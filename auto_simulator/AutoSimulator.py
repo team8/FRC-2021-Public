@@ -196,7 +196,7 @@ def init():
 
 
 if (sys.argv[1] == 'save'):
-    anim = animation.FuncAnimation(fig, animate, init_func=init, frames=300,interval =  timeDif * 1000, blit=True, repeat=False)
+    anim = animation.FuncAnimation(fig, animate, init_func=init, frames=250,interval =  timeDif * 1000, blit=True, repeat=False)
     anim.save('resources/' + selectedAuto + 'Simulation.gif',writer=animation.PillowWriter(fps=20))
 elif (sys.argv[1] == 'show'):
     anim = animation.FuncAnimation(fig, animate, init_func=init, frames=frame_generator,interval =  timeDif * 1000, blit=True, repeat=False)
