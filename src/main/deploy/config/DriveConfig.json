@@ -24,5 +24,7 @@
 	"nonlinearPasses": 3,
 	"pathVelocityMetersPerSecond": 1.8,
 	"pathAccelerationMetersPerSecondSquared": 1.6,
-	"allowableYawErrorDegrees": 2.0
+	"allowableYawErrorDegrees": 2.0,
+	"maxAutoVelocity": 2.0,
+	"maxAutoAcceleration": 2.0
 }
