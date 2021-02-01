@@ -11,6 +11,4 @@ public class ShooterConfig extends SubsystemConfigBase {
 	public double rumbleDurationSeconds;
 	public double hoodSwitchDistanceThreshold;
 	public double noTargetSpinUpVelocity;
-	// TODO: remove
-	public double customVelocity;
 }

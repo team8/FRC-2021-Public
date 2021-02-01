@@ -31,8 +31,7 @@ public class Slalom implements AutoBase {
 				newWaypointMeters(5.79, 3.36, -140),
 				/** Third loop **/
 				newWaypointMeters(7.88, 1.322, 40),
-				newWaypointMeters(1.2, 2, 175))
-						.setMovement(5, 3).endingVelocity(3);
+				newWaypointMeters(1.2, 2, 175));
 		return new SequentialRoutine(setInitialOdometry, path);
 	}
 }
