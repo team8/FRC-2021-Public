@@ -20,7 +20,7 @@ public class Slalom implements AutoBase {
 //		List<Pose2d> thirdLoop = Arrays.asList(newWaypointMeters(6.85, 1.23, -20), newWaypointMeters(8.22, 1.522, 90), newWaypointMeters(7.38, 2.252, 180), newWaypointMeters(5.586, 2.262, 180), newWaypointMeters(0.5, 2.662, 180));
 //		return new SequentialRoutine(setInitialOdometry, new DrivePathRoutine(firstLoop).endingVelocity(mConfig.pathVelocityMetersPerSecond), new DrivePathRoutine(secondLoop).endingVelocity(mConfig.pathVelocityMetersPerSecond).startingVelocity(mConfig.pathVelocityMetersPerSecond), new DrivePathRoutine(thirdLoop).setMovement(mConfig.pathVelocityMetersPerSecond * 1.4, mConfig.pathAccelerationMetersPerSecondSquared * 1.3).startingVelocity(mConfig.pathVelocityMetersPerSecond));
 
-		var setInitialOdometry = new DriveSetOdometryRoutine(1.18, 2.672, -10);
+		var setInitialOdometry = new DriveSetOdometryRoutine(1.18, 2.672, -0);
 		var path = new DrivePathRoutine(
 				/** First loop **/
 				newWaypointMeters(3.63, 2.03, -15),
@@ -31,7 +31,7 @@ public class Slalom implements AutoBase {
 				newWaypointMeters(5.79, 3.36, -140),
 				/** Third loop **/
 				newWaypointMeters(7.88, 1.322, 40),
-				newWaypointMeters(1.2, 2, 175));
+				newWaypointMeters(1.2, 2.2, 180));
 		return new SequentialRoutine(setInitialOdometry, path);
 	}
 }
