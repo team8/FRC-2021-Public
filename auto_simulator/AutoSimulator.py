@@ -16,8 +16,8 @@ import matplotlib.transforms as mtransforms
 import matplotlib.patches as patches
 
 
-kRobotWidth = 0.40
-kRobotHeight = 0.55
+kRobotWidth = 0.838
+kRobotHeight = 1.0
 
 try:
     sys.argv[1]
