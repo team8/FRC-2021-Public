@@ -1,5 +1,5 @@
 {
-  "SelectedAuto": "ForwardTesting",
+  "SelectedAuto": "LoopTesting",
   "TrenchStart": {
     "SelectedField": "Field2020",
     "xPosInit": 3.5,
@@ -47,5 +47,11 @@
     "xPosInit": 0,
     "yPosInit": 2,
     "autoCSVPath": "/resources/forwardTestingAuto.csv"
+  },
+  "Looptesting": {
+    "SelectedField": "Field2020",
+    "xPosInit": 0,
+    "yPosInit": 2,
+    "autoCSVPath": "/resources/loopTestingAuto.csv"
   }
 }

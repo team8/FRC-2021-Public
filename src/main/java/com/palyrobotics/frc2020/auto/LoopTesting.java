@@ -17,19 +17,17 @@ public class LoopTesting implements AutoBase {
 		DriveConfig config = Configs.get(DriveConfig.class);
 
 		var setInitialOdometry = new DriveSetOdometryRoutine(0, 0, 0);
-		var goForward = new DrivePathRoutine(newWaypointMeters(0, 15, 0));
+		var goForward = new DrivePathRoutine(newWaypointMeters(2, 0, 0));
 
-		var turn = new DriveYawRoutine(90);
 
 		var wheeeeeeeeeeeee = new DrivePathRoutine(
-				newWaypointMeters(-3.5, 12.5, 135),
-				newWaypointMeters(-5, 10, -180),
-				newWaypointMeters(-3.5, 7.5, -45),
-				newWaypointMeters(0, 5, 90)
-		).setMovement(config.maxAutoVelocity, config.maxAutoAcceleration);
+				newWaypointMeters(4, 2, -30),
+				newWaypointMeters(6, 0, -120),
+				newWaypointMeters(4, 2, 130)
+				).setMovement(config.maxAutoVelocity, config.maxAutoAcceleration);
 
 
 
-		return new SequentialRoutine(setInitialOdometry, goForward);
+		return new SequentialRoutine(setInitialOdometry, goForward, wheeeeeeeeeeeee);
 	}
 }
