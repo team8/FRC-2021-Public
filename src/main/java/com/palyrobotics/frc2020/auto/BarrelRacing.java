@@ -19,11 +19,17 @@ public class BarrelRacing implements AutoBase {
 				newWaypointMeters(5.9, 2.08, -15),
 
 				/** -=-=-=-Loop-=-=-=- **/
-				newWaypointMeters(7.44, 1.1, -5),
-				newWaypointMeters(7.80, 1.8, 140),
+				newWaypointMeters(7.25, 1.13, -20),
+				newWaypointMeters(8.17, 1.55, 90),
+				newWaypointMeters(7.58, 2.32, -170),
+
+//				newWaypointMeters(7.44, 1.1, -5),
+//				newWaypointMeters(7.80, 1.8, 140),
 
 				/** -=-Second Curve-=- **/
-				newWaypointMeters(6.66, 1.432, -155),
+				newWaypointMeters(6.4, 1.15, -160),
+
+//				newWaypointMeters(6.66, 1.432, -155),
 				newWaypointMeters(3.04, 1.07, 160),
 				newWaypointMeters(1.25, 1.93, 175));
 
