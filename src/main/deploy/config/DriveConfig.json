@@ -25,6 +25,6 @@
 	"pathVelocityMetersPerSecond": 1.8,
 	"pathAccelerationMetersPerSecondSquared": 1.6,
 	"allowableYawErrorDegrees": 2.0,
-	"maxAutoVelocity": 2.0,
-	"maxAutoAcceleration": 2.0
+	"maxAutoVelocity": 3.25,
+	"maxAutoAcceleration": 3.0
 }

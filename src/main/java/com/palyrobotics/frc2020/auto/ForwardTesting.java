@@ -16,7 +16,7 @@ public class ForwardTesting implements AutoBase {
 		DriveConfig config = Configs.get(DriveConfig.class);
 
 		var setInitialOdometry = new DriveSetOdometryRoutine(0, 0, 0);
-		var path = new DrivePathRoutine(newWaypointMeters(5, 0, 0)).setMovement(config.maxAutoVelocity, config.maxAutoAcceleration);
+		var path = new DrivePathRoutine(newWaypointMeters(9, 0, 0)).setMovement(config.maxAutoVelocity, config.maxAutoAcceleration);
 
 		return new SequentialRoutine(setInitialOdometry, path);
 	}
