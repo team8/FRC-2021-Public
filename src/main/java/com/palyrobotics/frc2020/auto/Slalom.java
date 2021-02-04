@@ -24,7 +24,7 @@ public class Slalom implements AutoBase {
 //		return new SequentialRoutine(setInitialOdometry, new DrivePathRoutine(firstLoop).endingVelocity(mConfig.pathVelocityMetersPerSecond), new DrivePathRoutine(secondLoop).endingVelocity(mConfig.pathVelocityMetersPerSecond).startingVelocity(mConfig.pathVelocityMetersPerSecond), new DrivePathRoutine(thirdLoop).setMovement(mConfig.pathVelocityMetersPerSecond * 1.4, mConfig.pathAccelerationMetersPerSecondSquared * 1.3).startingVelocity(mConfig.pathVelocityMetersPerSecond));
 
 		var setInitialOdometry = new DriveSetOdometryRoutine(3, 3, 0);
-		var circularWaypoints = new DrivePathRoutine(newWaypointMeters(5, 3, 90), newWaypointMeters(1, 3, -180)).waypoints(Util.circlePathGenerator(new Translation2d(3, 3), 2, 0, 180));
+		var circularWaypoints = new DrivePathRoutine().waypoints(Util.circlePathGenerator(new Translation2d(3, 3), 2, 0, 180));
 //		var loops = new DrivePathRoutine(
 //				/** First loop **/
 //				newWaypointMeters(4.15, 2.23, -15),
