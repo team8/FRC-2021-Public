@@ -1,5 +1,5 @@
 {
-  "SelectedAuto": "GalacticSearchBBlue",
+  "SelectedAuto": "Bounce",
   "TrenchStart": {
     "SelectedField": "Field2020",
     "xPosInit": 3.5,
@@ -14,15 +14,15 @@
   },
   "BarrelRacing": {
     "SelectedField": "BarrelRacing",
-    "xPosInit": 2.5,
-    "yPosInit": 3.3,
-    "autoCSVPath": "/resources/barrelRacing.csv"
+    "xPosInit": 0,
+    "yPosInit": 0,
+    "autoCSVPath": "/resources/barrelRacingAuto.csv"
   },
   "Bounce": {
     "SelectedField": "Bounce",
-    "xPosInit": 2.5,
-    "yPosInit": 3.3,
-    "autoCSVPath": "/resources/bounce.csv"
+    "xPosInit": 0,
+    "yPosInit": 0,
+    "autoCSVPath": "/resources/bounceAuto.csv"
   },
   "GalacticSearchARed": {
     "SelectedField": "GalacticSearchARed",
@@ -50,8 +50,8 @@
   },
   "Slalom": {
     "SelectedField": "Slalom",
-    "xPosInit": 2.5,
-    "yPosInit": 3.3,
-    "autoCSVPath": "/resources/slalom.csv"
+    "xPosInit": 0,
+    "yPosInit": 0,
+    "autoCSVPath": "/resources/slalomAuto.csv"
   }
 }

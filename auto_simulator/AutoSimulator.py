@@ -16,8 +16,8 @@ import matplotlib.transforms as mtransforms
 import matplotlib.patches as patches
 
 
-kRobotWidth = 0.40
-kRobotHeight = 0.55
+kRobotWidth = 0.838
+kRobotHeight = 1.0
 
 try:
     sys.argv[1]
@@ -196,8 +196,8 @@ def init():
 
 
 if (sys.argv[1] == 'save'):
-    anim = animation.FuncAnimation(fig, animate, init_func=init, frames=250,interval =  timeDif * 1000, blit=True, repeat=False)
-    anim.save('resources/' + selectedAuto + 'Simulation.gif',writer=animation.PillowWriter(fps=20))
+    anim = animation.FuncAnimation(fig, animate, init_func=init, frames=450,interval =  timeDif * 1000, blit=True, repeat=False)
+    anim.save('resources/' + selectedAuto + 'Simulation.gif',writer=animation.PillowWriter(fps=24))
 elif (sys.argv[1] == 'show'):
     anim = animation.FuncAnimation(fig, animate, init_func=init, frames=frame_generator,interval =  timeDif * 1000, blit=True, repeat=False)
     plt.tight_layout()

@@ -75,6 +75,9 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void robotInit() {
+		Log.info(kLoggerTag, "Writing path CSV file...");
+		pathToCsv();
+
 		LiveWindow.disableAllTelemetry();
 
 		String setupSummary = setupSubsystemsAndServices();
@@ -94,8 +97,8 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void simulationInit() {
-		Log.info(kLoggerTag, "Writing path CSV file...");
-		pathToCsv();
+//		Log.info(kLoggerTag, "Writing path CSV file...");
+//		pathToCsv();
 	}
 
 	private void pathToCsv() {
