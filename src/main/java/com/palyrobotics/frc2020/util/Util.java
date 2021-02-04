@@ -2,7 +2,11 @@ package com.palyrobotics.frc2020.util;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.util.Units;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class holds a bunch of static methods and variables needed for mathematics
@@ -130,4 +134,17 @@ public class Util {
 		// Make first character lowercase to match JSON conventions
 		return Character.toLowerCase(className.charAt(0)) + className.substring(1);
 	}
+
+	//TODO: Refactor to utils
+	public static List<Translation2d> circlePathGenerator(Translation2d center, float radius, float startingAngleDeg, float endingAngleDeg) {
+		double steps = 10;
+		List<Translation2d> waypoints = new ArrayList<>();
+		for (float i = startingAngleDeg + 90; i <= endingAngleDeg + 90; i += steps) {
+			double xOffsetCenter = radius*Math.sin(i);
+			double yOffsetCenter = radius*Math.cos(i);
+			waypoints.add(new Translation2d(center.getX() + xOffsetCenter, center.getY() + yOffsetCenter));
+		}
+		return waypoints;
+	}
+
 }

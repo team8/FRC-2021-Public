@@ -14,6 +14,6 @@ public class DriveConfig extends SubsystemConfigBase {
 			lowNegativeInertiaThreshold, lowNegativeInertiaFarScalar, lowNegativeInertiaCloseScalar,
 			lowNegativeInertiaTurnScalar, wheelNonLinearity;
 	public int nonlinearPasses;
-	public double pathVelocityMetersPerSecond, pathAccelerationMetersPerSecondSquared;
+	public double normalPathVelocityMetersPerSecond, normalPathAccelerationMetersPerSecondSquared, straightPathVelocityMetersPerSecond, straightPathAccelerationMetersPerSecondSquared;
 	public double allowableYawErrorDegrees;
 }

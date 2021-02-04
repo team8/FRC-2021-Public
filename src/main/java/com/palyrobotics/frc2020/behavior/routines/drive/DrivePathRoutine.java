@@ -25,8 +25,8 @@ public class DrivePathRoutine extends TimeoutRoutineBase {
 	private static final double kTimeoutMultiplier = 1;
 	private final List<Pose2d> mPoses;
 	private List<Translation2d> mWaypoints;
-	private double mMaxVelocityMetersPerSecond = kConfig.pathVelocityMetersPerSecond,
-			mMaxAccelerationMetersPerSecondSq = kConfig.pathAccelerationMetersPerSecondSquared;
+	private double mMaxVelocityMetersPerSecond = kConfig.normalPathVelocityMetersPerSecond,
+			mMaxAccelerationMetersPerSecondSq = kConfig.normalPathAccelerationMetersPerSecondSquared;
 	private double mStartingVelocityMetersPerSecond, mEndingVelocityMetersPerSecond;
 	private List<TrajectoryConstraint> mConstraints = new ArrayList<>();
 	private boolean mShouldReversePath, mDriveInReverse;
@@ -125,7 +125,7 @@ public class DrivePathRoutine extends TimeoutRoutineBase {
 			}
 			posesWithStart.addFirst(startingPose);
 			var trajectoryConfig = DriveConstants.getTrajectoryConfig(mMaxVelocityMetersPerSecond, mMaxAccelerationMetersPerSecondSq);
-			trajectoryConfig.addConstraint(new CentripetalAccelerationConstraint(1.75));
+			trajectoryConfig.addConstraint(new CentripetalAccelerationConstraint(1.75)); //TODO: play around with this
 			trajectoryConfig.setReversed(mDriveInReverse);
 			trajectoryConfig.setStartVelocity(mStartingVelocityMetersPerSecond);
 			trajectoryConfig.setEndVelocity(mEndingVelocityMetersPerSecond);

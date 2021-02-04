@@ -7,7 +7,10 @@ import com.palyrobotics.frc2020.behavior.SequentialRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DrivePathRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DriveSetOdometryRoutine;
 import com.palyrobotics.frc2020.config.subsystem.DriveConfig;
+import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.config.Configs;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
 
 public class Slalom implements AutoBase {
 
@@ -20,18 +23,24 @@ public class Slalom implements AutoBase {
 //		List<Pose2d> thirdLoop = Arrays.asList(newWaypointMeters(6.85, 1.23, -20), newWaypointMeters(8.22, 1.522, 90), newWaypointMeters(7.38, 2.252, 180), newWaypointMeters(5.586, 2.262, 180), newWaypointMeters(0.5, 2.662, 180));
 //		return new SequentialRoutine(setInitialOdometry, new DrivePathRoutine(firstLoop).endingVelocity(mConfig.pathVelocityMetersPerSecond), new DrivePathRoutine(secondLoop).endingVelocity(mConfig.pathVelocityMetersPerSecond).startingVelocity(mConfig.pathVelocityMetersPerSecond), new DrivePathRoutine(thirdLoop).setMovement(mConfig.pathVelocityMetersPerSecond * 1.4, mConfig.pathAccelerationMetersPerSecondSquared * 1.3).startingVelocity(mConfig.pathVelocityMetersPerSecond));
 
-		var setInitialOdometry = new DriveSetOdometryRoutine(1.18, 2.672, -0);
-		var path = new DrivePathRoutine(
-				/** First loop **/
-				newWaypointMeters(3.63, 2.03, -15),
-				newWaypointMeters(3.72, 1.132, 170),
-				newWaypointMeters(3.89, 2.062, 15),
-				/** Second loop **/
-				newWaypointMeters(6.21, 2.72, 50),
-				newWaypointMeters(5.79, 3.36, -140),
-				/** Third loop **/
-				newWaypointMeters(7.88, 1.322, 40),
-				newWaypointMeters(1.2, 2.2, 180));
-		return new SequentialRoutine(setInitialOdometry, path);
+		var setInitialOdometry = new DriveSetOdometryRoutine(3, 3, 0);
+		var circularWaypoints = new DrivePathRoutine(newWaypointMeters(5, 3, 90), newWaypointMeters(1, 3, -180)).waypoints(Util.circlePathGenerator(new Translation2d(3, 3), 2, 0, 180));
+//		var loops = new DrivePathRoutine(
+//				/** First loop **/
+//				newWaypointMeters(4.15, 2.23, -15),
+//				newWaypointMeters(3.72, 0.6, 170),
+//				newWaypointMeters(3.15, 2.05, 30),
+//				/** Second loop **/
+//				newWaypointMeters(6.6, 2.35, 30),
+//				newWaypointMeters(5.6, 3.9, -160),
+//				/** Third loop **/
+//				newWaypointMeters(7, 0.98, -10),
+//				newWaypointMeters(8.15, 1.4, 70),
+//				newWaypointMeters(7.8, 2.3, 180)).endingVelocity(mConfig.straightPathVelocityMetersPerSecond);
+//		var toStart = new DrivePathRoutine(
+//				newWaypointMeters(0.6, 2.3, 180)
+//		).startingVelocity(mConfig.straightPathVelocityMetersPerSecond).setMovement(mConfig.straightPathVelocityMetersPerSecond, mConfig.straightPathAccelerationMetersPerSecondSquared);
+//		return new SequentialRoutine(setInitialOdometry, loops, toStart);
+		return new SequentialRoutine(setInitialOdometry, circularWaypoints);
 	}
 }
