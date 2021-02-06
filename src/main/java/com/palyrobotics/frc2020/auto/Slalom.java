@@ -7,10 +7,7 @@ import com.palyrobotics.frc2020.behavior.SequentialRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DrivePathRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DriveSetOdometryRoutine;
 import com.palyrobotics.frc2020.config.subsystem.DriveConfig;
-import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.config.Configs;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Translation2d;
 
 public class Slalom implements AutoBase {
 
@@ -35,13 +32,12 @@ public class Slalom implements AutoBase {
 				newWaypointMeters(5.6, 3.9, -160),
 				/** Third loop **/
 //				newWaypointMeters(6.58, 1, -10),
-				newWaypointMeters(6.5, 0.8, 0),
+				newWaypointMeters(6.35, 1.25, -35),
 //				newWaypointMeters(8.19, 1.062, 30),
-				newWaypointMeters(8, 1.2, 70),
+				newWaypointMeters(8.55, 1.25, 55),
 				newWaypointMeters(7.8, 2.5, 180)).endingVelocity(mConfig.straightPathVelocityMetersPerSecond);
 		var toStart = new DrivePathRoutine(
-				newWaypointMeters(1.2, 2.5, 180)
-		).startingVelocity(mConfig.straightPathVelocityMetersPerSecond).setMovement(mConfig.straightPathVelocityMetersPerSecond, mConfig.straightPathAccelerationMetersPerSecondSquared);
+				newWaypointMeters(1.2, 2.5, 180)).startingVelocity(mConfig.straightPathVelocityMetersPerSecond).setMovement(mConfig.straightPathVelocityMetersPerSecond, mConfig.straightPathAccelerationMetersPerSecondSquared);
 		return new SequentialRoutine(setInitialOdometry, loops, toStart);
 	}
 }

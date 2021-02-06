@@ -1,12 +1,12 @@
 package com.palyrobotics.frc2020.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.util.Units;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class holds a bunch of static methods and variables needed for mathematics
@@ -140,8 +140,8 @@ public class Util {
 		double steps = 5;
 		List<Translation2d> waypoints = new ArrayList<>();
 		for (float i = startingAngleDeg + 90; i <= endingAngleDeg + 90; i += steps) {
-			double xOffsetCenter = radius*Math.cos(i * Math.PI / 180);
-			double yOffsetCenter = radius*Math.sin(i * Math.PI / 180);
+			double xOffsetCenter = radius * Math.cos(i * Math.PI / 180);
+			double yOffsetCenter = radius * Math.sin(i * Math.PI / 180);
 			waypoints.add(new Translation2d(center.getX() + xOffsetCenter, center.getY() + yOffsetCenter));
 		}
 		return waypoints;
