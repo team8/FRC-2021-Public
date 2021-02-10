@@ -20,24 +20,41 @@ public class BarrelRacing implements AutoBase {
 //		List<Pose2d> thirdLoop = Arrays.asList(newWaypointMeters(6.85, 1.23, -20), newWaypointMeters(8.22, 1.522, 90), newWaypointMeters(7.38, 2.252, 180), newWaypointMeters(5.586, 2.262, 180), newWaypointMeters(0.5, 2.662, 180));
 //		return new SequentialRoutine(setInitialOdometry, new DrivePathRoutine(firstLoop).endingVelocity(mConfig.pathVelocityMetersPerSecond), new DrivePathRoutine(secondLoop).endingVelocity(mConfig.pathVelocityMetersPerSecond).startingVelocity(mConfig.pathVelocityMetersPerSecond), new DrivePathRoutine(thirdLoop).setMovement(mConfig.pathVelocityMetersPerSecond * 1.4, mConfig.pathAccelerationMetersPerSecondSquared * 1.3).startingVelocity(mConfig.pathVelocityMetersPerSecond));
 
-		var setInitialOdometry = new DriveSetOdometryRoutine(1.14, 2.23, 0);
+//		var setInitialOdometry = new DriveSetOdometryRoutine(1.14, 2.23, 0);
+		var setInitialOdometry = new DriveSetOdometryRoutine(0.9, 2.35, 20);
 //		var circularWaypoints = new DrivePathRoutine().waypoints(Util.circlePathGenerator(new Translation2d(3, 3), 2, 0, 180));
 		var loops = new DrivePathRoutine(
+//				/** First loop **/
+//				newWaypointMeters(4.15, 2.23, -15),
+//				newWaypointMeters(3.72, 0.6, 170),
+//				newWaypointMeters(3.15, 2.05, 30),
+//				/** Second loop **/
+//				newWaypointMeters(6.6, 2.35, 30),
+//				newWaypointMeters(5.6, 3.9, -160),
+//				/** Third loop **/
+//				newWaypointMeters(6.35, 1.25, -35),
+//				newWaypointMeters(8.55, 1.25, 55),
+
 				/** First loop **/
-				newWaypointMeters(4.15, 2.23, -15),
-				newWaypointMeters(3.72, 0.6, 170),
-				newWaypointMeters(3.15, 2.05, 30),
+				newWaypointMeters(4.1, 2.1, -50),
+				newWaypointMeters(3.35, 1.05, 145),
+
+				newWaypointMeters(4.05, 2.1, 10),
 				/** Second loop **/
-				newWaypointMeters(6.6, 2.35, 30),
-				newWaypointMeters(5.6, 3.9, -160),
+//				newWaypointMeters(6.7, 3, 100),
+//				newWaypointMeters(5.5, 3, -85),
+
+				newWaypointMeters(6.65, 2.9, 75),
+				newWaypointMeters(5.6, 3.3, -105),
 				/** Third loop **/
-//				newWaypointMeters(6.58, 1, -10),
-				newWaypointMeters(6.35, 1.25, -35),
-//				newWaypointMeters(8.19, 1.062, 30),
-				newWaypointMeters(8.55, 1.25, 55),
-				newWaypointMeters(7.8, 2.5, 180)).endingVelocity(mConfig.straightPathVelocityMetersPerSecond);
-		var toStart = new DrivePathRoutine(
-				newWaypointMeters(1.2, 2.5, 180)).startingVelocity(mConfig.straightPathVelocityMetersPerSecond).setMovement(mConfig.straightPathVelocityMetersPerSecond, mConfig.straightPathAccelerationMetersPerSecondSquared);
-		return new SequentialRoutine(setInitialOdometry, loops, toStart);
+
+				newWaypointMeters(6.9, 0.95, -20),
+				newWaypointMeters(8.0, 2.0, 165),
+
+				/** Finish **/
+				newWaypointMeters(6.4, 2.2, 180),
+				newWaypointMeters(1.2, 2.2, 180));
+//
+		return new SequentialRoutine(setInitialOdometry, loops);
 	}
 }
