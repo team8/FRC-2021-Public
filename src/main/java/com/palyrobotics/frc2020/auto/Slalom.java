@@ -11,38 +11,33 @@ public class Slalom implements AutoBase {
 
 	@Override
 	public RoutineBase getRoutine() {
-		var setInitialOdometry = new DriveSetOdometryRoutine(1.0, 0.8, 0);
-		// Making one large routine since there shouldn't be any stops along the way, just one large motion
+		var setInitialOdometry = new DriveSetOdometryRoutine(0.9, 0.6, 15);
+
 		var path = new DrivePathRoutine(
 		/** -=-First Curve-=- **/
-//				newWaypointMeters(2.8, 2.1, 35),
-//				newWaypointMeters(6.5, 1.9, -50),
-
-				newWaypointMeters(3.23, 2.2, 0),
+//				newWaypointMeters(3.35, 2.2, 0),
+				newWaypointMeters(3.65, 2.2, 0),
 				newWaypointMeters(6.08, 2.1, -5),
 
-				newWaypointMeters(7.62, 0.85, -10),
-				newWaypointMeters(8.1, 1.95, 145),
-				newWaypointMeters(7.03, 1.59, -100),
-
 				/** -=-=-=-Loop-=-=-=- **/
-//				newWaypointMeters(7.07, 0.85, -35),
-//				newWaypointMeters(7.30, 0.73, -20),
-//				newWaypointMeters(7.58, 0.69, 0),
-//				newWaypointMeters(8.09, 0.73, 10),
-//				newWaypointMeters(8.57, 1.05, 75),
-//				newWaypointMeters(8.36, 0.62, 20),
-//				newWaypointMeters(8.18, 2.43, 160),
-//				newWaypointMeters(6.75, 1.66, -110),
+				// "longer" turn
+//				newWaypointMeters(7.62, 0.85, -10),
+//				newWaypointMeters(8.1, 2, 170),
+//				newWaypointMeters(7.03, 1.59, -100),
+
+				// tighter turn, works on sim but is super tight
+				newWaypointMeters(7.12, 1.18, -55),
+				newWaypointMeters(8.16, 1.5, 90),
+				newWaypointMeters(7, 1.8, -110),
 
 				/** -=-Second Curve-=- **/
-//				newWaypointMeters(6.3, 0.8, -160),
-//				newWaypointMeters(5.66, 0.62, -165),
-//				newWaypointMeters(2.83, 0.87, 138),
+				newWaypointMeters(6, 0.8, -170),
 
-				newWaypointMeters(6, 0.8, -175),
-				newWaypointMeters(3.2, 0.8, 165),
-				newWaypointMeters(1.4, 2.1, 160));
+//				newWaypointMeters(3.2, 0.85, 165),
+//				newWaypointMeters(1.4, 2.1, 160));
+
+				newWaypointMeters(3.35, 0.85, 165),
+				newWaypointMeters(1.4, 2.4, 140));
 
 		return new SequentialRoutine(setInitialOdometry, path);
 	}
