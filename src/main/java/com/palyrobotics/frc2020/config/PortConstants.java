@@ -49,4 +49,10 @@ public class PortConstants extends ConfigBase {
 	 */
 	public int nariSpinnerId;
 	public int nariSpinnerSolenoidId;
+
+	/**
+	 * Odroid
+	 */
+	public String address;
+	public int port;
 }
