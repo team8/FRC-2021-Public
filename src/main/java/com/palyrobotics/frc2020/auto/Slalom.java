@@ -2,14 +2,14 @@ package com.palyrobotics.frc2020.auto;
 
 import static com.palyrobotics.frc2020.util.Util.newWaypointMeters;
 
+import java.util.function.Predicate;
+
 import com.palyrobotics.frc2020.behavior.RoutineBase;
 import com.palyrobotics.frc2020.behavior.SequentialRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DrivePathRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DriveSetOdometryRoutine;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.util.Units;
 
-import java.util.function.Predicate;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
 
 public class Slalom implements AutoBase {
 
@@ -21,8 +21,8 @@ public class Slalom implements AutoBase {
 				newWaypointMeters(3.65, 2.2, 0),
 				newWaypointMeters(6.08, 2.1, -5)).limitWhen(2.7, startingLoopTest).endingVelocity(2.7).setMovement(3.5, 2.7);
 
-				/** -=-=-=-Loop-=-=-=- **/
-				// "longer" turn
+		/** -=-=-=-Loop-=-=-=- **/
+		// "longer" turn
 //				newWaypointMeters(7.62, 0.85, -10),
 //				newWaypointMeters(8.1, 2, 170),
 //				newWaypointMeters(7.03, 1.59, -100),
