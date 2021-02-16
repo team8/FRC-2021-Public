@@ -4,6 +4,7 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
+import com.palyrobotics.frc2020.util.service.OdroidMessage;
 
 import java.io.IOException;
 
@@ -14,6 +15,9 @@ public class Odroid {
     private Server server;
     private String address;
     private int port;
+
+    private String foo;
+    private int bar;
 
     public Odroid(String address, int port) {
         this.address = address;
@@ -37,7 +41,21 @@ public class Odroid {
 
                 @Override
                 public void received(Connection connection, Object message) {
-                    // TODO: work on what this should do
+                    if (!message.getClass().equals(OdroidMessage.class)) {
+                        return;
+                    }
+
+                    // this is what it would look like except with actual messages instead.
+                    if (((OdroidMessage) message).type == 0) {
+                        if (((OdroidMessage) message).message.getClass().equals(String.class)) {
+                            foo = (String) ((OdroidMessage) message).message;
+                        }
+                    }
+                    if (((OdroidMessage) message).type == 1) {
+                        if (((OdroidMessage) message).message.getClass().equals(Integer.class)) {
+                            bar = (Integer) ((OdroidMessage) message).message;
+                        }
+                    }
                 }
             });
             server.start();
@@ -46,5 +64,18 @@ public class Odroid {
         } catch (IOException exception) {
             Log.error(catagory, "Failed to start server", exception);
         }
+    }
+
+    // The idea for this would be to put everything that is received into categories and each category
+    // to be a queue (maybe not a queue, maybe just a object that gets swapped each time idk this is just
+    // prototyping). Then when you query something in HardwareReader it will get and remove the first
+    // element of the queue (or just whatever the object is). Idk, that seems like the best bet, problem is
+    // atm is idk what needs to be received. So for now these will just be foo and bar.
+    public int getBar() {
+        return bar;
+    }
+
+    public String getFoo() {
+        return foo;
     }
 }
