@@ -11,12 +11,13 @@ public class Bounce implements AutoBase {
 
 	@Override
 	public RoutineBase getRoutine() {
-		var setInitialOdometry = new DriveSetOdometryRoutine(1.2, 2.27, 0);
-		var firstBall = new DrivePathRoutine(newWaypointMeters(2.3, 3.762, 90));
-		var secondBall = new DrivePathRoutine(newWaypointMeters(3.24, 1.29, 140),
-				newWaypointMeters(4.6, 3.762, -90)).driveInReverse();
-		var thirdBall = new DrivePathRoutine(newWaypointMeters(5.8, 1.0, 0),
-				newWaypointMeters(6.85, 3.672, 90));
+		var setInitialOdometry = new DriveSetOdometryRoutine(1.0, 2.35, 0);
+		var firstBall = new DrivePathRoutine(newWaypointMeters(2.3, 3.5, 90));
+		var secondBall = new DrivePathRoutine(newWaypointMeters(3.1, 1.45, 120),
+				newWaypointMeters(4.45, 1.23, -110),
+				newWaypointMeters(4.6, 3.5, -90)).driveInReverse();
+		var thirdBall = new DrivePathRoutine(newWaypointMeters(5.8, 0.9, 0),
+				newWaypointMeters(6.85, 3.5, 90));
 		var finishZone = new DrivePathRoutine(newWaypointMeters(8.05, 2.23, 170)).driveInReverse();
 		return new SequentialRoutine(setInitialOdometry, firstBall, secondBall, thirdBall, finishZone);
 	}
