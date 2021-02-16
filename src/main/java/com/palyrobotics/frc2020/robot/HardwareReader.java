@@ -62,6 +62,7 @@ public class HardwareReader {
 		if (enabledSubsystems.contains(Spinner.getInstance())) readSpinnerState(state);
 		Robot.sLoopDebugger.addPoint("readSpinner");
 		readJoystickState(state);
+		readOdroidState(state);
 	}
 
 	private void readGameAndFieldState(RobotState state) {
@@ -158,6 +159,13 @@ public class HardwareReader {
 		}
 		state.closestColorConfidence = state.closestColorRGB.confidence;
 //		System.out.println(Spinner.getInstance().directionToGoalColor(state.closestColorString, state.gameData));
+	}
+
+	private void readOdroidState(RobotState state) {
+		var odroidHardware = HardwareAdapter.MiscellaneousHardware.getInstance();
+
+		odroidHardware.odroid.getBar();
+		odroidHardware.odroid.getFoo();
 	}
 
 	private void checkTalonFaults(Talon talon) {

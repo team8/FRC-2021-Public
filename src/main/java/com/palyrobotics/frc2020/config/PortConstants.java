@@ -53,6 +53,6 @@ public class PortConstants extends ConfigBase {
 	/**
 	 * Odroid
 	 */
-	public String address;
-	public int port;
+	public String odroidAddress;
+	public int odroidPort;
 }

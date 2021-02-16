@@ -16,8 +16,8 @@ public class Odroid {
     private String address;
     private int port;
 
-    private String foo;
-    private int bar;
+    private String foo = null;
+    private int bar = 0;
 
     public Odroid(String address, int port) {
         this.address = address;
