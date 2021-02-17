@@ -45,11 +45,11 @@ public class BarrelRacing implements AutoBase {
 //				newWaypointMeters(5.5, 3, -85),
 
 				newWaypointMeters(6.65, 2.9, 75),
-				newWaypointMeters(5.6, 3.3, -105),
+				newWaypointMeters(5.53, 3.3, -105),
 				/** Third loop **/
 
 				newWaypointMeters(6.9, 0.95, -20),
-				newWaypointMeters(8.0, 2.0, 165),
+				newWaypointMeters(8.02, 2.1, 170),
 
 				/** Finish **/
 				newWaypointMeters(6.4, 2.2, 180),
