@@ -24,16 +24,13 @@ public class GalacticSearchARed implements AutoBase {
 
 		Predicate<Pose2d> nearFirstBall = poseMeters -> poseMeters.getTranslation().getX() > Units.inchesToMeters(50.0);
 		var setInitialOdometry = new DriveSetOdometryRoutine(1.2, 2.3, 0);
-		//will need to split apart for intaking.
 		var path = new DrivePathRoutine(
 				newWaypointMeters(2.286, 2.286, 0),
 				newWaypointMeters(3.7, 1.524, 15),
-				newWaypointMeters(4.572, 3.65, 60)
-//                newWaypointMeters(0.3,3.81, -180)
-		).endingVelocity(2);
+				newWaypointMeters(4.572, 3.65, 60)).endingVelocity(2);
 		var pathAndIntake = new DriveParallelPathRoutine(path, new SequentialRoutine(new IntakeLowerRoutine(), new IntakeBallRoutine(4.0)), nearFirstBall);
 		var returnHome = new DrivePathRoutine(
-				newWaypointMeters(8.0, 4.4, -10)).startingVelocity(2).endingVelocity(1);
+				newWaypointMeters(8.2, 4.2, 0)).startingVelocity(2);
 		return new SequentialRoutine(setInitialOdometry, pathAndIntake, returnHome);
 	}
 }

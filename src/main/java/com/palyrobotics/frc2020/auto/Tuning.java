@@ -15,7 +15,7 @@ public class Tuning implements AutoBase {
 		var initial = new DriveSetOdometryRoutine(0, 0, 0);
 		var test = new DrivePathRoutine(
 //				newWaypointMeters(1, 1, 90),
-				newWaypointMeters(2, 2, 0));
+				newWaypointMeters(0, 2, -180));
 //				newWaypointMeters(2.5, 0, 0));
 
 		var test2 = new DriveYawRoutine(90);
