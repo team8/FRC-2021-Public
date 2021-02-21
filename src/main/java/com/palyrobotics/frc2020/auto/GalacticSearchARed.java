@@ -11,6 +11,7 @@ import com.palyrobotics.frc2020.behavior.routines.drive.DrivePathRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DriveSetOdometryRoutine;
 import com.palyrobotics.frc2020.behavior.routines.superstructure.IntakeBallRoutine;
 import com.palyrobotics.frc2020.behavior.routines.superstructure.IntakeLowerRoutine;
+import com.palyrobotics.frc2020.behavior.routines.superstructure.IntakeStowRoutine;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.util.Units;
@@ -19,18 +20,14 @@ public class GalacticSearchARed implements AutoBase {
 
 	@Override
 	public RoutineBase getRoutine() {
-		double xPosInit = 0.76;
-		double yPosInit = 2.3;
-
-		Predicate<Pose2d> nearFirstBall = poseMeters -> poseMeters.getTranslation().getX() > Units.inchesToMeters(50.0);
-		var setInitialOdometry = new DriveSetOdometryRoutine(1.2, 2.3, 0);
+		Predicate<Pose2d> nearFirstBall = poseMeters -> poseMeters.getTranslation().getX() > Units.inchesToMeters(10.0);
+		var setInitialOdometry = new DriveSetOdometryRoutine(1.2, 2.9, -30);
+		var lowerIntake = new IntakeLowerRoutine();
 		var path = new DrivePathRoutine(
-				newWaypointMeters(2.286, 2.286, 0),
-				newWaypointMeters(3.7, 1.524, 15),
-				newWaypointMeters(4.572, 3.65, 60)).endingVelocity(2);
-		var pathAndIntake = new DriveParallelPathRoutine(path, new SequentialRoutine(new IntakeLowerRoutine(), new IntakeBallRoutine(4.0)), nearFirstBall);
-		var returnHome = new DrivePathRoutine(
-				newWaypointMeters(8.2, 4.2, 0)).startingVelocity(2);
-		return new SequentialRoutine(setInitialOdometry, pathAndIntake, returnHome);
+				newWaypointMeters(3.6, 1.524, 45),
+				newWaypointMeters(4.6, 3.55, 50),
+				newWaypointMeters(8.4, 4.3, 0));
+		var pathAndIntake = new DriveParallelPathRoutine(path, new SequentialRoutine(new IntakeBallRoutine(5.0), new IntakeStowRoutine()), nearFirstBall);
+		return new SequentialRoutine(setInitialOdometry, lowerIntake, pathAndIntake);
 	}
 }
