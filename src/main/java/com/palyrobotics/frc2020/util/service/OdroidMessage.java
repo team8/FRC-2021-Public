@@ -1,5 +1,6 @@
 package com.palyrobotics.frc2020.util.service;
 
 public class OdroidMessage {
-    public double radiansToBall;
+
+	public double radiansToBall;
 }

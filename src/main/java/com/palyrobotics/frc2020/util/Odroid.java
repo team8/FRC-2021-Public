@@ -2,7 +2,6 @@ package com.palyrobotics.frc2020.util;
 
 import java.io.IOException;
 
-import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
@@ -19,7 +18,7 @@ public class Odroid {
 
 	public Odroid(String address, int port) {
 		server = new Server();
-		server.getKryo().setRegistrationRequired(false);
+		server.getKryo().register(OdroidMessage.class);
 
 		try {
 			server.addListener(new Listener() {
@@ -42,7 +41,8 @@ public class Odroid {
 
 					// it would be easier just to send a double, but i feel like this is better in case
 					// that more stuff needs to be transmitted
-                    radiansToBall = ((OdroidMessage) message).radiansToBall;
+					radiansToBall = ((OdroidMessage) message).radiansToBall;
+					Log.info(catagory, "" + radiansToBall);
 				}
 			});
 			server.start();

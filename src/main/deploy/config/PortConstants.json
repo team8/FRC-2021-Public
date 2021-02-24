@@ -22,5 +22,7 @@
 	"nariShooterHoodSolenoid": 5,
 	"nariShooterBlockingSolenoidId": 4,
 	"nariSpinnerId": 6,
-  	"nariSpinnerSolenoidId": 2
+  	"nariSpinnerSolenoidId": 2,
+	"odroidAddress":  "127.0.0.1",
+	"odroidPort": 807
 }
