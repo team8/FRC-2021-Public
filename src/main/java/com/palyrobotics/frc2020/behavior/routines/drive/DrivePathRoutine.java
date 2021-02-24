@@ -125,7 +125,7 @@ public class DrivePathRoutine extends TimeoutRoutineBase {
 			}
 			posesWithStart.addFirst(startingPose);
 			var trajectoryConfig = DriveConstants.getTrajectoryConfig(mMaxVelocityMetersPerSecond, mMaxAccelerationMetersPerSecondSq);
-			trajectoryConfig.addConstraint(new CentripetalAccelerationConstraint(2.5)); //TODO: play around with this
+			trajectoryConfig.addConstraint(new CentripetalAccelerationConstraint(3));
 			trajectoryConfig.setReversed(mDriveInReverse);
 			trajectoryConfig.setStartVelocity(mStartingVelocityMetersPerSecond);
 			trajectoryConfig.setEndVelocity(mEndingVelocityMetersPerSecond);

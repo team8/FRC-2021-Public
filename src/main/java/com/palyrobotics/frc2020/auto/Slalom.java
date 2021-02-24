@@ -14,15 +14,14 @@ public class Slalom implements AutoBase {
 		var setInitialOdometry = new DriveSetOdometryRoutine(0.9, 0.6, 15);
 		var path = new DrivePathRoutine(
 				/** -=-=First Curve=-=- **/
-				//With omni wheels, set centripetal accel to 2.3, otherwise it overturns and swerves
-				newWaypointMeters(3.65, 2.3, 0),
-				newWaypointMeters(5.83, 2.3, 0),
+				newWaypointMeters(3.65, 2.15, 0),
+				newWaypointMeters(5.83, 2.15, 0),
 
 				/** -=-=-=-Loop-=-=-=- **/
 				// "longer" turn
-				newWaypointMeters(7.72, 0.8, -10),
+				newWaypointMeters(7.65, 0.87, 0),
 				newWaypointMeters(7.80, 2.1, 180),
-				newWaypointMeters(6.9, 1.59, -100),
+				newWaypointMeters(6.9, 1.59, -110),
 				// tighter turn, works on sim but is super tight
 				// in lab, turn goes wide, looks slower than the longer turn
 //				newWaypointMeters(7.12, 1.18, -55),
@@ -30,9 +29,9 @@ public class Slalom implements AutoBase {
 //				newWaypointMeters(7, 1.8, -110),
 
 				/** -=-Second Curve-=- **/
-				newWaypointMeters(6, 0.72, -170),
-				newWaypointMeters(3.6, 0.65, 180),
-				newWaypointMeters(1.5, 2.2, 155));
+				newWaypointMeters(6, 0.85, -175),
+				newWaypointMeters(3.5, 0.80, 180),
+				newWaypointMeters(1.6, 2.0, 165));
 
 		return new SequentialRoutine(setInitialOdometry, path);
 	}
