@@ -167,7 +167,7 @@ public class HardwareAdapter {
 		private static MiscellaneousHardware sInstance;
 		final Compressor compressor = new Compressor();
 		final PowerDistributionPanel pdp = new PowerDistributionPanel();
-		final Odroid odroid = new Odroid(sPortConstants.odroidAddress, sPortConstants.odroidPort);
+		final Odroid odroid = new Odroid(sPortConstants.odroidPort);
 //    final UsbCamera fisheyeCam = CameraServer.getInstance().startAutomaticCapture();
 
 		private MiscellaneousHardware() {

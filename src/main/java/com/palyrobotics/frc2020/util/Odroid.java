@@ -16,7 +16,7 @@ public class Odroid {
 
 	private double radiansToBall = 0;
 
-	public Odroid(String address, int port) {
+	public Odroid(int port) {
 		server = new Server();
 		server.getKryo().register(OdroidMessage.class);
 
