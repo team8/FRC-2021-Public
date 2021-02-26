@@ -10,7 +10,7 @@ import com.palyrobotics.frc2020.util.service.OdroidMessage;
 
 public class Odroid {
 
-	private static final String catagory = "Odroid";
+	private static final String category = "Odroid";
 
 	private Server server;
 
@@ -18,6 +18,7 @@ public class Odroid {
 
 	public Odroid(int port) {
 		server = new Server();
+//		server.getKryo().register(Double.class);
 		server.getKryo().register(OdroidMessage.class);
 
 		try {
@@ -25,32 +26,45 @@ public class Odroid {
 
 				@Override
 				public void connected(Connection connection) {
-					Log.info(catagory, "Connected!");
+					Log.info(category, "Connected!");
 				}
 
 				@Override
 				public void disconnected(Connection connection) {
-					Log.error(catagory, "Disconnected!");
+					Log.error(category, "Disconnected!");
 				}
 
 				@Override
 				public void received(Connection connection, Object message) {
-					if (!message.getClass().equals(OdroidMessage.class)) {
-						return;
+//					Log.info(category, "Received object: " + message.getClass());
+					if (!message.getClass().getName().equals(OdroidMessage.class.getName())) {
+//						Log.info(category, "unexpected class: " + message.getClass().getName());
+						// return;
 					}
-
-					// it would be easier just to send a double, but i feel like this is better in case
-					// that more stuff needs to be transmitted
-					radiansToBall = ((OdroidMessage) message).radiansToBall;
-					Log.info(catagory, "" + radiansToBall);
+//					try {
+//						// it would be easier just to send a double, but i feel like this is better in case
+//						// that more stuff needs to be transmitted
+//						Log.info(category, "Converting: ");
+//						Log.info(category, String.valueOf(OdroidMessage.class));
+//						radiansToBall = ((OdroidMessage) message).radiansToBall;
+//						Log.info(category, "Message: " + radiansToBall);
+//						System.out.println(radiansToBall);
+//					} catch (Throwable t) {
+//						Log.error(category, "Error receiving " + t.getMessage());
+//					}
+//					Log.info(category, "Message: " + radiansToBall);
+//					System.out.println(radiansToBall);
+//					Log.info("Hi!");
+					radiansToBall = (Double) message;
+					Log.info(category, String.valueOf(radiansToBall));
 				}
 			});
 			server.start();
 			server.bind(port);
 
-			Log.info(catagory, "Started server");
+			Log.info(category, "Started server");
 		} catch (IOException exception) {
-			Log.error(catagory, "Failed to start server", exception);
+			Log.error(category, "Failed to start server", exception);
 		}
 	}
 

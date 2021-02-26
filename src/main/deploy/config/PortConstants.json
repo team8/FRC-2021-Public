@@ -23,5 +23,5 @@
 	"nariShooterBlockingSolenoidId": 4,
 	"nariSpinnerId": 6,
   	"nariSpinnerSolenoidId": 2,
-	"odroidPort": 807
+	"odroidPort": 809
 }
