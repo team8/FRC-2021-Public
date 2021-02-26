@@ -109,6 +109,14 @@ public class Commands {
 		visionWantedPipeline = visionPipeline;
 	}
 
+	public void setShooterVisionAssisted(int visionPipeline, double backupFlywheelVelocity, Shooter.HoodState backupHoodState) {
+		shooterWantedState = Shooter.ShooterState.VISION_VELOCITY;
+		visionWanted = true;
+		visionWantedPipeline = visionPipeline;
+		shooterWantedHoodState = backupHoodState;
+		shooterWantedCustomFlywheelVelocity = backupFlywheelVelocity;
+	}
+
 	public void setDriveTeleop() {
 		setDriveTeleop(0.0, 0.0, false, false, false);
 	}

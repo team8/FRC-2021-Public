@@ -117,7 +117,7 @@ public class Shooter extends SubsystemBase {
 				break;
 			case VISION_VELOCITY:
 				if (targetDistanceInches == null) {
-					targetHoodState = null;
+					targetHoodState = commands.getShooterWantedHoodState();
 				} else {
 					Map.Entry<Double, HoodState> floorEntry = kTargetDistanceToHoodState.floorEntry(targetDistanceInches),
 							ceilingEntry = kTargetDistanceToHoodState.ceilingEntry(targetDistanceInches),

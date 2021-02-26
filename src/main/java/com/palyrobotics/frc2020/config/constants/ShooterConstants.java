@@ -2,21 +2,21 @@ package com.palyrobotics.frc2020.config.constants;
 
 import java.util.*;
 
-import com.palyrobotics.frc2020.subsystems.Shooter.HoodState;
 import com.palyrobotics.frc2020.util.InterpolatingDoubleTreeMap;
+import com.palyrobotics.frc2020.subsystems.Shooter.HoodState;
 
 @SuppressWarnings ("squid:S2386")
 public class ShooterConstants {
+
 
 	private ShooterConstants() {
 	}
 
 	public static final Map<HoodState, InterpolatingDoubleTreeMap> kTargetDistanceToVelocity = new EnumMap<>(HoodState.class);
 	public static final NavigableMap<Double, HoodState> kTargetDistanceToHoodState = new TreeMap<>();
-	public static final double kTimeToShootPerBallSeconds = 1.0;
+	public static final double kTimeToShootPerBallSeconds = 0.5;
 
 	static {
-		// TODO: config?
 		/* Low Velocities */
 		var lowMap = new InterpolatingDoubleTreeMap();
 		lowMap.put(0.0, 0.0);

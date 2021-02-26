@@ -8,6 +8,7 @@ import com.palyrobotics.frc2020.behavior.routines.spinner.SpinnerPositionControl
 import com.palyrobotics.frc2020.behavior.routines.spinner.SpinnerRotationControlRoutine;
 import com.palyrobotics.frc2020.behavior.routines.superstructure.IndexerFeedRoutine;
 import com.palyrobotics.frc2020.config.subsystem.IntakeConfig;
+import com.palyrobotics.frc2020.config.subsystem.ShooterConfig;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.Joysticks;
 import com.palyrobotics.frc2020.subsystems.Climber;
 import com.palyrobotics.frc2020.subsystems.Indexer;
@@ -30,6 +31,7 @@ public class OperatorInterface {
 			mTurnStick = Joysticks.getInstance().turnStick;
 	private final XboxController mOperatorXboxController = Joysticks.getInstance().operatorXboxController;
 	private final IntakeConfig mIntakeConfig = Configs.get(IntakeConfig.class);
+	private final ShooterConfig mShooterConfig = Configs.get(ShooterConfig.class);
 
 	/**
 	 * Modifies commands based on operator input devices.
@@ -109,7 +111,7 @@ public class OperatorInterface {
 	private void updateSuperstructureCommands(Commands commands, RobotState state) {
 		if (mOperatorXboxController.getDPadDownReleased()) {
 			commands.setIntakeRunning(0);
-		} else if (mOperatorXboxController.getDPadDown()) {
+		} else if (mOperatorXboxController.getDPadDown() || mTurnStick.getRawButton(5)) {
 			if (!state.intakeStalled) {
 				commands.setIntakeRunning(mIntakeConfig.rollerPo);
 			} else {
@@ -135,7 +137,7 @@ public class OperatorInterface {
 			commands.indexerColumnWantedState = Indexer.ColumnState.IDLE;
 		}
 		if (mOperatorXboxController.getRightBumper()) {
-			commands.setShooterCustomFlywheelVelocity(1500, Shooter.HoodState.MIDDLE);
+			commands.setShooterVisionAssisted(0, mShooterConfig.noTargetSpinUpVelocity, Shooter.HoodState.LOW);
 		} else if (mOperatorXboxController.getLeftBumper()) {
 			commands.setIntakeStowed();
 			commands.indexerColumnWantedState = Indexer.ColumnState.IDLE;
