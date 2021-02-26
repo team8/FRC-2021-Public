@@ -1,6 +1,7 @@
 package com.palyrobotics.frc2020.util;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
@@ -20,7 +21,7 @@ public class Odroid {
 		server = new Server();
 //		server.getKryo().register(Double.class);
 		server.getKryo().register(OdroidMessage.class);
-
+		server.getKryo().register(HashMap.class);
 		try {
 			server.addListener(new Listener() {
 
@@ -37,25 +38,14 @@ public class Odroid {
 				@Override
 				public void received(Connection connection, Object message) {
 //					Log.info(category, "Received object: " + message.getClass());
-					if (!message.getClass().getName().equals(OdroidMessage.class.getName())) {
-//						Log.info(category, "unexpected class: " + message.getClass().getName());
-						// return;
+					if (!message.getClass().getName().equals(HashMap.class.getName())) {
+						Log.info(category, "unexpected class: " + message.getClass().getName());
+						 return;
 					}
-//					try {
-//						// it would be easier just to send a double, but i feel like this is better in case
-//						// that more stuff needs to be transmitted
-//						Log.info(category, "Converting: ");
-//						Log.info(category, String.valueOf(OdroidMessage.class));
-//						radiansToBall = ((OdroidMessage) message).radiansToBall;
-//						Log.info(category, "Message: " + radiansToBall);
-//						System.out.println(radiansToBall);
-//					} catch (Throwable t) {
-//						Log.error(category, "Error receiving " + t.getMessage());
-//					}
-//					Log.info(category, "Message: " + radiansToBall);
-//					System.out.println(radiansToBall);
-//					Log.info("Hi!");
-					radiansToBall = (Double) message;
+					Object sent = ((HashMap<String, Object>) message).get("radians-to-ball");
+					if (sent.getClass().equals(Double.class)) {
+						radiansToBall = (double) sent;
+					}
 					Log.info(category, String.valueOf(radiansToBall));
 				}
 			});
