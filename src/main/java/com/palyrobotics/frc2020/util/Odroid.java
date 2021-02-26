@@ -7,7 +7,6 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
-import com.palyrobotics.frc2020.util.service.OdroidMessage;
 
 public class Odroid {
 
@@ -19,8 +18,6 @@ public class Odroid {
 
 	public Odroid(int port) {
 		server = new Server();
-//		server.getKryo().register(Double.class);
-		server.getKryo().register(OdroidMessage.class);
 		server.getKryo().register(HashMap.class);
 		try {
 			server.addListener(new Listener() {
@@ -37,10 +34,8 @@ public class Odroid {
 
 				@Override
 				public void received(Connection connection, Object message) {
-//					Log.info(category, "Received object: " + message.getClass());
 					if (!message.getClass().getName().equals(HashMap.class.getName())) {
-						Log.info(category, "unexpected class: " + message.getClass().getName());
-						 return;
+						return;
 					}
 					Object sent = ((HashMap<String, Object>) message).get("radians-to-ball");
 					if (sent.getClass().equals(Double.class)) {
@@ -58,7 +53,6 @@ public class Odroid {
 		}
 	}
 
-	// might want to go to degrees
 	public double getRadiansToBall() {
 		return radiansToBall;
 	}
