@@ -18,8 +18,8 @@ public class Tuning implements AutoBase {
 //				newWaypointMeters(1, 1, 90),
 				newWaypointMeters(0, 2, -180));
 //				newWaypointMeters(2.5, 0, 0));
-		var test2 = new DriveYawRoutine(90);
+		var test2 = new DriveYawRoutine(180);
 		var testIntake = new IntakeBallRoutine(5);
-		return new SequentialRoutine(initial, testIntake);
+		return new SequentialRoutine(initial, test2);
 	}
 }

@@ -1,10 +1,10 @@
 {
 	"velocityGains": {
-		"f": 0.0376,
+		"f": 0.0372,
 		"p": 0.016
 	},
 	"turnGains": {
-		"f": 0.00128,
+		"f": 0.00116,
 		"p": 0.0004,
 		"velocity": 260.0,
 		"acceleration": 320.0
@@ -23,6 +23,6 @@
 	"wheelNonLinearity": 0.5,
 	"nonlinearPasses": 3,
 	"pathVelocityMetersPerSecond": 3.5,
-	"pathAccelerationMetersPerSecondSquared": 3.0,
+	"pathAccelerationMetersPerSecondSquared": 3.5,
 	"allowableYawErrorDegrees": 2.0
 }
