@@ -1,5 +1,11 @@
 {
-  "SelectedAuto": "Slalom",
+  "SelectedAuto": "TrenchStartPlus",
+  "TrenchStartPlus": {
+    "SelectedField": "Field2020",
+    "xPosInit": 3.5,
+    "yPosInit": 0.8,
+    "autoCSVPath": "/resources/trenchStealTwoShootFiveFriendlyTrenchThreeShootThreeAuto.csv"
+  },
   "TrenchStart": {
     "SelectedField": "Field2020",
     "xPosInit": 3.5,
@@ -9,7 +15,7 @@
   "StartCenter": {
     "SelectedField": "Field2020",
     "xPosInit": 3.5,
-    "yPosInit": 0.8,
+    "yPosInit": 5.8,
     "autoCSVPath": "/resources/startCenterFriendlyTrenchThreeShootThreeAuto.csv"
   },
   "BarrelRacing": {
