@@ -18,6 +18,7 @@ import com.palyrobotics.frc2020.util.control.Falcon;
 import com.palyrobotics.frc2020.util.control.Spark;
 import com.palyrobotics.frc2020.util.control.Talon;
 import com.palyrobotics.frc2020.util.dashboard.LiveGraph;
+import com.palyrobotics.frc2020.vision.Limelight;
 import com.revrobotics.CANSparkMax.FaultID;
 import com.revrobotics.ColorMatch;
 
@@ -31,7 +32,7 @@ public class HardwareReader {
 	private static final Timer mTimer = new Timer();
 	private final RobotConfig mRobotConfig = Configs.get(RobotConfig.class);
 	private final IntakeConfig mIntakeConfig = Configs.get(IntakeConfig.class);
-
+	private final Limelight mLimelight = Limelight.getInstance();
 	private final ColorMatch mColorMatcher = new ColorMatch();
 
 	private final double[] mGyroAngles = new double[3], mGyroAngularVelocities = new double[3];
@@ -69,6 +70,7 @@ public class HardwareReader {
 	}
 
 	private void readDriveState(RobotState state) {
+		Log.info("Limelight Target Distance", String.valueOf(mLimelight.getEstimatedDistanceInches()));
 		var hardware = DriveHardware.getInstance();
 		/* Gyro */
 		state.driveIsGyroReady = hardware.gyro.getState() == PigeonState.Ready;

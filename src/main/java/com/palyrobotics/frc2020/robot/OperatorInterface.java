@@ -3,7 +3,11 @@ package com.palyrobotics.frc2020.robot;
 import static com.palyrobotics.frc2020.util.Util.handleDeadBand;
 import static com.palyrobotics.frc2020.vision.Limelight.kOneTimesZoomPipelineId;
 import static com.palyrobotics.frc2020.vision.Limelight.kTwoTimesZoomPipelineId;
+import static com.palyrobotics.frc2020.util.Util.newWaypointMeters;
 
+import com.palyrobotics.frc2020.behavior.SequentialRoutine;
+import com.palyrobotics.frc2020.behavior.routines.drive.DrivePathRoutine;
+import com.palyrobotics.frc2020.behavior.routines.drive.DriveSetOdometryRoutine;
 import com.palyrobotics.frc2020.behavior.routines.spinner.SpinnerPositionControlRoutine;
 import com.palyrobotics.frc2020.behavior.routines.spinner.SpinnerRotationControlRoutine;
 import com.palyrobotics.frc2020.behavior.routines.superstructure.IndexerFeedRoutine;
@@ -89,10 +93,17 @@ public class OperatorInterface {
 			commands.setDriveVisionAlign(kTwoTimesZoomPipelineId);
 		}
 		/* Path Following */
-//		if (mOperatorXboxController.getBButtonPressed()) {
+		if (mDriveStick.getRawButton(6)) {
+			commands.addWantedRoutine(new SequentialRoutine(
+					new DriveSetOdometryRoutine(0.0, 0.0, 0.0),
+					new DrivePathRoutine(newWaypointMeters(3.5, 0.0, 0.0))));
+		}
+//		if (mDriveStick.getRawButton(5)) {
 //			commands.addWantedRoutine(new SequentialRoutine(
-//					new DriveSetOdometryRoutine(0.0, 0.0, 0.0),
-//					new DrivePathRoutine(newWaypoint(30.0, 0.0, 0.0))));
+//					new DriveSetOdometryRoutine(0, 0.0, 0.0),
+//					new DrivePathRoutine(newWaypointMeters(-3.5, 0.0, 0.0))));
+//		}
+//		}));
 //			commands.addWantedRoutine(new SequentialRoutine(
 //					new DriveSetOdometryRoutine(0.0, 0.0, 180.0),
 //					new DriveYawRoutine(0.0)));
@@ -122,7 +133,7 @@ public class OperatorInterface {
 			commands.setIntakeStowed();
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.IDLE;
 		}
-		if (mOperatorXboxController.getRightTriggerPressed()) {
+		if (mOperatorXboxController.getRightBumperPressed()) {
 			commands.addWantedRoutine(new IndexerFeedRoutine());
 		} else if (mOperatorXboxController.getLeftTrigger()) {
 			commands.indexerColumnWantedState = Indexer.ColumnState.REVERSE_FEED;
@@ -136,7 +147,7 @@ public class OperatorInterface {
 		} else {
 			commands.indexerColumnWantedState = Indexer.ColumnState.IDLE;
 		}
-		if (mOperatorXboxController.getRightBumper()) {
+		if (mOperatorXboxController.getRightTrigger()) {
 			commands.setShooterVisionAssisted(0, mShooterConfig.noTargetSpinUpVelocity, Shooter.HoodState.LOW);
 		} else if (mOperatorXboxController.getLeftBumper()) {
 			commands.setIntakeStowed();

@@ -132,6 +132,7 @@ public class Shooter extends SubsystemBase {
 		}
 		TelemetryService.putArbitrary("shooterTargetHoodState", targetHoodState);
 		if (targetHoodState != null) {
+//			applyHoodState(state, HoodState.MIDDLE);
 			applyHoodState(state, targetHoodState);
 		}
 		return targetHoodState;

@@ -11,6 +11,6 @@
     "velocityTolerance": 50.0,
     "acceptableDriveVelocity": 0.2,
     "rumbleDurationSeconds": 0.5,
-    "hoodSwitchDistanceThreshold": 10.0,
+    "hoodSwitchDistanceThreshold": 15,
     "noTargetSpinUpVelocity": 1900
 }
