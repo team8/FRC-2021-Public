@@ -96,7 +96,7 @@ public class OperatorInterface {
 		if (mDriveStick.getRawButton(6)) {
 			commands.addWantedRoutine(new SequentialRoutine(
 					new DriveSetOdometryRoutine(0.0, 0.0, 0.0),
-					new DrivePathRoutine(newWaypointMeters(3.5, 0.0, 0.0))));
+					new DrivePathRoutine(newWaypointMeters(4.5, 0.0, 0.0))));
 		}
 //		if (mDriveStick.getRawButton(5)) {
 //			commands.addWantedRoutine(new SequentialRoutine(
@@ -154,9 +154,6 @@ public class OperatorInterface {
 			commands.indexerColumnWantedState = Indexer.ColumnState.IDLE;
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.IDLE;
 			commands.setShooterIdle();
-		}
-		if (mOperatorXboxController.getYButton()) {
-			commands.setShooterCustomFlywheelVelocity(1800, Shooter.HoodState.MIDDLE);
 		}
 	}
 
