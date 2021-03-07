@@ -155,6 +155,9 @@ public class OperatorInterface {
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.IDLE;
 			commands.setShooterIdle();
 		}
+		if (mOperatorXboxController.getYButton()) {
+			commands.setShooterCustomFlywheelVelocity(1800, Shooter.HoodState.MIDDLE);
+		}
 	}
 
 	private void updateSpinnerCommands(Commands commands) {
