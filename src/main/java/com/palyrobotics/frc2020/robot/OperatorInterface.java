@@ -4,11 +4,11 @@ import static com.palyrobotics.frc2020.util.Util.handleDeadBand;
 import static com.palyrobotics.frc2020.vision.Limelight.kOneTimesZoomPipelineId;
 import static com.palyrobotics.frc2020.vision.Limelight.kTwoTimesZoomPipelineId;
 
+import com.palyrobotics.frc2020.behavior.routines.drive.DrivePathRoutine;
 import com.palyrobotics.frc2020.behavior.routines.spinner.SpinnerPositionControlRoutine;
 import com.palyrobotics.frc2020.behavior.routines.spinner.SpinnerRotationControlRoutine;
 import com.palyrobotics.frc2020.behavior.routines.superstructure.IndexerFeedRoutine;
 import com.palyrobotics.frc2020.config.subsystem.IntakeConfig;
-import com.palyrobotics.frc2020.config.subsystem.ShooterConfig;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.Joysticks;
 import com.palyrobotics.frc2020.subsystems.Climber;
 import com.palyrobotics.frc2020.subsystems.Indexer;
@@ -19,6 +19,8 @@ import com.palyrobotics.frc2020.util.input.Joystick;
 import com.palyrobotics.frc2020.util.input.XboxController;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
 
 /**
  * Used to produce {@link Commands}'s from human input. Should only be used in robot package.
@@ -31,7 +33,6 @@ public class OperatorInterface {
 			mTurnStick = Joysticks.getInstance().turnStick;
 	private final XboxController mOperatorXboxController = Joysticks.getInstance().operatorXboxController;
 	private final IntakeConfig mIntakeConfig = Configs.get(IntakeConfig.class);
-	private final ShooterConfig mShooterConfig = Configs.get(ShooterConfig.class);
 
 	/**
 	 * Modifies commands based on operator input devices.
@@ -137,12 +138,16 @@ public class OperatorInterface {
 			commands.indexerColumnWantedState = Indexer.ColumnState.IDLE;
 		}
 		if (mOperatorXboxController.getRightBumper()) {
-			commands.setShooterVisionAssisted(0, mShooterConfig.noTargetSpinUpVelocity, Shooter.HoodState.LOW);
+			commands.setShooterCustomFlywheelVelocity(1500, Shooter.HoodState.MIDDLE);
 		} else if (mOperatorXboxController.getLeftBumper()) {
 			commands.setIntakeStowed();
 			commands.indexerColumnWantedState = Indexer.ColumnState.IDLE;
 			commands.indexerVSingulatorWantedState = Indexer.VSingulatorState.IDLE;
 			commands.setShooterIdle();
+		}
+		if (mDriveStick.getRawButton(3)) {
+			commands.addWantedRoutine(new DrivePathRoutine(state.drivePoseMeters,
+					new Pose2d(new Translation2d(state.drivePoseMeters.getTranslation().getX() - 2, state.drivePoseMeters.getTranslation().getY()), state.drivePoseMeters.getRotation())).driveInReverse());
 		}
 	}
 
