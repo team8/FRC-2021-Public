@@ -79,7 +79,10 @@ public class OperatorInterface {
 	}
 
 	private void updateLightingCommands(Commands commands, @ReadOnly RobotState state) {
-		//Need to implement
+		if (mDriveStick.getTriggerPressed()){
+			commands.lightingWantedStates.add(Lighting.State.SPINNER_DONE);
+			System.out.println(Lighting.getInstance().mLEDControllers);
+		}
 	}
 
 	private void updateSuperstructureCommands(Commands commands, RobotState state) {

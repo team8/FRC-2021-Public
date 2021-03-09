@@ -170,6 +170,7 @@ public class HardwareWriter {
 			if (enabledSubsystems.contains(mIntake)) updateIntake();
 			if (enabledSubsystems.contains(mShooter)) updateShooter();
 			if (enabledSubsystems.contains(mIndexer)) updateIndexer();
+			if (enabledSubsystems.contains(mLighting)) updateLighting();
 			Robot.sLoopDebugger.addPoint("writeDrive");
 		}
 		var joystickHardware = HardwareAdapter.Joysticks.getInstance();

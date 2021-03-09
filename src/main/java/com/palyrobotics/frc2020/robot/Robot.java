@@ -77,6 +77,7 @@ public class Robot extends TimedRobot {
 		LiveWindow.disableAllTelemetry();
 
 		String setupSummary = setupSubsystemsAndServices();
+		System.out.println(setupSummary);
 
 		if (kCanUseHardware) mHardwareWriter.configureHardware(mEnabledSubsystems);
 
@@ -243,7 +244,6 @@ public class Robot extends TimedRobot {
 	}
 
 	private void updateSubsystemsAndApplyOutputs() {
-		System.out.println("e");
 		resetOdometryIfWanted();
 
 		for (SubsystemBase subsystem : mEnabledSubsystems) {

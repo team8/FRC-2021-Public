@@ -66,7 +66,7 @@ public class Lighting extends SubsystemBase {
 	private LightingConfig mConfig = Configs.get(LightingConfig.class);
 	private AddressableLEDBuffer mOutputBuffer = new AddressableLEDBuffer(mConfig.ledCount);
 	private PriorityQueue<State> mStates = new PriorityQueue<>(10, Comparator.comparingInt(this::getLightingEnumValueInt));
-	private PriorityQueue<LEDController> mLEDControllers = new PriorityQueue<>(1, Comparator.comparingInt(o -> o.kPriority));
+	public PriorityQueue<LEDController> mLEDControllers = new PriorityQueue<>(1, Comparator.comparingInt(o -> o.kPriority));
 
 	private Lighting() {
 	}
@@ -80,10 +80,13 @@ public class Lighting extends SubsystemBase {
 		ArrayList<State> wantedStates = commands.lightingWantedStates;
 		for (State wantedState : wantedStates) {
 			if (RobotController.getBatteryVoltage() < mConfig.minVoltageToFunction) wantedState = State.OFF;
-			boolean isNewState = mStates.contains(wantedState);
+			boolean isNewState = !mStates.contains(wantedState);
 			if (isNewState) {
+				System.out.println("new state adding");
 				mStates.add(wantedState);
 				int controllerPriority = getLightingEnumValueInt(wantedState);
+				System.out.println(controllerPriority);
+				System.out.println(wantedState);
 				switch (wantedState) {
 					case OFF:
 						resetLedStrip();
@@ -102,7 +105,8 @@ public class Lighting extends SubsystemBase {
 								mConfig.spinnerSegmentLastIndex, Color.HSV.kYellow, 1, 2));
 						break;
 					case SPINNER_DONE:
-						addToControllers(new OneColorController(mConfig.frontLeftSegmentFirstIndex, mConfig.frontRightSegmentLastIndex, Color.HSV.kBlue, 2, controllerPriority));
+						addToControllers(new OneColorController(0, 20, Color.HSV.kBlue, 1, controllerPriority));
+						System.out.println("spinner done");
 						break;
 					case BALL_ENTERED:
 						addToControllers(new DivergingBandsController(mConfig.frontLeftSegmentFirstIndex, mConfig.frontRightSegmentLastIndex, Color.HSV.kOrange, Color.HSV.kOff, 2, 1.0 / 6.0, 2, controllerPriority));
