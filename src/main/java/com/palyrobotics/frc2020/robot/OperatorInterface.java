@@ -1,9 +1,9 @@
 package com.palyrobotics.frc2020.robot;
 
 import static com.palyrobotics.frc2020.util.Util.handleDeadBand;
+import static com.palyrobotics.frc2020.util.Util.newWaypointMeters;
 import static com.palyrobotics.frc2020.vision.Limelight.kOneTimesZoomPipelineId;
 import static com.palyrobotics.frc2020.vision.Limelight.kTwoTimesZoomPipelineId;
-import static com.palyrobotics.frc2020.util.Util.newWaypointMeters;
 
 import com.palyrobotics.frc2020.behavior.SequentialRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DrivePathRoutine;
@@ -174,7 +174,7 @@ public class OperatorInterface {
 		commands.climberWantedState = Climber.State.IDLE;
 		commands.climberWantsSoftLimits = true;
 		commands.setDriveNeutral();
-		commands.wantedCompression = true;
+		commands.wantedCompression = false;
 		commands.visionWanted = false;
 		commands.setIntakeStowed();
 		commands.setShooterIdle();
