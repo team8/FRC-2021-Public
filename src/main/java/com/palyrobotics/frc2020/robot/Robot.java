@@ -1,9 +1,6 @@
 package com.palyrobotics.frc2020.robot;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -11,17 +8,19 @@ import java.util.stream.Collectors;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.esotericsoftware.minlog.Log;
 import com.palyrobotics.frc2020.auto.AutoBase;
-import com.palyrobotics.frc2020.behavior.MultipleRoutineBase;
-import com.palyrobotics.frc2020.behavior.RoutineBase;
-import com.palyrobotics.frc2020.behavior.RoutineManager;
+import com.palyrobotics.frc2020.behavior.*;
+import com.palyrobotics.frc2020.behavior.routines.TimedRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DrivePathRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DriveSetOdometryRoutine;
+import com.palyrobotics.frc2020.behavior.routines.drive.DriveYawRoutine;
 import com.palyrobotics.frc2020.config.RobotConfig;
+import com.palyrobotics.frc2020.config.constants.DriveConstants;
 import com.palyrobotics.frc2020.subsystems.*;
 import com.palyrobotics.frc2020.util.LoopOverrunDebugger;
 import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.commands.CommandReceiverService;
 import com.palyrobotics.frc2020.util.config.Configs;
+import com.palyrobotics.frc2020.util.control.PointLinkTime;
 import com.palyrobotics.frc2020.util.csvlogger.CSVWriter;
 import com.palyrobotics.frc2020.util.dashboard.LiveGraph;
 import com.palyrobotics.frc2020.util.service.NetworkLoggerService;
@@ -33,6 +32,7 @@ import com.palyrobotics.frc2020.vision.LimelightControlMode;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
@@ -53,13 +53,15 @@ public class Robot extends TimedRobot {
 	private final Commands mCommands = new Commands();
 
 	/* Subsystems */
+	private final Climber mClimber = Climber.getInstance();
 	private final Drive mDrive = Drive.getInstance();
 	private final Intake mIntake = Intake.getInstance();
 	private final Lighting mLighting = Lighting.getInstance();
 	private final Indexer mIndexer = Indexer.getInstance();
 	private final Shooter mShooter = Shooter.getInstance();
+	private final Spinner mSpinner = Spinner.getInstance();
 
-	private Set<SubsystemBase> mSubsystems = Set.of(mDrive, mIntake, mLighting, mIndexer),
+	private Set<SubsystemBase> mSubsystems = Set.of(mClimber, mDrive, mShooter, mIntake, mIndexer, mSpinner, mLighting),
 			mEnabledSubsystems;
 
 	private Set<RobotService> mServices = Set.of(new CommandReceiverService(), new NetworkLoggerService(),
@@ -74,6 +76,9 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void robotInit() {
+		Log.info(kLoggerTag, "Writing path CSV file...");
+		pathToCsv();
+
 		LiveWindow.disableAllTelemetry();
 
 		String setupSummary = setupSubsystemsAndServices();
@@ -99,21 +104,29 @@ public class Robot extends TimedRobot {
 	}
 
 	private void pathToCsv() {
-		RoutineBase drivePath = AutoSelector.getAuto().getRoutine();
-		try (var writer = new PrintWriter(new BufferedWriter(new FileWriter("auto.csv")))) {
-			writer.write("x,y,d" + '\n');
-			var points = new LinkedList<Pose2d>();
+		String csv_path = "auto_simulator/resources/" + AutoSelector.getAuto().getName() + "Auto.csv";
+		Log.info(kLoggerTag, AutoSelector.getAuto().getName());
+		try (var writer = new PrintWriter(new BufferedWriter(new FileWriter(csv_path)))) {
+			RoutineBase drivePath = AutoSelector.getAuto().getRoutine();
+			writer.write("xPos,yPos,d,t,a," + '\n');
+			var points = new LinkedList<PointLinkTime>();
 			recurseRoutine(drivePath, points);
-			for (Pose2d pose : points) {
-				Translation2d point = pose.getTranslation();
-				writer.write(String.format("%f,%f,%f%n", point.getY() * -39.37, point.getX() * 39.37, pose.getRotation().getDegrees()));
+			for (PointLinkTime pointLink : points) {
+				Pose2d pose = pointLink.getPose();
+				Translation2d point = pointLink.getPose().getTranslation();
+				writer.write(String.format("%f,%f,%f,%f,%s,%n", point.getX(), point.getY(), pose.getRotation().getDegrees(), pointLink.getTime(), pointLink.getRoutineName()));
 			}
 		} catch (IOException writeException) {
 			writeException.printStackTrace();
 		}
 	}
 
-	private void recurseRoutine(RoutineBase routine, Deque<Pose2d> points) {
+	private void recurseRoutine(RoutineBase routine, Deque<PointLinkTime> points) {
+		//TODO: change reset odometry routine to change intial positions
+		//Todo: Fix estimated time routines
+		//TODO: figure out how the estimated time of rotations will work
+		//Todo: Make routine base have method instead of instanceof...
+		//TODO: remove instanceof in code, need to figure out how parralel routines will work... (ignore shorter or path?) Also solve problem where wait routine + parallel routine adds in too much time
 		if (routine instanceof MultipleRoutineBase) {
 			var multiple = (MultipleRoutineBase) routine;
 			for (RoutineBase childRoutine : multiple.getRoutines()) {
@@ -122,16 +135,44 @@ public class Robot extends TimedRobot {
 		} else if (routine instanceof DriveSetOdometryRoutine) {
 			var odometry = (DriveSetOdometryRoutine) routine;
 			var pose = odometry.getTargetPose();
-			points.addLast(pose);
+			//TODO: Make these take time, change time from 0
+			points.addLast(new PointLinkTime(pose, 0, routine.getName()));
 		} else if (routine instanceof DrivePathRoutine) {
 			var path = (DrivePathRoutine) routine;
-			System.out.println(points.getLast());
-			path.generateTrajectory(points.getLast());
+			path.generateTrajectory(points.getLast().getPose());
+			double lastTime = points.getLast().getTime();
 			for (Trajectory.State state : path.getTrajectory().getStates()) {
 				var pose = state.poseMeters;
-				points.addLast(pose);
+				var time = state.timeSeconds;
+				//Need to find some way to take last time dif or something in order to add to program
+				points.addLast(new PointLinkTime(pose, time + lastTime, routine.getName()));
 			}
+		} else if (routine instanceof DriveYawRoutine) {
+
+			PointLinkTime last = points.getLast();
+			Log.info(kLoggerTag, "Rotating __ Degrees");
+			Log.info(kLoggerTag, String.valueOf(((DriveYawRoutine) routine).getTargetYawDegrees()));
+			Log.info(kLoggerTag, "Time for rotation sec");
+			Log.info(kLoggerTag, String.valueOf(DriveConstants.calculateTimeToFinishTurn(0, ((DriveYawRoutine) routine).getTargetYawDegrees())));
+			Log.info(kLoggerTag, "First Pose");
+			Log.info(kLoggerTag, String.valueOf(points.getFirst().getPose().toString()));
+			Log.info(kLoggerTag, "Last Pose");
+			Log.info(kLoggerTag, String.valueOf(points.getLast().getPose().toString()));
+			Log.info(kLoggerTag, "Last Pose Time");
+			Log.info(kLoggerTag, String.valueOf(last.getTime()));
+			double targetYawDeg = ((DriveYawRoutine) routine).getTargetYawDegrees();
+			Log.info(kLoggerTag, "Turn Frames");
+			Log.info(kLoggerTag, String.valueOf(Math.abs(targetYawDeg / 4)));
+
+			points.addLast(
+					new PointLinkTime(last.getPose().getTranslation(), new Rotation2d(targetYawDeg * Math.PI / 180), last.getTime() + DriveConstants.calculateTimeToFinishTurn(last.getPose().getRotation().getDegrees(), targetYawDeg), routine.getName()));
+		} else if (routine instanceof TimedRoutine) {
+			PointLinkTime last = points.getLast();
+			points.addLast(new PointLinkTime(last.getPose(), last.getTime() + ((TimedRoutine) routine).getEstimatedTime(), routine.getName()));
+			//TODO: Fix interpolation in autographer
+
 		}
+		//TODO: figure out how to add wait time for other routines
 	}
 
 	@Override
@@ -252,6 +293,7 @@ public class Robot extends TimedRobot {
 		}
 		if (kCanUseHardware) {
 			mHardwareWriter.writeHardware(mEnabledSubsystems, mRobotState);
+			mHardwareWriter.setClimberSoftLimitsEnabled(mCommands.climberWantsSoftLimits);
 		}
 		updateVision(mCommands.visionWanted, mCommands.visionWantedPipeline);
 		updateCompressor();

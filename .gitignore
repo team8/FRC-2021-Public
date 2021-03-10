@@ -236,9 +236,10 @@ modules.xml
 # Sonarlint plugin
 .idea/sonarlint
 
-*.csv
-
 # WPILib simulation configuration for GUI
 imgui.ini
+
+# Virtual Environment Python
+venv/
 
 # End of https://www.gitignore.io/api/intellij

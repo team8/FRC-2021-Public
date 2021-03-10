@@ -1,6 +1,6 @@
 package com.palyrobotics.frc2020.behavior.routines.drive;
 
-import static com.palyrobotics.frc2020.util.Util.newWaypoint;
+import static com.palyrobotics.frc2020.util.Util.newWaypointMeters;
 
 import java.util.Set;
 
@@ -23,15 +23,16 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 public class DriveSetOdometryRoutine extends TimeoutRoutineBase {
 
 	public static final double kTimeout = 0.5;
+	public static final double kEstimatedTime = 0.1;
 	private Pose2d mTargetPose;
 
 	public DriveSetOdometryRoutine() {
 		this(0.0, 0.0, 0.0);
 	}
 
-	public DriveSetOdometryRoutine(double xInches, double yInches, double yawDegrees) {
-		super(kTimeout);
-		mTargetPose = newWaypoint(xInches, yInches, yawDegrees);
+	public DriveSetOdometryRoutine(double xMeters, double yMeters, double yawDegrees) {
+		super(kTimeout, kEstimatedTime);
+		mTargetPose = newWaypointMeters(xMeters, yMeters, yawDegrees);
 	}
 
 	public Pose2d getTargetPose() {

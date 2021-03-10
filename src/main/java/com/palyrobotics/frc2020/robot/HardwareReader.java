@@ -6,21 +6,21 @@ import com.ctre.phoenix.motorcontrol.StickyFaults;
 import com.ctre.phoenix.sensors.PigeonIMU.PigeonState;
 import com.esotericsoftware.minlog.Log;
 import com.palyrobotics.frc2020.config.RobotConfig;
+import com.palyrobotics.frc2020.config.constants.SpinnerConstants;
 import com.palyrobotics.frc2020.config.subsystem.IntakeConfig;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.DriveHardware;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.IntakeHardware;
-import com.palyrobotics.frc2020.subsystems.Drive;
-import com.palyrobotics.frc2020.subsystems.Indexer;
-import com.palyrobotics.frc2020.subsystems.Intake;
-import com.palyrobotics.frc2020.subsystems.Shooter;
-import com.palyrobotics.frc2020.subsystems.SubsystemBase;
+import com.palyrobotics.frc2020.robot.HardwareAdapter.SpinnerHardware;
+import com.palyrobotics.frc2020.subsystems.*;
 import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.Falcon;
 import com.palyrobotics.frc2020.util.control.Spark;
 import com.palyrobotics.frc2020.util.control.Talon;
 import com.palyrobotics.frc2020.util.dashboard.LiveGraph;
+import com.palyrobotics.frc2020.vision.Limelight;
 import com.revrobotics.CANSparkMax.FaultID;
+import com.revrobotics.ColorMatch;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
@@ -32,11 +32,17 @@ public class HardwareReader {
 	private static final Timer mTimer = new Timer();
 	private final RobotConfig mRobotConfig = Configs.get(RobotConfig.class);
 	private final IntakeConfig mIntakeConfig = Configs.get(IntakeConfig.class);
+	private final Limelight mLimelight = Limelight.getInstance();
+	private final ColorMatch mColorMatcher = new ColorMatch();
 
 	private final double[] mGyroAngles = new double[3], mGyroAngularVelocities = new double[3];
 
 	public HardwareReader() {
 		mTimer.start();
+		mColorMatcher.addColorMatch(SpinnerConstants.kCyanCPTarget);
+		mColorMatcher.addColorMatch(SpinnerConstants.kGreenCPTarget);
+		mColorMatcher.addColorMatch(SpinnerConstants.kRedCPTarget);
+		mColorMatcher.addColorMatch(SpinnerConstants.kYellowCPTarget);
 	}
 
 	/**
@@ -47,11 +53,16 @@ public class HardwareReader {
 		readGameAndFieldState(state);
 		Robot.sLoopDebugger.addPoint("readGameAndFieldState");
 		if (enabledSubsystems.contains(Drive.getInstance())) readDriveState(state);
-		if (enabledSubsystems.contains(Intake.getInstance())) readIntakeState(state);
-		if (enabledSubsystems.contains(Shooter.getInstance())) readShooterState(state);
-		if (enabledSubsystems.contains(Indexer.getInstance())) readIndexerState(state);
-		readJoystickState(state);
 		Robot.sLoopDebugger.addPoint("readDrive");
+		if (enabledSubsystems.contains(Indexer.getInstance())) readIndexerState(state);
+		Robot.sLoopDebugger.addPoint("readIndexer");
+		if (enabledSubsystems.contains(Intake.getInstance())) readIntakeState(state);
+		Robot.sLoopDebugger.addPoint("readIntake");
+		if (enabledSubsystems.contains(Shooter.getInstance())) readShooterState(state);
+		Robot.sLoopDebugger.addPoint("readShooter");
+		if (enabledSubsystems.contains(Spinner.getInstance())) readSpinnerState(state);
+		Robot.sLoopDebugger.addPoint("readSpinner");
+		readJoystickState(state);
 	}
 
 	private void readGameAndFieldState(RobotState state) {
@@ -59,6 +70,7 @@ public class HardwareReader {
 	}
 
 	private void readDriveState(RobotState state) {
+		Log.info("Limelight Target Distance", String.valueOf(mLimelight.getEstimatedDistanceInches()));
 		var hardware = DriveHardware.getInstance();
 		/* Gyro */
 		state.driveIsGyroReady = hardware.gyro.getState() == PigeonState.Ready;
@@ -92,9 +104,14 @@ public class HardwareReader {
 
 	private void readShooterState(RobotState state) {
 		var hardware = HardwareAdapter.ShooterHardware.getInstance();
-		state.blockingSolenoidState = hardware.blockingSolenoid.isExtended();
-		state.hoodSolenoidState = hardware.hoodSolenoid.isExtended();
-		state.shooterVelocity = hardware.masterEncoder.getVelocity();
+//		LiveGraph.add("shooterFlywheelVelocity", hardware.masterEncoder.getVelocity());
+//		LiveGraph.add("shooterAppliedOutput", hardware.masterSpark.getAppliedOutput());
+		state.shooterFlywheelVelocity = hardware.masterEncoder.getVelocity();
+		state.shooterIsHoodExtended = hardware.hoodSolenoid.isExtended();
+		state.shooterIsBlockingExtended = hardware.blockingSolenoid.isExtended();
+		state.shooterHoodIsInTransition = hardware.hoodSolenoid.isInTransition() || hardware.blockingSolenoid.isInTransition();
+		checkSparkFaults(hardware.masterSpark);
+		checkSparkFaults(hardware.slaveSpark);
 	}
 
 	private void readIndexerState(RobotState state) {
@@ -127,6 +144,22 @@ public class HardwareReader {
 	private void readJoystickState(RobotState state) {
 		var joystickHardware = HardwareAdapter.Joysticks.getInstance();
 		state.joystickRightTriggerPressed = joystickHardware.operatorXboxController.getRightTrigger();
+	}
+
+	private void readSpinnerState(RobotState state) {
+		state.detectedRGBValues = SpinnerHardware.getInstance().colorSensor.getColor();
+		state.closestColorRGB = mColorMatcher.matchClosestColor(state.detectedRGBValues);
+		if (state.closestColorRGB.color == SpinnerConstants.kCyanCPTarget) {
+			state.closestColorString = "C";
+		} else if (state.closestColorRGB.color == SpinnerConstants.kYellowCPTarget) {
+			state.closestColorString = "Y";
+		} else if (state.closestColorRGB.color == SpinnerConstants.kGreenCPTarget) {
+			state.closestColorString = "G";
+		} else if (state.closestColorRGB.color == SpinnerConstants.kRedCPTarget) {
+			state.closestColorString = "R";
+		}
+		state.closestColorConfidence = state.closestColorRGB.confidence;
+//		System.out.println(Spinner.getInstance().directionToGoalColor(state.closestColorString, state.gameData));
 	}
 
 	private void checkTalonFaults(Talon talon) {

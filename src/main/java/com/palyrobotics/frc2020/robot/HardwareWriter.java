@@ -15,17 +15,13 @@ import com.palyrobotics.frc2020.config.constants.DriveConstants;
 import com.palyrobotics.frc2020.config.subsystem.IndexerConfig;
 import com.palyrobotics.frc2020.config.subsystem.LightingConfig;
 import com.palyrobotics.frc2020.robot.RobotState.GamePeriod;
-import com.palyrobotics.frc2020.subsystems.Drive;
-import com.palyrobotics.frc2020.subsystems.Indexer;
-import com.palyrobotics.frc2020.subsystems.Intake;
-import com.palyrobotics.frc2020.subsystems.Lighting;
-import com.palyrobotics.frc2020.subsystems.Shooter;
-import com.palyrobotics.frc2020.subsystems.SubsystemBase;
+import com.palyrobotics.frc2020.subsystems.*;
 import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.Falcon;
 import com.palyrobotics.frc2020.util.control.Spark;
 import com.palyrobotics.frc2020.util.control.Talon;
+import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 
@@ -41,19 +37,23 @@ public class HardwareWriter {
 	public static final double kVoltageCompensation = 12.0;
 	private final RobotConfig mRobotConfig = Configs.get(RobotConfig.class);
 	private final IndexerConfig mIndexerConfig = Configs.get(IndexerConfig.class);
+	private final Lighting mLighting = Lighting.getInstance();
+	private final Climber mClimber = Climber.getInstance();
 	private final Drive mDrive = Drive.getInstance();
 	private final Intake mIntake = Intake.getInstance();
-	private final Lighting mLighting = Lighting.getInstance();
-	private final Indexer mIndexer = Indexer.getInstance();
 	private final Shooter mShooter = Shooter.getInstance();
+	private final Indexer mIndexer = Indexer.getInstance();
+	private final Spinner mSpinner = Spinner.getInstance();
 	private boolean mRumbleOutput;
 
 	void configureHardware(Set<SubsystemBase> enabledSubsystems) {
+		if (enabledSubsystems.contains(mClimber)) configureClimberHardware();
 		if (enabledSubsystems.contains(mDrive)) configureDriveHardware();
 		if (enabledSubsystems.contains(mIntake)) configureIntakeHardware();
 		if (enabledSubsystems.contains(mLighting)) configureLightingHardware();
 		if (enabledSubsystems.contains(mShooter)) configureShooterHardware();
 		if (enabledSubsystems.contains(mIndexer)) configureIndexerHardware();
+		if (enabledSubsystems.contains(mSpinner)) configureSpinnerHardware();
 		configureMiscellaneousHardware();
 	}
 
@@ -61,6 +61,20 @@ public class HardwareWriter {
 		var hardware = HardwareAdapter.MiscellaneousHardware.getInstance();
 		hardware.pdp.clearStickyFaults();
 		hardware.compressor.clearAllPCMStickyFaults();
+	}
+
+	private void configureClimberHardware() {
+		var hardware = HardwareAdapter.ClimberHardware.getInstance();
+		hardware.spark.restoreFactoryDefaults();
+		hardware.spark.enableVoltageCompensation(kVoltageCompensation);
+		/* Encoder units are inches and inches/sec */
+		hardware.sparkEncoder.setPositionConversionFactor((1.0 / 17.0666667) * 4.0 * Math.PI);
+		hardware.sparkEncoder.setVelocityConversionFactor((1.0 / 17.0666667) * 4.0 * Math.PI);
+		hardware.spark.setInverted(true);
+		hardware.sparkEncoder.setPosition(0.0);
+		hardware.spark.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 160.0f);
+		hardware.spark.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, 0.0f);
+		hardware.spark.setIdleMode(CANSparkMax.IdleMode.kBrake);
 	}
 
 	private void configureDriveHardware() {
@@ -139,6 +153,15 @@ public class HardwareWriter {
 		hardware.masterEncoder.setVelocityConversionFactor(1.0 / 0.76923076);
 	}
 
+	private void configureSpinnerHardware() {
+		var talon = HardwareAdapter.SpinnerHardware.getInstance().talon;
+		talon.configFactoryDefault(kTimeoutMs);
+		talon.configOpenloopRamp(0.1, kTimeoutMs);
+		talon.enableVoltageCompensation(true);
+		talon.configVoltageCompSaturation(kVoltageCompensation, kTimeoutMs);
+		talon.setNeutralMode(NeutralMode.Brake);
+	}
+
 	public void resetDriveSensors(Pose2d pose) {
 		double heading = pose.getRotation().getDegrees();
 		var hardware = HardwareAdapter.DriveHardware.getInstance();
@@ -160,22 +183,36 @@ public class HardwareWriter {
 		hardware.rightMasterFalcon.setNeutralMode(neutralMode);
 	}
 
+	void setClimberSoftLimitsEnabled(boolean isEnabled) {
+		var spark = HardwareAdapter.ClimberHardware.getInstance().spark;
+		spark.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, isEnabled);
+		spark.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, isEnabled);
+	}
+
 	/**
 	 * Updates the hardware to run with output values of {@link SubsystemBase}'s.
 	 */
 	void writeHardware(Set<SubsystemBase> enabledSubsystems, @ReadOnly RobotState robotState) {
 		mRumbleOutput = false;
 		if (!mRobotConfig.disableHardwareUpdates) {
+			if (enabledSubsystems.contains(mClimber)) updateClimber();
 			if (enabledSubsystems.contains(mDrive) && robotState.gamePeriod != GamePeriod.TESTING) updateDrivetrain();
 			if (enabledSubsystems.contains(mIntake)) updateIntake();
 			if (enabledSubsystems.contains(mShooter)) updateShooter();
 			if (enabledSubsystems.contains(mIndexer)) updateIndexer();
 			if (enabledSubsystems.contains(mLighting)) updateLighting();
+			if (enabledSubsystems.contains(mSpinner)) updateSpinner();
 			Robot.sLoopDebugger.addPoint("writeDrive");
 		}
 		var joystickHardware = HardwareAdapter.Joysticks.getInstance();
 		joystickHardware.operatorXboxController.setRumble(mRumbleOutput);
 		Robot.sLoopDebugger.addPoint("writeHardware");
+	}
+
+	private void updateClimber() {
+		var hardware = HardwareAdapter.ClimberHardware.getInstance();
+		hardware.spark.setOutput(mClimber.getControllerOutput());
+		hardware.solenoid.set(mClimber.getSolenoidOutput());
 	}
 
 	private void updateDrivetrain() {
@@ -209,10 +246,21 @@ public class HardwareWriter {
 
 	private void updateShooter() {
 		var hardware = HardwareAdapter.ShooterHardware.getInstance();
-
-		hardware.blockingSolenoid.set(mShooter.getBlockingOutput());
-		hardware.hoodSolenoid.set(mShooter.getHoodOutput());
+//		handleReset(hardware.masterSpark, hardware.slaveSpark);
+//		Robot.mDebugger.addPoint("handleReset");
 		hardware.masterSpark.setOutput(mShooter.getFlywheelOutput());
+//		Robot.mDebugger.addPoint("masterSpark.setOutput");
+		hardware.blockingSolenoid.set(mShooter.getBlockingOutput());
+//		Robot.mDebugger.addPoint("blockingSolenoid.setOutput");
+		hardware.hoodSolenoid.set(mShooter.getHoodOutput());
+//		Robot.mDebugger.addPoint("hoodSolenoid.setOutput");
+		mRumbleOutput |= mShooter.getRumbleOutput();
+	}
+
+	private void updateSpinner() {
+		var hardware = HardwareAdapter.SpinnerHardware.getInstance();
+		hardware.talon.handleReset();
+		hardware.talon.setOutput(mSpinner.getOutput());
 	}
 
 	private void setPigeonStatusFramePeriods(PigeonIMU gyro) {

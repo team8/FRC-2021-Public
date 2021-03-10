@@ -5,7 +5,6 @@ import java.util.List;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.palyrobotics.frc2020.config.PortConstants;
 import com.palyrobotics.frc2020.config.subsystem.IntakeConfig;
-import com.palyrobotics.frc2020.config.subsystem.ShooterConfig;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.Falcon;
 import com.palyrobotics.frc2020.util.control.Spark;
@@ -14,18 +13,34 @@ import com.palyrobotics.frc2020.util.control.TimedSolenoid;
 import com.palyrobotics.frc2020.util.input.Joystick;
 import com.palyrobotics.frc2020.util.input.XboxController;
 import com.revrobotics.CANEncoder;
+import com.revrobotics.ColorSensorV3;
 
-import edu.wpi.first.wpilibj.AddressableLED;
-import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
-import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.*;
 
 /**
  * Represents all hardware components of the robot. Singleton class. Should only be used in robot
  * package. Subdivides hardware into subsystems.
  */
 public class HardwareAdapter {
+
+	/**
+	 * 1 NEO (controlled by Spark MAX), 1 Solenoid
+	 */
+	static class ClimberHardware {
+
+		private static ClimberHardware sInstance;
+		final Spark spark = new Spark(sPortConstants.nariClimberId, "Climber");
+		final CANEncoder sparkEncoder = spark.getEncoder();
+		final TimedSolenoid solenoid = new TimedSolenoid(sPortConstants.nariClimberSolenoidId, 0.2, true);
+
+		ClimberHardware() {
+		}
+
+		static ClimberHardware getInstance() {
+			if (sInstance == null) sInstance = new ClimberHardware();
+			return sInstance;
+		}
+	}
 
 	/**
 	 * 4 Falcon 500s (controlled by Talon FX), 1 Pigeon IMU Gyro connected via Talon SRX data cable.
@@ -86,10 +101,28 @@ public class HardwareAdapter {
 		}
 	}
 
-	/*
-	* 2 NEOs (controlled by Spark MAX) for indexer tower, 2 775s (controlled by Talon SRX) for v belts,
-	* 2 Single Solenoids, 2 Infrared Sensors
-	*/
+	/**
+	 * 1 775 (controlled by Talon SRX), 1 Color Sensor V3
+	 */
+	static class SpinnerHardware {
+
+		private static SpinnerHardware sInstance = new SpinnerHardware();
+		final Talon talon = new Talon(sPortConstants.nariSpinnerId, "Spinner");
+		final ColorSensorV3 colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
+
+		private SpinnerHardware() {
+		}
+
+		static SpinnerHardware getInstance() {
+			if (sInstance == null) sInstance = new SpinnerHardware();
+			return sInstance;
+		}
+	}
+
+	/**
+	 * 2 NEOs (controlled by Spark MAX) for indexer tower, 2 775s (controlled by Talon SRX) for v belts,
+	 * 2 Single Solenoids, 2 Infrared Sensors
+	 */
 	static class IndexerHardware {
 
 		private static IndexerHardware sInstance;
@@ -123,14 +156,11 @@ public class HardwareAdapter {
 	static class ShooterHardware {
 
 		private static ShooterHardware sInstance;
-
-		private ShooterConfig mConfig = Configs.get(ShooterConfig.class);
-
 		final Spark masterSpark = new Spark(sPortConstants.nariShooterMasterId, "Shooter Master"),
 				slaveSpark = new Spark(sPortConstants.nariShooterSlaveId, "Shooter Slave");
 		final CANEncoder masterEncoder = masterSpark.getEncoder();
-		final TimedSolenoid hoodSolenoid = new TimedSolenoid(sPortConstants.nariShooterHoodSolenoid, mConfig.hoodSolenoid, true),
-				blockingSolenoid = new TimedSolenoid(sPortConstants.nariShooterBlockingSolenoidId, mConfig.blockingSolenoid, false);
+		final TimedSolenoid hoodSolenoid = new TimedSolenoid(sPortConstants.nariShooterHoodSolenoid, 0.5, true),
+				blockingSolenoid = new TimedSolenoid(sPortConstants.nariShooterBlockingSolenoidId, 0.4, false);
 
 		private ShooterHardware() {
 		}

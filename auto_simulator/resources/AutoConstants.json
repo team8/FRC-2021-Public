@@ -1,0 +1,57 @@
+{
+  "SelectedAuto": "GalacticSearchABlue",
+  "TrenchStart": {
+    "SelectedField": "Field2020",
+    "xPosInit": 3.5,
+    "yPosInit": 0.8,
+    "autoCSVPath": "/resources/trenchStealTwoShootFiveAuto.csv"
+  },
+  "StartCenter": {
+    "SelectedField": "Field2020",
+    "xPosInit": 3.5,
+    "yPosInit": 0.8,
+    "autoCSVPath": "/resources/startCenterFriendlyTrenchThreeShootThreeAuto.csv"
+  },
+  "BarrelRacing": {
+    "SelectedField": "BarrelRacing",
+    "xPosInit": 0,
+    "yPosInit": 0,
+    "autoCSVPath": "/resources/barrelRacingAuto.csv"
+  },
+  "Bounce": {
+    "SelectedField": "Bounce",
+    "xPosInit": 0,
+    "yPosInit": 0,
+    "autoCSVPath": "/resources/bounceAuto.csv"
+  },
+  "GalacticSearchARed": {
+    "SelectedField": "GalacticSearchA",
+    "xPosInit": 0,
+    "yPosInit": 0,
+    "autoCSVPath": "/resources/galacticSearchARedAuto.csv"
+  },
+  "GalacticSearchBRed": {
+    "SelectedField": "GalacticSearchB",
+    "xPosInit": 0,
+    "yPosInit": 0,
+    "autoCSVPath": "/resources/galacticSearchBRedAuto.csv"
+  },
+  "GalacticSearchABlue": {
+    "SelectedField": "GalacticSearchA",
+    "xPosInit": 0.0,
+    "yPosInit": 0.0,
+    "autoCSVPath": "/resources/galacticSearchABlueAuto.csv"
+  },
+  "GalacticSearchBBlue": {
+    "SelectedField": "GalacticSearchB",
+    "xPosInit": 0.0,
+    "yPosInit": 0.0,
+    "autoCSVPath": "/resources/galacticSearchBBlueAuto.csv"
+  },
+  "Slalom": {
+    "SelectedField": "Slalom",
+    "xPosInit": 0,
+    "yPosInit": 0,
+    "autoCSVPath": "/resources/slalomAuto.csv"
+  }
+}

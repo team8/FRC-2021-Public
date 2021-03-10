@@ -32,6 +32,7 @@ public class DriveYawRoutine extends TimeoutRoutineBase {
 		super.start(commands, state);
 		mTimeout = DriveConstants.calculateTimeToFinishTurn(state.driveYawDegrees, mTargetYawDegrees) *
 				kTimeoutMultiplier;
+		mEstimatedTime = DriveConstants.calculateTimeToFinishTurn(state.driveYawDegrees, mTargetYawDegrees);
 	}
 
 	@Override
@@ -49,5 +50,10 @@ public class DriveYawRoutine extends TimeoutRoutineBase {
 	@Override
 	public Set<SubsystemBase> getRequiredSubsystems() {
 		return Set.of(mDrive);
+	}
+
+	//TODO: delete this, shouldn't exist in code architecture. DON"T USE UNLESS FOR GRAPHER
+	public double getTargetYawDegrees() {
+		return mTargetYawDegrees;
 	}
 }

@@ -1,7 +1,11 @@
 package com.palyrobotics.frc2020.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.util.Units;
 
 /**
@@ -14,7 +18,15 @@ public class Util {
 	private Util() {
 	}
 
-	public static Pose2d newWaypoint(double xInches, double yInches, double yawDegrees) {
+	public static Pose2d newWaypointMeters(double xMeters, double yMeters, double yawDegrees) {
+		return new Pose2d(xMeters, yMeters,
+				Rotation2d.fromDegrees(yawDegrees));
+	}
+
+	/**
+	 * @deprecated DO NOT USE THIS - This is there for old autos. Use the meters version of this
+	 */
+	public static Pose2d newWaypointInches(double xInches, double yInches, double yawDegrees) {
 		return new Pose2d(Units.inchesToMeters(xInches), Units.inchesToMeters(yInches),
 				Rotation2d.fromDegrees(yawDegrees));
 	}
@@ -122,4 +134,17 @@ public class Util {
 		// Make first character lowercase to match JSON conventions
 		return Character.toLowerCase(className.charAt(0)) + className.substring(1);
 	}
+
+	//TODO: Refactor to utils
+	public static List<Translation2d> circlePathGenerator(Translation2d center, float radius, float startingAngleDeg, float endingAngleDeg) {
+		double steps = 5;
+		List<Translation2d> waypoints = new ArrayList<>();
+		for (float i = startingAngleDeg + 90; i <= endingAngleDeg + 90; i += steps) {
+			double xOffsetCenter = radius * Math.cos(i * Math.PI / 180);
+			double yOffsetCenter = radius * Math.sin(i * Math.PI / 180);
+			waypoints.add(new Translation2d(center.getX() + xOffsetCenter, center.getY() + yOffsetCenter));
+		}
+		return waypoints;
+	}
+
 }
