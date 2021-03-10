@@ -201,7 +201,7 @@ public class OperatorInterface {
 		commands.climberWantedState = Climber.State.IDLE;
 		commands.climberWantsSoftLimits = true;
 		commands.setDriveNeutral();
-		commands.wantedCompression = true;
+		commands.wantedCompression = false;
 		commands.visionWanted = false;
 		commands.lightingWantedStates = new ArrayList<>(Arrays.asList(Lighting.State.IDLE));
 		commands.setIntakeStowed();

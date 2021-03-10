@@ -19,20 +19,21 @@ public class BarrelRacing implements AutoBase {
 		var loops = new DrivePathRoutine(
 				/** First loop **/
 				newWaypointMeters(4.1, 2.1, -50),
-				newWaypointMeters(3.3, 0.98, 145),
-				newWaypointMeters(3.98, 2.25, 10),
+				newWaypointMeters(3.2, 0.98, 145),
+				newWaypointMeters(3.93, 2.25, 10),
 
 				/** Second loop **/
-				newWaypointMeters(6.65, 2.9, 75),
-				newWaypointMeters(5.45, 3.3, -105),
+				newWaypointMeters(6.4, 2.8, 75),
+				newWaypointMeters(5.4, 3.3, -105),
 
 				/** Third loop **/
-				newWaypointMeters(6.9, 0.95, -20),
-				newWaypointMeters(8.02, 2.2, 170),
+				newWaypointMeters(6.8, 1.1, -20),
+				newWaypointMeters(8.02, 2.3, 160),
 
 				/** Finish **/
-				newWaypointMeters(6.4, 2.3, 180),
-				newWaypointMeters(1.2, 2.3, 180));
+				newWaypointMeters(6.4, 2.4, 170),
+				newWaypointMeters(1.2, 2.5, 180));
+		// Centr. Accel is lower (around 3.5) for this auto
 //
 		return new SequentialRoutine(setInitialOdometry, loops);
 	}

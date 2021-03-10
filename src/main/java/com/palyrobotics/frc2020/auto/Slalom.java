@@ -15,7 +15,7 @@ public class Slalom implements AutoBase {
 		var path = new DrivePathRoutine(
 				/** -=-=First Curve=-=- **/
 				newWaypointMeters(3.35, 2.15, 0),
-				newWaypointMeters(5.78, 2.15, 0),
+				newWaypointMeters(5.72, 2.15, 0),
 
 				/** -=-=-=-Loop-=-=-=- **/
 				// "longer" turn
@@ -31,7 +31,7 @@ public class Slalom implements AutoBase {
 				/** -=-Second Curve-=- **/
 				newWaypointMeters(5.8, 0.83, 180),
 				newWaypointMeters(3.4, 0.83, 180),
-				newWaypointMeters(1.4, 2.1, 165));
+				newWaypointMeters(1.4, 2.0, 165));
 
 		return new SequentialRoutine(setInitialOdometry, path);
 	}

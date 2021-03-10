@@ -14,7 +14,7 @@
 		"spinner"
 	],
 	"checkFaults": false,
-	"coastDriveWhenDisabled": true,
+	"coastDriveWhenDisabled": false,
 	"enableVisionWhenDisabled": false,
 	"visionPipelineWhenDisabled": 0,
 	"motorOutputMultiplier": 1.0,
