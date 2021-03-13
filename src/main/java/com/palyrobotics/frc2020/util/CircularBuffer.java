@@ -1,6 +1,7 @@
 package com.palyrobotics.frc2020.util;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.function.Predicate;
 
 public class CircularBuffer<E> {
@@ -10,6 +11,12 @@ public class CircularBuffer<E> {
 
 	public CircularBuffer(int windowSize) {
 		mWindowSize = windowSize;
+	}
+
+	public void fillBuffer(List<E> list) {
+		for (E value : list) {
+			this.add(value);
+		}
 	}
 
 	public void clear() {

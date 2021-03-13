@@ -4,11 +4,8 @@ import static com.palyrobotics.frc2020.config.constants.ShooterConstants.kTarget
 import static com.palyrobotics.frc2020.config.constants.ShooterConstants.kTargetDistanceToVelocity;
 import static com.palyrobotics.frc2020.util.Util.*;
 
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.function.Predicate;
+import java.util.*;
 
-import com.palyrobotics.frc2020.config.constants.ShooterConstants;
 import com.palyrobotics.frc2020.config.subsystem.ShooterConfig;
 import com.palyrobotics.frc2020.robot.Commands;
 import com.palyrobotics.frc2020.robot.ReadOnly;
@@ -44,13 +41,19 @@ public class Shooter extends SubsystemBase {
 	private MedianFilter distanceFilter = new MedianFilter(15);
 	private MedianFilter velocityFilter = new MedianFilter(15);
 
-	private CircularBuffer<HoodState> hoodStateCircularBuffer = new CircularBuffer<HoodState>(5);
+	private class HoodStateBuffer extends CircularBuffer {
+
+		HoodState[] initArr = { HoodState.HIGH, HoodState.HIGH, HoodState.HIGH, HoodState.HIGH, HoodState.HIGH };
+
+		public HoodStateBuffer(int windowSize) {
+			super(windowSize);
+			fillBuffer(Arrays.asList(initArr));
+		}
+	}
+
+	private HoodStateBuffer mHoodStateCircularBuffer = new HoodStateBuffer(5);
 
 	private Shooter() {
-		//please ignore this blatant violation of coding architecture.
-		for(int i = 0; i < 5; i++) {
-			hoodStateCircularBuffer.add(HoodState.HIGH);
-		}
 	}
 
 	public static Shooter getInstance() {
@@ -134,9 +137,9 @@ public class Shooter extends SubsystemBase {
 							closestEntry = ceilingEntry == null || targetDistanceInches - floorEntry.getKey() < ceilingEntry.getKey() - targetDistanceInches ? floorEntry : ceilingEntry;
 					double deltaFromThreshold = Math.abs(targetDistanceInches - closestEntry.getKey());
 					HoodState addedHoodState = deltaFromThreshold > mConfig.hoodSwitchDistanceThreshold ? floorEntry.getValue() : closestEntry.getValue();
-					hoodStateCircularBuffer.add(addedHoodState);
-					LinkedList<HoodState> pastHoodStates = hoodStateCircularBuffer.getSamples();
-					if(pastHoodStates.get(2) == pastHoodStates.get(3) && pastHoodStates.get(4) == pastHoodStates.get(3)){
+					mHoodStateCircularBuffer.add(addedHoodState);
+					LinkedList<HoodState> pastHoodStates = mHoodStateCircularBuffer.getSamples();
+					if (pastHoodStates.get(2) == pastHoodStates.get(3) && pastHoodStates.get(4) == pastHoodStates.get(3)) {
 						targetHoodState = pastHoodStates.get(3);
 					}
 				}
