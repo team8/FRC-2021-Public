@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.function.Predicate;
 
+import com.palyrobotics.frc2020.config.constants.ShooterConstants;
 import com.palyrobotics.frc2020.config.subsystem.ShooterConfig;
 import com.palyrobotics.frc2020.robot.Commands;
 import com.palyrobotics.frc2020.robot.ReadOnly;
@@ -46,6 +47,10 @@ public class Shooter extends SubsystemBase {
 	private CircularBuffer<HoodState> hoodStateCircularBuffer = new CircularBuffer<HoodState>(5);
 
 	private Shooter() {
+		//please ignore this blatant violation of coding architecture.
+		for(int i = 0; i < 5; i++) {
+			hoodStateCircularBuffer.add(HoodState.HIGH);
+		}
 	}
 
 	public static Shooter getInstance() {
