@@ -4,12 +4,15 @@ import static com.palyrobotics.frc2020.config.constants.ShooterConstants.kTarget
 import static com.palyrobotics.frc2020.config.constants.ShooterConstants.kTargetDistanceToVelocity;
 import static com.palyrobotics.frc2020.util.Util.*;
 
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.function.Predicate;
 
 import com.palyrobotics.frc2020.config.subsystem.ShooterConfig;
 import com.palyrobotics.frc2020.robot.Commands;
 import com.palyrobotics.frc2020.robot.ReadOnly;
 import com.palyrobotics.frc2020.robot.RobotState;
+import com.palyrobotics.frc2020.util.CircularBuffer;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.ControllerOutput;
 import com.palyrobotics.frc2020.util.dashboard.LiveGraph;
@@ -39,6 +42,8 @@ public class Shooter extends SubsystemBase {
 	// TODO: Change the size of the median filter to better or worse filter out values
 	private MedianFilter distanceFilter = new MedianFilter(15);
 	private MedianFilter velocityFilter = new MedianFilter(15);
+
+	private CircularBuffer<HoodState> hoodStateCircularBuffer = new CircularBuffer<HoodState>(5);
 
 	private Shooter() {
 	}
@@ -107,7 +112,7 @@ public class Shooter extends SubsystemBase {
 
 	// Null hood state represents no action
 	private HoodState updateHood(@ReadOnly Commands commands, @ReadOnly RobotState state, Double targetDistanceInches) {
-		HoodState targetHoodState;
+		HoodState targetHoodState = null;
 		switch (commands.getShooterWantedState()) {
 			case IDLE:
 				targetHoodState = HoodState.HIGH;
@@ -123,7 +128,12 @@ public class Shooter extends SubsystemBase {
 							ceilingEntry = kTargetDistanceToHoodState.ceilingEntry(targetDistanceInches),
 							closestEntry = ceilingEntry == null || targetDistanceInches - floorEntry.getKey() < ceilingEntry.getKey() - targetDistanceInches ? floorEntry : ceilingEntry;
 					double deltaFromThreshold = Math.abs(targetDistanceInches - closestEntry.getKey());
-					targetHoodState = deltaFromThreshold > mConfig.hoodSwitchDistanceThreshold ? floorEntry.getValue() : closestEntry.getValue();
+					HoodState addedHoodState = deltaFromThreshold > mConfig.hoodSwitchDistanceThreshold ? floorEntry.getValue() : closestEntry.getValue();
+					hoodStateCircularBuffer.add(addedHoodState);
+					LinkedList<HoodState> pastHoodStates = hoodStateCircularBuffer.getSamples();
+					if(pastHoodStates.get(2) == pastHoodStates.get(3) && pastHoodStates.get(4) == pastHoodStates.get(3)){
+						targetHoodState = pastHoodStates.get(3);
+					}
 				}
 				break;
 			default:
@@ -132,7 +142,6 @@ public class Shooter extends SubsystemBase {
 		}
 		TelemetryService.putArbitrary("shooterTargetHoodState", targetHoodState);
 		if (targetHoodState != null) {
-//			applyHoodState(state, HoodState.MIDDLE);
 			applyHoodState(state, targetHoodState);
 		}
 		return targetHoodState;

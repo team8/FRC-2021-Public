@@ -35,6 +35,10 @@ public class CircularBuffer<E> {
 				.count();
 	}
 
+	public LinkedList<E> getSamples() {
+		return mSamples;
+	}
+
 	public int size() {
 		return mSamples.size();
 	}
