@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.Timer;
 public class Lighting extends SubsystemBase {
 
 	public enum State {
-		OFF, IDLE, INIT, DISABLE, TARGET_FOUND, SHOOTER_FULLRPM, ROBOT_ALIGNED, CLIMB_DONE, INTAKE_EXTENDED, BALL_ENTERED, SPINNER_DONE, BALL_SHOT, DO_NOTHING
+		OFF, IDLE, INIT, DISABLE, TARGET_FOUND, READY_TO_SHOOT, SHOOTER_FULLRPM, ROBOT_ALIGNED, CLIMB_DONE, INTAKE_EXTENDED, BALL_ENTERED, SPINNER_DONE, BALL_SHOT, DO_NOTHING
 	}
 
 	public abstract static class LEDController {
@@ -103,6 +103,10 @@ public class Lighting extends SubsystemBase {
 					case TARGET_FOUND:
 						addToControllers(new FadeInFadeOutController(mConfig.spinnerSegmentFirstIndex,
 								mConfig.spinnerSegmentLastIndex, Color.HSV.kYellow, 1, 2));
+						break;
+					case READY_TO_SHOOT:
+						addToControllers(new OneColorController(mConfig.spinnerSegmentFirstIndex,
+								mConfig.spinnerSegmentLastIndex, Color.HSV.kGreen, 2, 1));
 						break;
 					case SPINNER_DONE:
 						addToControllers(new OneColorController(0, 20, Color.HSV.kBlue, 1, controllerPriority));

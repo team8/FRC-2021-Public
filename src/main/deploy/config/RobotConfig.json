@@ -8,10 +8,10 @@
 		"lighting",
 		"climber",
 		"drive",
-	  	"intake",
+		"intake",
 		"indexer",
 		"shooter",
-	  	"spinner"
+		"spinner"
 	],
 	"checkFaults": false,
 	"coastDriveWhenDisabled": true,

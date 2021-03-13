@@ -14,6 +14,7 @@ import com.palyrobotics.frc2020.behavior.routines.drive.DriveSetOdometryRoutine;
 import com.palyrobotics.frc2020.behavior.routines.spinner.SpinnerPositionControlRoutine;
 import com.palyrobotics.frc2020.behavior.routines.spinner.SpinnerRotationControlRoutine;
 import com.palyrobotics.frc2020.behavior.routines.superstructure.IndexerFeedRoutine;
+import com.palyrobotics.frc2020.config.VisionConfig;
 import com.palyrobotics.frc2020.config.subsystem.IntakeConfig;
 import com.palyrobotics.frc2020.config.subsystem.ShooterConfig;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.Joysticks;
@@ -37,6 +38,7 @@ public class OperatorInterface {
 	private final IntakeConfig mIntakeConfig = Configs.get(IntakeConfig.class);
 
 	private final ShooterConfig mShooterConfig = Configs.get(ShooterConfig.class);
+	private final VisionConfig mVisionConfig = Configs.get(VisionConfig.class);
 
 	/**
 	 * Modifies commands based on operator input devices.
@@ -124,6 +126,21 @@ public class OperatorInterface {
 		if (mDriveStick.getTriggerPressed()) {
 			commands.lightingWantedStates.add(Lighting.State.SPINNER_DONE);
 			System.out.println(Lighting.getInstance().mLEDControllers);
+		}
+		if (state.intakeExtended) {
+			commands.lightingWantedStates.add(Lighting.State.INTAKE_EXTENDED);
+		}
+		if (Math.abs(state.angleToTarget) <= mVisionConfig.acceptableYawError && state.shooterIsReadyToShoot) {
+			commands.lightingWantedStates.add(Lighting.State.READY_TO_SHOOT);
+		}
+		if (state.shooterIsReadyToShoot) {
+			commands.lightingWantedStates.add(Lighting.State.SHOOTER_FULLRPM);
+		}
+		if (Math.abs(state.angleToTarget) <= mVisionConfig.acceptableYawError) {
+			commands.lightingWantedStates.add(Lighting.State.ROBOT_ALIGNED);
+		}
+		if (commands.climberWantedState == Climber.State.LOCKED) {
+			commands.lightingWantedStates.add(Lighting.State.CLIMB_DONE);
 		}
 	}
 
