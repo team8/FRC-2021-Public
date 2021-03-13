@@ -139,7 +139,7 @@ public class Shooter extends SubsystemBase {
 					HoodState addedHoodState = deltaFromThreshold > mConfig.hoodSwitchDistanceThreshold ? floorEntry.getValue() : closestEntry.getValue();
 					mHoodStateCircularBuffer.add(addedHoodState);
 					LinkedList<HoodState> pastHoodStates = mHoodStateCircularBuffer.getSamples();
-					if (pastHoodStates.get(2) == pastHoodStates.get(3) && pastHoodStates.get(4) == pastHoodStates.get(3)) {
+					if (pastHoodStates.get(2).equals(pastHoodStates.get(3)) && pastHoodStates.get(4).equals(pastHoodStates.get(3))) {
 						targetHoodState = pastHoodStates.get(3);
 					}
 				}
