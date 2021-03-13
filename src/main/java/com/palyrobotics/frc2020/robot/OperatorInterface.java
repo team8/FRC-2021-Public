@@ -123,25 +123,25 @@ public class OperatorInterface {
 	}
 
 	private void updateLightingCommands(Commands commands, @ReadOnly RobotState state) {
-		if (mDriveStick.getTriggerPressed()) {
-			commands.lightingWantedStates.add(Lighting.State.SPINNER_DONE);
-			System.out.println(Lighting.getInstance().mLEDControllers);
-		}
+//		if (mDriveStick.getTriggerPressed()) {
+//			commands.lightingWantedStates.add(Lighting.State.SPINNER_DONE);
+//			System.out.println(Lighting.getInstance().mLEDControllers);
+//		}
 		if (state.intakeExtended) {
 			commands.lightingWantedStates.add(Lighting.State.INTAKE_EXTENDED);
 		}
-		if (Math.abs(state.angleToTarget) <= mVisionConfig.acceptableYawError && state.shooterIsReadyToShoot) {
-			commands.lightingWantedStates.add(Lighting.State.READY_TO_SHOOT);
-		}
-		if (state.shooterIsReadyToShoot) {
-			commands.lightingWantedStates.add(Lighting.State.SHOOTER_FULLRPM);
-		}
-		if (Math.abs(state.angleToTarget) <= mVisionConfig.acceptableYawError) {
+//		if (Math.abs(state.angleToTarget) <= mVisionConfig.acceptableYawError && state.shooterIsReadyToShoot) {
+//			commands.lightingWantedStates.add(Lighting.State.READY_TO_SHOOT);
+//		}
+		if (state.isAligned) {
 			commands.lightingWantedStates.add(Lighting.State.ROBOT_ALIGNED);
 		}
-		if (commands.climberWantedState == Climber.State.LOCKED) {
-			commands.lightingWantedStates.add(Lighting.State.CLIMB_DONE);
-		}
+//		if (Math.abs(state.angleToTarget) <= mVisionConfig.acceptableYawError) {
+//			commands.lightingWantedStates.add(Lighting.State.ROBOT_ALIGNED);
+//		}
+//		if (commands.climberWantedState == Climber.State.LOCKED) {
+//			commands.lightingWantedStates.add(Lighting.State.CLIMB_DONE);
+//		}
 	}
 
 	private void updateSuperstructureCommands(Commands commands, RobotState state) {
@@ -201,7 +201,7 @@ public class OperatorInterface {
 		commands.climberWantedState = Climber.State.IDLE;
 		commands.climberWantsSoftLimits = true;
 		commands.setDriveNeutral();
-		commands.wantedCompression = false;
+		commands.wantedCompression = true;
 		commands.visionWanted = false;
 		commands.lightingWantedStates = new ArrayList<>(Arrays.asList(Lighting.State.IDLE));
 		commands.setIntakeStowed();

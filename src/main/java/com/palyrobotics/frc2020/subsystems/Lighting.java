@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.Timer;
 public class Lighting extends SubsystemBase {
 
 	public enum State {
-		OFF, IDLE, INIT, DISABLE, TARGET_FOUND, READY_TO_SHOOT, SHOOTER_FULLRPM, ROBOT_ALIGNED, CLIMB_DONE, INTAKE_EXTENDED, BALL_ENTERED, SPINNER_DONE, BALL_SHOT, DO_NOTHING
+		OFF, IDLE, INIT, DISABLE, TARGET_FOUND, READY_TO_SHOOT, SHOOTER_FULLRPM, CLIMB_DONE, INTAKE_EXTENDED, ROBOT_ALIGNED, BALL_ENTERED, SPINNER_DONE, BALL_SHOT, DO_NOTHING
 	}
 
 	public abstract static class LEDController {
@@ -100,38 +100,38 @@ public class Lighting extends SubsystemBase {
 						resetLedStrip();
 						addToControllers(new OneColorController(mConfig.totalSegmentFirstIndex, mConfig.totalSegmentLastIndex, Color.HSV.kAqua, controllerPriority));
 						break;
-					case TARGET_FOUND:
-						addToControllers(new FadeInFadeOutController(mConfig.spinnerSegmentFirstIndex,
-								mConfig.spinnerSegmentLastIndex, Color.HSV.kYellow, 1, 2));
+					case ROBOT_ALIGNED:
+						addToControllers(new DivergingBandsController(mConfig.frontLeftSegmentFirstIndex, mConfig.frontRightSegmentLastIndex, Color.HSV.kAqua, Color.HSV.kOff, 2, 1.0 / 5.0, 1, controllerPriority));
+						addToControllers(new DivergingBandsController(mConfig.spinnerSegmentFirstIndex, mConfig.spinnerSegmentLastIndex, Color.HSV.kAqua, Color.HSV.kOff, 3, 1.0 / 5.0, 1, controllerPriority));
 						break;
-					case READY_TO_SHOOT:
-						addToControllers(new OneColorController(mConfig.spinnerSegmentFirstIndex,
-								mConfig.spinnerSegmentLastIndex, Color.HSV.kGreen, 2, 1));
-						break;
-					case SPINNER_DONE:
-						addToControllers(new OneColorController(0, 20, Color.HSV.kBlue, 1, controllerPriority));
-						System.out.println("spinner done");
-						break;
-					case BALL_ENTERED:
-						addToControllers(new DivergingBandsController(mConfig.frontLeftSegmentFirstIndex, mConfig.frontRightSegmentLastIndex, Color.HSV.kOrange, Color.HSV.kOff, 2, 1.0 / 6.0, 2, controllerPriority));
-						addToControllers(new DivergingBandsController(mConfig.spinnerSegmentFirstIndex, mConfig.spinnerSegmentLastIndex, Color.HSV.kOrange, Color.HSV.kOff, 3, 1.0 / 6.0, 2, controllerPriority));
-						break;
-					case CLIMB_DONE:
-						addToControllers(new FadeInController(mConfig.totalSegmentFirstIndex,
-								mConfig.totalSegmentLastIndex, Color.HSV.kPink, 0.5, 3, controllerPriority));
-						break;
+//					case READY_TO_SHOOT:
+//						addToControllers(new OneColorController(mConfig.spinnerSegmentFirstIndex,
+//								mConfig.spinnerSegmentLastIndex, Color.HSV.kGreen, 2, 1));
+//						break;
+//					case SPINNER_DONE:
+//						addToControllers(new OneColorController(0, 20, Color.HSV.kBlue, 1, controllerPriority));
+//						System.out.println("spinner done");
+//						break;
+//					case BALL_ENTERED:
+//						addToControllers(new DivergingBandsController(mConfig.frontLeftSegmentFirstIndex, mConfig.frontRightSegmentLastIndex, Color.HSV.kOrange, Color.HSV.kOff, 2, 1.0 / 6.0, 2, controllerPriority));
+//						addToControllers(new DivergingBandsController(mConfig.spinnerSegmentFirstIndex, mConfig.spinnerSegmentLastIndex, Color.HSV.kOrange, Color.HSV.kOff, 3, 1.0 / 6.0, 2, controllerPriority));
+//						break;
+//					case CLIMB_DONE:
+//						addToControllers(new FadeInController(mConfig.totalSegmentFirstIndex,
+//								mConfig.totalSegmentLastIndex, Color.HSV.kPink, 0.5, 3, controllerPriority));
+//						break;
 					case INTAKE_EXTENDED:
 						addToControllers(new DivergingBandsController(mConfig.frontLeftSegmentFirstIndex, mConfig.frontRightSegmentLastIndex, Color.HSV.kPurple, Color.HSV.kOff, 2, 1.0 / 6.0, 2, controllerPriority));
 						addToControllers(new DivergingBandsController(mConfig.spinnerSegmentFirstIndex, mConfig.spinnerSegmentLastIndex, Color.HSV.kPurple, Color.HSV.kOff, 3, 1.0 / 6.0, 2, controllerPriority));
 						break;
-					case ROBOT_ALIGNED:
-						addToControllers(new OneColorController(mConfig.spinnerSegmentFirstIndex, mConfig.spinnerSegmentLastIndex, Color.HSV.kLime, 2, controllerPriority));
-						break;
-					case SHOOTER_FULLRPM:
-						addToControllers(new FadeInFadeOutController(mConfig.spinnerSegmentFirstIndex, mConfig.spinnerSegmentLastIndex, Color.HSV.kGreen, 0.5, 5, controllerPriority));
-						break;
-					case BALL_SHOT:
-						addToControllers(new OneColorController(mConfig.spinnerSegmentFirstIndex, mConfig.spinnerSegmentLastIndex, Color.HSV.kBlue, 0.25, controllerPriority));
+//					case ROBOT_ALIGNED:
+//						addToControllers(new OneColorController(mConfig.spinnerSegmentFirstIndex, mConfig.spinnerSegmentLastIndex, Color.HSV.kLime, 2, controllerPriority));
+//						break;s
+//					case SHOOTER_FULLRPM:
+//						addToControllers(new FadeInFadeOutController(mConfig.spinnerSegmentFirstIndex, mConfig.spinnerSegmentLastIndex, Color.HSV.kGreen, 0.5, 5, controllerPriority));
+//						break;
+//					case BALL_SHOT:
+//						addToControllers(new OneColorController(mConfig.spinnerSegmentFirstIndex, mConfig.spinnerSegmentLastIndex, Color.HSV.kBlue, 0.25, controllerPriority));
 				}
 			}
 		}

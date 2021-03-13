@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.StickyFaults;
 import com.ctre.phoenix.sensors.PigeonIMU.PigeonState;
 import com.esotericsoftware.minlog.Log;
 import com.palyrobotics.frc2020.config.RobotConfig;
+import com.palyrobotics.frc2020.config.VisionConfig;
 import com.palyrobotics.frc2020.config.constants.SpinnerConstants;
 import com.palyrobotics.frc2020.config.subsystem.IntakeConfig;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.DriveHardware;
@@ -32,6 +33,7 @@ public class HardwareReader {
 	private static final Timer mTimer = new Timer();
 	private final RobotConfig mRobotConfig = Configs.get(RobotConfig.class);
 	private final IntakeConfig mIntakeConfig = Configs.get(IntakeConfig.class);
+	private final VisionConfig mVisionConfig = Configs.get(VisionConfig.class);
 	private final Limelight mLimelight = Limelight.getInstance();
 	private final ColorMatch mColorMatcher = new ColorMatch();
 
@@ -101,8 +103,7 @@ public class HardwareReader {
 //		LiveGraph.add("driveLeftPercentOutput", hardware.leftMasterFalcon.getMotorOutputPercent());
 //		hardware.falcons.forEach(this::checkFalconFaults);
 
-		state.angleToTarget = mLimelight.getYawToTarget();
-
+		state.isAligned = mLimelight.isAligned(mVisionConfig.acceptableYawError * 2);
 	}
 
 	private void readShooterState(RobotState state) {

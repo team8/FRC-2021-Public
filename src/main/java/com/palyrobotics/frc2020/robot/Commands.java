@@ -93,7 +93,7 @@ public class Commands {
 	/* Shooter */
 	public void setShooterIdle() {
 		shooterWantedState = Shooter.ShooterState.IDLE;
-		shooterWantedHoodState = Shooter.HoodState.HIGH;
+		shooterWantedHoodState = Shooter.HoodState.LOW;
 	}
 
 	public void setShooterCustomFlywheelVelocity(double wantedVelocity, Shooter.HoodState hoodState) {

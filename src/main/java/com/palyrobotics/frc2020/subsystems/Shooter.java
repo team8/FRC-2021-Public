@@ -4,9 +4,7 @@ import static com.palyrobotics.frc2020.config.constants.ShooterConstants.kTarget
 import static com.palyrobotics.frc2020.config.constants.ShooterConstants.kTargetDistanceToVelocity;
 import static com.palyrobotics.frc2020.util.Util.*;
 
-import java.util.LinkedList;
 import java.util.Map;
-import java.util.function.Predicate;
 
 import com.palyrobotics.frc2020.config.subsystem.ShooterConfig;
 import com.palyrobotics.frc2020.robot.Commands;
@@ -46,6 +44,9 @@ public class Shooter extends SubsystemBase {
 	private CircularBuffer<HoodState> hoodStateCircularBuffer = new CircularBuffer<HoodState>(5);
 
 	private Shooter() {
+		for (int i = 0; i < 5; i++) {
+			hoodStateCircularBuffer.add(HoodState.LOW);
+		}
 	}
 
 	public static Shooter getInstance() {
@@ -115,7 +116,7 @@ public class Shooter extends SubsystemBase {
 		HoodState targetHoodState = null;
 		switch (commands.getShooterWantedState()) {
 			case IDLE:
-				targetHoodState = HoodState.HIGH;
+				targetHoodState = HoodState.LOW;
 				break;
 			case CUSTOM_VELOCITY:
 				targetHoodState = commands.getShooterWantedHoodState();
@@ -130,10 +131,11 @@ public class Shooter extends SubsystemBase {
 					double deltaFromThreshold = Math.abs(targetDistanceInches - closestEntry.getKey());
 					HoodState addedHoodState = deltaFromThreshold > mConfig.hoodSwitchDistanceThreshold ? floorEntry.getValue() : closestEntry.getValue();
 					hoodStateCircularBuffer.add(addedHoodState);
-					LinkedList<HoodState> pastHoodStates = hoodStateCircularBuffer.getSamples();
-					if(pastHoodStates.get(2) == pastHoodStates.get(3) && pastHoodStates.get(4) == pastHoodStates.get(3)){
-						targetHoodState = pastHoodStates.get(3);
-					}
+//					LinkedList<HoodState> pastHoodStates = hoodStateCircularBuffer.getSamples();
+//					if(pastHoodStates.get(2) == pastHoodStates.get(3) && pastHoodStates.get(4) == pastHoodStates.get(3)){
+//						targetHoodState = pastHoodStates.get(3);
+//					}
+					targetHoodState = addedHoodState;
 				}
 				break;
 			default:
@@ -144,6 +146,7 @@ public class Shooter extends SubsystemBase {
 		if (targetHoodState != null) {
 			applyHoodState(state, targetHoodState);
 		}
+		System.out.println(targetHoodState);
 		return targetHoodState;
 	}
 

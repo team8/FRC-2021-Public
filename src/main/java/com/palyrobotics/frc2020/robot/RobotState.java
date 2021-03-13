@@ -56,7 +56,7 @@ public class RobotState {
 	public ColorMatchResult closestColorRGB;
 
 	/* Vision */
-	public double angleToTarget;
+	public boolean isAligned;
 
 	public GamePeriod gamePeriod = GamePeriod.DISABLED;
 	public String gameData;
