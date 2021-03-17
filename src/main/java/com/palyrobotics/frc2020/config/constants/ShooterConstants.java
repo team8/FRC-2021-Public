@@ -13,10 +13,9 @@ public class ShooterConstants {
 
 	public static final Map<HoodState, InterpolatingDoubleTreeMap> kTargetDistanceToVelocity = new EnumMap<>(HoodState.class);
 	public static final NavigableMap<Double, HoodState> kTargetDistanceToHoodState = new TreeMap<>();
-	public static final double kTimeToShootPerBallSeconds = 1.0;
+	public static final double kTimeToShootPerBallSeconds = 0.5;
 
 	static {
-		// TODO: config?
 		/* Low Velocities */
 		var lowMap = new InterpolatingDoubleTreeMap();
 		lowMap.put(0.0, 0.0);

@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.StickyFaults;
 import com.ctre.phoenix.sensors.PigeonIMU.PigeonState;
 import com.esotericsoftware.minlog.Log;
 import com.palyrobotics.frc2020.config.RobotConfig;
+import com.palyrobotics.frc2020.config.VisionConfig;
 import com.palyrobotics.frc2020.config.constants.SpinnerConstants;
 import com.palyrobotics.frc2020.config.subsystem.IntakeConfig;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.DriveHardware;
@@ -18,6 +19,7 @@ import com.palyrobotics.frc2020.util.control.Falcon;
 import com.palyrobotics.frc2020.util.control.Spark;
 import com.palyrobotics.frc2020.util.control.Talon;
 import com.palyrobotics.frc2020.util.dashboard.LiveGraph;
+import com.palyrobotics.frc2020.vision.Limelight;
 import com.revrobotics.CANSparkMax.FaultID;
 import com.revrobotics.ColorMatch;
 
@@ -31,7 +33,8 @@ public class HardwareReader {
 	private static final Timer mTimer = new Timer();
 	private final RobotConfig mRobotConfig = Configs.get(RobotConfig.class);
 	private final IntakeConfig mIntakeConfig = Configs.get(IntakeConfig.class);
-
+	private final VisionConfig mVisionConfig = Configs.get(VisionConfig.class);
+	private final Limelight mLimelight = Limelight.getInstance();
 	private final ColorMatch mColorMatcher = new ColorMatch();
 
 	private final double[] mGyroAngles = new double[3], mGyroAngularVelocities = new double[3];
@@ -70,6 +73,7 @@ public class HardwareReader {
 	}
 
 	private void readDriveState(RobotState state) {
+		Log.info("Limelight Target Distance", String.valueOf(mLimelight.getEstimatedDistanceInches()));
 		var hardware = DriveHardware.getInstance();
 		/* Gyro */
 		state.driveIsGyroReady = hardware.gyro.getState() == PigeonState.Ready;
@@ -99,6 +103,8 @@ public class HardwareReader {
 //		LiveGraph.add("driveRightPercentOutput", hardware.rightMasterFalcon.getMotorOutputPercent());
 //		LiveGraph.add("driveLeftPercentOutput", hardware.leftMasterFalcon.getMotorOutputPercent());
 //		hardware.falcons.forEach(this::checkFalconFaults);
+
+		state.isAligned = mLimelight.isAligned(mVisionConfig.acceptableYawError * 2);
 	}
 
 	private void readShooterState(RobotState state) {

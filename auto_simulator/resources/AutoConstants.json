@@ -1,5 +1,5 @@
 {
-  "SelectedAuto": "GalacticSearchBBlue",
+  "SelectedAuto": "GalacticSearchABlue",
   "TrenchStart": {
     "SelectedField": "Field2020",
     "xPosInit": 3.5,
@@ -25,13 +25,13 @@
     "autoCSVPath": "/resources/bounceAuto.csv"
   },
   "GalacticSearchARed": {
-    "SelectedField": "GalacticSearchARed",
+    "SelectedField": "GalacticSearchA",
     "xPosInit": 0,
     "yPosInit": 0,
     "autoCSVPath": "/resources/galacticSearchARedAuto.csv"
   },
   "GalacticSearchBRed": {
-    "SelectedField": "GalacticSearchBRed",
+    "SelectedField": "GalacticSearchB",
     "xPosInit": 0,
     "yPosInit": 0,
     "autoCSVPath": "/resources/galacticSearchBRedAuto.csv"

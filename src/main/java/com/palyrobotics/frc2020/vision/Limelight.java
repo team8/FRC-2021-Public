@@ -44,7 +44,7 @@ public class Limelight {
 	}
 
 	public boolean isAligned(double acceptableYawError) {
-		return isTargetFound() && getYawToTarget() < acceptableYawError;
+		return isTargetFound() && Math.abs(getYawToTarget()) < acceptableYawError;
 	}
 
 	/**

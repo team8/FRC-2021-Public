@@ -58,9 +58,10 @@ public class RobotState {
 	public Color detectedRGBValues;
 	public ColorMatchResult closestColorRGB;
 
-	/* Misc */
+	/* Vision */
 	public ArrayList<Float> radii;
 	public ArrayList<Point> centers;
+	public boolean isAligned;
 
 	public GamePeriod gamePeriod = GamePeriod.DISABLED;
 	public String gameData;
