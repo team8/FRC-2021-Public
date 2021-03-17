@@ -5,25 +5,26 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
-import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
 
 public class Odroid {
 
 	private static final String category = "Odroid";
 
-	private Server server;
+	private Client client;
 
 	private ArrayList<Float> radii = new ArrayList<>();
 	private ArrayList<Point> centers = new ArrayList<>();
 
 	public Odroid(int port) {
-		server = new Server();
-		server.getKryo().register(HashMap.class);
+		client = new Client();
+		client.getKryo().register(HashMap.class);
+		client.getKryo().register(java.awt.Point.class);
 		try {
-			server.addListener(new Listener() {
+			client.addListener(new Listener() {
 
 				@Override
 				public void connected(Connection connection) {
@@ -52,8 +53,8 @@ public class Odroid {
 					Log.info(category, String.valueOf(centers.get(0).x)); // TODO: might give error but whatever ill delete this later cus its just for debug
 				}
 			});
-			server.start();
-			server.bind(port);
+			client.start();
+			client.connect(63345, "127.0.0.1", 63345); // TODO: no more magic numbers, also which one is the ip? prob look at old code to find out or smth
 
 			Log.info(category, "Started server");
 		} catch (IOException exception) {
