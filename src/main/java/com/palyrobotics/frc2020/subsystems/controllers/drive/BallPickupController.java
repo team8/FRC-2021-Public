@@ -8,8 +8,7 @@ import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.SynchronousPIDF;
 import com.palyrobotics.frc2020.vision.Limelight;
-
-import edu.wpi.first.wpilibj.MedianFilter;
+import static com.palyrobotics.frc2020.util.Util.clamp;
 
 public class BallPickupController extends ChezyDriveController {
 
@@ -19,40 +18,33 @@ public class BallPickupController extends ChezyDriveController {
     private final SynchronousPIDF mDistancePidController = new SynchronousPIDF();
     private final SynchronousPIDF mAnglePidController = new SynchronousPIDF();
     private VisionConfig mVisionConfig = Configs.get(VisionConfig.class);
-    private MedianFilter mTargetYawFilter = new MedianFilter(kFilterSize);
-    private MedianFilter mTargetDistanceFilter = new MedianFilter(kFilterSize);
     private int mTargetFoundCount;
-    private double mTargetGyroYaw;
-    private double mTargetDistance;
+    private double mTargetGyroYaw = 0;
+    private double mTargetDistance = 0;
 
     public BallPickupController() {
     }
 
     @Override
     public void updateSignal(@ReadOnly Commands commands, @ReadOnly RobotState state) {
-        if (state.driveIsGyroReady) {
-            double gyroYawDegrees = state.driveYawDegrees;
-            double gyroYawAngularVelocity = state.driveYawAngularVelocityDegrees;
-            //TODO: Need a way of getting current position
-            double postition = 0;
+        if (state.driveIsGyroReady) { //Do I need this if statement?
+            double currentAngle = 0; //Probably state.something in RobotState that will be created later
+            double gyroYawAngularVelocity = state.driveYawAngularVelocityDegrees; //If not using angles, do I need to get a different form of rate of change
+            double currentPosition = 0; //Probably state.something in RobotState that will be created later
             double velocityMetersPerSecond =  state.driveVelocityMetersPerSecond;
             if (mLimelight.isTargetFound()) {
-                double visionYawToTargetDegrees = mLimelight.getYawToTarget();
-                double visionDistanceToTarget = mLimelight.getEstimatedDistanceInches(); //TODO: may make a new method or convert this to meters
-                mTargetGyroYaw = mTargetYawFilter.calculate(gyroYawDegrees - visionYawToTargetDegrees);
-                mTargetDistance = mTargetDistanceFilter.calculate(postition - visionDistanceToTarget);
                 mTargetFoundCount++;
             } else {
                 mTargetFoundCount = 0;
             }
             if (mTargetFoundCount >= kFilterSize) {
-                setOutput(calculateDistance(mTargetDistance, postition, velocityMetersPerSecond), calculateAngle(mTargetGyroYaw, gyroYawDegrees, -gyroYawAngularVelocity));
+                setOutput(calculateDistance(mTargetDistance, currentPosition, velocityMetersPerSecond), calculateAngle(mTargetGyroYaw, currentAngle, -gyroYawAngularVelocity));
                 return;
             }
-        } else {
+        } else { //if I don't need the if statement above delete this
             if (mLimelight.isTargetFound()) {
-                //TODO: change estimated distance part
-                setOutput(calculateDistance(0, mLimelight.getEstimatedDistanceInches(), null), calculateAngle(0.0, mLimelight.getYawToTarget(), null));
+                double estimatedDistance = 0; //Probably state.something in RobotState that will be created later if even needed
+                setOutput(calculateDistance(0, estimatedDistance, null), calculateAngle(0.0, mLimelight.getYawToTarget(), null));
             }
             mTargetFoundCount = 0;
         }
@@ -60,28 +52,28 @@ public class BallPickupController extends ChezyDriveController {
     }
 
     private double calculateAngle(double targetDegrees, double degrees, Double degreesDerivative) {
-        var preciseGains = mVisionConfig.preciseGains;
+        var preciseGains = mVisionConfig.preciseGains; //Create new config class for Automatic Ball Pickup?
         mAnglePidController.setPID(preciseGains.p, preciseGains.i, preciseGains.d);
         mAnglePidController.setSetpoint(targetDegrees);
-        double percentOutput = degreesDerivative == null ? mAnglePidController.calculate(degrees) : mAnglePidController.calculate(degrees, degreesDerivative);
-        double turnGainS = mConfig.turnGainsS;
-        if (Math.abs(mAnglePidController.getError()) < mVisionConfig.acceptableYawError) turnGainS *= 0.2;
-        return percentOutput + Math.signum(percentOutput) * turnGainS;
+        /* If deleting the if statement for gyro ready, then there will be no null so this will be
+        return mDistancePidController.calculate(degrees, degreesDerivative);
+         */
+        return degreesDerivative == null ? mAnglePidController.calculate(degrees) : mAnglePidController.calculate(degrees, degreesDerivative);
     }
 
-    //TODO: change more of the stuff to distance related
     private double calculateDistance(double targetDistance, double currentDistance, Double accelerationDerivative) {
-        var preciseGains = mVisionConfig.preciseGains;
+        var preciseGains = mVisionConfig.preciseGains; //Create new config class for Automatic Ball Pickup?
         mDistancePidController.setPID(preciseGains.p, preciseGains.i, preciseGains.d);
         mDistancePidController.setSetpoint(targetDistance);
-        double percentOutput = accelerationDerivative == null ? mDistancePidController.calculate(currentDistance) : mDistancePidController.calculate(currentDistance, accelerationDerivative);
-        double turnGainS = mConfig.turnGainsS;
-        if (Math.abs(mDistancePidController.getError()) < mVisionConfig.acceptableYawError) turnGainS *= 0.2;
-        return percentOutput + Math.signum(percentOutput) * turnGainS;
+        /* If deleting the if statement for gyro ready, then there will be no null so this will be
+        return mDistancePidController.calculate(currentDistance, accelerationDerivative);
+         */
+        return accelerationDerivative == null ? mDistancePidController.calculate(currentDistance) : mDistancePidController.calculate(currentDistance, accelerationDerivative);
     }
 
     private void setOutput(double distanceOut, double angleOut) {
-        mOutputs.leftOutput.setPercentOutput(-distanceOut*angleOut);
-        mOutputs.rightOutput.setPercentOutput(distanceOut*angleOut);
+        double clampedOutput = clamp(distanceOut+angleOut, -1, 1); //Check if these are the correct min and max values
+        mOutputs.leftOutput.setPercentOutput(-clampedOutput);
+        mOutputs.rightOutput.setPercentOutput(clampedOutput);
     }
 }
