@@ -12,6 +12,9 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.util.Color;
 
+import java.awt.*;
+import java.util.ArrayList;
+
 /**
  * Holds the current physical state of the robot from our sensors.
  */
@@ -56,7 +59,8 @@ public class RobotState {
 	public ColorMatchResult closestColorRGB;
 
 	/* Misc */
-	public double radiansToBall;
+	public ArrayList<Float> radii;
+	public ArrayList<Point> centers;
 
 	public GamePeriod gamePeriod = GamePeriod.DISABLED;
 	public String gameData;

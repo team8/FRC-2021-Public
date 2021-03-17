@@ -1,6 +1,8 @@
 package com.palyrobotics.frc2020.util;
 
+import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.esotericsoftware.kryonet.Connection;
@@ -14,7 +16,8 @@ public class Odroid {
 
 	private Server server;
 
-	private double radiansToBall = 0;
+	private ArrayList<Float> radii = new ArrayList<>();
+	private ArrayList<Point> centers = new ArrayList<>();
 
 	public Odroid(int port) {
 		server = new Server();
@@ -37,11 +40,16 @@ public class Odroid {
 					if (!message.getClass().getName().equals(HashMap.class.getName())) {
 						return;
 					}
-					Object sent = ((HashMap<String, Object>) message).get("radians-to-ball");
-					if (sent.getClass().equals(Double.class)) {
-						radiansToBall = (double) sent;
+					Object sent;
+					sent = ((HashMap<String, Object>) message).get("radii");
+					if (sent.getClass().equals(ArrayList.class)) {
+						radii = (ArrayList<Float>) sent;
 					}
-					Log.info(category, String.valueOf(radiansToBall));
+					sent = ((HashMap<String, Object>) message).get("centers");
+					if (sent.getClass().equals(ArrayList.class)) {
+						centers = (ArrayList<Point>) sent;
+					}
+					Log.info(category, String.valueOf(centers.get(0).x)); // TODO: might give error but whatever ill delete this later cus its just for debug
 				}
 			});
 			server.start();
@@ -53,7 +61,11 @@ public class Odroid {
 		}
 	}
 
-	public double getRadiansToBall() {
-		return radiansToBall;
+	public ArrayList<Float> getRadii() {
+		return radii;
+	}
+
+	public ArrayList<Point> getCenters() {
+		return centers;
 	}
 }
