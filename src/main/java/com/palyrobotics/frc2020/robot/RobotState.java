@@ -1,5 +1,8 @@
 package com.palyrobotics.frc2020.robot;
 
+import java.awt.*;
+import java.util.ArrayList;
+
 import com.esotericsoftware.minlog.Log;
 import com.palyrobotics.frc2020.config.constants.DriveConstants;
 import com.palyrobotics.frc2020.util.Util;
@@ -11,9 +14,6 @@ import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.util.Color;
-
-import java.awt.*;
-import java.util.ArrayList;
 
 /**
  * Holds the current physical state of the robot from our sensors.
