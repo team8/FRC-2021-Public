@@ -96,10 +96,16 @@ public class OperatorInterface {
 			commands.setDriveVisionAlign(kTwoTimesZoomPipelineId);
 		}
 		/* Path Following */
-		if (mDriveStick.getRawButton(6)) {
+		if (mTurnStick.getRawButton(5)) {
 			commands.addWantedRoutine(new SequentialRoutine(
 					new DriveSetOdometryRoutine(0.0, 0.0, 0.0),
 					new DrivePathRoutine(newWaypointMeters(4.5, 0.0, 0.0))));
+		}
+		if (mDriveStick.getRawButton(6)) {
+			System.out.println("Should be going backward");
+			commands.addWantedRoutine(new SequentialRoutine(
+					new DriveSetOdometryRoutine(0.0, 0.0, 180),
+					new DrivePathRoutine(newWaypointMeters(4.5, 0.0, 0.0)).driveInReverse()));
 		}
 //		if (mDriveStick.getRawButton(5)) {
 //			commands.addWantedRoutine(new SequentialRoutine(
@@ -147,7 +153,7 @@ public class OperatorInterface {
 	private void updateSuperstructureCommands(Commands commands, RobotState state) {
 		if (mOperatorXboxController.getDPadDownReleased()) {
 			commands.setIntakeRunning(0);
-		} else if (mOperatorXboxController.getDPadDown() || mTurnStick.getRawButton(5)) {
+		} else if (mOperatorXboxController.getDPadDown()) {
 			if (!state.intakeStalled) {
 				commands.setIntakeRunning(mIntakeConfig.rollerPo);
 			} else {
