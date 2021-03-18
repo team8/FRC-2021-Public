@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import com.esotericsoftware.minlog.Log;
 import com.palyrobotics.frc2020.config.constants.DriveConstants;
+import com.palyrobotics.frc2020.util.Circle;
 import com.palyrobotics.frc2020.util.Util;
 import com.revrobotics.ColorMatchResult;
 
@@ -59,8 +60,7 @@ public class RobotState {
 	public ColorMatchResult closestColorRGB;
 
 	/* Vision */
-	public ArrayList<Float> radii;
-	public ArrayList<Point> centers;
+	public ArrayList<Circle> balls;
 	public boolean isAligned;
 
 	public GamePeriod gamePeriod = GamePeriod.DISABLED;

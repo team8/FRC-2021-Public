@@ -170,8 +170,7 @@ public class HardwareReader {
 	private void readOdroidState(RobotState state) {
 		var odroidHardware = HardwareAdapter.MiscellaneousHardware.getInstance();
 
-		state.centers = odroidHardware.odroid.getCenters();
-		state.radii = odroidHardware.odroid.getRadii();
+		state.balls = odroidHardware.odroid.getBalls();
 	}
 
 	private void checkTalonFaults(Talon talon) {

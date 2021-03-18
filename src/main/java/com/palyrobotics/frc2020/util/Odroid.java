@@ -14,10 +14,9 @@ public class Odroid {
 
 	private static final String category = "Odroid";
 
-	private Client client;
+	private final Client client;
 
-	private ArrayList<Float> radii = new ArrayList<>();
-	private ArrayList<Point> centers = new ArrayList<>();
+	private final ArrayList<Circle> balls = new ArrayList<>();
 
 	public Odroid(int port) {
 		client = new Client();
@@ -42,6 +41,8 @@ public class Odroid {
 						return;
 					}
 					Object sent;
+					var radii = new ArrayList<Float>();
+					var centers = new ArrayList<Point>();
 					sent = ((HashMap<String, Object>) message).get("radii");
 					if (sent.getClass().equals(ArrayList.class)) {
 						radii = (ArrayList<Float>) sent;
@@ -49,6 +50,11 @@ public class Odroid {
 					sent = ((HashMap<String, Object>) message).get("centers");
 					if (sent.getClass().equals(ArrayList.class)) {
 						centers = (ArrayList<Point>) sent;
+					}
+
+					balls.clear();
+					for (int i = 0; i < radii.size() && i < centers.size(); i++) {
+						balls.add(new Circle(radii.get(i), centers.get(i)));
 					}
 					Log.info(category, String.valueOf(centers.get(0).x)); // TODO: might give error but whatever ill delete this later cus its just for debug
 				}
@@ -62,11 +68,7 @@ public class Odroid {
 		}
 	}
 
-	public ArrayList<Float> getRadii() {
-		return radii;
-	}
-
-	public ArrayList<Point> getCenters() {
-		return centers;
+	public ArrayList<Circle> getBalls() {
+		return balls;
 	}
 }
