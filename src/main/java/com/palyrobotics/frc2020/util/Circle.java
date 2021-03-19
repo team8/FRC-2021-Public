@@ -11,4 +11,12 @@ public class Circle {
 		this.radius = radius;
 		this.center = center;
 	}
+
+	@Override
+	public String toString() {
+		return "Circle{" +
+				"radius=" + radius +
+				", center=" + center +
+				'}';
+	}
 }
