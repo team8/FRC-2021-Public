@@ -15,6 +15,7 @@ import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.vision.Limelight;
 import edu.wpi.first.vision.VisionPipeline;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
 
 public class DriveForwardAlignRoutine extends DrivePathRoutine {
 
@@ -39,7 +40,7 @@ public class DriveForwardAlignRoutine extends DrivePathRoutine {
         //check if target, then if target is there create a trajectory once that is the current pos to target pos.
         commands.visionWanted = true;
         if (mLimelight.isTargetFound()) {
-            hasLocated = true;
+                hasLocated = true;
             mTargetYawDegrees = mLimelight.getYawToTarget();
            //TODO: fill this out mLimelightTarget = new Pose2d();
             commands.addWantedRoutine(new DrivePathRoutine());
@@ -56,5 +57,21 @@ public class DriveForwardAlignRoutine extends DrivePathRoutine {
     @Override
     public Set<SubsystemBase> getRequiredSubsystems() {
         return Set.of(mDrive);
+    }
+
+    public static Pose2d findPointOrthagonalCurrentPosFarPos(double theta, Pose2d robotPos, Pose2d targetPos){
+        Translation2d robotTransl = robotPos.getTranslation();
+        Translation2d targetTransl = targetPos.getTranslation();
+
+        double orthogonalDist = robotTransl.getDistance(targetTransl);
+        double run = targetTransl.getX() - robotTransl.getX();
+        double rise = targetTransl.getY() - robotTransl.getY();
+
+        //create inverse unit vector that is orthogonal to original line
+
+
+
+        orthogonalDist *
+
     }
 }
