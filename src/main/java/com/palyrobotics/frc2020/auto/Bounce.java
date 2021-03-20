@@ -13,16 +13,18 @@ public class Bounce implements AutoBase {
 	public RoutineBase getRoutine() {
 		var setInitialOdometry = new DriveSetOdometryRoutine(1.0, 2.35, 0);
 		var firstBall = new DrivePathRoutine(
-				newWaypointMeters(2.3, 3.45, 90));
+				newWaypointMeters(2.2, 3.38, 90));
 		var secondBall = new DrivePathRoutine(
-				newWaypointMeters(3.07, 1.45, 120),
-				newWaypointMeters(4.45, 1.23, -110),
-				newWaypointMeters(4.6, 3.45, -90)).driveInReverse();
+				newWaypointMeters(3.0, 1.65, 120),
+				newWaypointMeters(4.35, 1.45, -110),
+				newWaypointMeters(4.48, 3.57, -90)).driveInReverse();
 		var thirdBall = new DrivePathRoutine(
-				newWaypointMeters(5.8, 0.78, 0),
-				newWaypointMeters(6.85, 3.45, 90));
+				newWaypointMeters(5.55, 1.07, 0),
+				newWaypointMeters(6.85, 3.65, 90));
 		var finishZone = new DrivePathRoutine(
-				newWaypointMeters(8.05, 2.23, 170)).driveInReverse();
+				newWaypointMeters(8.05, 2.5, 160)).driveInReverse();
+
+		// A lot of drift towards neg y, not sure why
 		return new SequentialRoutine(setInitialOdometry, firstBall, secondBall, thirdBall, finishZone);
 	}
 }
