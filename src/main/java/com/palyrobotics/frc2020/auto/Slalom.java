@@ -29,7 +29,7 @@ public class Slalom implements AutoBase {
 //				newWaypointMeters(7, 1.8, -110),
 
 				/** -=-Second Curve-=- **/
-				newWaypointMeters(5.8, 0.83, -179),
+				newWaypointMeters(5.8, 0.83, -175),
 				newWaypointMeters(3.5, 0.83, 175),
 				newWaypointMeters(1.4, 2.0, 165));
 
