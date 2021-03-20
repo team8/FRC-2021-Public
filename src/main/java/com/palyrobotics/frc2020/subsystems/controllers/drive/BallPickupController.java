@@ -29,9 +29,9 @@ public class BallPickupController extends ChezyDriveController {
 	@Override
 	public void updateSignal(@ReadOnly Commands commands, @ReadOnly RobotState state) {
 		if (state.driveIsGyroReady) { //Do I need this if statement?
-			double currentAngle = 0; //Probably state.something in RobotState that will be created later
-			double gyroYawAngularVelocity = state.driveYawAngularVelocityDegrees; //If not using angles, do I need to get a different form of rate of change
-			double currentPosition = 0; //Probably state.something in RobotState that will be created later
+			double currentAngle = 0; //Probably state.balls.center when odroid is implemented
+			double gyroYawAngularVelocity = state.driveYawAngularVelocityDegrees; //This will probably work due to the way PID works, but may change
+			double currentPosition = 0; //Probably state.balls.radius later when odroid is implemented
 			double velocityMetersPerSecond = state.driveVelocityMetersPerSecond;
 			if (mLimelight.isTargetFound()) {
 				mTargetFoundCount++;
@@ -44,8 +44,8 @@ public class BallPickupController extends ChezyDriveController {
 			}
 		} else { //if I don't need the if statement above delete this
 			if (mLimelight.isTargetFound()) {
-				double estimatedDistance = 0; //Probably state.something in RobotState that will be created later if even needed
-				setOutput(calculateDistance(0, estimatedDistance, null), calculateAngle(0.0, mLimelight.getYawToTarget(), null));
+				double currentPosition = 0; //Probably state.balls.radius later if even needed
+				setOutput(calculateDistance(0, currentPosition, null), calculateAngle(0.0, mLimelight.getYawToTarget(), null));
 			}
 			mTargetFoundCount = 0;
 		}
@@ -73,8 +73,10 @@ public class BallPickupController extends ChezyDriveController {
 	}
 
 	private void setOutput(double distanceOut, double angleOut) {
-		double clampedOutput = clamp(distanceOut + angleOut, -1, 1); //Check if these are the correct min and max values
-		mOutputs.leftOutput.setPercentOutput(-clampedOutput);
-		mOutputs.rightOutput.setPercentOutput(clampedOutput);
+		//Check if these are the correct min and max values
+		double rightOutput = clamp(distanceOut + angleOut, -1, 1);
+		double leftOutput = clamp(distanceOut - angleOut, -1, 1);
+		mOutputs.leftOutput.setPercentOutput(leftOutput);
+		mOutputs.rightOutput.setPercentOutput(rightOutput);
 	}
 }
