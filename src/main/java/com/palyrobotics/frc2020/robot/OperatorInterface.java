@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.palyrobotics.frc2020.behavior.SequentialRoutine;
+import com.palyrobotics.frc2020.behavior.routines.drive.DriveForwardAlignRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DrivePathRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DriveSetOdometryRoutine;
 import com.palyrobotics.frc2020.behavior.routines.spinner.SpinnerPositionControlRoutine;
@@ -24,6 +25,9 @@ import com.palyrobotics.frc2020.util.input.Joystick;
 import com.palyrobotics.frc2020.util.input.XboxController;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
 
 /**
  * Used to produce {@link Commands}'s from human input. Should only be used in robot package.
@@ -97,9 +101,7 @@ public class OperatorInterface {
 		}
 		/* Path Following */
 		if (mDriveStick.getRawButton(6)) {
-			commands.addWantedRoutine(new SequentialRoutine(
-					new DriveSetOdometryRoutine(0.0, 0.0, 0.0),
-					new DrivePathRoutine(newWaypointMeters(4.5, 0.0, 0.0))));
+			commands.addWantedRoutine(new DriveForwardAlignRoutine(new Pose2d(3, 0, new Rotation2d(0)));
 		}
 //		if (mDriveStick.getRawButton(5)) {
 //			commands.addWantedRoutine(new SequentialRoutine(

@@ -15,9 +15,7 @@ import edu.wpi.first.wpilibj.geometry.Translation2d;
 
 public class DriveForwardAlignRoutine extends DrivePathRoutine {
 
-    private final VisionConfig mVisionConfig = Configs.get(VisionConfig.class);
     private final Limelight mLimelight = Limelight.getInstance();
-    private final int mVisionPipeline;
     //Limelight controlled targeted point.
     private Pose2d mLimelightTarget;
     private Pose2d forwardTarget;
@@ -26,10 +24,9 @@ public class DriveForwardAlignRoutine extends DrivePathRoutine {
 
     private boolean hasLocated;
 
-    public DriveForwardAlignRoutine(Pose2d forwardTarget, int visionPipeline) {
+    public DriveForwardAlignRoutine(Pose2d forwardTarget) {
         super(forwardTarget);
         this.forwardTarget = forwardTarget;
-        mVisionPipeline = visionPipeline;
     }
 
     @Override
