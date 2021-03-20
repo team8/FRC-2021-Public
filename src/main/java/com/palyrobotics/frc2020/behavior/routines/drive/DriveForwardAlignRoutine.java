@@ -15,6 +15,7 @@ import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.vision.Limelight;
 import edu.wpi.first.vision.VisionPipeline;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 
 public class DriveForwardAlignRoutine extends DrivePathRoutine {
@@ -24,6 +25,7 @@ public class DriveForwardAlignRoutine extends DrivePathRoutine {
     private final int mVisionPipeline;
     //Limelight controlled targeted point.
     private Pose2d mLimelightTarget;
+    private Pose2d forwardTarget;
 
     private double mTargetYawDegrees;
     private double mTrajectory;
@@ -32,6 +34,7 @@ public class DriveForwardAlignRoutine extends DrivePathRoutine {
 
     public DriveForwardAlignRoutine(Pose2d forwardTarget, int visionPipeline) {
         super(forwardTarget);
+        this.forwardTarget = forwardTarget;
         mVisionPipeline = visionPipeline;
     }
 
@@ -42,8 +45,8 @@ public class DriveForwardAlignRoutine extends DrivePathRoutine {
         if (mLimelight.isTargetFound()) {
                 hasLocated = true;
             mTargetYawDegrees = mLimelight.getYawToTarget();
-           //TODO: fill this out mLimelightTarget = new Pose2d();
-            commands.addWantedRoutine(new DrivePathRoutine());
+            mLimelightTarget = findPointOrthagonalCurrentPosFarPos(mTargetYawDegrees, state.drivePoseMeters, forwardTarget);
+            commands.addWantedRoutine(new DrivePathRoutine(mLimelightTarget));
         }
         else{
             super.update(commands, state);
@@ -59,7 +62,7 @@ public class DriveForwardAlignRoutine extends DrivePathRoutine {
         return Set.of(mDrive);
     }
 
-    public static Pose2d findPointOrthagonalCurrentPosFarPos(double theta, Pose2d robotPos, Pose2d targetPos){
+    public static Pose2d findPointOrthagonalCurrentPosFarPos(double theta, Pose2d robotPos, Pose2d targetPos) {
         Translation2d robotTransl = robotPos.getTranslation();
         Translation2d targetTransl = targetPos.getTranslation();
 
@@ -67,11 +70,14 @@ public class DriveForwardAlignRoutine extends DrivePathRoutine {
         double run = targetTransl.getX() - robotTransl.getX();
         double rise = targetTransl.getY() - robotTransl.getY();
 
-        //create inverse unit vector that is orthogonal to original line
+        double magnitudeVector = Math.hypot(run, rise);
+        // because perpendicular
+        double xDisplacement = rise / magnitudeVector * orthogonalDist * Math.signum(theta);
+        double yDisplacement = -run / magnitudeVector * orthogonalDist * Math.signum(theta);
 
+        Translation2d orthogonalPoint = targetTransl.plus(new Translation2d(xDisplacement, yDisplacement));
 
-
-        orthogonalDist *
+        return new Pose2d(orthogonalPoint, new Rotation2d( robotPos.getRotation().getRadians() + theta));
 
     }
 }
