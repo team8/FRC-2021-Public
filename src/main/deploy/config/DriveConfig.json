@@ -24,6 +24,6 @@
 	"nonlinearPasses": 3,
 	"pathVelocityMetersPerSecond": 3.5,
 	"pathAccelerationMetersPerSecondSquared": 3.5,
-	"pathCentripetalAcceleration": 3.8,
+	"pathCentripetalAcceleration": 4.0,
 	"allowableYawErrorDegrees": 2.0
 }
