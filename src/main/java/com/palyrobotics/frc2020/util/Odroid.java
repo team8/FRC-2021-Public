@@ -21,6 +21,7 @@ public class Odroid {
 	public Odroid(int port) {
 		client = new Client();
 		client.getKryo().register(HashMap.class);
+		client.getKryo().register(ArrayList.class);
 		client.getKryo().register(java.awt.Point.class);
 		try {
 			client.addListener(new Listener() {
@@ -56,15 +57,14 @@ public class Odroid {
 					for (int i = 0; i < radii.size() && i < centers.size(); i++) {
 						balls.add(new Circle(radii.get(i), centers.get(i)));
 					}
-					Log.info(category, String.valueOf(centers.get(0).x)); // TODO: might give error but whatever ill delete this later cus its just for debug
 				}
 			});
 			client.start();
-			client.connect(63345, "127.0.0.1", 63345); // TODO: no more magic numbers, also which one is the ip? prob look at old code to find out or smth
+			client.connect(100, "127.0.0.1", port, port); // TODO: no more magic numbers, also which one is the ip? prob look at old code to find out or smth
 
 			Log.info(category, "Started server");
 		} catch (IOException exception) {
-			Log.error(category, "Failed to start server", exception);
+			Log.error(category, "Failed to start client", exception);
 		}
 	}
 
