@@ -36,8 +36,7 @@ public class DriveForwardAlignRoutine extends DrivePathRoutine {
 			hasLocated = true;
 			mTargetYawRad = Math.toRadians(mLimelight.getYawToTarget());
 			mLimelightTarget = findPointOrthagonalCurrentPosFarPos(mTargetYawRad, state.drivePoseMeters, forwardTarget);
-			System.out.println("targetPosX:" + mLimelightTarget.getTranslation().getX() + " targetPosY" + mLimelightTarget.getTranslation().getY());
-//			commands.addWantedRoutine(new DrivePathRoutine(mLimelightTarget));
+			commands.addWantedRoutine(new DrivePathRoutine(mLimelightTarget));
 		} else {
 			super.update(commands, state);
 		}
@@ -57,15 +56,14 @@ public class DriveForwardAlignRoutine extends DrivePathRoutine {
 		Translation2d robotTransl = robotPos.getTranslation();
 		Translation2d targetTransl = targetPos.getTranslation();
 
-		double orthogonalDist = robotTransl.getDistance(targetTransl);
+		double orthogonalDist = robotTransl.getDistance(targetTransl) * Math.tan(theta);
 		double run = targetTransl.getX() - robotTransl.getX();
 		double rise = targetTransl.getY() - robotTransl.getY();
 
 		double magnitudeVector = Math.hypot(run, rise);
 		// because perpendicular
-		double xDisplacement = rise / magnitudeVector * orthogonalDist * Math.signum(theta);
-		double yDisplacement = -run / magnitudeVector * orthogonalDist * Math.signum(theta);
-
+		double xDisplacement = (rise / magnitudeVector) * orthogonalDist * Math.signum(theta);
+		double yDisplacement = (-run / magnitudeVector) * orthogonalDist * Math.signum(theta);
 		Translation2d orthogonalPoint = targetTransl.plus(new Translation2d(xDisplacement, yDisplacement));
 
 		return new Pose2d(orthogonalPoint, new Rotation2d(robotPos.getRotation().getRadians() + theta));

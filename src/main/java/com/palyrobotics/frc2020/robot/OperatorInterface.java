@@ -7,7 +7,9 @@ import static com.palyrobotics.frc2020.vision.Limelight.kTwoTimesZoomPipelineId;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import com.palyrobotics.frc2020.behavior.SequentialRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DriveForwardAlignRoutine;
+import com.palyrobotics.frc2020.behavior.routines.drive.DriveSetOdometryRoutine;
 import com.palyrobotics.frc2020.behavior.routines.spinner.SpinnerPositionControlRoutine;
 import com.palyrobotics.frc2020.behavior.routines.spinner.SpinnerRotationControlRoutine;
 import com.palyrobotics.frc2020.behavior.routines.superstructure.IndexerFeedRoutine;
@@ -96,7 +98,9 @@ public class OperatorInterface {
 		}
 		/* Path Following */
 		if (mDriveStick.getRawButton(6)) {
-			commands.addWantedRoutine(new DriveForwardAlignRoutine(new Pose2d(3, 0, new Rotation2d(0))));
+			commands.addWantedRoutine(new SequentialRoutine(
+					new DriveSetOdometryRoutine(),
+					new DriveForwardAlignRoutine(new Pose2d(3, 0, new Rotation2d(0)))));
 		}
 //		if (mDriveStick.getRawButton(5)) {
 //			commands.addWantedRoutine(new SequentialRoutine(
