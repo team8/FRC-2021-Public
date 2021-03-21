@@ -38,6 +38,7 @@ public class Odroid {
 
 				@Override
 				public void received(Connection connection, Object message) {
+					System.out.println("Received");
 					if (!message.getClass().getName().equals(HashMap.class.getName())) {
 						return;
 					}
@@ -60,9 +61,9 @@ public class Odroid {
 				}
 			});
 			client.start();
-			client.connect(100, "127.0.0.1", port, port); // TODO: no more magic numbers, also which one is the ip? prob look at old code to find out or smth
+			client.connect(500, "10.0.8.88", port, port); // TODO: no more magic numbers, also which one is the ip? prob look at old code to find out or smth
 
-			Log.info(category, "Started server");
+			Log.info(category, "Started client");
 		} catch (IOException exception) {
 			Log.error(category, "Failed to start client", exception);
 		}
