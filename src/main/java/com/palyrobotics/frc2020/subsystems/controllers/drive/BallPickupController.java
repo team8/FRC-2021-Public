@@ -2,7 +2,7 @@ package com.palyrobotics.frc2020.subsystems.controllers.drive;
 
 import static com.palyrobotics.frc2020.util.Util.clamp;
 
-import com.palyrobotics.frc2020.config.VisionConfig;
+import com.palyrobotics.frc2020.config.subsystem.DriveConfig;
 import com.palyrobotics.frc2020.robot.Commands;
 import com.palyrobotics.frc2020.robot.ReadOnly;
 import com.palyrobotics.frc2020.robot.RobotState;
@@ -18,7 +18,7 @@ public class BallPickupController extends ChezyDriveController {
 	private final Limelight mLimelight = Limelight.getInstance();
 	private final SynchronousPIDF mDistancePidController = new SynchronousPIDF();
 	private final SynchronousPIDF mAnglePidController = new SynchronousPIDF();
-	private VisionConfig mVisionConfig = Configs.get(VisionConfig.class);
+	private DriveConfig mDriveConfig = Configs.get(DriveConfig.class);
 	private int mTargetFoundCount;
 	private double mTargetGyroYaw = 0;
 	private double mTargetDistance = 0;
@@ -29,9 +29,9 @@ public class BallPickupController extends ChezyDriveController {
 	@Override
 	public void updateSignal(@ReadOnly Commands commands, @ReadOnly RobotState state) {
 		if (state.driveIsGyroReady) { //Do I need this if statement?
-			double currentAngle = 0; //Probably state.balls.center when odroid is implemented
+			double currentAngle = state.balls.get(0).getCenter().getX();
 			double gyroYawAngularVelocity = state.driveYawAngularVelocityDegrees; //This will probably work due to the way PID works, but may change
-			double currentPosition = 0; //Probably state.balls.radius later when odroid is implemented
+			double currentPosition = state.balls.get(0).getRadius();
 			double velocityMetersPerSecond = state.driveVelocityMetersPerSecond;
 			if (mLimelight.isTargetFound()) {
 				mTargetFoundCount++;
@@ -44,7 +44,7 @@ public class BallPickupController extends ChezyDriveController {
 			}
 		} else { //if I don't need the if statement above delete this
 			if (mLimelight.isTargetFound()) {
-				double currentPosition = 0; //Probably state.balls.radius later if even needed
+				double currentPosition = state.balls.get(0).getRadius();
 				setOutput(calculateDistance(0, currentPosition, null), calculateAngle(0.0, mLimelight.getYawToTarget(), null));
 			}
 			mTargetFoundCount = 0;
@@ -53,7 +53,7 @@ public class BallPickupController extends ChezyDriveController {
 	}
 
 	private double calculateAngle(double targetDegrees, double degrees, Double degreesDerivative) {
-		var preciseGains = mVisionConfig.preciseGains; //Create new config class for Automatic Ball Pickup?
+		var preciseGains = mDriveConfig.ballPickupTurnGains;
 		mAnglePidController.setPID(preciseGains.p, preciseGains.i, preciseGains.d);
 		mAnglePidController.setSetpoint(targetDegrees);
 		/* If deleting the if statement for gyro ready, then there will be no null so this will be
@@ -63,7 +63,7 @@ public class BallPickupController extends ChezyDriveController {
 	}
 
 	private double calculateDistance(double targetDistance, double currentDistance, Double accelerationDerivative) {
-		var preciseGains = mVisionConfig.preciseGains; //Create new config class for Automatic Ball Pickup?
+		var preciseGains = mDriveConfig.ballPickupVelocityGains;
 		mDistancePidController.setPID(preciseGains.p, preciseGains.i, preciseGains.d);
 		mDistancePidController.setSetpoint(targetDistance);
 		/* If deleting the if statement for gyro ready, then there will be no null so this will be
