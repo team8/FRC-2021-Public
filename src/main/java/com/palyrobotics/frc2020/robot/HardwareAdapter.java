@@ -5,6 +5,7 @@ import java.util.List;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.palyrobotics.frc2020.config.PortConstants;
 import com.palyrobotics.frc2020.config.subsystem.IntakeConfig;
+import com.palyrobotics.frc2020.util.Odroid;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.Falcon;
 import com.palyrobotics.frc2020.util.control.Spark;
@@ -15,11 +16,7 @@ import com.palyrobotics.frc2020.util.input.XboxController;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.ColorSensorV3;
 
-import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
-import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.*;
 
 /**
  * Represents all hardware components of the robot. Singleton class. Should only be used in robot
@@ -89,6 +86,23 @@ public class HardwareAdapter {
 	}
 
 	/**
+	 * 1 WS2812B LED Strip connected to roboRIO via PWM
+	 */
+	static class LightingHardware {
+
+		private static LightingHardware sInstance;
+		final AddressableLED ledStrip = new AddressableLED(sPortConstants.nariLightingPwmPort);
+
+		private LightingHardware() {
+		}
+
+		static LightingHardware getInstance() {
+			if (sInstance == null) sInstance = new LightingHardware();
+			return sInstance;
+		}
+	}
+
+	/**
 	 * 1 775 (controlled by Talon SRX), 1 Color Sensor V3
 	 */
 	static class SpinnerHardware {
@@ -146,8 +160,8 @@ public class HardwareAdapter {
 		final Spark masterSpark = new Spark(sPortConstants.nariShooterMasterId, "Shooter Master"),
 				slaveSpark = new Spark(sPortConstants.nariShooterSlaveId, "Shooter Slave");
 		final CANEncoder masterEncoder = masterSpark.getEncoder();
-		final TimedSolenoid hoodSolenoid = new TimedSolenoid(sPortConstants.nariShooterHoodSolenoid, 0.4, true),
-				blockingSolenoid = new TimedSolenoid(sPortConstants.nariShooterBlockingSolenoidId, 0.2, false);
+		final TimedSolenoid hoodSolenoid = new TimedSolenoid(sPortConstants.nariShooterHoodSolenoid, 0.5, true),
+				blockingSolenoid = new TimedSolenoid(sPortConstants.nariShooterBlockingSolenoidId, 0.4, false);
 
 		private ShooterHardware() {
 		}
@@ -166,6 +180,7 @@ public class HardwareAdapter {
 		private static MiscellaneousHardware sInstance;
 		final Compressor compressor = new Compressor();
 		final PowerDistributionPanel pdp = new PowerDistributionPanel();
+		final Odroid odroid = new Odroid(sPortConstants.odroidPort);
 //    final UsbCamera fisheyeCam = CameraServer.getInstance().startAutomaticCapture();
 
 		private MiscellaneousHardware() {

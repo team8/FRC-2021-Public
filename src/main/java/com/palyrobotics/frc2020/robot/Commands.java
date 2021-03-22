@@ -51,6 +51,9 @@ public class Commands {
 	/* Miscellaneous */
 	public boolean wantedCompression;
 
+	/* Lighting */
+	public ArrayList<Lighting.State> lightingWantedStates;
+
 	/* Shooter */
 	private Shooter.ShooterState shooterWantedState;
 	private double shooterWantedCustomFlywheelVelocity;
@@ -90,7 +93,7 @@ public class Commands {
 	/* Shooter */
 	public void setShooterIdle() {
 		shooterWantedState = Shooter.ShooterState.IDLE;
-		shooterWantedHoodState = Shooter.HoodState.HIGH;
+		shooterWantedHoodState = Shooter.HoodState.LOW;
 	}
 
 	public void setShooterCustomFlywheelVelocity(double wantedVelocity, Shooter.HoodState hoodState) {
@@ -107,6 +110,14 @@ public class Commands {
 		shooterWantedState = Shooter.ShooterState.VISION_VELOCITY;
 		visionWanted = true;
 		visionWantedPipeline = visionPipeline;
+	}
+
+	public void setShooterVisionAssisted(int visionPipeline, double backupFlywheelVelocity, Shooter.HoodState backupHoodState) {
+		shooterWantedState = Shooter.ShooterState.VISION_VELOCITY;
+		visionWanted = true;
+		visionWantedPipeline = visionPipeline;
+		shooterWantedHoodState = backupHoodState;
+		shooterWantedCustomFlywheelVelocity = backupFlywheelVelocity;
 	}
 
 	public void setDriveTeleop() {

@@ -4,7 +4,6 @@ import static com.palyrobotics.frc2020.util.Util.newWaypointMeters;
 
 import java.util.function.Predicate;
 
-import com.palyrobotics.frc2020.behavior.ParallelRoutine;
 import com.palyrobotics.frc2020.behavior.RoutineBase;
 import com.palyrobotics.frc2020.behavior.SequentialRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DriveParallelPathRoutine;
@@ -21,15 +20,14 @@ public class GalacticSearchBBlue implements AutoBase {
 
 	@Override
 	public RoutineBase getRoutine() {
-		Predicate<Pose2d> nearFirstBall = poseMeters -> poseMeters.getTranslation().getX() > Units.inchesToMeters(50.0);
+		Predicate<Pose2d> nearFirstBall = poseMeters -> poseMeters.getTranslation().getX() > Units.inchesToMeters(40.0);
 		var setInitialOdometry = new DriveSetOdometryRoutine(1.2, 0.4, 0);
+		var lowerIntake = new IntakeLowerRoutine();
 		var path = new DrivePathRoutine(
 				newWaypointMeters(4.5, 1.5, 65),
 				newWaypointMeters(6.09, 3.07, 0),
-				newWaypointMeters(7.8, 1.7, 0)).endingVelocity(2);
-		var finishZone = new ParallelRoutine(new DrivePathRoutine(newWaypointMeters(8.0, 1.7, 0)).startingVelocity(2).endingVelocity(1), new IntakeStowRoutine());
-		var pathAndIntake = new DriveParallelPathRoutine(path, new SequentialRoutine(new IntakeLowerRoutine(), new IntakeBallRoutine(4.0)), nearFirstBall);
-
-		return new SequentialRoutine(setInitialOdometry, pathAndIntake, finishZone);
+				newWaypointMeters(8.2, 1.5, -20));
+		var pathAndIntake = new DriveParallelPathRoutine(path, new SequentialRoutine(new IntakeBallRoutine(5.0), new IntakeStowRoutine()), nearFirstBall);
+		return new SequentialRoutine(setInitialOdometry, lowerIntake, pathAndIntake);
 	}
 }

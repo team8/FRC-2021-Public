@@ -1,16 +1,16 @@
 {
-    "velocityGains": {
-        "f": 0.000176,
-        "p": 0.000185,
-        "i": 0.0000005,
-        "d": 0.00009,
-        "iZone": 150.0,
-        "iMax": 0.0
-    },
-    "maxVelocity": 5000.0,
-    "velocityTolerance": 50.0,
-    "acceptableDriveVelocity": 0.2,
-    "rumbleDurationSeconds": 0.5,
-    "hoodSwitchDistanceThreshold": 10.0,
-    "noTargetSpinUpVelocity": 1900
+  "velocityGains": {
+    "f": 0.000176,
+    "p": 0.000185,
+    "i": 0.0000005,
+    "d": 0.00009,
+    "iZone": 150.0,
+    "iMax": 0.0
+  },
+  "maxVelocity": 5000.0,
+  "velocityTolerance": 50.0,
+  "acceptableDriveVelocity": 0.2,
+  "rumbleDurationSeconds": 0.5,
+  "hoodSwitchDistanceThreshold": 10.0,
+  "noTargetSpinUpVelocity": 1900
 }

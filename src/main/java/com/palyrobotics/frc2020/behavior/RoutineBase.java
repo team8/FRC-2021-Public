@@ -28,6 +28,8 @@ public abstract class RoutineBase {
 	protected final Intake mIntake = Intake.getInstance();
 	protected final Shooter mShooter = Shooter.getInstance();
 	protected final Spinner mSpinner = Spinner.getInstance();
+	//in case you want something flashy
+	protected final Lighting mLighting = Lighting.getInstance();
 	private State mState = State.INIT;
 
 	/**

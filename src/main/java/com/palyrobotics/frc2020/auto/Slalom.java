@@ -11,19 +11,17 @@ public class Slalom implements AutoBase {
 
 	@Override
 	public RoutineBase getRoutine() {
-//		var setInitialOdometry = new DriveSetOdometryRoutine(0.9, 0.6, 0);
 		var setInitialOdometry = new DriveSetOdometryRoutine(0.9, 0.6, 15);
 		var path = new DrivePathRoutine(
 				/** -=-=First Curve=-=- **/
-				newWaypointMeters(3.65, 2.2, 0),
-				newWaypointMeters(5.85, 2.1, -5),
+				newWaypointMeters(3.35, 2.15, 5),
+				newWaypointMeters(5.72, 2.15, 0),
 
 				/** -=-=-=-Loop-=-=-=- **/
 				// "longer" turn
-				newWaypointMeters(7.62, 0.85, -10),
-				newWaypointMeters(7.7, 2.05, 180),
-				newWaypointMeters(6.9, 1.59, -100),
-
+				newWaypointMeters(7.69, 0.93, 0),
+				newWaypointMeters(7.92, 2.15, 180),
+				newWaypointMeters(6.93, 1.59, -110),
 				// tighter turn, works on sim but is super tight
 				// in lab, turn goes wide, looks slower than the longer turn
 //				newWaypointMeters(7.12, 1.18, -55),
@@ -31,9 +29,9 @@ public class Slalom implements AutoBase {
 //				newWaypointMeters(7, 1.8, -110),
 
 				/** -=-Second Curve-=- **/
-				newWaypointMeters(6, 0.77, -170),
-				newWaypointMeters(3.6, 0.7, 180),
-				newWaypointMeters(1.5, 2.2, 155));
+				newWaypointMeters(5.8, 0.83, -179),
+				newWaypointMeters(3.5, 0.83, 175),
+				newWaypointMeters(1.4, 2.0, 165));
 
 		return new SequentialRoutine(setInitialOdometry, path);
 	}

@@ -7,6 +7,7 @@ import com.palyrobotics.frc2020.behavior.SequentialRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DrivePathRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DriveSetOdometryRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DriveYawRoutine;
+import com.palyrobotics.frc2020.behavior.routines.superstructure.IntakeBallRoutine;
 
 public class Tuning implements AutoBase {
 
@@ -15,10 +16,10 @@ public class Tuning implements AutoBase {
 		var initial = new DriveSetOdometryRoutine(0, 0, 0);
 		var test = new DrivePathRoutine(
 //				newWaypointMeters(1, 1, 90),
-				newWaypointMeters(2, 2, 0));
+				newWaypointMeters(0, 2, -180));
 //				newWaypointMeters(2.5, 0, 0));
-
-		var test2 = new DriveYawRoutine(90);
-		return new SequentialRoutine(initial, test);
+		var test2 = new DriveYawRoutine(180);
+		var testIntake = new IntakeBallRoutine(5);
+		return new SequentialRoutine(initial, test2);
 	}
 }

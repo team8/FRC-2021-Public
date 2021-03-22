@@ -56,11 +56,12 @@ public class Robot extends TimedRobot {
 	private final Climber mClimber = Climber.getInstance();
 	private final Drive mDrive = Drive.getInstance();
 	private final Intake mIntake = Intake.getInstance();
+	private final Lighting mLighting = Lighting.getInstance();
 	private final Indexer mIndexer = Indexer.getInstance();
 	private final Shooter mShooter = Shooter.getInstance();
 	private final Spinner mSpinner = Spinner.getInstance();
 
-	private Set<SubsystemBase> mSubsystems = Set.of(mClimber, mDrive, mShooter, mIntake, mIndexer, mSpinner),
+	private Set<SubsystemBase> mSubsystems = Set.of(mClimber, mDrive, mShooter, mIntake, mIndexer, mSpinner, mLighting),
 			mEnabledSubsystems;
 
 	private Set<RobotService> mServices = Set.of(new CommandReceiverService(), new NetworkLoggerService(),
@@ -81,6 +82,7 @@ public class Robot extends TimedRobot {
 		LiveWindow.disableAllTelemetry();
 
 		String setupSummary = setupSubsystemsAndServices();
+		System.out.println(setupSummary);
 
 		if (kCanUseHardware) mHardwareWriter.configureHardware(mEnabledSubsystems);
 
@@ -97,8 +99,8 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void simulationInit() {
-//		Log.info(kLoggerTag, "Writing path CSV file...");
-//		pathToCsv();
+		Log.info(kLoggerTag, "Writing path CSV file...");
+		//pathToCsv();
 	}
 
 	private void pathToCsv() {
@@ -183,6 +185,10 @@ public class Robot extends TimedRobot {
 
 		CSVWriter.write();
 
+		if (kCanUseHardware && mEnabledSubsystems.contains(mLighting)) {
+			mLighting.update(mCommands, mRobotState);
+			mHardwareWriter.updateLighting();
+		}
 	}
 
 	@Override
@@ -224,7 +230,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void simulationPeriodic() {
-
 	}
 
 	@Override

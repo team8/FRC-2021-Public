@@ -13,6 +13,7 @@ import com.esotericsoftware.minlog.Log;
 import com.palyrobotics.frc2020.config.RobotConfig;
 import com.palyrobotics.frc2020.config.constants.DriveConstants;
 import com.palyrobotics.frc2020.config.subsystem.IndexerConfig;
+import com.palyrobotics.frc2020.config.subsystem.LightingConfig;
 import com.palyrobotics.frc2020.robot.RobotState.GamePeriod;
 import com.palyrobotics.frc2020.subsystems.*;
 import com.palyrobotics.frc2020.util.Util;
@@ -36,6 +37,7 @@ public class HardwareWriter {
 	public static final double kVoltageCompensation = 12.0;
 	private final RobotConfig mRobotConfig = Configs.get(RobotConfig.class);
 	private final IndexerConfig mIndexerConfig = Configs.get(IndexerConfig.class);
+	private final Lighting mLighting = Lighting.getInstance();
 	private final Climber mClimber = Climber.getInstance();
 	private final Drive mDrive = Drive.getInstance();
 	private final Intake mIntake = Intake.getInstance();
@@ -48,6 +50,7 @@ public class HardwareWriter {
 		if (enabledSubsystems.contains(mClimber)) configureClimberHardware();
 		if (enabledSubsystems.contains(mDrive)) configureDriveHardware();
 		if (enabledSubsystems.contains(mIntake)) configureIntakeHardware();
+		if (enabledSubsystems.contains(mLighting)) configureLightingHardware();
 		if (enabledSubsystems.contains(mShooter)) configureShooterHardware();
 		if (enabledSubsystems.contains(mIndexer)) configureIndexerHardware();
 		if (enabledSubsystems.contains(mSpinner)) configureSpinnerHardware();
@@ -111,6 +114,13 @@ public class HardwareWriter {
 	private void configureIntakeHardware() {
 		var hardware = HardwareAdapter.IntakeHardware.getInstance();
 		hardware.talon.setInverted(true);
+	}
+
+	private void configureLightingHardware() {
+		var hardware = HardwareAdapter.LightingHardware.getInstance();
+		hardware.ledStrip.setLength(Configs.get(LightingConfig.class).ledCount);
+		hardware.ledStrip.start();
+		hardware.ledStrip.setData(mLighting.getOutput());
 	}
 
 	private void configureIndexerHardware() {
@@ -190,6 +200,7 @@ public class HardwareWriter {
 			if (enabledSubsystems.contains(mIntake)) updateIntake();
 			if (enabledSubsystems.contains(mShooter)) updateShooter();
 			if (enabledSubsystems.contains(mIndexer)) updateIndexer();
+			if (enabledSubsystems.contains(mLighting)) updateLighting();
 			if (enabledSubsystems.contains(mSpinner)) updateSpinner();
 			Robot.sLoopDebugger.addPoint("writeDrive");
 		}
@@ -210,6 +221,11 @@ public class HardwareWriter {
 		hardware.leftMasterFalcon.setOutput(mDrive.getDriveSignal().leftOutput);
 		hardware.rightMasterFalcon.setOutput(mDrive.getDriveSignal().rightOutput);
 		handleReset(hardware.gyro);
+	}
+
+	public void updateLighting() {
+		var hardware = HardwareAdapter.LightingHardware.getInstance();
+		hardware.ledStrip.setData(mLighting.getOutput());
 	}
 
 	private void updateIntake() {
