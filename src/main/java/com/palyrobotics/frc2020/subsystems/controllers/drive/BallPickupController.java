@@ -32,7 +32,7 @@ public class BallPickupController extends ChezyDriveController {
 			double currentAngle = state.balls.get(0).getCenter().getX();
 			double gyroYawAngularVelocity = state.driveYawAngularVelocityDegrees; //This will probably work due to the way PID works, but may change
 			double currentPosition = state.balls.get(0).getRadius();
-			double velocityMetersPerSecond = state.driveVelocityMetersPerSecond;
+			double velocityMetersPerSecond = state.driveVelocityMetersPerSecond; //This will probably work due to the way PID works, but may change
 			if (mLimelight.isTargetFound()) {
 				mTargetFoundCount++;
 			} else {
@@ -74,9 +74,7 @@ public class BallPickupController extends ChezyDriveController {
 
 	private void setOutput(double distanceOut, double angleOut) {
 		//Check if these are the correct min and max values
-		double rightOutput = clamp(distanceOut + angleOut, -1, 1);
-		double leftOutput = clamp(distanceOut - angleOut, -1, 1);
-		mOutputs.leftOutput.setPercentOutput(leftOutput);
-		mOutputs.rightOutput.setPercentOutput(rightOutput);
+		mOutputs.leftOutput.setPercentOutput(clamp(distanceOut - angleOut, -1, 1));
+		mOutputs.rightOutput.setPercentOutput(clamp(distanceOut + angleOut, -1, 1));
 	}
 }
