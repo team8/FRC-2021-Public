@@ -39,7 +39,7 @@ public class BallAutoAlignController extends Drive.DriveController {
 			pidf.setPID(mConfig.velocityGains.p, mConfig.velocityGains.i, mConfig.velocityGains.d);
 			pidf.setSetpoint(targetGyroYaw);
 
-			double percentOutput = pidf.calculate(state.driveYawDegrees - -state.driveYawAngularVelocityDegrees);
+			double percentOutput = pidf.calculate(state.driveYawDegrees - state.driveYawAngularVelocityDegrees);
 			double staticAdjustedPO = percentOutput + Math.signum(percentOutput) * mConfig.turnGainsS;
 			mOutputs.leftOutput.setPercentOutput(-staticAdjustedPO);
 			mOutputs.rightOutput.setPercentOutput(staticAdjustedPO);

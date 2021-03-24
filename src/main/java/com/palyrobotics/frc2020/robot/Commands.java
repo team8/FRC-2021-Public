@@ -84,6 +84,11 @@ public class Commands {
 		driveWantedTrajectory = trajectory;
 	}
 
+	public void setDriveBallAlign() {
+		driveWantedState = Drive.State.BALL_ALIGN;
+		visionWanted = true;
+	}
+
 	public void setDriveVisionAlign(int visionPipeline) {
 		driveWantedState = Drive.State.VISION_ALIGN;
 		visionWantedPipeline = visionPipeline;

@@ -4,10 +4,7 @@ import com.palyrobotics.frc2020.config.subsystem.DriveConfig;
 import com.palyrobotics.frc2020.robot.Commands;
 import com.palyrobotics.frc2020.robot.ReadOnly;
 import com.palyrobotics.frc2020.robot.RobotState;
-import com.palyrobotics.frc2020.subsystems.controllers.drive.AlignDriveController;
-import com.palyrobotics.frc2020.subsystems.controllers.drive.ChezyDriveController;
-import com.palyrobotics.frc2020.subsystems.controllers.drive.RamseteDriveController;
-import com.palyrobotics.frc2020.subsystems.controllers.drive.YawDriveController;
+import com.palyrobotics.frc2020.subsystems.controllers.drive.*;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.DriveOutputs;
 
@@ -17,7 +14,7 @@ import com.palyrobotics.frc2020.util.control.DriveOutputs;
 public class Drive extends SubsystemBase {
 
 	public enum State {
-		NEUTRAL, TELEOP, OUTPUTS, FOLLOW_PATH, VISION_ALIGN, TURN
+		NEUTRAL, TELEOP, OUTPUTS, FOLLOW_PATH, VISION_ALIGN, TURN, BALL_ALIGN
 	}
 
 	public abstract static class DriveController {
@@ -83,6 +80,9 @@ public class Drive extends SubsystemBase {
 					break;
 				case VISION_ALIGN:
 					mController = new AlignDriveController();
+					break;
+				case BALL_ALIGN:
+					mController = new BallAutoAlignController();
 			}
 		}
 		if (mController == null) {
