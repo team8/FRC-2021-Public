@@ -90,6 +90,10 @@ public class Commands {
 		visionWanted = true;
 	}
 
+	public void setDriveBallPickup() {
+		driveWantedState = Drive.State.BALL_PICKUP;
+	}
+
 	/* Shooter */
 	public void setShooterIdle() {
 		shooterWantedState = Shooter.ShooterState.IDLE;

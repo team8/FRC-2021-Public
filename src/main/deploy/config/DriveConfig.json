@@ -25,5 +25,15 @@
 	"pathVelocityMetersPerSecond": 3.5,
 	"pathAccelerationMetersPerSecondSquared": 3.5,
 	"pathCentripetalAcceleration": 3.8,
-	"allowableYawErrorDegrees": 2.0
+	"allowableYawErrorDegrees": 2.0,
+	"ballPickupTurnGains" : {
+		"p": 0.0084,
+		"i": 0.0,
+		"d": 0.000675
+	},
+	"ballPickupVelocityGains" : {
+		"p": 0.0084,
+		"i": 0.0,
+		"d": 0.000675
+	}
 }
