@@ -19,8 +19,8 @@ public class Bounce implements AutoBase {
 				newWaypointMeters(4.35, 1.45, -110),
 				newWaypointMeters(4.48, 3.57, -90)).driveInReverse();
 		var thirdBall = new DrivePathRoutine(
-				newWaypointMeters(5.55, 1.07, 0),
-				newWaypointMeters(6.85, 3.65, 90));
+				newWaypointMeters(5.55, 1.04, 0),
+				newWaypointMeters(6.75, 3.65, 90));
 		var finishZone = new DrivePathRoutine(
 				newWaypointMeters(8.05, 2.5, 160)).driveInReverse();
 
