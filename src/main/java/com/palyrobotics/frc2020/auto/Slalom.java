@@ -19,8 +19,8 @@ public class Slalom implements AutoBase {
 
 				/** -=-=-=-Loop-=-=-=- **/
 				// "longer" turn
-				newWaypointMeters(7.69, 0.93, 0),
-				newWaypointMeters(7.92, 2.15, 180),
+				newWaypointMeters(7.72, 0.86, 0),
+				newWaypointMeters(7.98, 2.15, 180),
 				newWaypointMeters(6.93, 1.59, -110),
 				// tighter turn, works on sim but is super tight
 				// in lab, turn goes wide, looks slower than the longer turn
@@ -29,8 +29,8 @@ public class Slalom implements AutoBase {
 //				newWaypointMeters(7, 1.8, -110),
 
 				/** -=-Second Curve-=- **/
-				newWaypointMeters(5.8, 0.83, -175),
-				newWaypointMeters(3.5, 0.83, 175),
+				newWaypointMeters(5.8, 0.78, -175),
+				newWaypointMeters(3.5, 0.78, 175),
 				newWaypointMeters(1.4, 2.0, 165));
 
 		return new SequentialRoutine(setInitialOdometry, path);

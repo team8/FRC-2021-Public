@@ -20,9 +20,10 @@ public class AutoSelector {
 	// ============================================================= //
 	// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= //
 
-	//galactic search bblue
+//galactic search b
 	private static AutoBase sChosenAuto = RobotState.balls.get(0).radius > 8 ? new GalacticSearchBRed() : new GalacticSearchBBlue();
-//	private static AutoBase sChosenAuto = RobotState.balls.get(0).radius > 8 ? new GalacticSearchBRed() : new GalacticSearchBBlue();
+//galactic search a
+//	private static AutoBase sChosenAuto = RobotState.balls.get(0).radius > 8 ? new GalacticSearchARed() : new GalacticSearchABlue();
 
 	// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= //
 	// ============================================================= //
