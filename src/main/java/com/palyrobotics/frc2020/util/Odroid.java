@@ -75,7 +75,7 @@ public class Odroid {
 			while (true) {
 				try {
 					System.out.println("Attempting to connect");
-					client.connect(5000, "127.0.0.1", port, port); // TODO: no more magic numbers, also which one is the ip? prob look at old code to find out or smth
+					client.connect(5000, "10.0.8.88", port, port); // TODO: no more magic numbers, also which one is the ip? prob look at old code to find out or smth
 					System.out.println("Connected");
 					return;
 				} catch (Throwable t) {

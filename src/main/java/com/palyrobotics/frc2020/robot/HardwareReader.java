@@ -171,9 +171,10 @@ public class HardwareReader {
 		var odroidHardware = HardwareAdapter.MiscellaneousHardware.getInstance();
 
 		state.balls = odroidHardware.odroid.getBalls();
-		Log.info("Ball Count", String.valueOf(state.balls.size()));
+//		if (Math.random() > 0.9) {
+		System.out.println("Ball Count" + String.valueOf(state.balls.size()));
+//		}
 		for (int i = 0; i < state.balls.size(); i++) {
-			Log.info("ball radius", String.valueOf(i) + " " + state.balls.get(i).toString());
 		}
 	}
 
