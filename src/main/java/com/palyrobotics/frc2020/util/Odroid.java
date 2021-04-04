@@ -60,6 +60,7 @@ public class Odroid {
 					balls.add(new Circle(radii.get(i), centers.get(i)));
 				}
 				System.out.println("Received, number of balls detected is " + balls.size());
+				Log.info(category, "Received, number of balls detected is " + balls.size());
 			}
 		});
 

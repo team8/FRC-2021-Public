@@ -4,8 +4,8 @@ import java.awt.*;
 
 public class Circle {
 
-	float radius;
-	Point center;
+	public float radius;
+	public Point center;
 
 	public Circle(float radius, Point center) {
 		this.radius = radius;

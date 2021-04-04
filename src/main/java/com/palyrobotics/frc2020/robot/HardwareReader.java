@@ -172,9 +172,11 @@ public class HardwareReader {
 
 		state.balls = odroidHardware.odroid.getBalls();
 //		if (Math.random() > 0.9) {
-		System.out.println("Ball Count" + String.valueOf(state.balls.size()));
+		Log.info("Odroid", "Ball Count" + String.valueOf(state.balls.size()));
+		System.out.println("Ball count" + String.valueOf(state.balls.size()));
 //		}
-		for (int i = 0; i < state.balls.size(); i++) {
+		if (state.balls.size() > 0) {
+			System.out.println(state.balls.get(0).toString());
 		}
 	}
 

@@ -60,7 +60,7 @@ public class RobotState {
 	public ColorMatchResult closestColorRGB;
 
 	/* Vision */
-	public ArrayList<Circle> balls;
+	public static ArrayList<Circle> balls; //very very temporary static - fix
 	public boolean isAligned;
 
 	public GamePeriod gamePeriod = GamePeriod.DISABLED;
