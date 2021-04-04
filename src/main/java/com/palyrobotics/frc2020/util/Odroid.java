@@ -71,23 +71,20 @@ public class Odroid {
 
 	private void connect(int port) {
 		// Attempt to connect until it works
-		new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				while (true) {
-					try {
-						client.connect(5000, "127.0.0.1", port, port); // TODO: no more magic numbers, also which one is the ip? prob look at old code to find out or smth
-						System.out.println("Connected");
-						return;
-					} catch (Throwable t) {
-						Log.error(category, "Failed to connect client", t);
-					}
-					try {
-						Thread.sleep(2000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+		new Thread(() -> {
+			while (true) {
+				try {
+					System.out.println("Attempting to connect");
+					client.connect(5000, "127.0.0.1", port, port); // TODO: no more magic numbers, also which one is the ip? prob look at old code to find out or smth
+					System.out.println("Connected");
+					return;
+				} catch (Throwable t) {
+					Log.error(category, "Failed to connect client", t);
+				}
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
 			}
 		}).start();
