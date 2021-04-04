@@ -40,7 +40,6 @@ public class Odroid {
 
 			@Override
 			public void received(Connection connection, Object message) {
-				System.out.println("Received");
 				if (!message.getClass().getName().equals(HashMap.class.getName())) {
 					return;
 				}
@@ -60,6 +59,7 @@ public class Odroid {
 				for (int i = 0; i < radii.size() && i < centers.size(); i++) {
 					balls.add(new Circle(radii.get(i), centers.get(i)));
 				}
+				System.out.println("Received, number of balls detected is " + balls.size());
 			}
 		});
 
