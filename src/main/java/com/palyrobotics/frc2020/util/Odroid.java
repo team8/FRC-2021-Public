@@ -1,7 +1,6 @@
 package com.palyrobotics.frc2020.util;
 
 import java.awt.*;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -76,9 +75,10 @@ public class Odroid {
 	private void connect(int port) {
 		// Attempt to connect until it works
 		new Thread(new Runnable() {
+
 			@Override
 			public void run() {
-				while(true) {
+				while (true) {
 					try {
 						client.connect(5000, "127.0.0.1", port, port); // TODO: no more magic numbers, also which one is the ip? prob look at old code to find out or smth
 						System.out.println("Connected");
