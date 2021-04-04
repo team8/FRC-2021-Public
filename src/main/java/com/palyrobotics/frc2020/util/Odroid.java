@@ -15,10 +15,12 @@ public class Odroid {
 	private static final String category = "Odroid";
 
 	private final Client client;
+	private int port;
 
 	private final ArrayList<Circle> balls = new ArrayList<>();
 
 	public Odroid(int port) {
+		this.port = port;
 		client = new Client();
 		client.getKryo().register(HashMap.class);
 		client.getKryo().register(ArrayList.class);
@@ -33,7 +35,9 @@ public class Odroid {
 
 				@Override
 				public void disconnected(Connection connection) {
-					Log.error(category, "Disconnected!");
+
+					Log.error(category, "Disconnected!, attempting to reconnect");
+					connect(Odroid.this.port);
 				}
 
 				@Override
@@ -61,15 +65,45 @@ public class Odroid {
 				}
 			});
 			client.start();
-			client.connect(500, "10.0.8.88", port, port); // TODO: no more magic numbers, also which one is the ip? prob look at old code to find out or smth
+			connect(port);
 
 			Log.info(category, "Started client");
-		} catch (IOException exception) {
+		} catch (Throwable exception) {
 			Log.error(category, "Failed to start client", exception);
 		}
 	}
 
+	private void connect(int port) {
+		// Attempt to connect until it works
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				while(true) {
+					try {
+						client.connect(5000, "127.0.0.1", port, port); // TODO: no more magic numbers, also which one is the ip? prob look at old code to find out or smth
+						System.out.println("Connected");
+						return;
+					} catch (Throwable t) {
+						Log.error(category, "Failed to connect client", t);
+					}
+					try {
+						Thread.sleep(2000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}).start();
+	}
+
 	public ArrayList<Circle> getBalls() {
+//		if (!client.isConnected()) {
+//			try {
+//				client.connect(500, "127.0.0.1", port, port);
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//		}
 		return balls;
 	}
 }
