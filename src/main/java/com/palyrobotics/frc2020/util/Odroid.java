@@ -24,52 +24,49 @@ public class Odroid {
 		client.getKryo().register(HashMap.class);
 		client.getKryo().register(ArrayList.class);
 		client.getKryo().register(java.awt.Point.class);
-		try {
-			client.addListener(new Listener() {
+		client.addListener(new Listener() {
 
-				@Override
-				public void connected(Connection connection) {
-					Log.info(category, "Connected!");
+			@Override
+			public void connected(Connection connection) {
+				Log.info(category, "Connected!");
+			}
+
+			@Override
+			public void disconnected(Connection connection) {
+
+				Log.error(category, "Disconnected!, attempting to reconnect");
+				connect(Odroid.this.port);
+			}
+
+			@Override
+			public void received(Connection connection, Object message) {
+				System.out.println("Received");
+				if (!message.getClass().getName().equals(HashMap.class.getName())) {
+					return;
+				}
+				Object sent;
+				var radii = new ArrayList<Float>();
+				var centers = new ArrayList<Point>();
+				sent = ((HashMap<String, Object>) message).get("radii");
+				if (sent.getClass().equals(ArrayList.class)) {
+					radii = (ArrayList<Float>) sent;
+				}
+				sent = ((HashMap<String, Object>) message).get("centers");
+				if (sent.getClass().equals(ArrayList.class)) {
+					centers = (ArrayList<Point>) sent;
 				}
 
-				@Override
-				public void disconnected(Connection connection) {
-
-					Log.error(category, "Disconnected!, attempting to reconnect");
-					connect(Odroid.this.port);
+				balls.clear();
+				for (int i = 0; i < radii.size() && i < centers.size(); i++) {
+					balls.add(new Circle(radii.get(i), centers.get(i)));
 				}
+			}
+		});
 
-				@Override
-				public void received(Connection connection, Object message) {
-					System.out.println("Received");
-					if (!message.getClass().getName().equals(HashMap.class.getName())) {
-						return;
-					}
-					Object sent;
-					var radii = new ArrayList<Float>();
-					var centers = new ArrayList<Point>();
-					sent = ((HashMap<String, Object>) message).get("radii");
-					if (sent.getClass().equals(ArrayList.class)) {
-						radii = (ArrayList<Float>) sent;
-					}
-					sent = ((HashMap<String, Object>) message).get("centers");
-					if (sent.getClass().equals(ArrayList.class)) {
-						centers = (ArrayList<Point>) sent;
-					}
+		client.start();
+		connect(port);
 
-					balls.clear();
-					for (int i = 0; i < radii.size() && i < centers.size(); i++) {
-						balls.add(new Circle(radii.get(i), centers.get(i)));
-					}
-				}
-			});
-			client.start();
-			connect(port);
-
-			Log.info(category, "Started client");
-		} catch (Throwable exception) {
-			Log.error(category, "Failed to start client", exception);
-		}
+		Log.info(category, "Started client");
 	}
 
 	private void connect(int port) {
@@ -97,13 +94,6 @@ public class Odroid {
 	}
 
 	public ArrayList<Circle> getBalls() {
-//		if (!client.isConnected()) {
-//			try {
-//				client.connect(500, "127.0.0.1", port, port);
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//		}
 		return balls;
 	}
 }
