@@ -146,7 +146,7 @@ public class Shooter extends SubsystemBase {
 		if (targetHoodState != null) {
 			applyHoodState(state, targetHoodState);
 		}
-		System.out.println(targetHoodState);
+//		System.out.println(targetHoodState);
 		return targetHoodState;
 	}
 

@@ -16,6 +16,7 @@ import com.palyrobotics.frc2020.behavior.routines.drive.DriveYawRoutine;
 import com.palyrobotics.frc2020.config.RobotConfig;
 import com.palyrobotics.frc2020.config.constants.DriveConstants;
 import com.palyrobotics.frc2020.subsystems.*;
+import com.palyrobotics.frc2020.util.Circle;
 import com.palyrobotics.frc2020.util.LoopOverrunDebugger;
 import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.commands.CommandReceiverService;
@@ -195,23 +196,46 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		startStage(RobotState.GamePeriod.AUTO);
 		AutoBase auto = AutoSelector.getAuto();
-		mHardwareReader.readState(mEnabledSubsystems, mRobotState);
-		// TODO: move to another class
-		// For Galactic Search Autos, very sketchy and def needs tons of work (odroid code needs tweaking)
-		// TODO: readjust center positions
-		if (RobotState.balls.get(0).center.getY() <= 287 && RobotState.balls.get(0).center.getY() >= 283) {
-			if (RobotState.balls.get(0).radius <= 9 && RobotState.balls.get(0).radius >= 8.2) {
-				auto = new GalacticSearchBRed();
-			} else {
-				auto = new GalacticSearchBBlue();
-			}
-		} else if (RobotState.balls.get(0).center.getY() <= 283 && RobotState.balls.get(0).center.getY() >= 278) {
-			auto = new GalacticSearchABlue();
-		} else if (RobotState.balls.get(0).center.getY() <= 303 && RobotState.balls.get(0).center.getY() >= 296) {
-			auto = new GalacticSearchARed();
+
+		mHardwareReader.readOdroidState(mRobotState);
+		if (RobotState.balls.size() != 3) {
+			mHardwareReader.readOdroidState(mRobotState);
 		}
-		Log.info(kLoggerTag, String.format("Running auto %s", auto.getName()));
-		mCommands.addWantedRoutine(auto.getRoutine());
+		if (RobotState.balls.size() != 3) {
+			System.out.println("Rerun");
+			Log.debug(kLoggerTag, "Rerun");
+		} else {
+			System.out.println("3 Powercells Found!");
+			Log.debug(kLoggerTag, "3 powercells found");
+			ArrayList<Circle> ballscopy = (ArrayList<Circle>) RobotState.balls.clone();
+			for (Circle powercell : ballscopy) {
+				System.out.println(powercell);
+				Log.debug(kLoggerTag, powercell.toString());
+			}
+
+			if (RobotState.balls.get(0).center.getX() < 0 && RobotState.balls.get(1).center.getX() < 0 && Math.abs(RobotState.balls.get(0).center.getX() - RobotState.balls.get(1).center.getX()) < 5) {
+				auto = new GalacticSearchARed();
+			} else {
+				auto = new GalacticSearchABlue(); //TODO: issue where starting position, camera cannot see all powercells
+			}
+//			// For Galactic Search Autos, very sketchy and def needs tons of work (odroid code needs tweaking)
+//			// TODO: readjust center positions
+//			if (RobotState.balls.get(0).center.getY() <= 287 && RobotState.balls.get(0).center.getY() >= 283) {
+//				if (RobotState.balls.get(0).radius <= 9 && RobotState.balls.get(0).radius >= 8.2) {
+//					auto = new GalacticSearchBRed();
+//				} else {
+//					auto = new GalacticSearchBBlue();
+//				}
+//			} else if (RobotState.balls.get(0).center.getY() <= 283 && RobotState.balls.get(0).center.getY() >= 278) {
+//				auto = new GalacticSearchABlue();
+//			} else if (RobotState.balls.get(0).center.getY() <= 303 && RobotState.balls.get(0).center.getY() >= 296) {
+//				auto = new GalacticSearchARed();
+//			}
+			System.out.println("Running " + auto.getName());
+			Log.debug(kLoggerTag, "Running " + auto.getName());
+
+			mCommands.addWantedRoutine(auto.getRoutine());
+		}
 	}
 
 	private void startStage(RobotState.GamePeriod period) {

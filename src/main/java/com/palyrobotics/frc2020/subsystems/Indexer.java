@@ -76,7 +76,7 @@ public class Indexer extends SubsystemBase {
 			mMasterIndexerColumnOutput = mRunningController.mMasterSparkOutput;
 			mSlaveIndexerColumnOutput = mRunningController.mSlaveSparkOutput;
 		} else {
-			System.out.println("Indexer @ Idle");
+//			System.out.println("Indexer @ Idle");
 			mMasterIndexerColumnOutput.setIdle();
 			mSlaveIndexerColumnOutput.setIdle();
 		}

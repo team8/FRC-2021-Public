@@ -4,7 +4,6 @@ import java.util.Set;
 
 import com.ctre.phoenix.motorcontrol.StickyFaults;
 import com.ctre.phoenix.sensors.PigeonIMU.PigeonState;
-import com.esotericsoftware.minlog.Log;
 import com.palyrobotics.frc2020.config.RobotConfig;
 import com.palyrobotics.frc2020.config.VisionConfig;
 import com.palyrobotics.frc2020.config.constants.SpinnerConstants;
@@ -73,7 +72,7 @@ public class HardwareReader {
 	}
 
 	private void readDriveState(RobotState state) {
-		Log.info("Limelight Target Distance", String.valueOf(mLimelight.getEstimatedDistanceInches()));
+//		Log.info("Limelight Target Distance", String.valueOf(mLimelight.getEstimatedDistanceInches()));
 		var hardware = DriveHardware.getInstance();
 		/* Gyro */
 		state.driveIsGyroReady = hardware.gyro.getState() == PigeonState.Ready;
@@ -167,17 +166,18 @@ public class HardwareReader {
 //		System.out.println(Spinner.getInstance().directionToGoalColor(state.closestColorString, state.gameData));
 	}
 
-	private void readOdroidState(RobotState state) {
+	//Temporarily public
+	public void readOdroidState(RobotState state) {
 		var odroidHardware = HardwareAdapter.MiscellaneousHardware.getInstance();
 
 		state.balls = odroidHardware.odroid.getBalls();
 //		if (Math.random() > 0.9) {
-		Log.info("Odroid", "Ball Count" + String.valueOf(state.balls.size()));
-		System.out.println("Ball count" + String.valueOf(state.balls.size()));
+//		Log.info("Odroid", "Ball Count" + String.valueOf(state.balls.size()));
+//		System.out.println("Ball count" + String.valueOf(state.balls.size()));
 //		}
-		if (state.balls.size() > 0) {
-			System.out.println(state.balls.get(0).toString());
-		}
+//		if (state.balls.size() > 0) {
+//			System.out.println(state.balls.get(0).toString());
+//		}
 	}
 
 	private void checkTalonFaults(Talon talon) {
@@ -185,7 +185,7 @@ public class HardwareReader {
 			var faults = new StickyFaults();
 			talon.getStickyFaults(faults);
 			if (faults.hasAnyFault()) {
-				Log.error(kLoggerTag, String.format("%s faults: %s", talon.getName(), faults));
+//				Log.error(kLoggerTag, String.format("%s faults: %s", talon.getName(), faults));
 				talon.clearStickyFaults();
 			}
 		}
@@ -197,7 +197,7 @@ public class HardwareReader {
 			for (var value : FaultID.values()) {
 				boolean isFaulted = spark.getStickyFault(value);
 				if (isFaulted) {
-					Log.error(kLoggerTag, String.format("Spark %d fault: %s", spark.getDeviceId(), value));
+//					Log.error(kLoggerTag, String.format("Spark %d fault: %s", spark.getDeviceId(), value));
 					wasAnyFault = true;
 				}
 			}
@@ -212,7 +212,7 @@ public class HardwareReader {
 			var faults = new StickyFaults();
 			falcon.getStickyFaults(faults);
 			if (faults.hasAnyFault()) {
-				Log.error(kLoggerTag, String.format("%s faults: %s", falcon.getName(), faults));
+//				Log.error(kLoggerTag, String.format("%s faults: %s", falcon.getName(), faults));
 				falcon.clearStickyFaults();
 			}
 		}
