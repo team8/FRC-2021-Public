@@ -212,7 +212,7 @@ public class Robot extends TimedRobot {
 				System.out.println(powercell);
 				Log.debug(kLoggerTag, powercell.toString());
 			}
-
+			// For a red, it looks like the first 2 powercells are directly in line
 			if (RobotState.balls.get(0).center.getX() < 0 && RobotState.balls.get(1).center.getX() < 0 && Math.abs(RobotState.balls.get(0).center.getX() - RobotState.balls.get(1).center.getX()) < 5) {
 				auto = new GalacticSearchARed();
 			} else {
