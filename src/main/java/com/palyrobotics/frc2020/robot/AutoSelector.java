@@ -9,11 +9,9 @@ import java.util.stream.Stream;
 
 import com.esotericsoftware.minlog.Log;
 import com.palyrobotics.frc2020.auto.*;
-import com.palyrobotics.frc2020.util.Circle;
 import com.palyrobotics.frc2020.util.Util;
 
 import org.reflections.Reflections;
-import com.palyrobotics.frc2020.robot.RobotState;
 
 public class AutoSelector {
 
@@ -21,7 +19,8 @@ public class AutoSelector {
 	// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= //
 
 //galactic search b
-	private static AutoBase sChosenAuto = RobotState.balls.get(0).radius > 8 ? new GalacticSearchBRed() : new GalacticSearchBBlue();
+
+	private static AutoBase sChosenAuto = new GalacticSearchABlue();//RobotState.balls.get(0).center.getY() == 282 ? new GalacticSearchBRed() : new GalacticSearchBBlue();
 //galactic search a
 //	private static AutoBase sChosenAuto = RobotState.balls.get(0).radius > 8 ? new GalacticSearchARed() : new GalacticSearchABlue();
 

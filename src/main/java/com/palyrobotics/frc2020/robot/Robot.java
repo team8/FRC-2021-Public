@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.esotericsoftware.minlog.Log;
-import com.palyrobotics.frc2020.auto.AutoBase;
+import com.palyrobotics.frc2020.auto.*;
 import com.palyrobotics.frc2020.behavior.*;
 import com.palyrobotics.frc2020.behavior.routines.TimedRoutine;
 import com.palyrobotics.frc2020.behavior.routines.drive.DrivePathRoutine;
@@ -195,6 +195,21 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		startStage(RobotState.GamePeriod.AUTO);
 		AutoBase auto = AutoSelector.getAuto();
+		mHardwareReader.readState(mEnabledSubsystems, mRobotState);
+		// TODO: move to another class
+		// For Galactic Search Autos, very sketchy and def needs tons of work (odroid code needs tweaking)
+		// TODO: readjust center positions
+		if (RobotState.balls.get(0).center.getY() <= 287 && RobotState.balls.get(0).center.getY() >= 283) {
+			if (RobotState.balls.get(0).radius <= 9 && RobotState.balls.get(0).radius >= 8.2) {
+				auto = new GalacticSearchBRed();
+			} else {
+				auto = new GalacticSearchBBlue();
+			}
+		} else if (RobotState.balls.get(0).center.getY() <= 283 && RobotState.balls.get(0).center.getY() >= 278) {
+			auto = new GalacticSearchABlue();
+		} else if (RobotState.balls.get(0).center.getY() <= 303 && RobotState.balls.get(0).center.getY() >= 296) {
+			auto = new GalacticSearchARed();
+		}
 		Log.info(kLoggerTag, String.format("Running auto %s", auto.getName()));
 		mCommands.addWantedRoutine(auto.getRoutine());
 	}

@@ -61,6 +61,11 @@ public class Odroid {
 				}
 				System.out.println("Received, number of balls detected is " + balls.size());
 				Log.info(category, "Received, number of balls detected is " + balls.size());
+				if (balls.size() != 0) {
+					System.out.println("Ball 1 center: " + balls.get(0).center);
+					System.out.println("ball 1 center y: " + balls.get(0).center.getY());
+					System.out.println("ball radius: " + balls.get(0).radius);
+				}
 			}
 		});
 
