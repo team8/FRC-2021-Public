@@ -24,9 +24,9 @@ public class GalacticSearchBBlue implements AutoBase {
 		var setInitialOdometry = new DriveSetOdometryRoutine(1.2, 0.4, 0);
 		var lowerIntake = new IntakeLowerRoutine();
 		var path = new DrivePathRoutine(
-				newWaypointMeters(4.5, 1.5, 65),
-				newWaypointMeters(6.09, 3.07, 0),
-				newWaypointMeters(8.2, 1.5, -20));
+				newWaypointMeters(4.3, 1.5, 50),
+				newWaypointMeters(5.85, 2.8, 0),
+				newWaypointMeters(8.3, 1.5, -20));
 		var pathAndIntake = new DriveParallelPathRoutine(path, new SequentialRoutine(new IntakeBallRoutine(5.0), new IntakeStowRoutine()), nearFirstBall);
 		return new SequentialRoutine(setInitialOdometry, lowerIntake, pathAndIntake);
 	}

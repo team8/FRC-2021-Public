@@ -198,26 +198,36 @@ public class Robot extends TimedRobot {
 		AutoBase auto = AutoSelector.getAuto();
 
 		mHardwareReader.readOdroidState(mRobotState);
-		if (RobotState.balls.size() != 3) {
-			mHardwareReader.readOdroidState(mRobotState);
+//		if (RobotState.balls.size() != 3) {
+//			mHardwareReader.readOdroidState(mRobotState);
+//		}
+//		if (RobotState.balls.size() != 3) {
+//			System.out.println("Rerun");
+//			Log.debug(kLoggerTag, "Rerun");
+//		} else {
+//		System.out.println("3 Powercells Found!");
+//		Log.debug(kLoggerTag, "3 powercells found");
+		ArrayList<Circle> ballscopy = (ArrayList<Circle>) RobotState.balls.clone();
+
+		if (ballscopy.size() == 1 && ballscopy.get(0).center.getX() <= -40 && ballscopy.get(0).center.getX() >= -50 && ballscopy.get(0).center.getY() <= -10 && ballscopy.get(0).center.getY() <= -20 && Math.abs(ballscopy.get(0).radius - 20) < 0.5) {
+			auto = new GalacticSearchARed();
+		} else if ((ballscopy.get(0).center.getX() <= -75 && ballscopy.get(0).center.getY() <= -35 && ballscopy.get(0).center.getY() >= -20) || ballscopy.get(0).radius < 10/*(ballscopy.get(0).center.getX() <= -55 && ballscopy.get(0).center.getX() >= -70 && ballscopy.get(0).center.getY() <= -70 && ballscopy.get(0).center.getY() >= -85)*/) {
+			auto = new GalacticSearchBBlue();
+		} else if (ballscopy.get(0).center.getX() <= -50 && ballscopy.get(0).center.getX() >= -60 && ballscopy.get(0).center.getY() <= -20 && ballscopy.get(0).center.getY() >= -30) {
+			auto = new GalacticSearchABlue();
+		} else if (ballscopy.get(0).center.getX() <= 5 && ballscopy.get(0).center.getX() >= -5 && ballscopy.get(0).center.getY() <= -25 && ballscopy.get(0).center.getY() >= -35) {
+			auto = new GalacticSearchBRed();
 		}
-		if (RobotState.balls.size() != 3) {
-			System.out.println("Rerun");
-			Log.debug(kLoggerTag, "Rerun");
-		} else {
-			System.out.println("3 Powercells Found!");
-			Log.debug(kLoggerTag, "3 powercells found");
-			ArrayList<Circle> ballscopy = (ArrayList<Circle>) RobotState.balls.clone();
-			for (Circle powercell : ballscopy) {
-				System.out.println(powercell);
-				Log.debug(kLoggerTag, powercell.toString());
-			}
-			// For a red, it looks like the first 2 powercells are directly in line
-			if (RobotState.balls.get(0).center.getX() < 0 && RobotState.balls.get(1).center.getX() < 0 && Math.abs(RobotState.balls.get(0).center.getX() - RobotState.balls.get(1).center.getX()) < 5) {
-				auto = new GalacticSearchARed();
-			} else {
-				auto = new GalacticSearchABlue(); //TODO: issue where starting position, camera cannot see all powercells
-			}
+//			for (Circle powercell : ballscopy) {
+//				System.out.println(powercell);
+//				Log.debug(kLoggerTag, powercell.toString());
+//			}
+		// For a red, it looks like the first 2 powercells are directly in line
+//			if (RobotState.balls.get(0).center.getX() < 0 && RobotState.balls.get(1).center.getX() < 0 && Math.abs(RobotState.balls.get(0).center.getX() - RobotState.balls.get(1).center.getX()) < 5) {
+//				auto = new GalacticSearchARed();
+//			} else {
+//				auto = new GalacticSearchABlue(); //TODO: issue where starting position, camera cannot see all powercells
+//			}
 //			// For Galactic Search Autos, very sketchy and def needs tons of work (odroid code needs tweaking)
 //			// TODO: readjust center positions
 //			if (RobotState.balls.get(0).center.getY() <= 287 && RobotState.balls.get(0).center.getY() >= 283) {
@@ -231,11 +241,11 @@ public class Robot extends TimedRobot {
 //			} else if (RobotState.balls.get(0).center.getY() <= 303 && RobotState.balls.get(0).center.getY() >= 296) {
 //				auto = new GalacticSearchARed();
 //			}
-			System.out.println("Running " + auto.getName());
-			Log.debug(kLoggerTag, "Running " + auto.getName());
+		System.out.println("Running " + auto.getName());
+		Log.debug(kLoggerTag, "Running " + auto.getName());
 
-			mCommands.addWantedRoutine(auto.getRoutine());
-		}
+		mCommands.addWantedRoutine(auto.getRoutine());
+//		}
 	}
 
 	private void startStage(RobotState.GamePeriod period) {

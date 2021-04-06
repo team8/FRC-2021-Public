@@ -18,11 +18,7 @@ public class AutoSelector {
 	// ============================================================= //
 	// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= //
 
-//galactic search b
-
-	private static AutoBase sChosenAuto = new GalacticSearchABlue();//RobotState.balls.get(0).center.getY() == 282 ? new GalacticSearchBRed() : new GalacticSearchBBlue();
-//galactic search a
-//	private static AutoBase sChosenAuto = RobotState.balls.get(0).radius > 8 ? new GalacticSearchARed() : new GalacticSearchABlue();
+	private static AutoBase sChosenAuto = new GalacticSearchARed();
 
 	// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= //
 	// ============================================================= //
