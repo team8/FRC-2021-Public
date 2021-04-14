@@ -24,7 +24,7 @@ public class DriveBallPickupRoutine extends DriveYawRoutine {
 
 	@Override
 	protected void stop(Commands commands, @ReadOnly RobotState state) {
-		commands.visionWanted = false;
+		commands.visionWanted = false; //TODO: Find an odroid equivalent to this
 	}
 
 	@Override

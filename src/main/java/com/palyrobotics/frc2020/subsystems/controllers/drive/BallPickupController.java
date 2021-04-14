@@ -14,14 +14,10 @@ import com.palyrobotics.frc2020.vision.Limelight;
 public class BallPickupController extends ChezyDriveController {
 
 	private static final String kLoggerTag = Util.classToJsonName(BallPickupController.class);
-	public static final int kFilterSize = 3;
 	private final Limelight mLimelight = Limelight.getInstance();
 	private final SynchronousPIDF mDistancePidController = new SynchronousPIDF();
 	private final SynchronousPIDF mAnglePidController = new SynchronousPIDF();
 	private DriveConfig mDriveConfig = Configs.get(DriveConfig.class);
-	private int mTargetFoundCount;
-	private double mTargetGyroYaw = 0;
-	private double mTargetDistance = 0;
 
 	public BallPickupController() {
 	}
@@ -30,34 +26,32 @@ public class BallPickupController extends ChezyDriveController {
 	public void updateSignal(@ReadOnly Commands commands, @ReadOnly RobotState state) {
 		if (state.driveIsGyroReady) {
 			double currentAngle = state.balls.get(0).getCenter().getX();
-			double gyroYawAngularVelocity = state.driveYawAngularVelocityDegrees; //This will probably work due to the way PID works, but may change
+			double gyroYawAngularVelocity = state.driveYawAngularVelocityDegrees; //This will likely work due to the way PID works, but may change
 			double currentPosition = state.balls.get(0).getRadius();
-			double velocityMetersPerSecond = state.driveVelocityMetersPerSecond; //This will probably work due to the way PID works, but may change
-			if (state.balls.size() >= kFilterSize) {
-				setOutput(calculateDistance(mTargetDistance, currentPosition, velocityMetersPerSecond), calculateAngle(mTargetGyroYaw, currentAngle, -gyroYawAngularVelocity));
+			double velocityMetersPerSecond = state.driveVelocityMetersPerSecond; //This will likely work due to the way PID works, but may change
+			if (state.balls.size() >= 1) {
+				setOutput(calculateDistance(currentPosition, velocityMetersPerSecond), calculateAngle(currentAngle, -gyroYawAngularVelocity));
 				return;
 			}
 		} else {
 			if (mLimelight.isTargetFound()) {
-				double currentPosition = state.balls.get(0).getRadius();
-				setOutput(calculateDistance(0, currentPosition, null), calculateAngle(0.0, mLimelight.getYawToTarget(), null));
+				setOutput(calculateDistance(state.balls.get(0).getRadius(), null), calculateAngle(state.balls.get(0).getCenter().getX(), null));
 			}
-			mTargetFoundCount = 0;
 		}
 		super.updateSignal(commands, state);
 	}
 
-	private double calculateAngle(double targetDegrees, double degrees, Double degreesDerivative) {
+	private double calculateAngle(double degrees, Double degreesDerivative) {
 		var preciseGains = mDriveConfig.ballPickupTurnGains;
 		mAnglePidController.setPID(preciseGains.p, preciseGains.i, preciseGains.d);
-		mAnglePidController.setSetpoint(targetDegrees);
+		mAnglePidController.setSetpoint(0);
 		return degreesDerivative == null ? mAnglePidController.calculate(degrees) : mAnglePidController.calculate(degrees, degreesDerivative);
 	}
 
-	private double calculateDistance(double targetDistance, double currentDistance, Double accelerationDerivative) {
+	private double calculateDistance(double currentDistance, Double accelerationDerivative) {
 		var preciseGains = mDriveConfig.ballPickupVelocityGains;
 		mDistancePidController.setPID(preciseGains.p, preciseGains.i, preciseGains.d);
-		mDistancePidController.setSetpoint(targetDistance);
+		mDistancePidController.setSetpoint(0);
 		return accelerationDerivative == null ? mDistancePidController.calculate(currentDistance) : mDistancePidController.calculate(currentDistance, accelerationDerivative);
 	}
 
