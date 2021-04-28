@@ -7,50 +7,40 @@ Team 8's 2021 FRC code for [Nari](http://palyrobotics.com/robots/). Our code is 
 ### Subsystems
 
 ![Robot](https://i.imgur.com/m5wDzObh.jpg)
+![Render](http://palyrobotics.com/assets/img/robots/nari.png)
 
 * [Drivetrain](src/main/java/com/palyrobotics/frc2020/subsystems/Drive.java)
 
-    ![Drivetrain]()
-
-    Our drivetrain uses (6 motors?). IDK HOW THIS STUFF WORKS
+    Our drivetrain uses a 6 wheel west coast drive powered by 4 Falcon 500s. It can reach a top speed of 13.5 ft (ca. 4 m)/sec.
 
 * [Shooter](src/main/java/com/palyrobotics/frc2020/subsystems/Shooter.java)
 
-    ![Shooter]()
-
-    Our shooter subsystem uses IDK HOW THIS STUFF WORKS
+    Our shooter subsystem uses a pneumatically adjustable hood with 3 states. We also use 2 NEO motors to shoot the balls
+    from anywhere between the front of the control panel and the target zone. In order to choose between the hood states
+    and the motors' velocity we use a Limelight to get the distance and an interpolating tree map to use that distance
+    to find the needed velocities.
 
 * [Intake](src/main/java/com/palyrobotics/frc2020/subsystems/Intake.java)
 
-    ![Intake]()
-
-    Our intake subsystem uses IDK HOW THIS STUFF WORKS
+    Our intake subsystem uses a virtual 4-bar intake and utilizes stationary sprocket and chain system to fold inwards
+    when stowed or impacted.
 
 * [Indexer](src/main/java/com/palyrobotics/frc2020/subsystems/Indexer.java)
 
-    ![Indexer]()
-
-    Our indexer subsystem uses IDK HOW THIS STUFF WORKS
+    Our indexer subsystem uses a 5 ball linear indexer with “V” configured belts for internal ball singulating
 
 * [Climber](src/main/java/com/palyrobotics/frc2020/subsystems/Climber.java)
 
-    ![Climber]()
-
-    Our climber subsystem uses IDK HOW THIS STUFF WORKS
+    Our climber subsystem is a telescoping climber which enables sub 5 sec. climbs when the switch is tipped or stationary
 
 * [Spinner](src/main/java/com/palyrobotics/frc2020/subsystems/Spinner.java)
-
-    ![Spinner]()
 
     Our spinner subsystem uses IDK HOW THIS STUFF WORKS
 
 * [Lighting](src/main/java/com/palyrobotics/frc2020/subsystems/Lighting.java)
 
-    ![Lighting]()
-
-    In order to communicate with the drivers and give valuable information such as if our robot is ready to shoot,
-    we use LEDs.
-
+    LED animations allow for better driver and operator synchronization used to indicate bot alignment, climber lock,
+    power cell pickup, ball launches and more.
 
 ## Setup Instructions
 
