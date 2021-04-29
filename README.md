@@ -38,20 +38,20 @@ Team 8's 2021 FRC code for [Nari](http://palyrobotics.com/robots/). Our code is 
 
 * [Intake](src/main/java/com/palyrobotics/frc2020/subsystems/Intake.java)
 
-    Our intake subsystem uses a virtual 4-bar intake and utilizes stationary sprocket and chain system to fold inwards
+    Our intake subsystem uses a virtual 4-bar intake and utilizes stationary sprocket and chain system to fold inwards.
     when stowed or impacted.
 
 * [Indexer](src/main/java/com/palyrobotics/frc2020/subsystems/Indexer.java)
 
-    Our indexer subsystem uses a 5 ball linear indexer with “V” configured belts for internal ball singulating
+    Our indexer subsystem uses a 5 ball linear indexer with “V” configured belts for internal ball singulating.
 
 * [Climber](src/main/java/com/palyrobotics/frc2020/subsystems/Climber.java)
 
-    Our climber subsystem is a telescoping climber which enables sub 5 sec. climbs when the switch is tipped or stationary
+    Our climber subsystem is a telescoping climber which enables sub 5 sec. climbs when the switch is tipped or stationary.
 
 * [Spinner](src/main/java/com/palyrobotics/frc2020/subsystems/Spinner.java)
 
-    Our spinner subsystem uses IDK HOW THIS STUFF WORKS
+    Our spinner subsystem uses a spinning wheel with a color sensor.
 
 * [Lighting](src/main/java/com/palyrobotics/frc2020/subsystems/Lighting.java)
 
@@ -131,4 +131,4 @@ We recommend using IntelliJ, however, Visual Studio Code and Eclipse both work.
 
 ## Licence
 
-Our code is released under the DO WE NEED A LICENSE? A copy of this license is included in the ________ file.
+Our code is released under the MIT License A copy of this license is included in the LICENSE file.
