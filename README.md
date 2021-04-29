@@ -7,7 +7,6 @@ Team 8's 2021 FRC code for [Nari](http://palyrobotics.com/robots/). Our code is 
 ### Subsystems
 
 ![Robot](https://i.imgur.com/m5wDzObh.jpg)
-![Render](http://palyrobotics.com/assets/img/robots/nari.png)
 
 * [Drivetrain](src/main/java/com/palyrobotics/frc2020/subsystems/Drive.java)
 
@@ -69,6 +68,7 @@ We recommend using IntelliJ, however, Visual Studio Code and Eclipse both work.
   
 * Auto grapher
     
+    ![auto simulator example](auto_simulator/resources/BarrelRacingSimulation.gif)
     Graphs each auto we code in order to be able to develop auto's at home during the COVID-19 pandemic.
     This sped up out auto development during lockdown and allowed multiple people to test auto's at the same time.
 
