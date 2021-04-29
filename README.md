@@ -121,6 +121,14 @@ We recommend using IntelliJ, however, Visual Studio Code and Eclipse both work.
 * k**** (i.e. ``kTimeToShootPerBallSeconds``): final constants
 * m**** (i.e. ``mOutputs``): private variables
 
+## Sponsors
+
+|![](http://palyrobotics.com/assets/img/sponsors/BayerFund.png)|![](http://palyrobotics.com/assets/img/sponsors/KLA.png)|![](http://palyrobotics.com/assets/img/sponsors/TEconnectivity.png)|![](http://palyrobotics.com/assets/img/sponsors/apple.svg)|
+| --- | --- | --- | --- |
+|![](http://palyrobotics.com/assets/img/sponsors/GHF.jpg)|![](http://palyrobotics.com/assets/img/sponsors/Intuitive_Foundation.png)|![](http://palyrobotics.com/assets/img/sponsors/arm.png)|![](http://palyrobotics.com/assets/img/sponsors/NASA.png)|
+|![](http://palyrobotics.com/assets/img/sponsors/d&k.gif)|![](http://palyrobotics.com/assets/img/sponsors/markforged.png)|![](http://palyrobotics.com/assets/img/sponsors/solidworks.png)|![](http://palyrobotics.com/assets/img/sponsors/dropbox.jpg)|
+|![](http://palyrobotics.com/assets/img/sponsors/kirks.png)|![](http://palyrobotics.com/assets/img/sponsors/Asiain_Box.jpeg)|![](http://palyrobotics.com/assets/img/sponsors/robby.png)|![](http://palyrobotics.com/assets/img/sponsors/emotiv.png)|
+
 ## Licence
 
 Our code is released under the DO WE NEED A LICENSE? A copy of this license is included in the ________ file.
