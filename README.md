@@ -1,8 +1,25 @@
-# FRC 2021
+# Team 8 FRC 2021
 
 Team 8's 2021 FRC code for [Nari](http://palyrobotics.com/robots/). Our code is written in Java with our path visualiser written in python.
 
 ## Robot
+
+### Highlights
+* Path following with RAMSETE controller.
+    
+    We use RAMSETE in order to generate paths for our autos. We found this to be better than the Adaptive Pure
+    Pursuit that we used before.
+
+* Vision for target detection
+    
+    We use Limelight in order to find the distance to the target and use custom OpenCV code in order to find the 
+    locations of balls.
+  
+* Auto grapher
+    
+    ![auto simulator example](auto_simulator/resources/BarrelRacingSimulation.gif)
+    Graphs each auto we code in order to be able to develop auto's at home during the COVID-19 pandemic.
+    This sped up out auto development during lockdown and allowed multiple people to test auto's at the same time.
 
 ### Subsystems
 
@@ -54,23 +71,6 @@ Team 8's 2021 FRC code for [Nari](http://palyrobotics.com/robots/). Our code is 
 We recommend using IntelliJ, however, Visual Studio Code and Eclipse both work.
 
 ## Code
-
-### Highlights
-* Path following with RAMSETE controller.
-    
-    We use RAMSETE in order to generate paths for our autos. We found this to be better than the Adaptive Pure
-    Pursuit that we used before.
-
-* Vision for target detection
-    
-    We use Limelight in order to find the distance to the target and use custom OpenCV code in order to find the 
-    locations of balls.
-  
-* Auto grapher
-    
-    ![auto simulator example](auto_simulator/resources/BarrelRacingSimulation.gif)
-    Graphs each auto we code in order to be able to develop auto's at home during the COVID-19 pandemic.
-    This sped up out auto development during lockdown and allowed multiple people to test auto's at the same time.
 
 ### Packages
 * [com.palyrobotics.frc2020](src/main/java/com/palyrobotics/frc2020)
