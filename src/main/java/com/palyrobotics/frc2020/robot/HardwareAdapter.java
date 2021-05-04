@@ -45,7 +45,7 @@ public class HardwareAdapter {
 	}
 
 	/**
-	 * Some robot parts
+	 * Some robot parts idk
 	 */
 	static class IntakeHardware {
 
