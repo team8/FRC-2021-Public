@@ -14,6 +14,7 @@ import com.palyrobotics.frc2020.config.RobotConfig;
 import com.palyrobotics.frc2020.config.constants.DriveConstants;
 import com.palyrobotics.frc2020.robot.RobotState.GamePeriod;
 import com.palyrobotics.frc2020.subsystems.Drive;
+import com.palyrobotics.frc2020.subsystems.Intake;
 import com.palyrobotics.frc2020.subsystems.SubsystemBase;
 import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.config.Configs;
@@ -35,6 +36,7 @@ public class HardwareWriter {
 			true, 30.0, 35.0, 1.0);
 	private final RobotConfig mRobotConfig = Configs.get(RobotConfig.class);
 	private final Drive mDrive = Drive.getInstance();
+	private final Intake mIntake = Intake.getInstance();
 	private boolean mRumbleOutput;
 
 	void configureHardware(Set<SubsystemBase> enabledSubsystems) {
@@ -106,6 +108,7 @@ public class HardwareWriter {
 			if (enabledSubsystems.contains(mDrive) && robotState.gamePeriod != GamePeriod.TESTING) updateDrivetrain();
 			Robot.sLoopDebugger.addPoint("writeDrive");
 		}
+		if(enabledSubsystems.contains(mIntake) && robotState.gamePeriod != GamePeriod.TESTING) updateIntake();
 		var joystickHardware = HardwareAdapter.Joysticks.getInstance();
 		joystickHardware.operatorXboxController.setRumble(mRumbleOutput);
 		Robot.sLoopDebugger.addPoint("writeHardware");
@@ -117,6 +120,10 @@ public class HardwareWriter {
 		hardware.leftMasterFalcon.setOutput(mDrive.getDriveSignal().leftOutput);
 		hardware.rightMasterFalcon.setOutput(mDrive.getDriveSignal().rightOutput);
 		handleReset(hardware.gyro);
+	}
+
+	private void updateIntake() {
+		HardwareAdapter.IntakeHardware hardware = HardwareAdapter.IntakeHardware.getInstance();
 	}
 
 	private void setPigeonStatusFramePeriods(PigeonIMU gyro) {
