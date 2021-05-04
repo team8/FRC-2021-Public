@@ -40,7 +40,7 @@ public class HardwareReader {
 		Robot.sLoopDebugger.addPoint("readGameAndFieldState");
 		if (enabledSubsystems.contains(Drive.getInstance())) readDriveState(state);
 		Robot.sLoopDebugger.addPoint("readDrive");
-		if(enabledSubsystems.contains(Intake.getInstance())) readIntakeState(state);
+		if (enabledSubsystems.contains(Intake.getInstance())) readIntakeState(state);
 	}
 
 	private void readGameAndFieldState(RobotState state) {
