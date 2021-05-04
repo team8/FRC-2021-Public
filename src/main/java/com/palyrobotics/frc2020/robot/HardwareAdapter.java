@@ -6,6 +6,8 @@ import com.ctre.phoenix.sensors.PigeonIMU;
 import com.palyrobotics.frc2020.config.PortConstants;
 import com.palyrobotics.frc2020.util.config.Configs;
 import com.palyrobotics.frc2020.util.control.Falcon;
+import com.palyrobotics.frc2020.util.control.Talon;
+import com.palyrobotics.frc2020.util.control.TimedSolenoid;
 import com.palyrobotics.frc2020.util.input.Joystick;
 import com.palyrobotics.frc2020.util.input.XboxController;
 
@@ -51,13 +53,16 @@ public class HardwareAdapter {
 
 		private static IntakeHardware sInstance;
 
-		private IntakeHardware() {}
+		final Talon talon = new Talon(sPortConstants.nariIntakeId, "intake");
+		final TimedSolenoid solenoid = new TimedSolenoid(sPortConstants.nariIntakeSolenoidId, Configs.get(IntakeConfig.class).solenoidActuationDurationSec, false);
 
-		static IntakeHardware getInstance() {
-			if(sInstance == null) sInstance = new IntakeHardware();
-			return sInstance;
+		private IntakeHardware() {
 		}
 
+		static IntakeHardware getInstance() {
+			if (sInstance == null) sInstance = new IntakeHardware();
+			return sInstance;
+		}
 	}
 
 	/**
