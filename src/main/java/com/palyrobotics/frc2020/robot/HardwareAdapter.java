@@ -45,6 +45,22 @@ public class HardwareAdapter {
 	}
 
 	/**
+	 * Some robot parts
+	 */
+	static class IntakeHardware {
+
+		private static IntakeHardware sInstance;
+
+		private IntakeHardware() {}
+
+		static IntakeHardware getInstance() {
+			if(sInstance == null) sInstance = new IntakeHardware();
+			return sInstance;
+		}
+
+	}
+
+	/**
 	 * 1 Compressor, 1 PDP, 1 Fisheye USB Camera
 	 */
 	static class MiscellaneousHardware {
