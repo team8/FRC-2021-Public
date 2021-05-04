@@ -8,6 +8,7 @@ import com.esotericsoftware.minlog.Log;
 import com.palyrobotics.frc2020.config.RobotConfig;
 import com.palyrobotics.frc2020.robot.HardwareAdapter.DriveHardware;
 import com.palyrobotics.frc2020.subsystems.Drive;
+import com.palyrobotics.frc2020.subsystems.Intake;
 import com.palyrobotics.frc2020.subsystems.SubsystemBase;
 import com.palyrobotics.frc2020.util.Util;
 import com.palyrobotics.frc2020.util.config.Configs;
@@ -39,6 +40,7 @@ public class HardwareReader {
 		Robot.sLoopDebugger.addPoint("readGameAndFieldState");
 		if (enabledSubsystems.contains(Drive.getInstance())) readDriveState(state);
 		Robot.sLoopDebugger.addPoint("readDrive");
+		if(enabledSubsystems.contains(Intake.getInstance())) readIntakeState(state);
 	}
 
 	private void readGameAndFieldState(RobotState state) {
@@ -75,6 +77,11 @@ public class HardwareReader {
 //		LiveGraph.add("driveRightPercentOutput", hardware.rightMasterFalcon.getMotorOutputPercent());
 //		LiveGraph.add("driveLeftPercentOutput", hardware.leftMasterFalcon.getMotorOutputPercent());
 		hardware.falcons.forEach(this::checkFalconFaults);
+	}
+
+	private void readIntakeState(RobotState state) {
+		HardwareAdapter.IntakeHardware hardware = HardwareAdapter.IntakeHardware.getInstance();
+		// Reading stuff
 	}
 
 	private void checkSparkFaults(Spark spark) {
