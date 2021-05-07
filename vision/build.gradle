@@ -1,0 +1,36 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group 'frc8'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
+
+compileJava {
+    options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://clojars.org/repo" }
+}
+
+dependencies {
+    compile 'kryonet:kryonet:2.21'
+    compile 'com.esotericsoftware:kryo:4.0.2'
+    compile 'net.sourceforge.argparse4j:argparse4j:0.8.1'
+    compile 'com.fasterxml:jackson-module-json-org:0.9.1'
+    compile fileTree(dir: 'lib', include: ['*.jar'])
+}
+
+mainClassName = 'Main'
+
+jar {
+    from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    manifest {
+        attributes 'Main-Class': 'Main'
+    }
+}
